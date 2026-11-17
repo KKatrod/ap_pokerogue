@@ -177,7 +177,7 @@ class DefaultOverrides {
    *
    * Note that, for all items in the array, `count` is not used.
    */
-  readonly ITEM_REWARD_OVERRIDE: ModifierOverride[] = [{name:"APITEM"}];
+  readonly ITEM_REWARD_OVERRIDE: ModifierOverride[] = [];
 }
 
 export const defaultOverrides = new DefaultOverrides();
