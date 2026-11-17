@@ -1,0 +1,8 @@
+{
+  "game": "PokeRogue",
+  "minimum_ap_version": "0.6.0",
+  "authors": ["PokeRogue Archipelago contributors"],
+  "world_version": "0.1.0",
+  "version": 7,
+  "compatible_version": 7
+}

@@ -466,6 +466,14 @@ export class ArchipelagoManager {
     }
   }
 
+  /** Marks the Pokémon received so far as announced (the player sees them in the starter selection) */
+  acknowledgePokemonUnlocks(): void {
+    if (this.profile) {
+      this.profile.announced = this.receivedItems.length;
+      this.saveProfile();
+    }
+  }
+
   hasUnlockedStarters(): boolean {
     return this.receivedItems.some(i => getApItemDef(i.item)?.category === ApItemCategory.POKEMON);
   }

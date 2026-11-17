@@ -189,7 +189,9 @@ export class ArchipelagoClient {
     if (typeof location !== "undefined" && location.protocol === "https:") {
       return [ `wss://${address}` ];
     }
-    return [ `wss://${address}`, `ws://${address}` ];
+    // Local servers are almost always plain ws, remote ones (archipelago.gg...) use wss
+    const isLocal = /^(localhost|127\.0\.0\.1|\[::1\])(:|$)/i.test(address);
+    return isLocal ? [ `ws://${address}`, `wss://${address}` ] : [ `wss://${address}`, `ws://${address}` ];
   }
 
   private openAndAuthenticate(url: string): Promise<ConnectedPacket> {

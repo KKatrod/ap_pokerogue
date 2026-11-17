@@ -342,6 +342,8 @@ export class TitlePhase extends Phase {
         }, null, true);
         return;
       }
+      // The starters received so far are shown in the starter selection: no need to announce them in battle
+      archipelago.acknowledgePokemonUnlocks();
       this.gameMode = GameModes.ARCHIPELAGO;
       this.scene.ui.clearText();
       this.end();
