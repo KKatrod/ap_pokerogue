@@ -1,13 +1,16 @@
-import { BattlerIndex } from "#app/battle";
-import Pokemon from "#app/field/pokemon";
-import { ContactHeldItemTransferChanceModifier } from "#app/modifier/modifier";
-import { Abilities } from "#enums/abilities";
-import { BerryType } from "#enums/berry-type";
-import { Moves } from "#enums/moves";
-import { Species } from "#enums/species";
+import { BattlerIndex } from "#app/battle.js";
+import { allMoves } from "#app/data/move.js";
+import { Abilities } from "#app/enums/abilities.js";
+import { BerryType } from "#app/enums/berry-type.js";
+import { Moves } from "#app/enums/moves.js";
+import { Species } from "#app/enums/species.js";
+import { CommandPhase, MoveEndPhase, SelectTargetPhase } from "#app/phases.js";
 import GameManager from "#test/utils/gameManager";
 import Phase from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { getMovePosition } from "#test/utils/gameManagerUtils";
+
+const TIMEOUT = 20 * 1000; // 20 seconds
 
 describe("Items - Grip Claw", () => {
   let phaserGame: Phaser.Game;
@@ -28,85 +31,44 @@ describe("Items - Grip Claw", () => {
 
     game.override
       .battleType("double")
-      .moveset([ Moves.TACKLE, Moves.SPLASH, Moves.ATTRACT ])
+      .moveset([Moves.POPULATION_BOMB, Moves.SPLASH])
       .startingHeldItems([
-        { name: "GRIP_CLAW", count: 1 },
+        { name: "GRIP_CLAW", count: 5 },
+        { name: "MULTI_LENS", count: 3 },
       ])
       .enemySpecies(Species.SNORLAX)
-      .enemyAbility(Abilities.UNNERVE)
-      .ability(Abilities.UNNERVE)
-      .enemyMoveset(Moves.SPLASH)
+      .ability(Abilities.KLUTZ)
+      .enemyMoveset([Moves.SPLASH, Moves.SPLASH, Moves.SPLASH, Moves.SPLASH])
       .enemyHeldItems([
         { name: "BERRY", type: BerryType.SITRUS, count: 2 },
         { name: "BERRY", type: BerryType.LUM, count: 2 },
       ])
+      .startingLevel(100)
       .enemyLevel(100);
 
+    vi.spyOn(allMoves[Moves.POPULATION_BOMB], "accuracy", "get").mockReturnValue(100);
   });
 
-  it("should steal items on contact and only from the attack target", async () => {
-    await game.classicMode.startBattle([ Species.FEEBAS, Species.MILOTIC ]);
+  it(
+    "should only steal items from the attack target",
+    async () => {
+      await game.startBattle([Species.PANSEAR, Species.ROWLET, Species.PANPOUR, Species.PANSAGE, Species.CHARMANDER, Species.SQUIRTLE]);
 
-    const [ playerPokemon, ] = game.scene.getPlayerField();
+      const enemyPokemon = game.scene.getEnemyField();
 
-    const gripClaw = playerPokemon.getHeldItems()[0] as ContactHeldItemTransferChanceModifier;
-    vi.spyOn(gripClaw, "chance", "get").mockReturnValue(100);
+      const enemyHeldItemCt = enemyPokemon.map(p => p.getHeldItems.length);
 
-    const enemyPokemon = game.scene.getEnemyField();
+      game.doAttack(getMovePosition(game.scene, 0, Moves.POPULATION_BOMB));
 
-    const playerHeldItemCount = getHeldItemCount(playerPokemon);
-    const enemy1HeldItemCount = getHeldItemCount(enemyPokemon[0]);
-    const enemy2HeldItemCount = getHeldItemCount(enemyPokemon[1]);
-    expect(enemy2HeldItemCount).toBeGreaterThan(0);
+      await game.phaseInterceptor.to(SelectTargetPhase, false);
+      game.doSelectTarget(BattlerIndex.ENEMY);
 
-    game.move.select(Moves.TACKLE, 0, BattlerIndex.ENEMY_2);
-    game.move.select(Moves.SPLASH, 1);
+      await game.phaseInterceptor.to(CommandPhase, false);
+      game.doAttack(getMovePosition(game.scene, 1, Moves.SPLASH));
 
-    await game.phaseInterceptor.to("BerryPhase", false);
+      await game.phaseInterceptor.to(MoveEndPhase, false);
 
-    const playerHeldItemCountAfter = getHeldItemCount(playerPokemon);
-    const enemy1HeldItemCountsAfter = getHeldItemCount(enemyPokemon[0]);
-    const enemy2HeldItemCountsAfter = getHeldItemCount(enemyPokemon[1]);
-
-    expect(playerHeldItemCountAfter).toBe(playerHeldItemCount + 1);
-    expect(enemy1HeldItemCountsAfter).toBe(enemy1HeldItemCount);
-    expect(enemy2HeldItemCountsAfter).toBe(enemy2HeldItemCount - 1);
-  });
-
-  it("should not steal items when using a targetted, non attack move", async () => {
-    await game.classicMode.startBattle([ Species.FEEBAS, Species.MILOTIC ]);
-
-    const [ playerPokemon, ] = game.scene.getPlayerField();
-
-    const gripClaw = playerPokemon.getHeldItems()[0] as ContactHeldItemTransferChanceModifier;
-    vi.spyOn(gripClaw, "chance", "get").mockReturnValue(100);
-
-    const enemyPokemon = game.scene.getEnemyField();
-
-    const playerHeldItemCount = getHeldItemCount(playerPokemon);
-    const enemy1HeldItemCount = getHeldItemCount(enemyPokemon[0]);
-    const enemy2HeldItemCount = getHeldItemCount(enemyPokemon[1]);
-    expect(enemy2HeldItemCount).toBeGreaterThan(0);
-
-    game.move.select(Moves.ATTRACT, 0, BattlerIndex.ENEMY_2);
-    game.move.select(Moves.SPLASH, 1);
-
-    await game.phaseInterceptor.to("BerryPhase", false);
-
-    const playerHeldItemCountAfter = getHeldItemCount(playerPokemon);
-    const enemy1HeldItemCountsAfter = getHeldItemCount(enemyPokemon[0]);
-    const enemy2HeldItemCountsAfter = getHeldItemCount(enemyPokemon[1]);
-
-    expect(playerHeldItemCountAfter).toBe(playerHeldItemCount);
-    expect(enemy1HeldItemCountsAfter).toBe(enemy1HeldItemCount);
-    expect(enemy2HeldItemCountsAfter).toBe(enemy2HeldItemCount);
-  });
+      expect(enemyPokemon[1].getHeldItems.length).toBe(enemyHeldItemCt[1]);
+    }, TIMEOUT
+  );
 });
-
-/*
- * Gets the total number of items a Pokemon holds
- */
-function getHeldItemCount(pokemon: Pokemon) {
-  return pokemon.getHeldItems().reduce((currentTotal, item) => currentTotal + item.getStackCount(), 0);
-}
-

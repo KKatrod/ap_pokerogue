@@ -3,9 +3,8 @@ import BattleScene from "../battle-scene";
 import * as Utils from "../utils";
 import { TextStyle, addTextObject } from "./text";
 import { WindowVariant, addWindow } from "./ui-theme";
-import { pokerogueApi } from "#app/plugins/api/pokerogue-api";
 
-export interface RankingEntry {
+interface RankingEntry {
   rank: integer,
   username: string,
   score: integer,
@@ -13,7 +12,7 @@ export interface RankingEntry {
 }
 
 // Don't forget to update translations when adding a new category
-export enum ScoreboardCategory {
+enum ScoreboardCategory {
   DAILY,
   WEEKLY
 }
@@ -143,13 +142,13 @@ export class DailyRunScoreboard extends Phaser.GameObjects.Container {
       entryContainer.add(scoreLabel);
 
       switch (this.category) {
-        case ScoreboardCategory.DAILY:
-          const waveLabel = addTextObject(this.scene, 68, 0, wave, TextStyle.WINDOW, { fontSize: "54px" });
-          entryContainer.add(waveLabel);
-          break;
-        case ScoreboardCategory.WEEKLY:
-          scoreLabel.x -= 16;
-          break;
+      case ScoreboardCategory.DAILY:
+        const waveLabel = addTextObject(this.scene, 68, 0, wave, TextStyle.WINDOW, { fontSize: "54px" });
+        entryContainer.add(waveLabel);
+        break;
+      case ScoreboardCategory.WEEKLY:
+        scoreLabel.x -= 16;
+        break;
       }
 
       return entryContainer;
@@ -192,17 +191,18 @@ export class DailyRunScoreboard extends Phaser.GameObjects.Container {
     }
 
     Utils.executeIf(category !== this.category || this.pageCount === undefined,
-      () =>  pokerogueApi.daily.getRankingsPageCount({ category }).then(count => this.pageCount = count)
+      () => Utils.apiFetch(`daily/rankingpagecount?category=${category}`).then(response => response.json()).then(count => this.pageCount = count)
     ).then(() => {
-      pokerogueApi.daily.getRankings({ category, page })
-        .then(rankings => {
+      Utils.apiFetch(`daily/rankings?category=${category}&page=${page}`)
+        .then(response => response.json())
+        .then(jsonResponse => {
           this.page = page;
           this.category = category;
           this.titleLabel.setText(`${i18next.t(`menu:${ScoreboardCategory[category].toLowerCase()}Rankings`)}`);
           this.pageNumberLabel.setText(page.toString());
-          if (rankings) {
+          if (jsonResponse) {
             this.loadingLabel.setVisible(false);
-            this.updateRankings(rankings);
+            this.updateRankings(jsonResponse);
           } else {
             this.loadingLabel.setText(i18next.t("menu:noRankings"));
           }

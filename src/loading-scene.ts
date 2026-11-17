@@ -1,25 +1,27 @@
-import { GachaType } from "#enums/gacha-types";
-import { getBiomeHasProps } from "#app/field/arena";
-import CacheBustedLoaderPlugin from "#app/plugins/cache-busted-loader-plugin";
-import { SceneBase } from "#app/scene-base";
-import { WindowVariant, getWindowVariantSuffix } from "#app/ui/ui-theme";
-import { isMobile } from "#app/touch-controls";
-import * as Utils from "#app/utils";
-import { initPokemonPrevolutions } from "#app/data/balance/pokemon-evolutions";
-import { initBiomes } from "#app/data/balance/biomes";
-import { initEggMoves } from "#app/data/balance/egg-moves";
-import { initPokemonForms } from "#app/data/pokemon-forms";
-import { initSpecies } from "#app/data/pokemon-species";
-import { initMoves } from "#app/data/move";
-import { initAbilities } from "#app/data/ability";
-import { initAchievements } from "#app/system/achv";
-import { initTrainerTypeDialogue } from "#app/data/dialogue";
-import { initChallenges } from "#app/data/challenge";
+import { GachaType } from "./enums/gacha-types";
+import { trainerConfigs } from "./data/trainer-config";
+import { getBiomeHasProps } from "./field/arena";
+import CacheBustedLoaderPlugin from "./plugins/cache-busted-loader-plugin";
+import { SceneBase } from "./scene-base";
+import { WindowVariant, getWindowVariantSuffix } from "./ui/ui-theme";
+import { isMobile } from "./touch-controls";
+import * as Utils from "./utils";
+import { initI18n } from "./plugins/i18n";
+import {initPokemonPrevolutions} from "#app/data/pokemon-evolutions";
+import {initBiomes} from "#app/data/biomes";
+import {initEggMoves} from "#app/data/egg-moves";
+import {initPokemonForms} from "#app/data/pokemon-forms";
+import {initSpecies} from "#app/data/pokemon-species";
+import {initMoves} from "#app/data/move";
+import {initAbilities} from "#app/data/ability";
+import {initAchievements} from "#app/system/achv";
+import {initTrainerTypeDialogue} from "#app/data/dialogue";
+import { initChallenges } from "./data/challenge";
 import i18next from "i18next";
-import { initStatsKeys } from "#app/ui/game-stats-ui-handler";
-import { initVouchers } from "#app/system/voucher";
+import { initStatsKeys } from "./ui/game-stats-ui-handler";
+import { initVouchers } from "./system/voucher";
 import { Biome } from "#enums/biome";
-import { initMysteryEncounters } from "#app/data/mystery-encounters/mystery-encounters";
+import { TrainerType } from "#enums/trainer-type";
 
 export class LoadingScene extends SceneBase {
   public static readonly KEY = "loading";
@@ -30,6 +32,7 @@ export class LoadingScene extends SceneBase {
     super(LoadingScene.KEY);
 
     Phaser.Plugins.PluginCache.register("Loader", CacheBustedLoaderPlugin, "load");
+    initI18n();
   }
 
   preload() {
@@ -38,14 +41,14 @@ export class LoadingScene extends SceneBase {
 
     this.loadImage("loading_bg", "arenas");
     this.loadImage("logo", "");
+    // this.loadImage("pride-update", "events");
+    this.loadImage("august-variant-update", "events");
 
     // Load menu images
     this.loadAtlas("bg", "ui");
     this.loadAtlas("prompt", "ui");
     this.loadImage("candy", "ui");
     this.loadImage("candy_overlay", "ui");
-    this.loadImage("friendship", "ui");
-    this.loadImage("friendship_overlay", "ui");
     this.loadImage("cursor", "ui");
     this.loadImage("cursor_reverse", "ui");
     for (const wv of Utils.getEnumValues(WindowVariant)) {
@@ -77,7 +80,6 @@ export class LoadingScene extends SceneBase {
     this.loadAtlas("overlay_hp_boss", "ui");
     this.loadImage("overlay_exp", "ui");
     this.loadImage("icon_owned", "ui");
-    this.loadImage("icon_egg_move", "ui");
     this.loadImage("ability_bar_left", "ui");
     this.loadImage("bgm_bar", "ui");
     this.loadImage("party_exp_bar", "ui");
@@ -98,8 +100,6 @@ export class LoadingScene extends SceneBase {
     this.loadImage("ha_capsule", "ui", "ha_capsule.png");
     this.loadImage("champion_ribbon", "ui", "champion_ribbon.png");
     this.loadImage("icon_spliced", "ui");
-    this.loadImage("icon_lock", "ui", "icon_lock.png");
-    this.loadImage("icon_stop", "ui", "icon_stop.png");
     this.loadImage("icon_tera", "ui");
     this.loadImage("type_tera", "ui");
     this.loadAtlas("type_bgs", "ui");
@@ -164,9 +164,6 @@ export class LoadingScene extends SceneBase {
     this.loadImage("saving_icon", "ui");
     this.loadImage("discord", "ui");
     this.loadImage("google", "ui");
-    this.loadImage("settings_icon", "ui");
-    this.loadImage("link_icon", "ui");
-    this.loadImage("unlink_icon", "ui");
 
     this.loadImage("default_bg", "arenas");
     // Load arena images
@@ -208,6 +205,14 @@ export class LoadingScene extends SceneBase {
     this.loadAtlas("trainer_f_back", "trainer");
     this.loadAtlas("trainer_f_back_pb", "trainer");
 
+    Utils.getEnumValues(TrainerType).map(tt => {
+      const config = trainerConfigs[tt];
+      this.loadAtlas(config.getSpriteKey(), "trainer");
+      if (config.doubleOnly || config.hasDouble) {
+        this.loadAtlas(config.getSpriteKey(true), "trainer");
+      }
+    });
+
     // Load character sprites
     this.loadAtlas("c_rival_m", "character", "rival_m");
     this.loadAtlas("c_rival_f", "character", "rival_f");
@@ -232,24 +237,16 @@ export class LoadingScene extends SceneBase {
     // Get current lang and load the types atlas for it. English will only load types while all other languages will load types and types_<lang>
     const lang = i18next.resolvedLanguage;
     if (lang !== "en") {
-      if (Utils.hasAllLocalizedSprites(lang)) {
-        this.loadAtlas(`statuses_${lang}`, "");
+      if (Utils.verifyLang(lang)) {
         this.loadAtlas(`types_${lang}`, "");
       } else {
         // Fallback to English
-        this.loadAtlas("statuses", "");
         this.loadAtlas("types", "");
       }
     } else {
-      this.loadAtlas("statuses", "");
       this.loadAtlas("types", "");
     }
-    const availableLangs = [ "en", "de", "it", "fr", "ja", "ko", "es-ES", "pt-BR", "zh-CN" ];
-    if (lang && availableLangs.includes(lang)) {
-      this.loadImage("halloween2024-event-" + lang, "events");
-    } else {
-      this.loadImage("halloween2024-event-en", "events");
-    }
+
 
     this.loadAtlas("statuses", "");
     this.loadAtlas("categories", "");
@@ -270,7 +267,6 @@ export class LoadingScene extends SceneBase {
     this.loadImage("gacha_knob", "egg");
 
     this.loadImage("egg_list_bg", "ui");
-    this.loadImage("egg_summary_bg", "ui");
 
     this.loadImage("end_m", "cg");
     this.loadImage("end_f", "cg");
@@ -282,16 +278,12 @@ export class LoadingScene extends SceneBase {
       }
     }
 
-    // Load Mystery Encounter dex progress icon
-    this.loadImage("encounter_radar", "mystery-encounters");
-
     this.loadAtlas("dualshock", "inputs");
     this.loadAtlas("xbox", "inputs");
     this.loadAtlas("keyboard", "inputs");
 
-    this.loadSe("select", "ui");
-    this.loadSe("menu_open", "ui");
-    this.loadSe("error", "ui");
+    this.loadSe("select");
+    this.loadSe("menu_open");
     this.loadSe("hit");
     this.loadSe("hit_strong");
     this.loadSe("hit_weak");
@@ -311,6 +303,7 @@ export class LoadingScene extends SceneBase {
     this.loadSe("upgrade");
     this.loadSe("buy");
     this.loadSe("achv");
+    this.loadSe("error");
 
     this.loadSe("pb_rel");
     this.loadSe("pb_throw");
@@ -349,8 +342,8 @@ export class LoadingScene extends SceneBase {
 
     this.loadLoadingScreen();
 
-    initAchievements();
     initVouchers();
+    initAchievements();
     initStatsKeys();
     initPokemonPrevolutions();
     initBiomes();
@@ -361,7 +354,6 @@ export class LoadingScene extends SceneBase {
     initMoves();
     initAbilities();
     initChallenges();
-    initMysteryEncounters();
   }
 
   loadLoadingScreen() {
@@ -469,7 +461,7 @@ export class LoadingScene extends SceneBase {
       intro.play();
     });
 
-    this.load.on(this.LOAD_EVENTS.PROGRESS, (progress: number) => {
+    this.load.on(this.LOAD_EVENTS.PROGRESS , (progress: number) => {
       percentText.setText(`${Math.floor(progress * 100)}%`);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 0.8);
@@ -479,18 +471,18 @@ export class LoadingScene extends SceneBase {
     this.load.on(this.LOAD_EVENTS.FILE_COMPLETE, (key: string) => {
       assetText.setText(i18next.t("menu:loadingAsset", { assetName: key }));
       switch (key) {
-        case "loading_bg":
-          bg.setTexture("loading_bg");
-          if (mobile) {
-            bg.setVisible(true);
-          }
-          break;
-        case "logo":
-          logo.setTexture("logo");
-          if (mobile) {
-            logo.setVisible(true);
-          }
-          break;
+      case "loading_bg":
+        bg.setTexture("loading_bg");
+        if (mobile) {
+          bg.setVisible(true);
+        }
+        break;
+      case "logo":
+        logo.setTexture("logo");
+        if (mobile) {
+          logo.setVisible(true);
+        }
+        break;
       }
     });
 

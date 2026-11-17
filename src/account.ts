@@ -1,20 +1,25 @@
-import { pokerogueApi } from "#app/plugins/api/pokerogue-api";
-import type { UserInfo } from "#app/@types/UserInfo";
 import { bypassLogin } from "./battle-scene";
 import * as Utils from "./utils";
+
+export interface UserInfo {
+  username: string;
+  lastSessionSlot: integer;
+  discordId: string;
+  googleId: string;
+}
 
 export let loggedInUser: UserInfo | null = null;
 // This is a random string that is used to identify the client session - unique per session (tab or window) so that the game will only save on the one that the server is expecting
 export const clientSessionId = Utils.randomString(32);
 
 export function initLoggedInUser(): void {
-  loggedInUser = { username: "Guest", lastSessionSlot: -1, discordId: "", googleId: "", hasAdminRole: false };
+  loggedInUser = { username: "Guest", lastSessionSlot: -1, discordId: "", googleId: ""};
 }
 
 export function updateUserInfo(): Promise<[boolean, integer]> {
   return new Promise<[boolean, integer]>(resolve => {
     if (bypassLogin) {
-      loggedInUser = { username: "Guest", lastSessionSlot: -1, discordId: "", googleId: "", hasAdminRole: false };
+      loggedInUser = { username: "Guest", lastSessionSlot: -1, discordId: "", googleId: "" };
       let lastSessionSlot = -1;
       for (let s = 0; s < 5; s++) {
         if (localStorage.getItem(`sessionData${s ? s : ""}_${loggedInUser.username}`)) {
@@ -37,14 +42,18 @@ export function updateUserInfo(): Promise<[boolean, integer]> {
       });
       return resolve([ true, 200 ]);
     }
-    pokerogueApi.account.getInfo().then(([ accountInfo, status ]) => {
-      if (!accountInfo) {
-        resolve([ false, status ]);
+    Utils.apiFetch("account/info", true).then(response => {
+      if (!response.ok) {
+        resolve([ false, response.status ]);
         return;
-      } else {
-        loggedInUser = accountInfo;
-        resolve([ true, 200 ]);
       }
+      return response.json();
+    }).then(jsonResponse => {
+      loggedInUser = jsonResponse;
+      resolve([ true, 200 ]);
+    }).catch(err => {
+      console.error(err);
+      resolve([ false, 500 ]);
     });
   });
 }

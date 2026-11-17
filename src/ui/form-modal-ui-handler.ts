@@ -5,7 +5,8 @@ import { TextStyle, addTextInputObject, addTextObject } from "./text";
 import { WindowVariant, addWindow } from "./ui-theme";
 import InputText from "phaser3-rex-plugins/plugins/inputtext";
 import * as Utils from "../utils";
-import { Button } from "#enums/buttons";
+import i18next from "i18next";
+import {Button} from "#enums/buttons";
 
 export interface FormModalConfig extends ModalConfig {
   errorMessage?: string;
@@ -18,7 +19,6 @@ export abstract class FormModalUiHandler extends ModalUiHandler {
   protected errorMessage: Phaser.GameObjects.Text;
   protected submitAction: Function | null;
   protected tween: Phaser.Tweens.Tween;
-  protected formLabels: Phaser.GameObjects.Text[];
 
   constructor(scene: BattleScene, mode: Mode | null = null) {
     super(scene, mode);
@@ -26,18 +26,17 @@ export abstract class FormModalUiHandler extends ModalUiHandler {
     this.editing = false;
     this.inputContainers = [];
     this.inputs = [];
-    this.formLabels = [];
   }
 
-  /**
-   * Get configuration for all fields that should be part of the modal
-   * Gets used by {@linkcode updateFields} to add the proper text inputs and labels to the view
-   * @returns array of {@linkcode InputFieldConfig}
-   */
-  abstract getInputFieldConfigs(): InputFieldConfig[];
+  abstract getFields(): string[];
+
+  /** Maximum number of characters accepted by the given field */
+  getFieldMaxLength(_fieldIndex: number, isPassword: boolean): number {
+    return isPassword ? 64 : 16;
+  }
 
   getHeight(config?: ModalConfig): number {
-    return 20 * this.getInputFieldConfigs().length + (this.getModalTitle() ? 26 : 0) + ((config as FormModalConfig)?.errorMessage ? 12 : 0) + this.getButtonTopMargin() + 28;
+    return 20 * this.getFields().length + (this.getModalTitle() ? 26 : 0) + ((config as FormModalConfig)?.errorMessage ? 12 : 0) + this.getButtonTopMargin() + 28;
   }
 
   getReadableErrorMessage(error: string): string {
@@ -51,50 +50,37 @@ export abstract class FormModalUiHandler extends ModalUiHandler {
   setup(): void {
     super.setup();
 
-    const config = this.getInputFieldConfigs();
+    const fields = this.getFields();
 
     const hasTitle = !!this.getModalTitle();
 
-    if (config.length >= 1) {
-      this.updateFields(config, hasTitle);
-    }
+    fields.forEach((field, f) => {
+      const label = addTextObject(this.scene, 10, (hasTitle ? 31 : 5) + 20 * f, field, TextStyle.TOOLTIP_CONTENT);
 
-    this.errorMessage = addTextObject(this.scene, 10, (hasTitle ? 31 : 5) + 20 * (config.length - 1) + 16 + this.getButtonTopMargin(), "", TextStyle.TOOLTIP_CONTENT);
-    this.errorMessage.setColor(this.getTextColor(TextStyle.SUMMARY_PINK));
-    this.errorMessage.setShadowColor(this.getTextColor(TextStyle.SUMMARY_PINK, true));
-    this.errorMessage.setVisible(false);
-    this.modalContainer.add(this.errorMessage);
-  }
-
-  protected updateFields(fieldsConfig: InputFieldConfig[], hasTitle: boolean) {
-    this.inputContainers = [];
-    this.inputs = [];
-    this.formLabels = [];
-    fieldsConfig.forEach((config, f) => {
-      const label = addTextObject(this.scene, 10, (hasTitle ? 31 : 5) + 20 * f, config.label, TextStyle.TOOLTIP_CONTENT);
-      label.name = "formLabel" + f;
-
-      this.formLabels.push(label);
-      this.modalContainer.add(this.formLabels[this.formLabels.length - 1]);
+      this.modalContainer.add(label);
 
       const inputContainer = this.scene.add.container(70, (hasTitle ? 28 : 2) + 20 * f);
       inputContainer.setVisible(false);
 
       const inputBg = addWindow(this.scene, 0, 0, 80, 16, false, false, 0, 0, WindowVariant.XTHIN);
 
-      const isPassword = config?.isPassword;
-      const isReadOnly = config?.isReadOnly;
-      const input = addTextInputObject(this.scene, 4, -2, 440, 116, TextStyle.TOOLTIP_CONTENT, { type: isPassword ? "password" : "text", maxLength: isPassword ? 64 : 20, readOnly: isReadOnly });
+      const isPassword = field.includes(i18next.t("menu:password")) || field.includes(i18next.t("menu:confirmPassword"));
+      const input = addTextInputObject(this.scene, 4, -2, 440, 116, TextStyle.TOOLTIP_CONTENT, { type: isPassword ? "password" : "text", maxLength: this.getFieldMaxLength(f, isPassword) });
       input.setOrigin(0, 0);
 
       inputContainer.add(inputBg);
       inputContainer.add(input);
-
-      this.inputContainers.push(inputContainer);
       this.modalContainer.add(inputContainer);
 
+      this.inputContainers.push(inputContainer);
       this.inputs.push(input);
     });
+
+    this.errorMessage = addTextObject(this.scene, 10, (hasTitle ? 31 : 5) + 20 * (fields.length - 1) + 16 + this.getButtonTopMargin(), "", TextStyle.TOOLTIP_CONTENT);
+    this.errorMessage.setColor(this.getTextColor(TextStyle.SUMMARY_PINK));
+    this.errorMessage.setShadowColor(this.getTextColor(TextStyle.SUMMARY_PINK, true));
+    this.errorMessage.setVisible(false);
+    this.modalContainer.add(this.errorMessage);
   }
 
   show(args: any[]): boolean {
@@ -167,10 +153,4 @@ export abstract class FormModalUiHandler extends ModalUiHandler {
       this.tween.remove();
     }
   }
-}
-
-export interface InputFieldConfig {
-  label: string,
-  isPassword?: boolean,
-  isReadOnly?: boolean
 }

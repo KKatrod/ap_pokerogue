@@ -4,7 +4,6 @@ export default class MockRectangle implements MockGameObject {
   private fillColor;
   private scene;
   public list: MockGameObject[] = [];
-  public name: string;
 
   constructor(textureManager, x, y, width, height, fillColor) {
     this.fillColor = fillColor;

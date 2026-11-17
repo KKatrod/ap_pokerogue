@@ -3,11 +3,11 @@ import { PersistentModifier } from "../modifier/modifier";
 import { GeneratedPersistentModifierType, ModifierType, ModifierTypeGenerator, getModifierTypeFuncById } from "../modifier/modifier-type";
 
 export default class ModifierData {
-  public player: boolean;
-  public typeId: string;
-  public typePregenArgs: any[];
-  public args: any[];
-  public stackCount: integer;
+  private player: boolean;
+  private typeId: string;
+  private typePregenArgs: any[];
+  private args: any[];
+  private stackCount: integer;
 
   public className: string;
 
@@ -38,7 +38,7 @@ export default class ModifierData {
       type.id = this.typeId;
 
       if (type instanceof ModifierTypeGenerator) {
-        type = (type as ModifierTypeGenerator).generateType(this.player ? scene.getPlayerParty() : scene.getEnemyField(), this.typePregenArgs);
+        type = (type as ModifierTypeGenerator).generateType(this.player ? scene.getParty() : scene.getEnemyField(), this.typePregenArgs);
       }
 
       const ret = Reflect.construct(constructor, ([ type ] as any[]).concat(this.args).concat(this.stackCount)) as PersistentModifier;

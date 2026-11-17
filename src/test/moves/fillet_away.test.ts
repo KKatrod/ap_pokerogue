@@ -1,13 +1,14 @@
-import { TurnEndPhase } from "#app/phases/turn-end-phase";
-import { toDmgValue } from "#app/utils";
+import { afterEach, beforeAll, beforeEach, describe, expect, test } from "vitest";
+import Phaser from "phaser";
+import GameManager from "#test/utils/gameManager";
+import { TurnEndPhase } from "#app/phases";
+import { getMovePosition } from "#test/utils/gameManagerUtils";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
-import { Stat } from "#enums/stat";
-import GameManager from "#test/utils/gameManager";
-import Phaser from "phaser";
-import { afterEach, beforeAll, beforeEach, describe, expect, test } from "vitest";
+import { BattleStat } from "#app/data/battle-stat";
+import { SPLASH_ONLY } from "#test/utils/testUtils";
 
-
+const TIMEOUT = 20 * 1000;
 /** HP Cost of Move */
 const RATIO = 2;
 /** Amount of extra HP lost */
@@ -33,85 +34,85 @@ describe("Moves - FILLET AWAY", () => {
     game.override.enemySpecies(Species.SNORLAX);
     game.override.startingLevel(100);
     game.override.enemyLevel(100);
-    game.override.moveset([ Moves.FILLET_AWAY ]);
-    game.override.enemyMoveset(Moves.SPLASH);
+    game.override.moveset([Moves.FILLET_AWAY]);
+    game.override.enemyMoveset(SPLASH_ONLY);
   });
 
   //Bulbapedia Reference: https://bulbapedia.bulbagarden.net/wiki/fillet_away_(move)
 
-  test("raises the user's ATK, SPATK, and SPD stat stages by 2 each, at the cost of 1/2 of its maximum HP",
+  test("Fillet Away raises the user's Attack, Special Attack, and Speed by two stages each, at the cost of 1/2 of its maximum HP",
     async() => {
-      await game.startBattle([ Species.MAGIKARP ]);
+      await game.startBattle([Species.MAGIKARP]);
 
       const leadPokemon = game.scene.getPlayerPokemon()!;
-      const hpLost = toDmgValue(leadPokemon.getMaxHp() / RATIO);
+      const hpLost = Math.floor(leadPokemon.getMaxHp() / RATIO);
 
-      game.move.select(Moves.FILLET_AWAY);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FILLET_AWAY));
       await game.phaseInterceptor.to(TurnEndPhase);
 
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp() - hpLost);
-      expect(leadPokemon.getStatStage(Stat.ATK)).toBe(2);
-      expect(leadPokemon.getStatStage(Stat.SPATK)).toBe(2);
-      expect(leadPokemon.getStatStage(Stat.SPD)).toBe(2);
-    }
+      expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(2);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(2);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(2);
+    }, TIMEOUT
   );
 
-  test("still takes effect if one or more of the involved stat stages are not at max",
+  test("Fillet Away will still take effect if one or more of the involved stats are not at max",
     async() => {
-      await game.startBattle([ Species.MAGIKARP ]);
+      await game.startBattle([Species.MAGIKARP]);
 
       const leadPokemon = game.scene.getPlayerPokemon()!;
-      const hpLost = toDmgValue(leadPokemon.getMaxHp() / RATIO);
+      const hpLost = Math.floor(leadPokemon.getMaxHp() / RATIO);
 
-      //Here - Stat.SPD -> 0 and Stat.SPATK -> 3
-      leadPokemon.setStatStage(Stat.ATK, 6);
-      leadPokemon.setStatStage(Stat.SPATK, 3);
+      //Here - BattleStat.SPD -> 0 and BattleStat.SPATK -> 3
+      leadPokemon.summonData.battleStats[BattleStat.ATK] = 6;
+      leadPokemon.summonData.battleStats[BattleStat.SPATK] = 3;
 
-      game.move.select(Moves.FILLET_AWAY);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FILLET_AWAY));
       await game.phaseInterceptor.to(TurnEndPhase);
 
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp() - hpLost);
-      expect(leadPokemon.getStatStage(Stat.ATK)).toBe(6);
-      expect(leadPokemon.getStatStage(Stat.SPATK)).toBe(5);
-      expect(leadPokemon.getStatStage(Stat.SPD)).toBe(2);
-    }
+      expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(6);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(5);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(2);
+    }, TIMEOUT
   );
 
-  test("fails if all stat stages involved are at max",
+  test("Fillet Away fails if all stats involved are at max",
     async() => {
-      await game.startBattle([ Species.MAGIKARP ]);
+      await game.startBattle([Species.MAGIKARP]);
 
       const leadPokemon = game.scene.getPlayerPokemon()!;
 
-      leadPokemon.setStatStage(Stat.ATK, 6);
-      leadPokemon.setStatStage(Stat.SPATK, 6);
-      leadPokemon.setStatStage(Stat.SPD, 6);
+      leadPokemon.summonData.battleStats[BattleStat.ATK] = 6;
+      leadPokemon.summonData.battleStats[BattleStat.SPATK] = 6;
+      leadPokemon.summonData.battleStats[BattleStat.SPD] = 6;
 
-      game.move.select(Moves.FILLET_AWAY);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FILLET_AWAY));
       await game.phaseInterceptor.to(TurnEndPhase);
 
       expect(leadPokemon.hp).toBe(leadPokemon.getMaxHp());
-      expect(leadPokemon.getStatStage(Stat.ATK)).toBe(6);
-      expect(leadPokemon.getStatStage(Stat.SPATK)).toBe(6);
-      expect(leadPokemon.getStatStage(Stat.SPD)).toBe(6);
-    }
+      expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(6);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(6);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(6);
+    }, TIMEOUT
   );
 
-  test("fails if the user's health is less than 1/2",
+  test("Fillet Away fails if the user's health is less than 1/2",
     async() => {
-      await game.startBattle([ Species.MAGIKARP ]);
+      await game.startBattle([Species.MAGIKARP]);
 
       const leadPokemon = game.scene.getPlayerPokemon()!;
-      const hpLost = toDmgValue(leadPokemon.getMaxHp() / RATIO);
+      const hpLost = Math.floor(leadPokemon.getMaxHp() / RATIO);
       leadPokemon.hp = hpLost - PREDAMAGE;
 
-      game.move.select(Moves.FILLET_AWAY);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FILLET_AWAY));
       await game.phaseInterceptor.to(TurnEndPhase);
 
       expect(leadPokemon.hp).toBe(hpLost - PREDAMAGE);
-      expect(leadPokemon.getStatStage(Stat.ATK)).toBe(0);
-      expect(leadPokemon.getStatStage(Stat.SPATK)).toBe(0);
-      expect(leadPokemon.getStatStage(Stat.SPD)).toBe(0);
-    }
+      expect(leadPokemon.summonData.battleStats[BattleStat.ATK]).toBe(0);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPATK]).toBe(0);
+      expect(leadPokemon.summonData.battleStats[BattleStat.SPD]).toBe(0);
+    }, TIMEOUT
   );
 });

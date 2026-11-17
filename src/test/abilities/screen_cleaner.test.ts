@@ -1,10 +1,10 @@
-import { ArenaTagType } from "#app/enums/arena-tag-type";
-import { PostSummonPhase } from "#app/phases/post-summon-phase";
-import { TurnEndPhase } from "#app/phases/turn-end-phase";
+import { ArenaTagType } from "#app/enums/arena-tag-type.js";
+import { PostSummonPhase, TurnEndPhase, } from "#app/phases";
+import GameManager from "#test/utils/gameManager";
+import { getMovePosition } from "#test/utils/gameManagerUtils";
 import { Abilities } from "#enums/abilities";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
-import GameManager from "#test/utils/gameManager";
 import Phaser from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
@@ -30,12 +30,12 @@ describe("Abilities - Screen Cleaner", () => {
   });
 
   it("removes Aurora Veil", async () => {
-    game.override.moveset([ Moves.HAIL ]);
-    game.override.enemyMoveset([ Moves.AURORA_VEIL, Moves.AURORA_VEIL, Moves.AURORA_VEIL, Moves.AURORA_VEIL ]);
+    game.override.moveset([Moves.HAIL]);
+    game.override.enemyMoveset([Moves.AURORA_VEIL, Moves.AURORA_VEIL, Moves.AURORA_VEIL, Moves.AURORA_VEIL]);
 
-    await game.startBattle([ Species.MAGIKARP, Species.MAGIKARP ]);
+    await game.startBattle([Species.MAGIKARP, Species.MAGIKARP]);
 
-    game.move.select(Moves.HAIL);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.HAIL));
     await game.phaseInterceptor.to(TurnEndPhase);
 
     expect(game.scene.arena.getTag(ArenaTagType.AURORA_VEIL)).toBeDefined();
@@ -48,11 +48,11 @@ describe("Abilities - Screen Cleaner", () => {
   });
 
   it("removes Light Screen", async () => {
-    game.override.enemyMoveset([ Moves.LIGHT_SCREEN, Moves.LIGHT_SCREEN, Moves.LIGHT_SCREEN, Moves.LIGHT_SCREEN ]);
+    game.override.enemyMoveset([Moves.LIGHT_SCREEN, Moves.LIGHT_SCREEN, Moves.LIGHT_SCREEN, Moves.LIGHT_SCREEN]);
 
-    await game.startBattle([ Species.MAGIKARP, Species.MAGIKARP ]);
+    await game.startBattle([Species.MAGIKARP, Species.MAGIKARP]);
 
-    game.move.select(Moves.SPLASH);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.SPLASH));
     await game.phaseInterceptor.to(TurnEndPhase);
 
     expect(game.scene.arena.getTag(ArenaTagType.LIGHT_SCREEN)).toBeDefined();
@@ -65,11 +65,11 @@ describe("Abilities - Screen Cleaner", () => {
   });
 
   it("removes Reflect", async () => {
-    game.override.enemyMoveset([ Moves.REFLECT, Moves.REFLECT, Moves.REFLECT, Moves.REFLECT ]);
+    game.override.enemyMoveset([Moves.REFLECT, Moves.REFLECT, Moves.REFLECT, Moves.REFLECT]);
 
-    await game.startBattle([ Species.MAGIKARP, Species.MAGIKARP ]);
+    await game.startBattle([Species.MAGIKARP, Species.MAGIKARP]);
 
-    game.move.select(Moves.SPLASH);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.SPLASH));
     await game.phaseInterceptor.to(TurnEndPhase);
 
     expect(game.scene.arena.getTag(ArenaTagType.REFLECT)).toBeDefined();

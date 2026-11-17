@@ -1,15 +1,14 @@
 import Phaser from "phaser";
-import BattleScene from "#app/battle-scene";
-import { TextStyle, addTextObject } from "#app/ui/text";
-import { Mode } from "#app/ui/ui";
-import UiHandler from "#app/ui/ui-handler";
-import { addWindow } from "#app/ui/ui-theme";
-import * as Utils from "#app/utils";
-import { DexAttr, GameData } from "#app/system/game-data";
-import { speciesStarterCosts } from "#app/data/balance/starters";
-import { Button } from "#enums/buttons";
+import BattleScene from "../battle-scene";
+import { TextStyle, addTextObject } from "./text";
+import { Mode } from "./ui";
+import UiHandler from "./ui-handler";
+import { addWindow } from "./ui-theme";
+import * as Utils from "../utils";
+import { DexAttr, GameData } from "../system/game-data";
+import { speciesStarters } from "../data/pokemon-species";
+import {Button} from "#enums/buttons";
 import i18next from "i18next";
-import { UiTheme } from "#enums/ui-theme";
 
 interface DisplayStat {
   label_key?: string;
@@ -34,14 +33,14 @@ const displayStats: DisplayStats = {
     label_key: "starters",
     sourceFunc: gameData => {
       const starterCount = gameData.getStarterCount(d => !!d.caughtAttr);
-      return `${starterCount} (${Math.floor((starterCount / Object.keys(speciesStarterCosts).length) * 1000) / 10}%)`;
+      return `${starterCount} (${Math.floor((starterCount / Object.keys(speciesStarters).length) * 1000) / 10}%)`;
     }
   },
   shinyStartersUnlocked: {
     label_key: "shinyStarters",
     sourceFunc: gameData => {
       const starterCount = gameData.getStarterCount(d => !!(d.caughtAttr & DexAttr.SHINY));
-      return `${starterCount} (${Math.floor((starterCount / Object.keys(speciesStarterCosts).length) * 1000) / 10}%)`;
+      return `${starterCount} (${Math.floor((starterCount / Object.keys(speciesStarters).length) * 1000) / 10}%)`;
     }
   },
   dexSeen: {
@@ -219,9 +218,6 @@ export default class GameStatsUiHandler extends UiHandler {
   private statLabels: Phaser.GameObjects.Text[];
   private statValues: Phaser.GameObjects.Text[];
 
-  private arrowUp: Phaser.GameObjects.Sprite;
-  private arrowDown: Phaser.GameObjects.Sprite;
-
   constructor(scene: BattleScene, mode: Mode | null = null) {
     super(scene, mode);
 
@@ -245,9 +241,11 @@ export default class GameStatsUiHandler extends UiHandler {
 
     const statsBgWidth = ((this.scene.game.canvas.width / 6) - 2) / 2;
     const [ statsBgLeft, statsBgRight ] = new Array(2).fill(null).map((_, i) => {
-      const width = statsBgWidth + 2;
-      const height = Math.floor((this.scene.game.canvas.height / 6) - headerBg.height - 2);
-      const statsBg = addWindow(this.scene, (statsBgWidth - 2) * i, headerBg.height, width, height, false, false, i > 0 ? -3 : 0, 1);
+      let width = statsBgWidth;
+      if (!i) {
+        width += 5;
+      }
+      const statsBg = addWindow(this.scene, statsBgWidth * i, headerBg.height, width, (this.scene.game.canvas.height / 6) - headerBg.height - 2, false, !!i, 2);
       statsBg.setOrigin(0, 0);
       return statsBg;
     });
@@ -274,14 +272,6 @@ export default class GameStatsUiHandler extends UiHandler {
     this.gameStatsContainer.add(statsBgRight);
     this.gameStatsContainer.add(this.statsContainer);
 
-    // arrows to show that we can scroll through the stats
-    const isLegacyTheme = this.scene.uiTheme === UiTheme.LEGACY;
-    this.arrowDown = this.scene.add.sprite(statsBgWidth, this.scene.game.canvas.height / 6 - (isLegacyTheme ? 9 : 5), "prompt");
-    this.gameStatsContainer.add(this.arrowDown);
-    this.arrowUp = this.scene.add.sprite(statsBgWidth, headerBg.height + (isLegacyTheme ? 7 : 3), "prompt");
-    this.arrowUp.flipY = true;
-    this.gameStatsContainer.add(this.arrowUp);
-
     ui.add(this.gameStatsContainer);
 
     this.setCursor(0);
@@ -295,15 +285,6 @@ export default class GameStatsUiHandler extends UiHandler {
     this.setCursor(0);
 
     this.updateStats();
-
-    this.arrowUp.play("prompt");
-    this.arrowDown.play("prompt");
-    if (this.scene.uiTheme === UiTheme.LEGACY) {
-      this.arrowUp.setTint(0x484848);
-      this.arrowDown.setTint(0x484848);
-    }
-
-    this.updateArrows();
 
     this.gameStatsContainer.setVisible(true);
 
@@ -330,17 +311,6 @@ export default class GameStatsUiHandler extends UiHandler {
     }
   }
 
-  /**
-   * Show arrows at the top / bottom of the page if it's possible to scroll in that direction
-   */
-  updateArrows(): void {
-    const showUpArrow = this.cursor > 0;
-    this.arrowUp.setVisible(showUpArrow);
-
-    const showDownArrow = this.cursor < Math.ceil((Object.keys(displayStats).length - 18) / 2);
-    this.arrowDown.setVisible(showDownArrow);
-  }
-
   processInput(button: Button): boolean {
     const ui = this.getUi();
 
@@ -351,16 +321,16 @@ export default class GameStatsUiHandler extends UiHandler {
       this.scene.ui.revertMode();
     } else {
       switch (button) {
-        case Button.UP:
-          if (this.cursor) {
-            success = this.setCursor(this.cursor - 1);
-          }
-          break;
-        case Button.DOWN:
-          if (this.cursor < Math.ceil((Object.keys(displayStats).length - 18) / 2)) {
-            success = this.setCursor(this.cursor + 1);
-          }
-          break;
+      case Button.UP:
+        if (this.cursor) {
+          success = this.setCursor(this.cursor - 1);
+        }
+        break;
+      case Button.DOWN:
+        if (this.cursor < Math.ceil((Object.keys(displayStats).length - 18) / 2)) {
+          success = this.setCursor(this.cursor + 1);
+        }
+        break;
       }
     }
 
@@ -376,7 +346,6 @@ export default class GameStatsUiHandler extends UiHandler {
 
     if (ret) {
       this.updateStats();
-      this.updateArrows();
     }
 
     return ret;

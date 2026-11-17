@@ -1,10 +1,10 @@
-import { Stat } from "#enums/stat";
+import { Stat } from "#app/data/pokemon-stat";
 import { SpeciesStatBoosterModifier } from "#app/modifier/modifier";
 import { modifierTypes } from "#app/modifier/modifier-type";
 import i18next from "#app/plugins/i18n";
+import GameManager from "#test/utils/gameManager";
 import * as Utils from "#app/utils";
 import { Species } from "#enums/species";
-import GameManager from "#test/utils/gameManager";
 import Phase from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -35,31 +35,31 @@ describe("Items - Quick Powder", () => {
       Species.DITTO
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
-    // Checking console log to make sure Quick Powder is applied when getEffectiveStat (with the appropriate stat) is called
-    partyMember.getEffectiveStat(Stat.DEF);
+    // Checking consoe log to make sure Quick Powder is applied when getBattleStat (with the appropriate stat) is called
+    partyMember.getBattleStat(Stat.DEF);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.QUICK_POWDER.name"), "");
 
     // Printing dummy console messages along the way so subsequent checks don't pass because of the first
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.SPDEF);
+    partyMember.getBattleStat(Stat.SPDEF);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.QUICK_POWDER.name"), "");
 
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.ATK);
+    partyMember.getBattleStat(Stat.ATK);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.QUICK_POWDER.name"), "");
 
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.SPATK);
+    partyMember.getBattleStat(Stat.SPATK);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.QUICK_POWDER.name"), "");
 
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.SPD);
+    partyMember.getBattleStat(Stat.SPD);
     expect(consoleSpy).toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.QUICK_POWDER.name"), "");
   });
 
@@ -68,7 +68,7 @@ describe("Items - Quick Powder", () => {
       Species.DITTO
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
     const spdStat = partyMember.getStat(Stat.SPD);
 
@@ -79,7 +79,7 @@ describe("Items - Quick Powder", () => {
     expect(spdValue.value / spdStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "QUICK_POWDER" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["QUICK_POWDER"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.SPD, spdValue);
 
     expect(spdValue.value / spdStat).toBe(2);
@@ -91,8 +91,8 @@ describe("Items - Quick Powder", () => {
       Species.MAROWAK
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
-    const ally = game.scene.getPlayerParty()[1];
+    const partyMember = game.scene.getParty()[0];
+    const ally = game.scene.getParty()[1];
 
     // Fuse party members (taken from PlayerPokemon.fuse(...) function)
     partyMember.fusionSpecies = ally.species;
@@ -112,7 +112,7 @@ describe("Items - Quick Powder", () => {
     expect(spdValue.value / spdStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "QUICK_POWDER" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["QUICK_POWDER"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.SPD, spdValue);
 
     expect(spdValue.value / spdStat).toBe(2);
@@ -124,8 +124,8 @@ describe("Items - Quick Powder", () => {
       Species.DITTO
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
-    const ally = game.scene.getPlayerParty()[1];
+    const partyMember = game.scene.getParty()[0];
+    const ally = game.scene.getParty()[1];
 
     // Fuse party members (taken from PlayerPokemon.fuse(...) function)
     partyMember.fusionSpecies = ally.species;
@@ -145,7 +145,7 @@ describe("Items - Quick Powder", () => {
     expect(spdValue.value / spdStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "QUICK_POWDER" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["QUICK_POWDER"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.SPD, spdValue);
 
     expect(spdValue.value / spdStat).toBe(2);
@@ -156,7 +156,7 @@ describe("Items - Quick Powder", () => {
       Species.MAROWAK
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
     const spdStat = partyMember.getStat(Stat.SPD);
 
@@ -167,7 +167,7 @@ describe("Items - Quick Powder", () => {
     expect(spdValue.value / spdStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "QUICK_POWDER" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["QUICK_POWDER"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.SPD, spdValue);
 
     expect(spdValue.value / spdStat).toBe(1);

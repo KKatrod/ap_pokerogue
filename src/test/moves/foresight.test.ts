@@ -1,9 +1,11 @@
-import { Moves } from "#app/enums/moves";
-import { Species } from "#app/enums/species";
-import { MoveEffectPhase } from "#app/phases/move-effect-phase";
-import GameManager from "#test/utils/gameManager";
-import Phaser from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import Phaser from "phaser";
+import GameManager from "#test/utils/gameManager";
+import { Species } from "#app/enums/species.js";
+import { SPLASH_ONLY } from "../utils/testUtils";
+import { Moves } from "#app/enums/moves.js";
+import { getMovePosition } from "../utils/gameManagerUtils";
+import { MoveEffectPhase } from "#app/phases.js";
 
 describe("Moves - Foresight", () => {
   let phaserGame: Phaser.Game;
@@ -24,10 +26,10 @@ describe("Moves - Foresight", () => {
     game.override
       .disableCrits()
       .enemySpecies(Species.GASTLY)
-      .enemyMoveset(Moves.SPLASH)
+      .enemyMoveset(SPLASH_ONLY)
       .enemyLevel(5)
       .starterSpecies(Species.MAGIKARP)
-      .moveset([ Moves.FORESIGHT, Moves.QUICK_ATTACK, Moves.MACH_PUNCH ]);
+      .moveset([Moves.FORESIGHT, Moves.QUICK_ATTACK, Moves.MACH_PUNCH]);
   });
 
   it("should allow Normal and Fighting moves to hit Ghost types", async () => {
@@ -35,34 +37,34 @@ describe("Moves - Foresight", () => {
 
     const enemy = game.scene.getEnemyPokemon()!;
 
-    game.move.select(Moves.QUICK_ATTACK);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.QUICK_ATTACK));
     await game.toNextTurn();
     expect(enemy.hp).toBe(enemy.getMaxHp());
 
-    game.move.select(Moves.FORESIGHT);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.FORESIGHT));
     await game.toNextTurn();
-    game.move.select(Moves.QUICK_ATTACK);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.QUICK_ATTACK));
     await game.toNextTurn();
 
     expect(enemy.hp).toBeLessThan(enemy.getMaxHp());
     enemy.hp = enemy.getMaxHp();
 
-    game.move.select(Moves.MACH_PUNCH);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.MACH_PUNCH));
     await game.phaseInterceptor.to(MoveEffectPhase);
 
     expect(enemy.hp).toBeLessThan(enemy.getMaxHp());
   });
 
   it("should ignore target's evasiveness boosts", async () => {
-    game.override.enemyMoveset([ Moves.MINIMIZE ]);
+    game.override.enemyMoveset(Array(4).fill(Moves.MINIMIZE));
     await game.startBattle();
 
     const pokemon = game.scene.getPlayerPokemon()!;
     vi.spyOn(pokemon, "getAccuracyMultiplier");
 
-    game.move.select(Moves.FORESIGHT);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.FORESIGHT));
     await game.toNextTurn();
-    game.move.select(Moves.QUICK_ATTACK);
+    game.doAttack(getMovePosition(game.scene, 0, Moves.QUICK_ATTACK));
     await game.phaseInterceptor.to(MoveEffectPhase);
 
     expect(pokemon.getAccuracyMultiplier).toHaveReturnedWith(1);

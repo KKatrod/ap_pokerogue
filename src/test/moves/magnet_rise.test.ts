@@ -1,15 +1,13 @@
-import { CommandPhase } from "#app/phases/command-phase";
-import { TurnEndPhase } from "#app/phases/turn-end-phase";
+import { CommandPhase, TurnEndPhase } from "#app/phases.js";
+import GameManager from "#test/utils/gameManager";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
-import GameManager from "#test/utils/gameManager";
 import Phaser from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Moves - Magnet Rise", () => {
   let phaserGame: Phaser.Game;
   let game: GameManager;
-  const moveToUse = Moves.MAGNET_RISE;
 
   beforeAll(() => {
     phaserGame = new Phaser.Game({
@@ -23,22 +21,23 @@ describe("Moves - Magnet Rise", () => {
 
   beforeEach(() => {
     game = new GameManager(phaserGame);
+    const moveToUse = Moves.MAGNET_RISE;
     game.override.battleType("single");
     game.override.starterSpecies(Species.MAGNEZONE);
     game.override.enemySpecies(Species.RATTATA);
-    game.override.enemyMoveset([ Moves.DRILL_RUN, Moves.DRILL_RUN, Moves.DRILL_RUN, Moves.DRILL_RUN ]);
+    game.override.enemyMoveset([Moves.DRILL_RUN, Moves.DRILL_RUN, Moves.DRILL_RUN, Moves.DRILL_RUN]);
     game.override.disableCrits();
     game.override.enemyLevel(1);
-    game.override.moveset([ moveToUse, Moves.SPLASH, Moves.GRAVITY, Moves.BATON_PASS ]);
+    game.override.moveset([moveToUse, Moves.SPLASH, Moves.GRAVITY, Moves.BATON_PASS]);
   });
 
   it("MAGNET RISE", async () => {
     await game.startBattle();
 
-    const startingHp = game.scene.getPlayerParty()[0].hp;
-    game.move.select(moveToUse);
+    const startingHp = game.scene.getParty()[0].hp;
+    game.doAttack(0);
     await game.phaseInterceptor.to(TurnEndPhase);
-    const finalHp = game.scene.getPlayerParty()[0].hp;
+    const finalHp = game.scene.getParty()[0].hp;
     const hpLost = finalHp - startingHp;
     expect(hpLost).toBe(0);
   }, 20000);
@@ -46,15 +45,15 @@ describe("Moves - Magnet Rise", () => {
   it("MAGNET RISE - Gravity", async () => {
     await game.startBattle();
 
-    const startingHp = game.scene.getPlayerParty()[0].hp;
-    game.move.select(moveToUse);
+    const startingHp = game.scene.getParty()[0].hp;
+    game.doAttack(0);
     await game.phaseInterceptor.to(CommandPhase);
-    let finalHp = game.scene.getPlayerParty()[0].hp;
+    let finalHp = game.scene.getParty()[0].hp;
     let hpLost = finalHp - startingHp;
     expect(hpLost).toBe(0);
-    game.move.select(Moves.GRAVITY);
+    game.doAttack(2);
     await game.phaseInterceptor.to(TurnEndPhase);
-    finalHp = game.scene.getPlayerParty()[0].hp;
+    finalHp = game.scene.getParty()[0].hp;
     hpLost = finalHp - startingHp;
     expect(hpLost).not.toBe(0);
   }, 20000);

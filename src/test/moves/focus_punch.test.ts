@@ -1,15 +1,14 @@
-import { BerryPhase } from "#app/phases/berry-phase";
-import { MessagePhase } from "#app/phases/message-phase";
-import { MoveHeaderPhase } from "#app/phases/move-header-phase";
-import { SwitchSummonPhase } from "#app/phases/switch-summon-phase";
-import { TurnStartPhase } from "#app/phases/turn-start-phase";
-import { Abilities } from "#enums/abilities";
-import { Moves } from "#enums/moves";
-import { Species } from "#enums/species";
-import GameManager from "#test/utils/gameManager";
 import Phaser from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import GameManager from "#test/utils/gameManager";
+import { Species } from "#enums/species";
+import { Abilities } from "#enums/abilities";
+import { Moves } from "#enums/moves";
+import { getMovePosition } from "#test/utils/gameManagerUtils";
+import { BerryPhase, MessagePhase, MoveHeaderPhase, SwitchSummonPhase, TurnStartPhase } from "#app/phases";
+import { SPLASH_ONLY } from "#test/utils/testUtils";
 
+const TIMEOUT = 20 * 1000;
 
 describe("Moves - Focus Punch", () => {
   let phaserGame: Phaser.Game;
@@ -30,10 +29,10 @@ describe("Moves - Focus Punch", () => {
     game.override
       .battleType("single")
       .ability(Abilities.UNNERVE)
-      .moveset([ Moves.FOCUS_PUNCH ])
+      .moveset([Moves.FOCUS_PUNCH])
       .enemySpecies(Species.GROUDON)
       .enemyAbility(Abilities.INSOMNIA)
-      .enemyMoveset(Moves.SPLASH)
+      .enemyMoveset(SPLASH_ONLY)
       .startingLevel(100)
       .enemyLevel(100);
   });
@@ -41,14 +40,14 @@ describe("Moves - Focus Punch", () => {
   it(
     "should deal damage at the end of turn if uninterrupted",
     async () => {
-      await game.startBattle([ Species.CHARIZARD ]);
+      await game.startBattle([Species.CHARIZARD]);
 
       const leadPokemon = game.scene.getPlayerPokemon()!;
       const enemyPokemon = game.scene.getEnemyPokemon()!;
 
       const enemyStartingHp = enemyPokemon.hp;
 
-      game.move.select(Moves.FOCUS_PUNCH);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FOCUS_PUNCH));
 
       await game.phaseInterceptor.to(MessagePhase);
 
@@ -59,23 +58,23 @@ describe("Moves - Focus Punch", () => {
 
       expect(enemyPokemon.hp).toBeLessThan(enemyStartingHp);
       expect(leadPokemon.getMoveHistory().length).toBe(1);
-      expect(leadPokemon.turnData.totalDamageDealt).toBe(enemyStartingHp - enemyPokemon.hp);
-    }
+      expect(leadPokemon.turnData.damageDealt).toBe(enemyStartingHp - enemyPokemon.hp);
+    }, TIMEOUT
   );
 
   it(
     "should fail if the user is hit",
     async () => {
-      game.override.enemyMoveset([ Moves.TACKLE ]);
+      game.override.enemyMoveset(Array(4).fill(Moves.TACKLE));
 
-      await game.startBattle([ Species.CHARIZARD ]);
+      await game.startBattle([Species.CHARIZARD]);
 
       const leadPokemon = game.scene.getPlayerPokemon()!;
       const enemyPokemon = game.scene.getEnemyPokemon()!;
 
       const enemyStartingHp = enemyPokemon.hp;
 
-      game.move.select(Moves.FOCUS_PUNCH);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FOCUS_PUNCH));
 
       await game.phaseInterceptor.to(MessagePhase);
 
@@ -86,21 +85,21 @@ describe("Moves - Focus Punch", () => {
 
       expect(enemyPokemon.hp).toBe(enemyStartingHp);
       expect(leadPokemon.getMoveHistory().length).toBe(1);
-      expect(leadPokemon.turnData.totalDamageDealt).toBe(0);
-    }
+      expect(leadPokemon.turnData.damageDealt).toBe(0);
+    }, TIMEOUT
   );
 
   it(
     "should be cancelled if the user falls asleep mid-turn",
     async () => {
-      game.override.enemyMoveset([ Moves.SPORE ]);
+      game.override.enemyMoveset(Array(4).fill(Moves.SPORE));
 
-      await game.startBattle([ Species.CHARIZARD ]);
+      await game.startBattle([Species.CHARIZARD]);
 
       const leadPokemon = game.scene.getPlayerPokemon()!;
       const enemyPokemon = game.scene.getEnemyPokemon()!;
 
-      game.move.select(Moves.FOCUS_PUNCH);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FOCUS_PUNCH));
 
       await game.phaseInterceptor.to(MessagePhase); // Header message
 
@@ -110,7 +109,7 @@ describe("Moves - Focus Punch", () => {
 
       expect(leadPokemon.getMoveHistory().length).toBe(1);
       expect(enemyPokemon.hp).toBe(enemyPokemon.getMaxHp());
-    }
+    }, TIMEOUT
   );
 
   it(
@@ -119,15 +118,15 @@ describe("Moves - Focus Punch", () => {
       /** Guarantee a Trainer battle with multiple enemy Pokemon */
       game.override.startingWave(25);
 
-      await game.startBattle([ Species.CHARIZARD ]);
+      await game.startBattle([Species.CHARIZARD]);
 
-      game.forceEnemyToSwitch();
-      game.move.select(Moves.FOCUS_PUNCH);
+      game.forceOpponentToSwitch();
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FOCUS_PUNCH));
 
       await game.phaseInterceptor.to(TurnStartPhase);
 
       expect(game.scene.getCurrentPhase() instanceof SwitchSummonPhase).toBeTruthy();
       expect(game.scene.phaseQueue.find(phase => phase instanceof MoveHeaderPhase)).toBeDefined();
-    }
+    }, TIMEOUT
   );
 });

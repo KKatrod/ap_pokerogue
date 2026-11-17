@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import MockGraphics from "./mocksContainer/mockGraphics";
 import MockTextureManager from "./mockTextureManager";
 
@@ -15,8 +16,8 @@ export class MockGameObjectCreator {
 
   rexTransitionImagePack() {
     return {
-      transit: () => null,
-      once: () => null,
+      transit: vi.fn(),
+      once: vi.fn(),
     };
   }
 }

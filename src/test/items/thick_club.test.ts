@@ -1,10 +1,10 @@
-import { Stat } from "#enums/stat";
+import { Stat } from "#app/data/pokemon-stat";
 import { SpeciesStatBoosterModifier } from "#app/modifier/modifier";
 import { modifierTypes } from "#app/modifier/modifier-type";
 import i18next from "#app/plugins/i18n";
+import GameManager from "#test/utils/gameManager";
 import * as Utils from "#app/utils";
 import { Species } from "#enums/species";
-import GameManager from "#test/utils/gameManager";
 import Phase from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -35,31 +35,31 @@ describe("Items - Thick Club", () => {
       Species.CUBONE
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
-    // Checking console log to make sure Thick Club is applied when getEffectiveStat (with the appropriate stat) is called
-    partyMember.getEffectiveStat(Stat.DEF);
+    // Checking consoe log to make sure Thick Club is applied when getBattleStat (with the appropriate stat) is called
+    partyMember.getBattleStat(Stat.DEF);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.THICK_CLUB.name"), "");
 
     // Printing dummy console messages along the way so subsequent checks don't pass because of the first
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.SPDEF);
+    partyMember.getBattleStat(Stat.SPDEF);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.THICK_CLUB.name"), "");
 
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.ATK);
+    partyMember.getBattleStat(Stat.ATK);
     expect(consoleSpy).toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.THICK_CLUB.name"), "");
 
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.SPATK);
+    partyMember.getBattleStat(Stat.SPATK);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.THICK_CLUB.name"), "");
 
     console.log("");
 
-    partyMember.getEffectiveStat(Stat.SPD);
+    partyMember.getBattleStat(Stat.SPD);
     expect(consoleSpy).not.toHaveBeenLastCalledWith("Applied", i18next.t("modifierType:SpeciesBoosterItem.THICK_CLUB.name"), "");
   });
 
@@ -68,7 +68,7 @@ describe("Items - Thick Club", () => {
       Species.CUBONE
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
     const atkStat = partyMember.getStat(Stat.ATK);
 
@@ -79,7 +79,7 @@ describe("Items - Thick Club", () => {
     expect(atkValue.value / atkStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "THICK_CLUB" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["THICK_CLUB"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.ATK, atkValue);
 
     expect(atkValue.value / atkStat).toBe(2);
@@ -90,7 +90,7 @@ describe("Items - Thick Club", () => {
       Species.MAROWAK
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
     const atkStat = partyMember.getStat(Stat.ATK);
 
@@ -101,7 +101,7 @@ describe("Items - Thick Club", () => {
     expect(atkValue.value / atkStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "THICK_CLUB" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["THICK_CLUB"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.ATK, atkValue);
 
     expect(atkValue.value / atkStat).toBe(2);
@@ -112,7 +112,7 @@ describe("Items - Thick Club", () => {
       Species.ALOLA_MAROWAK
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
     const atkStat = partyMember.getStat(Stat.ATK);
 
@@ -123,7 +123,7 @@ describe("Items - Thick Club", () => {
     expect(atkValue.value / atkStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "THICK_CLUB" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["THICK_CLUB"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.ATK, atkValue);
 
     expect(atkValue.value / atkStat).toBe(2);
@@ -139,8 +139,8 @@ describe("Items - Thick Club", () => {
       Species.PIKACHU
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
-    const ally = game.scene.getPlayerParty()[1];
+    const partyMember = game.scene.getParty()[0];
+    const ally = game.scene.getParty()[1];
 
     // Fuse party members (taken from PlayerPokemon.fuse(...) function)
     partyMember.fusionSpecies = ally.species;
@@ -160,7 +160,7 @@ describe("Items - Thick Club", () => {
     expect(atkValue.value / atkStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "THICK_CLUB" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["THICK_CLUB"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.ATK, atkValue);
 
     expect(atkValue.value / atkStat).toBe(2);
@@ -176,8 +176,8 @@ describe("Items - Thick Club", () => {
       species[randSpecies]
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
-    const ally = game.scene.getPlayerParty()[1];
+    const partyMember = game.scene.getParty()[0];
+    const ally = game.scene.getParty()[1];
 
     // Fuse party members (taken from PlayerPokemon.fuse(...) function)
     partyMember.fusionSpecies = ally.species;
@@ -197,7 +197,7 @@ describe("Items - Thick Club", () => {
     expect(atkValue.value / atkStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "THICK_CLUB" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["THICK_CLUB"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.ATK, atkValue);
 
     expect(atkValue.value / atkStat).toBe(2);
@@ -208,7 +208,7 @@ describe("Items - Thick Club", () => {
       Species.PIKACHU
     ]);
 
-    const partyMember = game.scene.getPlayerParty()[0];
+    const partyMember = game.scene.getParty()[0];
 
     const atkStat = partyMember.getStat(Stat.ATK);
 
@@ -219,7 +219,7 @@ describe("Items - Thick Club", () => {
     expect(atkValue.value / atkStat).toBe(1);
 
     // Giving Eviolite to party member and testing if it applies
-    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], [ "THICK_CLUB" ])!.newModifier(partyMember), true);
+    partyMember.scene.addModifier(modifierTypes.SPECIES_STAT_BOOSTER().generateType([], ["THICK_CLUB"])!.newModifier(partyMember), true);
     partyMember.scene.applyModifiers(SpeciesStatBoosterModifier, true, partyMember, Stat.ATK, atkValue);
 
     expect(atkValue.value / atkStat).toBe(1);

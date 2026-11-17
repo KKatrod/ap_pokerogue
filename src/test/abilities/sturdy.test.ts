@@ -1,13 +1,14 @@
-import { EnemyPokemon } from "#app/field/pokemon";
-import { DamagePhase } from "#app/phases/damage-phase";
-import { MoveEndPhase } from "#app/phases/move-end-phase";
+import { EnemyPokemon } from "#app/field/pokemon.js";
+import { DamagePhase, MoveEndPhase } from "#app/phases";
+import GameManager from "#test/utils/gameManager";
+import { getMovePosition } from "#test/utils/gameManagerUtils";
 import { Abilities } from "#enums/abilities";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
-import GameManager from "#test/utils/gameManager";
 import Phaser from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, test } from "vitest";
 
+const TIMEOUT = 20 * 1000;
 
 describe("Abilities - Sturdy", () => {
   let phaserGame: Phaser.Game;
@@ -29,7 +30,7 @@ describe("Abilities - Sturdy", () => {
 
     game.override.starterSpecies(Species.LUCARIO);
     game.override.startingLevel(100);
-    game.override.moveset([ Moves.CLOSE_COMBAT, Moves.FISSURE ]);
+    game.override.moveset([Moves.CLOSE_COMBAT, Moves.FISSURE]);
 
     game.override.enemySpecies(Species.ARON);
     game.override.enemyLevel(5);
@@ -40,10 +41,11 @@ describe("Abilities - Sturdy", () => {
     "Sturdy activates when user is at full HP",
     async () => {
       await game.startBattle();
-      game.move.select(Moves.CLOSE_COMBAT);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.CLOSE_COMBAT));
       await game.phaseInterceptor.to(MoveEndPhase);
       expect(game.scene.getEnemyParty()[0].hp).toBe(1);
     },
+    TIMEOUT
   );
 
   test(
@@ -54,24 +56,26 @@ describe("Abilities - Sturdy", () => {
       const enemyPokemon: EnemyPokemon = game.scene.getEnemyParty()[0];
       enemyPokemon.hp = enemyPokemon.getMaxHp() - 1;
 
-      game.move.select(Moves.CLOSE_COMBAT);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.CLOSE_COMBAT));
       await game.phaseInterceptor.to(DamagePhase);
 
       expect(enemyPokemon.hp).toBe(0);
       expect(enemyPokemon.isFainted()).toBe(true);
     },
+    TIMEOUT
   );
 
   test(
     "Sturdy pokemon should be immune to OHKO moves",
     async () => {
       await game.startBattle();
-      game.move.select(Moves.FISSURE);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.FISSURE));
       await game.phaseInterceptor.to(MoveEndPhase);
 
       const enemyPokemon: EnemyPokemon = game.scene.getEnemyParty()[0];
       expect(enemyPokemon.isFullHp()).toBe(true);
     },
+    TIMEOUT
   );
 
   test(
@@ -80,13 +84,14 @@ describe("Abilities - Sturdy", () => {
       game.override.ability(Abilities.MOLD_BREAKER);
 
       await game.startBattle();
-      game.move.select(Moves.CLOSE_COMBAT);
+      game.doAttack(getMovePosition(game.scene, 0, Moves.CLOSE_COMBAT));
       await game.phaseInterceptor.to(DamagePhase);
 
       const enemyPokemon: EnemyPokemon = game.scene.getEnemyParty()[0];
       expect(enemyPokemon.hp).toBe(0);
       expect(enemyPokemon.isFainted()).toBe(true);
     },
+    TIMEOUT
   );
 
 });

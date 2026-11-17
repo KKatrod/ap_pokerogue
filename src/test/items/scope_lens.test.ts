@@ -1,7 +1,11 @@
-import { TurnEndPhase } from "#app/phases/turn-end-phase";
+import { BattlerIndex } from "#app/battle";
+import { CritBoosterModifier } from "#app/modifier/modifier";
+import { modifierTypes } from "#app/modifier/modifier-type";
+import { MoveEffectPhase } from "#app/phases";
+import GameManager from "#test/utils/gameManager";
+import * as Utils from "#app/utils";
 import { Moves } from "#enums/moves";
 import { Species } from "#enums/species";
-import GameManager from "#test/utils/gameManager";
 import Phase from "phaser";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -22,29 +26,47 @@ describe("Items - Scope Lens", () => {
   beforeEach(() => {
     game = new GameManager(phaserGame);
 
-    game.override
-      .enemySpecies(Species.MAGIKARP)
-      .enemyMoveset(Moves.SPLASH)
-      .moveset([ Moves.POUND ])
-      .startingHeldItems([{ name: "SCOPE_LENS" }])
-      .battleType("single")
-      .disableCrits();
+    game.override.enemySpecies(Species.MAGIKARP);
+    game.override.enemyMoveset([ Moves.SPLASH, Moves.SPLASH, Moves.SPLASH, Moves.SPLASH ]);
+    game.override.disableCrits();
 
+    game.override.battleType("single");
   }, 20000);
 
-  it("should raise CRIT stage by 1", async () => {
+  it("SCOPE_LENS activates in battle correctly", async() => {
+    game.override.startingHeldItems([{ name: "SCOPE_LENS" }]);
+    game.override.moveset([ Moves.POUND ]);
+    const consoleSpy = vi.spyOn(console, "log");
     await game.startBattle([
       Species.GASTLY
     ]);
 
-    const enemyPokemon = game.scene.getEnemyPokemon()!;
+    game.doAttack(0);
 
-    vi.spyOn(enemyPokemon, "getCritStage");
+    await game.setTurnOrder([ BattlerIndex.PLAYER, BattlerIndex.ENEMY ]);
 
-    game.move.select(Moves.POUND);
+    await game.phaseInterceptor.to(MoveEffectPhase);
 
-    await game.phaseInterceptor.to(TurnEndPhase);
+    expect(consoleSpy).toHaveBeenCalledWith("Applied", "Scope Lens", "");
+  }, 20000);
 
-    expect(enemyPokemon.getCritStage).toHaveReturnedWith(1);
+  it("SCOPE_LENS held by random pokemon", async() => {
+    await game.startBattle([
+      Species.GASTLY
+    ]);
+
+    const partyMember = game.scene.getPlayerPokemon()!;
+
+    // Making sure modifier is not applied without holding item
+    const critLevel = new Utils.IntegerHolder(0);
+    partyMember.scene.applyModifiers(CritBoosterModifier, true, partyMember, critLevel);
+
+    expect(critLevel.value).toBe(0);
+
+    // Giving Scope Lens to party member and testing if it applies
+    partyMember.scene.addModifier(modifierTypes.SCOPE_LENS().newModifier(partyMember), true);
+    partyMember.scene.applyModifiers(CritBoosterModifier, true, partyMember, critLevel);
+
+    expect(critLevel.value).toBe(1);
   }, 20000);
 });
