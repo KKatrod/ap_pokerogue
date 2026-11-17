@@ -1,5 +1,6 @@
 import { pokerogueApi } from "#api/api";
 import { clientSessionId } from "#app/account";
+import { archipelago } from "#app/archipelago/archipelago";
 import { audioManager } from "#app/global-audio-manager";
 import { globalScene } from "#app/global-scene";
 import { settings } from "#app/global-settings-manager";
@@ -53,6 +54,10 @@ export class GameOverPhase extends BattlePhase {
     // Failsafe if players somehow skip floor 200 in classic mode
     if (globalScene.gameMode.isClassic && globalScene.currentBattle.waveIndex > 200) {
       this.isVictory = true;
+    }
+
+    if (this.isVictory && globalScene.gameMode.isArchipelago) {
+      archipelago.sendGoal();
     }
 
     // Handle Mystery Encounter special Game Over cases

@@ -1,3 +1,4 @@
+import { archipelago } from "#app/archipelago/archipelago";
 import { audioManager } from "#app/global-audio-manager";
 import { globalScene } from "#app/global-scene";
 import { speciesDataRegistry } from "#app/global-species-data-registry";
@@ -108,6 +109,11 @@ export class SelectStarterPhase extends Phase {
     });
     overrideModifiers();
     overrideHeldItems(party[0]);
+    if (globalScene.gameMode.isArchipelago) {
+      // Permanent Archipelago bonus items received so far are given at the start of every run
+      archipelago.startNewRun();
+      archipelago.grantRunStartBonuses();
+    }
     Promise.all(loadPokemonAssets).then(() => {
       audioManager.playBgm(undefined, true);
       if (globalScene.gameMode.isClassic) {

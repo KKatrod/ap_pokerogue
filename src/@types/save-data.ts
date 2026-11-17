@@ -1,3 +1,4 @@
+import type { ApSessionState } from "#app/archipelago/ap-hooks";
 import type { PokeballCounts } from "#app/battle-scene";
 import type { Tutorial } from "#app/tutorial";
 import type { BattleType } from "#enums/battle-type";
@@ -42,6 +43,8 @@ export interface SystemSaveData {
 }
 
 export interface SessionSaveData {
+  /** Archipelago run state, only present for Archipelago runs */
+  archipelago?: ApSessionState;
   seed: string;
   playTime: number;
   gameMode: GameModes;

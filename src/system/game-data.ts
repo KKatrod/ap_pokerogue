@@ -1,5 +1,6 @@
 import { pokerogueApi } from "#api/api";
 import { clientSessionId, getSessionDataLocalStorageKey, loggedInUser, updateUserInfo } from "#app/account";
+import { apHooks } from "#app/archipelago/ap-hooks";
 import { defaultStarterSpecies, saveKey } from "#app/constants";
 import { getGameMode } from "#app/game-mode";
 import { audioManager } from "#app/global-audio-manager";
@@ -113,6 +114,9 @@ export class GameData {
 
   public appliedMigrators: AppliedMigrators = {};
 
+  /** Classic dex/starter data kept aside while an Archipelago profile is swapped in */
+  private archipelagoBackup: { dexData: DexData; starterData: StarterData; onSave: () => void } | null = null;
+
   /**
    * @param fromRaw - (Default `false`) Whether to skip initialization of fields that are normally
    * randomized on new game start. Used for the admin panel.
@@ -150,14 +154,86 @@ export class GameData {
     this.initStarterData();
   }
 
+  /**
+   * Swaps an Archipelago profile's Pokédex and starter data in place of the Classic ones.
+   * While swapped, system saves keep writing the Classic data and call `onSave` to persist the profile.
+   */
+  public swapInArchipelagoProfile(dexData: DexData, starterData: StarterData, onSave: () => void): void {
+    if (this.archipelagoBackup) {
+      this.archipelagoBackup.onSave = onSave;
+    } else {
+      this.archipelagoBackup = { dexData: this.dexData, starterData: this.starterData, onSave };
+    }
+    this.dexData = dexData;
+    this.starterData = starterData;
+  }
+
+  /** Restores the Classic Pokédex and starter data */
+  public swapOutArchipelagoProfile(): void {
+    if (this.archipelagoBackup) {
+      this.archipelagoBackup.onSave();
+      this.dexData = this.archipelagoBackup.dexData;
+      this.starterData = this.archipelagoBackup.starterData;
+      this.archipelagoBackup = null;
+    }
+  }
+
+  public get isArchipelagoProfileActive(): boolean {
+    return this.archipelagoBackup != null;
+  }
+
+  /** Creates a Pokédex and starter data set where nothing is caught (used by Archipelago profiles) */
+  public createArchipelagoProfileData(): { dexData: DexData; starterData: StarterData } {
+    const dexData: DexData = {};
+    const starterData: StarterData = {};
+    this.completeArchipelagoProfileData(dexData, starterData);
+    return { dexData, starterData };
+  }
+
+  /** Adds the entries missing from an Archipelago profile (species added by a game update) */
+  public completeArchipelagoProfileData(dexData: DexData, starterData: StarterData): void {
+    for (const species of speciesDataRegistry.getAllSpecies()) {
+      dexData[species.speciesId] ??= {
+        seenAttr: 0n,
+        caughtAttr: 0n,
+        natureAttr: 0,
+        seenCount: 0,
+        caughtCount: 0,
+        hatchedCount: 0,
+        ivs: [0, 0, 0, 0, 0, 0],
+        ribbons: new RibbonData(0),
+      };
+      const entry = dexData[species.speciesId];
+      // Profiles are stored as JSON: ribbons come back as their hexadecimal string form
+      if (!(entry.ribbons instanceof RibbonData)) {
+        const raw = entry.ribbons as unknown;
+        entry.ribbons = typeof raw === "string" ? RibbonData.fromJSON(raw) : new RibbonData((raw as number) ?? 0);
+      }
+    }
+    for (const speciesId of speciesDataRegistry.getAllStarters()) {
+      starterData[speciesId] ??= {
+        moveset: null,
+        eggMoves: 0,
+        candyCount: 0,
+        friendship: 0,
+        abilityAttr: 0,
+        passiveAttr: 0,
+        valueReduction: 0,
+        classicWinCount: 0,
+        pity: [0, 0],
+      };
+    }
+  }
+
   public getSystemSaveData(): SystemSaveData {
+    this.archipelagoBackup?.onSave();
     return {
       trainerId: this.trainerId,
       secretId: this.secretId,
       // TODO: save some settings (such as player gender) separately, outside of system data
       gender: settings.general.playerGender,
-      dexData: this.dexData,
-      starterData: this.starterData,
+      dexData: this.archipelagoBackup?.dexData ?? this.dexData,
+      starterData: this.archipelagoBackup?.starterData ?? this.starterData,
       gameStats: this.gameStats,
       unlocks: this.unlocks,
       achvUnlocks: this.achvUnlocks,
@@ -782,6 +858,7 @@ export class GameData {
       mysteryEncounterType: globalScene.currentBattle.mysteryEncounter?.encounterType ?? -1,
       mysteryEncounterSaveData: globalScene.mysteryEncounterSaveData,
       playerFaints: globalScene.arena.playerFaints,
+      archipelago: globalScene.gameMode.isArchipelago ? apHooks.getSessionState() : undefined,
     } as SessionSaveData;
   }
 
@@ -885,6 +962,10 @@ export class GameData {
     globalScene.gameMode = getGameMode(fromSession.gameMode || GameModes.CLASSIC);
     if (fromSession.challenges) {
       globalScene.gameMode.challenges = fromSession.challenges.map(c => c.toChallenge());
+    }
+    if (fromSession.archipelago) {
+      globalScene.gameMode.isArchipelago = true;
+      apHooks.restoreSessionState(fromSession.archipelago);
     }
 
     globalScene.setSeed(fromSession.seed || globalScene.game.config.seed[0]);
@@ -1634,6 +1715,18 @@ export class GameData {
     fromEgg = false,
     showMessage = true,
   ): Promise<boolean> {
+    if (this.archipelagoBackup) {
+      // Archipelago: starters are only unlocked by items received from the multiworld
+      const apEntry = this.dexData[species.speciesId];
+      if (apEntry && incrementCount) {
+        if (fromEgg) {
+          apEntry.hatchedCount++;
+        } else {
+          apEntry.caughtCount++;
+        }
+      }
+      return false;
+    }
     const dexEntry = this.dexData[species.speciesId];
     const caughtAttr = dexEntry.caughtAttr;
     const formIndex = pokemon.formIndex;

@@ -36,6 +36,8 @@ interface GameModeConfig {
   isSplicedOnly?: boolean;
   isChallenge?: boolean;
   hasMysteryEncounters?: boolean;
+  /** Archipelago multiworld run: a Classic run with its own unlocks and multiworld items */
+  isArchipelago?: boolean;
 }
 
 export class GameMode implements GameModeConfig {
@@ -51,6 +53,8 @@ export class GameMode implements GameModeConfig {
   public hasRandomBosses: boolean;
   public isSplicedOnly: boolean;
   public isChallenge: boolean;
+  /** Archipelago multiworld run: a Classic run with its own unlocks and multiworld items */
+  public isArchipelago = false;
   public challenges: Challenge[];
   public battleConfig: FixedBattleConfigs;
   public hasMysteryEncounters: boolean;
@@ -410,6 +414,9 @@ export class GameMode implements GameModeConfig {
   }
 
   getName(): string {
+    if (this.isArchipelago) {
+      return "Archipelago";
+    }
     switch (this.modeId) {
       case GameModes.CLASSIC:
         return i18next.t("gameMode:classic");
