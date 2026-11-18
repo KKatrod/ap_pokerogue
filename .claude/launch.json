@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start:dev"],
       "port": 8000
+    },
+    {
+      "name": "pokerogue-1.12-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "../pokerogue-1.12", "run", "start:dev", "--", "--port", "8010", "--strictPort"],
+      "port": 8010
     }
   ]
 }
