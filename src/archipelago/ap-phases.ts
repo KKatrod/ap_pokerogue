@@ -15,7 +15,7 @@ import {
 } from "#modifiers/modifier-type";
 import { PartyOption } from "#ui/party-ui-handler";
 import { apText } from "./ap-messages";
-import { type ApPendingDelivery, archipelago } from "./archipelago";
+import { ApItemCategory, type ApPendingDelivery, archipelago } from "./archipelago";
 
 /**
  * Blocks the progression past a floor multiple of 10 until enough "Progressive Floor Pass" items were received.
@@ -111,6 +111,21 @@ export class ArchipelagoReceivePhase extends Phase {
       return;
     }
 
+    if (delivery.def.category === ApItemCategory.EGG) {
+      archipelago.markDelivered(delivery);
+      const added = archipelago.addEgg(delivery.def);
+      const message = archipelago.getReceivedMessage(delivery.item, delivery.def);
+      audioManager.playSound(added ? "se/item_fanfare" : "se/error");
+      globalScene.ui.showText(
+        `${message}\n${apText(added ? "eggReceived" : "eggListFull")}`,
+        null,
+        () => this.deliverNext(),
+        null,
+        true,
+      );
+      return;
+    }
+
     const type = archipelago.resolveModifierType(delivery.def);
     if (!type || type instanceof FusePokemonModifierType) {
       // Unknown or unsupported item for this game version: drop it instead of blocking the queue
@@ -122,10 +137,12 @@ export class ArchipelagoReceivePhase extends Phase {
     const message = archipelago.getReceivedMessage(delivery.item, delivery.def);
 
     if (type instanceof PokemonModifierType) {
+      // An item is offered only once: it is consumed even if the player declines it or no Pokémon can use it
+      archipelago.markDelivered(delivery);
       globalScene.ui.showText(
         `${message}\n${apText("chooseTarget", { item: type.name })}`,
         null,
-        () => this.selectTarget(delivery, type),
+        () => this.selectTarget(type),
         null,
         true,
       );
@@ -139,7 +156,7 @@ export class ArchipelagoReceivePhase extends Phase {
   }
 
   /** Same party selection flow as buying a targeted item in the shop */
-  private selectTarget(delivery: ApPendingDelivery, modifierType: ModifierType): void {
+  private selectTarget(modifierType: ModifierType): void {
     const party = globalScene.getPlayerParty();
     const pokemonModifierType = modifierType as PokemonModifierType;
     const isMoveModifier = modifierType instanceof PokemonMoveModifierType;
@@ -168,13 +185,12 @@ export class ArchipelagoReceivePhase extends Phase {
               : isRememberMoveModifier
                 ? modifierType.newModifier(party[slotIndex], option as number)
                 : modifierType.newModifier(party[slotIndex]);
-            if (globalScene.addModifier(modifier, false, true)) {
-              archipelago.markDelivered(delivery);
-            }
+            // NB: addModifier() returns false for held items even when they are added, so its result is not used
+            globalScene.addModifier(modifier, false, true);
             this.deliverNext();
           });
         } else {
-          // Cancelled: the item stays pending and will be offered again after the next floor
+          // Declined: the item was offered once and is not offered again
           globalScene.ui.setMode(UiMode.MESSAGE).then(() => this.deliverNext());
         }
       },

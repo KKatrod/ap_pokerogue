@@ -75,6 +75,11 @@ ITEMS = [
     ("Map", 8571317, "bonus", "useful"),
     ("Golden Poke Ball", 8571318, "bonus", "useful"),
     ("Coin Case", 8571319, "bonus", "useful"),
+    ("Common Egg", 8571400, "egg", "filler"),
+    ("Rare Egg", 8571401, "egg", "filler"),
+    ("Epic Egg", 8571402, "egg", "filler"),
+    ("Legendary Egg", 8571403, "egg", "useful"),
+    ("Mystery Egg", 8571404, "egg", "filler"),
 ]
 
 # (name, id, starter cost)

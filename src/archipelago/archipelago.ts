@@ -1,7 +1,10 @@
 import { globalScene } from "#app/global-scene";
 import { speciesDataRegistry } from "#app/global-species-data-registry";
+import { Egg } from "#data/egg";
 import { AbilityAttr } from "#enums/ability-attr";
 import { DexAttr } from "#enums/dex-attr";
+import { EggSourceType } from "#enums/egg-source-types";
+import { EggTier } from "#enums/egg-type";
 import { ModifierTier } from "#enums/modifier-tier";
 import { Nature } from "#enums/nature";
 import { SpeciesId } from "#enums/species-id";
@@ -12,6 +15,7 @@ import {
   ModifierTypeGenerator,
   ModifierTypeOption,
 } from "#modifiers/modifier-type";
+import { EggData } from "#system/egg-data";
 import type { DexData } from "#types/dex-data";
 import type { StarterData } from "#types/save-data";
 import { ArchipelagoClient, ClientStatus, type ConnectedPacket, ItemFlags, type NetworkItem } from "./ap-client";
@@ -35,7 +39,20 @@ export enum ApItemCategory {
   HELD = "held",
   BONUS = "bonus",
   POKEMON = "pokemon",
+  EGG = "egg",
 }
+
+/** Egg tier given by each Archipelago egg item (`undefined`: rolled like a gacha pull) */
+const EGG_ITEM_TIERS: Record<string, EggTier | undefined> = {
+  EGG_COMMON: EggTier.COMMON,
+  EGG_RARE: EggTier.RARE,
+  EGG_EPIC: EggTier.EPIC,
+  EGG_LEGENDARY: EggTier.LEGENDARY,
+  EGG_MYSTERY: undefined,
+};
+
+/** Maximum number of eggs a profile can hold (same limit as the game) */
+const MAX_EGGS = 99;
 
 export interface ApItemDef {
   id: number;
@@ -114,6 +131,8 @@ interface ApProfile {
   /** Locations checked locally, re-sent on every (re)connection */
   checkedLocations: number[];
   goalReached: boolean;
+  /** Eggs of the Archipelago profile: they hatch during Archipelago runs */
+  eggs?: Egg[];
 }
 
 interface ApLastConnection {
@@ -362,6 +381,7 @@ export class ArchipelagoManager {
       if (raw) {
         const profile = JSON.parse(raw, bigintReviver) as ApProfile;
         globalScene.gameData.completeArchipelagoProfileData(profile.dexData, profile.starterData);
+        profile.eggs = (profile.eggs ?? []).map(e => new EggData(e).toEgg());
         return profile;
       }
     } catch (err) {
@@ -378,6 +398,7 @@ export class ArchipelagoManager {
       announced: 0,
       checkedLocations: [],
       goalReached: false,
+      eggs: [],
     };
   }
 
@@ -386,9 +407,10 @@ export class ArchipelagoManager {
       return;
     }
     try {
+      const serialized = { ...this.profile, eggs: (this.profile.eggs ?? []).map(e => new EggData(e)) };
       localStorage.setItem(
         this.getProfileKey(this.profile.seedName, this.profile.slotName),
-        JSON.stringify(this.profile, bigintReplacer),
+        JSON.stringify(serialized, bigintReplacer),
       );
     } catch (err) {
       console.error("[AP] Failed to save profile", err);
@@ -402,8 +424,12 @@ export class ArchipelagoManager {
     }
     ensureArchipelagoIconTexture();
     this.active = true;
-    globalScene.gameData.swapInArchipelagoProfile(this.profile.dexData, this.profile.starterData, () =>
-      this.saveProfile(),
+    this.profile.eggs ??= [];
+    globalScene.gameData.swapInArchipelagoProfile(
+      this.profile.dexData,
+      this.profile.starterData,
+      this.profile.eggs,
+      () => this.saveProfile(),
     );
   }
 
@@ -555,7 +581,10 @@ export class ArchipelagoManager {
       if (!def) {
         return;
       }
-      const isOneShot = def.category === ApItemCategory.CONSUMABLE || def.category === ApItemCategory.HELD;
+      const isOneShot =
+        def.category === ApItemCategory.CONSUMABLE
+        || def.category === ApItemCategory.HELD
+        || def.category === ApItemCategory.EGG;
       if (
         (isOneShot && !oneShot.has(index))
         || (def.category === ApItemCategory.BONUS && !this.runBonusDelivered.has(index))
@@ -606,6 +635,28 @@ export class ArchipelagoManager {
       return apText("receivedOwn", { item: itemName });
     }
     return apText("received", { item: itemName, player: this.client.getPlayerName(item.player) });
+  }
+
+  /**
+   * Adds the egg matching an Archipelago egg item to the Archipelago profile.
+   * @returns `false` if the profile already holds the maximum number of eggs
+   */
+  addEgg(def: ApItemDef): boolean {
+    const eggs = globalScene.gameData.eggs;
+    if (eggs.length >= MAX_EGGS) {
+      return false;
+    }
+    const tier = EGG_ITEM_TIERS[def.key];
+    // Without a tier (Mystery Egg), the tier is rolled like a gacha pull
+    eggs.push(
+      new Egg({
+        ...(tier === undefined ? {} : { tier }),
+        sourceType: EggSourceType.EVENT,
+        eggDescriptor: "Archipelago",
+      }),
+    );
+    this.saveProfile();
+    return true;
   }
 
   /** Builds the PokeRogue modifier type matching an Archipelago item */

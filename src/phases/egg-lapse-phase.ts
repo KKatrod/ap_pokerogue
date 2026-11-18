@@ -25,12 +25,6 @@ export class EggLapsePhase extends Phase {
   start() {
     super.start();
 
-    // Eggs belong to the Classic save: they do not progress during Archipelago runs
-    if (globalScene.gameMode.isArchipelago) {
-      this.end();
-      return;
-    }
-
     const eggsToHatch: Egg[] = globalScene.gameData.eggs.filter((egg: Egg) => {
       return activeOverrides.EGG_IMMEDIATE_HATCH_OVERRIDE ? true : --egg.hatchWaves < 1;
     });

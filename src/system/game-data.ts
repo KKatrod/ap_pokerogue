@@ -115,7 +115,12 @@ export class GameData {
   public appliedMigrators: AppliedMigrators = {};
 
   /** Classic dex/starter data kept aside while an Archipelago profile is swapped in */
-  private archipelagoBackup: { dexData: DexData; starterData: StarterData; onSave: () => void } | null = null;
+  private archipelagoBackup: {
+    dexData: DexData;
+    starterData: StarterData;
+    eggs: Egg[];
+    onSave: () => void;
+  } | null = null;
 
   /**
    * @param fromRaw - (Default `false`) Whether to skip initialization of fields that are normally
@@ -158,14 +163,15 @@ export class GameData {
    * Swaps an Archipelago profile's Pokédex and starter data in place of the Classic ones.
    * While swapped, system saves keep writing the Classic data and call `onSave` to persist the profile.
    */
-  public swapInArchipelagoProfile(dexData: DexData, starterData: StarterData, onSave: () => void): void {
+  public swapInArchipelagoProfile(dexData: DexData, starterData: StarterData, eggs: Egg[], onSave: () => void): void {
     if (this.archipelagoBackup) {
       this.archipelagoBackup.onSave = onSave;
     } else {
-      this.archipelagoBackup = { dexData: this.dexData, starterData: this.starterData, onSave };
+      this.archipelagoBackup = { dexData: this.dexData, starterData: this.starterData, eggs: this.eggs, onSave };
     }
     this.dexData = dexData;
     this.starterData = starterData;
+    this.eggs = eggs;
   }
 
   /** Restores the Classic Pokédex and starter data */
@@ -174,6 +180,7 @@ export class GameData {
       this.archipelagoBackup.onSave();
       this.dexData = this.archipelagoBackup.dexData;
       this.starterData = this.archipelagoBackup.starterData;
+      this.eggs = this.archipelagoBackup.eggs;
       this.archipelagoBackup = null;
     }
   }
@@ -239,7 +246,7 @@ export class GameData {
       achvUnlocks: this.achvUnlocks,
       voucherUnlocks: this.voucherUnlocks,
       voucherCounts: this.voucherCounts,
-      eggs: this.eggs.map(e => new EggData(e)),
+      eggs: (this.archipelagoBackup?.eggs ?? this.eggs).map(e => new EggData(e)),
       gameVersion: globalScene.game.config.gameVersion,
       timestamp: Date.now(),
       eggPity: this.eggPity.slice(0),
@@ -1715,8 +1722,9 @@ export class GameData {
     fromEgg = false,
     showMessage = true,
   ): Promise<boolean> {
-    if (this.archipelagoBackup) {
+    if (this.archipelagoBackup && !fromEgg) {
       // Archipelago: starters are only unlocked by items received from the multiworld
+      // (or by hatching the eggs of the Archipelago profile)
       const apEntry = this.dexData[species.speciesId];
       if (apEntry && incrementCount) {
         if (fromEgg) {

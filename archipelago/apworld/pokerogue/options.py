@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import PerGameCommonOptions, Range
+from Options import DefaultOnToggle, PerGameCommonOptions, Range
 
 
 class ShopItemCount(Range):
@@ -35,6 +35,28 @@ class StartingPokemon(Range):
     default = 3
 
 
+class StartingPokemonMaxCost(Range):
+    """Maximum starter cost of the starting Pokemon (legendaries cost 7 to 10).
+    At least one starting Pokemon costs 5 or more (or this maximum if it is lower)."""
+    display_name = "Starting Pokemon Max Cost"
+    range_start = 1
+    range_end = 10
+    default = 6
+
+
+class StartWithMap(DefaultOnToggle):
+    """Start every run with a Map (lets you choose the next biome)."""
+    display_name = "Start With Map"
+
+
+class EggFillerPercent(Range):
+    """Percentage of the filler items that are eggs (hatched during Archipelago runs) instead of consumables."""
+    display_name = "Egg Filler Percent"
+    range_start = 0
+    range_end = 100
+    default = 25
+
+
 class PokemonInPool(Range):
     """Number of starter Pokemon unlocks shuffled into the multiworld."""
     display_name = "Pokemon In Pool"
@@ -49,4 +71,7 @@ class PokeRogueOptions(PerGameCommonOptions):
     shop_items_per_visit: ShopItemsPerVisit
     shop_cost_percent: ShopCostPercent
     starting_pokemon: StartingPokemon
+    starting_pokemon_max_cost: StartingPokemonMaxCost
+    start_with_map: StartWithMap
     pokemon_in_pool: PokemonInPool
+    egg_filler_percent: EggFillerPercent

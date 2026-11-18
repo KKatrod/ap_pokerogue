@@ -27,13 +27,15 @@ pnpm start:dev
 | **Déblocages séparés** | En mode Archipelago, le Pokédex et les données de starters sont ceux d'un **profil AP** (un par seed + slot), stocké dans `localStorage` (`ap_profile_<seed>_<slot>`). Le Pokédex Classique n'est ni lu ni modifié. Les captures en run ne débloquent pas de starter : seuls les objets AP le font. |
 | **Locations envoyées** | Chaque étage terminé (1 à 199) → `Floor N Cleared`. Chaque objet AP acheté en boutique → `Shop Item N`. Battre l'étage 200 → objectif (`CLIENT_GOAL`). |
 | **Passe d'étage** | `Progressive Floor Pass` (×19). Pour dépasser l'étage 10·k il faut k passes. Sans passe, le jeu attend sur un écran « Étage verrouillé » jusqu'à réception. |
-| **Pokémon** | `Pokemon - <Nom>` débloque ce starter dans le profil AP (tous les starters de PokeRogue, dont Pikachu). N starters de départ sont donnés en inventaire initial. |
-| **Consommables** (potions, rappels, éthers, Super Bonbons, Poké Balls, Parfums, pépites…) | Donnés **une seule fois**, entre deux étages. Si l'objet cible un Pokémon, l'écran d'équipe s'ouvre ; annuler le reporte à l'étage suivant. |
-| **Objets tenus** (Restes, Œuf Chance, Vive Griffe…) | Une seule fois, sur le Pokémon choisi. |
+| **Pokémon** | `Pokemon - <Nom>` débloque ce starter dans le profil AP (tous les starters de PokeRogue, dont Pikachu). N starters de départ sont donnés en inventaire initial : aucun au-dessus de `starting_pokemon_max_cost`, et au moins un de coût ≥ 5. |
+| **Consommables** (potions, rappels, éthers, Super Bonbons, Poké Balls, Parfums, pépites…) | Proposés **une seule fois**, entre deux étages. Si l'objet cible un Pokémon, l'écran d'équipe s'ouvre ; refuser ou ne pas pouvoir l'utiliser le fait perdre. |
+| **Objets tenus** (Restes, Œuf Chance, Vive Griffe…) | Proposés une seule fois, sur le Pokémon choisi. |
+| **Œufs** (fillers : Common/Rare/Epic/Legendary Egg, Mystery Egg = palier tiré comme au gacha) | Ajoutés aux **œufs du profil Archipelago** (max. 99) ; ils éclosent pendant les parties AP et débloquent le Pokémon dans le profil AP. Les œufs Classiques ne sont pas touchés. |
+| **Carte** | Donnée au début de chaque partie AP (option `start_with_map`, activée par défaut). |
 | **Objets bonus** (Multi Exp, Charmes, Pièce Rune, Bracelet Méga…) | **Permanents** : redonnés au début de chaque nouvelle run AP. |
 | **Boutique** | `shop_item_count` objets AP au total, `shop_items_per_visit` maximum par boutique, prix = `shop_cost_percent` % de l'argent d'une vague. L'objet affiche le nom et le destinataire (scout). |
 
-Les œufs du profil Classique ne progressent pas pendant une run Archipelago.
+Pendant une partie Archipelago, ce sont les œufs du profil AP qui progressent ; les œufs Classiques restent en pause.
 
 ## Côté joueur
 
@@ -47,7 +49,7 @@ La connexion se reconnecte automatiquement ; les locations faites hors-ligne son
 
 `archipelago/apworld/pokerogue/` est le monde Archipelago (Python). Pour l'utiliser : zipper le dossier `pokerogue` en `pokerogue.apworld` et le placer dans `custom_worlds/` (ou `lib/worlds/`) d'Archipelago.
 
-Options YAML : `shop_item_count` (0–150, 30), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10, 3), `pokemon_in_pool` (0–300, 40).
+Options YAML : `shop_item_count` (0–150, 30), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10, 3), `starting_pokemon_max_cost` (1–10, 6), `start_with_map` (true/false, true), `pokemon_in_pool` (0–300, 40), `egg_filler_percent` (0–100, 25).
 
 ```yaml
 game: PokeRogue
@@ -56,7 +58,10 @@ PokeRogue:
   shop_item_count: 30
   shop_items_per_visit: 1
   starting_pokemon: 3
+  starting_pokemon_max_cost: 6
+  start_with_map: true
   pokemon_in_pool: 40
+  egg_filler_percent: 25
 ```
 
 ## Données partagées

@@ -20,6 +20,19 @@ from .options import PokeRogueOptions
 
 FLOOR_PASS = "Progressive Floor Pass"
 VICTORY = "Victory"
+MAP = "Map"
+
+# Starting Pokemon: at least one costs this much (to avoid a too weak starting team)
+STRONG_STARTER_MIN_COST = 5
+
+# Relative weights of the egg fillers
+EGG_WEIGHTS = {
+    "Common Egg": 40,
+    "Rare Egg": 30,
+    "Epic Egg": 15,
+    "Legendary Egg": 5,
+    "Mystery Egg": 10,
+}
 
 CLASSIFICATIONS = {
     "progression": ItemClassification.progression,
@@ -83,6 +96,7 @@ class PokeRogueWorld(World):
         "Consumables": {name for name, _id, cat, _cls in ITEMS if cat == "consumable"},
         "Held Items": {name for name, _id, cat, _cls in ITEMS if cat == "held"},
         "Bonus Items": {name for name, _id, cat, _cls in ITEMS if cat == "bonus"},
+        "Eggs": {name for name, _id, cat, _cls in ITEMS if cat == "egg"},
     }
 
     def get_shop_item_count(self) -> int:
@@ -98,8 +112,23 @@ class PokeRogueWorld(World):
         return PokeRogueItem(name, classification, self.item_name_to_id[name], self.player)
 
     def get_filler_item_name(self) -> str:
+        if self.random.randint(1, 100) <= self.options.egg_filler_percent.value:
+            return self.random.choices(list(EGG_WEIGHTS), weights=list(EGG_WEIGHTS.values()))[0]
         fillers = [name for name, _id, cat, cls in ITEMS if cat == "consumable" and cls == "filler"]
         return self.random.choice(fillers)
+
+    def pick_starting_pokemon(self) -> List[str]:
+        """Random starting Pokemon: none above the maximum cost, at least one strong one."""
+        count = self.options.starting_pokemon.value
+        max_cost = self.options.starting_pokemon_max_cost.value
+        strong_cost = min(STRONG_STARTER_MIN_COST, max_cost)
+        allowed = [(name, cost) for name, _id, cost in POKEMON if cost <= max_cost]
+        strong = [name for name, cost in allowed if cost >= strong_cost]
+        chosen = [self.random.choice(strong)]
+        others = [name for name, _cost in allowed if name not in chosen]
+        chosen += self.random.sample(others, min(count - 1, len(others)))
+        self.random.shuffle(chosen)
+        return chosen
 
     def create_regions(self) -> None:
         menu = Region("Menu", self.player, self.multiworld)
@@ -141,24 +170,29 @@ class PokeRogueWorld(World):
         pool += [self.create_item(FLOOR_PASS) for _ in range(FINAL_WAVE // GATE_INTERVAL - 1)]
 
         # Pokemon: a few to start with, some more shuffled in the multiworld
-        pokemon = [name for name, _id, _cost in POKEMON]
-        self.random.shuffle(pokemon)
-        starting = pokemon[:self.options.starting_pokemon.value]
+        starting = self.pick_starting_pokemon()
         for name in starting:
             self.multiworld.push_precollected(self.create_item(name))
-        remaining = pokemon[len(starting):]
+        remaining = [name for name, _id, _cost in POKEMON if name not in starting]
+        self.random.shuffle(remaining)
         pokemon_count = min(self.options.pokemon_in_pool.value, len(remaining), max(0, location_count - len(pool)))
         pool += [self.create_item(name) for name in remaining[:pokemon_count]]
 
+        # Map given from the start (permanent bonus item: the game grants it at the start of every run)
+        start_with_map = bool(self.options.start_with_map.value)
+        if start_with_map:
+            self.multiworld.push_precollected(self.create_item(MAP))
+
         # Bonus and held items once each, while there is room
         for name, _id, category, _cls in ITEMS:
+            if name == MAP and start_with_map:
+                continue
             if category in ("bonus", "held") and len(pool) < location_count:
                 pool.append(self.create_item(name))
 
-        # Fill the remaining locations with consumables
-        consumables = [name for name, _id, cat, _cls in ITEMS if cat == "consumable"]
+        # Fill the remaining locations with consumables and eggs
         while len(pool) < location_count:
-            pool.append(self.create_item(self.random.choice(consumables)))
+            pool.append(self.create_item(self.get_filler_item_name()))
 
         self.multiworld.itempool += pool
 

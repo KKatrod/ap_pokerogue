@@ -35,6 +35,8 @@ const messages = {
     shopItemDescUnknown: "An item from the Archipelago multiworld.",
     shopItemBought: "Sent {{item}} to {{player}}!",
     shopItemSold: "SOLD",
+    eggReceived: "The egg was added to your Archipelago egg list. It hatches during Archipelago runs.",
+    eggListFull: "Your Archipelago egg list is full: the egg was lost.",
     goalComplete: "Archipelago goal complete!",
   },
   fr: {
@@ -67,6 +69,8 @@ const messages = {
     shopItemDescUnknown: "Un objet du multiworld Archipelago.",
     shopItemBought: "{{item}} envoyé à {{player}} !",
     shopItemSold: "VENDU",
+    eggReceived: "L'œuf a été ajouté à vos œufs Archipelago. Il éclora pendant les parties Archipelago.",
+    eggListFull: "Votre liste d'œufs Archipelago est pleine : l'œuf est perdu.",
     goalComplete: "Objectif Archipelago accompli !",
   },
 };

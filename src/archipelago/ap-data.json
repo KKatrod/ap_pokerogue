@@ -15,8 +15,13 @@
       "category": "gate",
       "classification": "progression"
     },
-
-    { "offset": 100, "key": "POTION", "name": "Potion", "category": "consumable", "classification": "filler" },
+    {
+      "offset": 100,
+      "key": "POTION",
+      "name": "Potion",
+      "category": "consumable",
+      "classification": "filler"
+    },
     {
       "offset": 101,
       "key": "SUPER_POTION",
@@ -31,7 +36,13 @@
       "category": "consumable",
       "classification": "filler"
     },
-    { "offset": 103, "key": "MAX_POTION", "name": "Max Potion", "category": "consumable", "classification": "filler" },
+    {
+      "offset": 103,
+      "key": "MAX_POTION",
+      "name": "Max Potion",
+      "category": "consumable",
+      "classification": "filler"
+    },
     {
       "offset": 104,
       "key": "FULL_RESTORE",
@@ -39,17 +50,83 @@
       "category": "consumable",
       "classification": "filler"
     },
-    { "offset": 105, "key": "REVIVE", "name": "Revive", "category": "consumable", "classification": "filler" },
-    { "offset": 106, "key": "MAX_REVIVE", "name": "Max Revive", "category": "consumable", "classification": "filler" },
-    { "offset": 107, "key": "FULL_HEAL", "name": "Full Heal", "category": "consumable", "classification": "filler" },
-    { "offset": 108, "key": "SACRED_ASH", "name": "Sacred Ash", "category": "consumable", "classification": "useful" },
-    { "offset": 109, "key": "ETHER", "name": "Ether", "category": "consumable", "classification": "filler" },
-    { "offset": 110, "key": "MAX_ETHER", "name": "Max Ether", "category": "consumable", "classification": "filler" },
-    { "offset": 111, "key": "ELIXIR", "name": "Elixir", "category": "consumable", "classification": "filler" },
-    { "offset": 112, "key": "MAX_ELIXIR", "name": "Max Elixir", "category": "consumable", "classification": "filler" },
-    { "offset": 113, "key": "PP_UP", "name": "PP Up", "category": "consumable", "classification": "filler" },
-    { "offset": 114, "key": "PP_MAX", "name": "PP Max", "category": "consumable", "classification": "filler" },
-    { "offset": 115, "key": "RARE_CANDY", "name": "Rare Candy", "category": "consumable", "classification": "filler" },
+    {
+      "offset": 105,
+      "key": "REVIVE",
+      "name": "Revive",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 106,
+      "key": "MAX_REVIVE",
+      "name": "Max Revive",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 107,
+      "key": "FULL_HEAL",
+      "name": "Full Heal",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 108,
+      "key": "SACRED_ASH",
+      "name": "Sacred Ash",
+      "category": "consumable",
+      "classification": "useful"
+    },
+    {
+      "offset": 109,
+      "key": "ETHER",
+      "name": "Ether",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 110,
+      "key": "MAX_ETHER",
+      "name": "Max Ether",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 111,
+      "key": "ELIXIR",
+      "name": "Elixir",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 112,
+      "key": "MAX_ELIXIR",
+      "name": "Max Elixir",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 113,
+      "key": "PP_UP",
+      "name": "PP Up",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 114,
+      "key": "PP_MAX",
+      "name": "PP Max",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 115,
+      "key": "RARE_CANDY",
+      "name": "Rare Candy",
+      "category": "consumable",
+      "classification": "filler"
+    },
     {
       "offset": 116,
       "key": "RARER_CANDY",
@@ -57,7 +134,13 @@
       "category": "consumable",
       "classification": "useful"
     },
-    { "offset": 117, "key": "POKEBALL", "name": "5 Poke Balls", "category": "consumable", "classification": "filler" },
+    {
+      "offset": 117,
+      "key": "POKEBALL",
+      "name": "5 Poke Balls",
+      "category": "consumable",
+      "classification": "filler"
+    },
     {
       "offset": 118,
       "key": "GREAT_BALL",
@@ -86,33 +169,181 @@
       "category": "consumable",
       "classification": "useful"
     },
-    { "offset": 122, "key": "LURE", "name": "Lure", "category": "consumable", "classification": "filler" },
-    { "offset": 123, "key": "SUPER_LURE", "name": "Super Lure", "category": "consumable", "classification": "filler" },
-    { "offset": 124, "key": "MAX_LURE", "name": "Max Lure", "category": "consumable", "classification": "filler" },
-    { "offset": 125, "key": "NUGGET", "name": "Nugget", "category": "consumable", "classification": "filler" },
-    { "offset": 126, "key": "BIG_NUGGET", "name": "Big Nugget", "category": "consumable", "classification": "filler" },
-    { "offset": 127, "key": "RELIC_GOLD", "name": "Relic Gold", "category": "consumable", "classification": "filler" },
-
-    { "offset": 200, "key": "LEFTOVERS", "name": "Leftovers", "category": "held", "classification": "useful" },
-    { "offset": 201, "key": "SHELL_BELL", "name": "Shell Bell", "category": "held", "classification": "useful" },
-    { "offset": 202, "key": "LUCKY_EGG", "name": "Lucky Egg", "category": "held", "classification": "useful" },
-    { "offset": 203, "key": "GOLDEN_EGG", "name": "Golden Egg", "category": "held", "classification": "useful" },
-    { "offset": 204, "key": "SOOTHE_BELL", "name": "Soothe Bell", "category": "held", "classification": "filler" },
-    { "offset": 205, "key": "SCOPE_LENS", "name": "Scope Lens", "category": "held", "classification": "useful" },
-    { "offset": 206, "key": "QUICK_CLAW", "name": "Quick Claw", "category": "held", "classification": "useful" },
-    { "offset": 207, "key": "KINGS_ROCK", "name": "King's Rock", "category": "held", "classification": "useful" },
-    { "offset": 208, "key": "FOCUS_BAND", "name": "Focus Band", "category": "held", "classification": "useful" },
-    { "offset": 209, "key": "WIDE_LENS", "name": "Wide Lens", "category": "held", "classification": "useful" },
-    { "offset": 210, "key": "MULTI_LENS", "name": "Multi Lens", "category": "held", "classification": "useful" },
-    { "offset": 211, "key": "GRIP_CLAW", "name": "Grip Claw", "category": "held", "classification": "filler" },
-    { "offset": 212, "key": "REVIVER_SEED", "name": "Reviver Seed", "category": "held", "classification": "useful" },
-    { "offset": 213, "key": "SOUL_DEW", "name": "Soul Dew", "category": "held", "classification": "useful" },
-    { "offset": 214, "key": "BATON", "name": "Baton", "category": "held", "classification": "filler" },
-
-    { "offset": 300, "key": "EXP_SHARE", "name": "EXP. All", "category": "bonus", "classification": "useful" },
-    { "offset": 301, "key": "EXP_BALANCE", "name": "EXP. Balance", "category": "bonus", "classification": "useful" },
-    { "offset": 302, "key": "OVAL_CHARM", "name": "Oval Charm", "category": "bonus", "classification": "useful" },
-    { "offset": 303, "key": "EXP_CHARM", "name": "EXP. Charm", "category": "bonus", "classification": "useful" },
+    {
+      "offset": 122,
+      "key": "LURE",
+      "name": "Lure",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 123,
+      "key": "SUPER_LURE",
+      "name": "Super Lure",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 124,
+      "key": "MAX_LURE",
+      "name": "Max Lure",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 125,
+      "key": "NUGGET",
+      "name": "Nugget",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 126,
+      "key": "BIG_NUGGET",
+      "name": "Big Nugget",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 127,
+      "key": "RELIC_GOLD",
+      "name": "Relic Gold",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 200,
+      "key": "LEFTOVERS",
+      "name": "Leftovers",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 201,
+      "key": "SHELL_BELL",
+      "name": "Shell Bell",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 202,
+      "key": "LUCKY_EGG",
+      "name": "Lucky Egg",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 203,
+      "key": "GOLDEN_EGG",
+      "name": "Golden Egg",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 204,
+      "key": "SOOTHE_BELL",
+      "name": "Soothe Bell",
+      "category": "held",
+      "classification": "filler"
+    },
+    {
+      "offset": 205,
+      "key": "SCOPE_LENS",
+      "name": "Scope Lens",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 206,
+      "key": "QUICK_CLAW",
+      "name": "Quick Claw",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 207,
+      "key": "KINGS_ROCK",
+      "name": "King's Rock",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 208,
+      "key": "FOCUS_BAND",
+      "name": "Focus Band",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 209,
+      "key": "WIDE_LENS",
+      "name": "Wide Lens",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 210,
+      "key": "MULTI_LENS",
+      "name": "Multi Lens",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 211,
+      "key": "GRIP_CLAW",
+      "name": "Grip Claw",
+      "category": "held",
+      "classification": "filler"
+    },
+    {
+      "offset": 212,
+      "key": "REVIVER_SEED",
+      "name": "Reviver Seed",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 213,
+      "key": "SOUL_DEW",
+      "name": "Soul Dew",
+      "category": "held",
+      "classification": "useful"
+    },
+    {
+      "offset": 214,
+      "key": "BATON",
+      "name": "Baton",
+      "category": "held",
+      "classification": "filler"
+    },
+    {
+      "offset": 300,
+      "key": "EXP_SHARE",
+      "name": "EXP. All",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 301,
+      "key": "EXP_BALANCE",
+      "name": "EXP. Balance",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 302,
+      "key": "OVAL_CHARM",
+      "name": "Oval Charm",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 303,
+      "key": "EXP_CHARM",
+      "name": "EXP. Charm",
+      "category": "bonus",
+      "classification": "useful"
+    },
     {
       "offset": 304,
       "key": "SUPER_EXP_CHARM",
@@ -127,18 +358,90 @@
       "category": "bonus",
       "classification": "useful"
     },
-    { "offset": 306, "key": "AMULET_COIN", "name": "Amulet Coin", "category": "bonus", "classification": "useful" },
-    { "offset": 307, "key": "LOCK_CAPSULE", "name": "Lock Capsule", "category": "bonus", "classification": "useful" },
-    { "offset": 308, "key": "HEALING_CHARM", "name": "Healing Charm", "category": "bonus", "classification": "useful" },
-    { "offset": 309, "key": "CANDY_JAR", "name": "Candy Jar", "category": "bonus", "classification": "useful" },
-    { "offset": 310, "key": "BERRY_POUCH", "name": "Berry Pouch", "category": "bonus", "classification": "useful" },
-    { "offset": 311, "key": "SHINY_CHARM", "name": "Shiny Charm", "category": "bonus", "classification": "useful" },
-    { "offset": 312, "key": "ABILITY_CHARM", "name": "Ability Charm", "category": "bonus", "classification": "useful" },
-    { "offset": 313, "key": "IV_SCANNER", "name": "IV Scanner", "category": "bonus", "classification": "useful" },
-    { "offset": 314, "key": "MEGA_BRACELET", "name": "Mega Bracelet", "category": "bonus", "classification": "useful" },
-    { "offset": 315, "key": "DYNAMAX_BAND", "name": "Dynamax Band", "category": "bonus", "classification": "useful" },
-    { "offset": 316, "key": "TERA_ORB", "name": "Tera Orb", "category": "bonus", "classification": "useful" },
-    { "offset": 317, "key": "MAP", "name": "Map", "category": "bonus", "classification": "useful" },
+    {
+      "offset": 306,
+      "key": "AMULET_COIN",
+      "name": "Amulet Coin",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 307,
+      "key": "LOCK_CAPSULE",
+      "name": "Lock Capsule",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 308,
+      "key": "HEALING_CHARM",
+      "name": "Healing Charm",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 309,
+      "key": "CANDY_JAR",
+      "name": "Candy Jar",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 310,
+      "key": "BERRY_POUCH",
+      "name": "Berry Pouch",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 311,
+      "key": "SHINY_CHARM",
+      "name": "Shiny Charm",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 312,
+      "key": "ABILITY_CHARM",
+      "name": "Ability Charm",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 313,
+      "key": "IV_SCANNER",
+      "name": "IV Scanner",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 314,
+      "key": "MEGA_BRACELET",
+      "name": "Mega Bracelet",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 315,
+      "key": "DYNAMAX_BAND",
+      "name": "Dynamax Band",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 316,
+      "key": "TERA_ORB",
+      "name": "Tera Orb",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 317,
+      "key": "MAP",
+      "name": "Map",
+      "category": "bonus",
+      "classification": "useful"
+    },
     {
       "offset": 318,
       "key": "GOLDEN_POKEBALL",
@@ -146,6 +449,47 @@
       "category": "bonus",
       "classification": "useful"
     },
-    { "offset": 319, "key": "COIN_CASE", "name": "Coin Case", "category": "bonus", "classification": "useful" }
+    {
+      "offset": 319,
+      "key": "COIN_CASE",
+      "name": "Coin Case",
+      "category": "bonus",
+      "classification": "useful"
+    },
+    {
+      "offset": 400,
+      "key": "EGG_COMMON",
+      "name": "Common Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 401,
+      "key": "EGG_RARE",
+      "name": "Rare Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 402,
+      "key": "EGG_EPIC",
+      "name": "Epic Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 403,
+      "key": "EGG_LEGENDARY",
+      "name": "Legendary Egg",
+      "category": "egg",
+      "classification": "useful"
+    },
+    {
+      "offset": 404,
+      "key": "EGG_MYSTERY",
+      "name": "Mystery Egg",
+      "category": "egg",
+      "classification": "filler"
+    }
   ]
 }
