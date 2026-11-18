@@ -1,12 +1,13 @@
 {
   "game": "PokeRogue",
-  "version": 1,
+  "version": 2,
   "base_id": 8571000,
   "final_wave": 200,
   "gate_interval": 10,
   "wave_location_offset": 0,
   "shop_location_offset": 1000,
   "pokemon_item_offset": 10000,
+  "shop_tier_waves": [1, 21, 51, 81, 111, 141, 171],
   "items": [
     {
       "offset": 1,
@@ -321,140 +322,160 @@
       "key": "EXP_SHARE",
       "name": "EXP. All",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 5
     },
     {
       "offset": 301,
       "key": "EXP_BALANCE",
       "name": "EXP. Balance",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 4
     },
     {
       "offset": 302,
       "key": "OVAL_CHARM",
       "name": "Oval Charm",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 5
     },
     {
       "offset": 303,
       "key": "EXP_CHARM",
       "name": "EXP. Charm",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 99
     },
     {
       "offset": 304,
       "key": "SUPER_EXP_CHARM",
       "name": "Super EXP. Charm",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 30
     },
     {
       "offset": 305,
       "key": "GOLDEN_EXP_CHARM",
       "name": "Golden EXP. Charm",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 10
     },
     {
       "offset": 306,
       "key": "AMULET_COIN",
       "name": "Amulet Coin",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 5
     },
     {
       "offset": 307,
       "key": "LOCK_CAPSULE",
       "name": "Lock Capsule",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 1
     },
     {
       "offset": 308,
       "key": "HEALING_CHARM",
       "name": "Healing Charm",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 5
     },
     {
       "offset": 309,
       "key": "CANDY_JAR",
       "name": "Candy Jar",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 99
     },
     {
       "offset": 310,
       "key": "BERRY_POUCH",
       "name": "Berry Pouch",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 3
     },
     {
       "offset": 311,
       "key": "SHINY_CHARM",
       "name": "Shiny Charm",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 4
     },
     {
       "offset": 312,
       "key": "ABILITY_CHARM",
       "name": "Ability Charm",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 4
     },
     {
       "offset": 313,
       "key": "IV_SCANNER",
       "name": "IV Scanner",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 1
     },
     {
       "offset": 314,
       "key": "MEGA_BRACELET",
       "name": "Mega Bracelet",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 1
     },
     {
       "offset": 315,
       "key": "DYNAMAX_BAND",
       "name": "Dynamax Band",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 1
     },
     {
       "offset": 316,
       "key": "TERA_ORB",
       "name": "Tera Orb",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 1
     },
     {
       "offset": 317,
       "key": "MAP",
       "name": "Map",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 1
     },
     {
       "offset": 318,
       "key": "GOLDEN_POKEBALL",
       "name": "Golden Poke Ball",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 3
     },
     {
       "offset": 319,
       "key": "COIN_CASE",
       "name": "Coin Case",
       "category": "bonus",
-      "classification": "useful"
+      "classification": "useful",
+      "max": 5
     },
     {
       "offset": 400,
@@ -490,6 +511,98 @@
       "name": "Mystery Egg",
       "category": "egg",
       "classification": "filler"
+    },
+    {
+      "offset": 500,
+      "key": "TRAP_MONEY",
+      "name": "Money Loss Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 501,
+      "key": "TRAP_ITEM_DROP",
+      "name": "Item Drop Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 502,
+      "key": "TRAP_POISON",
+      "name": "Poison Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 503,
+      "key": "TRAP_PARALYSIS",
+      "name": "Paralysis Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 504,
+      "key": "TRAP_BURN",
+      "name": "Burn Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 505,
+      "key": "TRAP_SLEEP",
+      "name": "Sleep Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 506,
+      "key": "TRAP_CONFUSION",
+      "name": "Confusion Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 507,
+      "key": "TRAP_STAT_DOWN",
+      "name": "Stat Down Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 600,
+      "key": "EFFECT_STAT_UP",
+      "name": "Stat Boost",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 601,
+      "key": "EFFECT_REFLECT",
+      "name": "Reflect",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 602,
+      "key": "EFFECT_LIGHT_SCREEN",
+      "name": "Light Screen",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 603,
+      "key": "EFFECT_SAFEGUARD",
+      "name": "Safeguard",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 604,
+      "key": "EFFECT_MIST",
+      "name": "Mist",
+      "category": "effect",
+      "classification": "filler"
     }
-  ]
+  ],
+  "biome_location_offset": 2000
 }

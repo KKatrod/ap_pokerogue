@@ -7,7 +7,7 @@
  * @module
  */
 
-import { ArchipelagoGatePhase, ArchipelagoReceivePhase } from "#app/archipelago/ap-phases";
+import { ArchipelagoBattleEventPhase, ArchipelagoGatePhase, ArchipelagoReceivePhase } from "#app/archipelago/ap-phases";
 import { DynamicQueueManager } from "#app/dynamic-queue-manager";
 import { globalScene } from "#app/global-scene";
 import type { Phase } from "#app/phase";
@@ -126,6 +126,7 @@ import type { NonEmptyTuple } from "type-fest";
  * This allows for easy creation of new phases without needing to import each phase individually.
  */
 const PHASES = Object.freeze({
+  ArchipelagoBattleEventPhase,
   ArchipelagoGatePhase,
   ArchipelagoReceivePhase,
   AddEnemyBuffModifierPhase,

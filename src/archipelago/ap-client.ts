@@ -483,6 +483,18 @@ export class ArchipelagoClient {
     this.send([{ cmd: "Say", text }]);
   }
 
+  /** Changes the tags of the connection (e.g. "DeathLink"), also used for the next reconnections */
+  setTags(tags: string[]): void {
+    if (!this.options) {
+      return;
+    }
+    const current = this.options.tags ?? [];
+    this.options.tags = tags;
+    if (current.length !== tags.length || current.some(t => !tags.includes(t))) {
+      this.send([{ cmd: "ConnectUpdate", tags }]);
+    }
+  }
+
   bounce(data: any, tags: string[]): void {
     this.send([{ cmd: "Bounce", tags, data }]);
   }

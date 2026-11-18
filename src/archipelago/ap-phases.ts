@@ -1,11 +1,20 @@
 import { audioManager } from "#app/global-audio-manager";
 import { globalScene } from "#app/global-scene";
+import { getPokemonNameWithAffix } from "#app/messages";
 import { Phase } from "#app/phase";
+import { ArenaTagSide } from "#enums/arena-tag-side";
+import { ArenaTagType } from "#enums/arena-tag-type";
+import { BattlerTagType } from "#enums/battler-tag-type";
+import { HitResult } from "#enums/hit-result";
 import { PartyUiMode } from "#enums/party-ui-mode";
+import { EFFECTIVE_STATS } from "#enums/stat";
+import { StatusEffect } from "#enums/status-effect";
 import { UiMode } from "#enums/ui-mode";
+import type { Pokemon } from "#field/pokemon";
 import {
   FusePokemonModifierType,
   type ModifierType,
+  PokemonHeldItemModifierType,
   PokemonModifierType,
   PokemonMoveModifierType,
   PokemonPpRestoreModifierType,
@@ -136,6 +145,16 @@ export class ArchipelagoReceivePhase extends Phase {
 
     const message = archipelago.getReceivedMessage(delivery.item, delivery.def);
 
+    if (
+      type instanceof PokemonHeldItemModifierType
+      && !globalScene.getPlayerParty().some(p => !type.selectFilter?.(p))
+    ) {
+      // No Pokémon can hold one more of this item: it is converted into money
+      archipelago.markDelivered(delivery);
+      this.giveMoneyInstead(message, type.name);
+      return;
+    }
+
     if (type instanceof PokemonModifierType) {
       // An item is offered only once: it is consumed even if the player declines it or no Pokémon can use it
       archipelago.markDelivered(delivery);
@@ -149,10 +168,28 @@ export class ArchipelagoReceivePhase extends Phase {
       return;
     }
 
-    globalScene.addModifier(type.newModifier(), false, true);
+    const modifier = type.newModifier();
     archipelago.markDelivered(delivery);
+    if (modifier && archipelago.isStackFull(modifier)) {
+      // Already held as many times as possible: converted into money
+      this.giveMoneyInstead(message, type.name);
+      return;
+    }
+    globalScene.addModifier(modifier, false, true);
     audioManager.playSound("se/item_fanfare");
     globalScene.ui.showText(message, null, () => this.deliverNext(), null, true);
+  }
+
+  private giveMoneyInstead(message: string, itemName: string): void {
+    archipelago.grantMoneyInstead();
+    audioManager.playSound("se/buy");
+    globalScene.ui.showText(
+      `${message}\n${apText("itemConvertedToMoney", { item: itemName })}`,
+      null,
+      () => this.deliverNext(),
+      null,
+      true,
+    );
   }
 
   /** Same party selection flow as buying a targeted item in the shop */
@@ -199,5 +236,143 @@ export class ArchipelagoReceivePhase extends Phase {
       tmMoveId,
       isPpRestoreModifier,
     );
+  }
+}
+
+/** Status inflicted by each status trap */
+const STATUS_TRAPS: Record<string, StatusEffect> = {
+  TRAP_POISON: StatusEffect.POISON,
+  TRAP_PARALYSIS: StatusEffect.PARALYSIS,
+  TRAP_BURN: StatusEffect.BURN,
+  TRAP_SLEEP: StatusEffect.SLEEP,
+};
+
+/** Arena tag (on the player's side, 5 turns) given by each screen effect */
+const SCREEN_EFFECTS: Record<string, ArenaTagType> = {
+  EFFECT_REFLECT: ArenaTagType.REFLECT,
+  EFFECT_LIGHT_SCREEN: ArenaTagType.LIGHT_SCREEN,
+  EFFECT_SAFEGUARD: ArenaTagType.SAFEGUARD,
+  EFFECT_MIST: ArenaTagType.MIST,
+};
+
+/** Share of the current money lost to a Money Loss Trap */
+const MONEY_TRAP_RATIO = 0.25;
+
+/** Not seeded on purpose: multiworld events must not change the run's random sequence */
+const randomInt = (min: number, max: number) => min + Math.floor(Math.random() * (max - min + 1));
+const randomItem = <T>(items: readonly T[]): T => items[Math.floor(Math.random() * items.length)];
+
+/**
+ * Applies the traps, battle effects and DeathLinks received from the multiworld to the active Pokémon,
+ * at the start of a battle turn (queued by `TurnInitPhase`).
+ */
+export class ArchipelagoBattleEventPhase extends Phase {
+  public readonly phaseName = "ArchipelagoBattleEventPhase";
+
+  start(): void {
+    super.start();
+
+    const pokemon = globalScene.getPlayerField().find(p => p?.isActive(true));
+    if (!pokemon) {
+      // Nothing to apply the events to: they stay pending until the next turn
+      this.end();
+      return;
+    }
+
+    for (const delivery of archipelago.getPendingDeliveries(true)) {
+      archipelago.markDelivered(delivery);
+      globalScene.phaseManager.queueMessage(archipelago.getReceivedMessage(delivery.item, delivery.def));
+      this.applyEvent(delivery.def.key, pokemon);
+    }
+
+    for (const deathLink of archipelago.takeDeathLinks()) {
+      globalScene.phaseManager.queueMessage(
+        deathLink.cause
+          ? apText("deathLinkReceivedCause", { player: deathLink.source, cause: deathLink.cause })
+          : apText("deathLinkReceived", { player: deathLink.source }),
+      );
+      if (!pokemon.isFainted()) {
+        if (globalScene.getPokemonAllowedInBattle().every(p => p === pokemon || p.isFainted())) {
+          // This knock-out ends the run: the resulting game over must not send a DeathLink back
+          archipelago.markDeathLinkKnockOut();
+        }
+        // Indirect KO: ignores Sturdy, Focus Band, boss segments and Reviver Seed
+        pokemon.damageAndUpdate(pokemon.hp, { result: HitResult.INDIRECT_KO, ignoreSegments: true });
+      }
+    }
+
+    this.end();
+  }
+
+  private applyEvent(key: string, pokemon: Pokemon): void {
+    const pokemonName = getPokemonNameWithAffix(pokemon);
+    const nothing = () => globalScene.phaseManager.queueMessage(apText("eventNoEffect"));
+
+    if (key in STATUS_TRAPS) {
+      const status = STATUS_TRAPS[key];
+      // Not quiet: the game explains why the status could not be inflicted
+      if (
+        !pokemon.trySetStatus(
+          status,
+          undefined,
+          status === StatusEffect.SLEEP ? randomInt(2, 4) : 0,
+          null,
+          false,
+          false,
+        )
+      ) {
+        nothing();
+      }
+      return;
+    }
+    if (key in SCREEN_EFFECTS) {
+      if (!globalScene.arena.addTag(SCREEN_EFFECTS[key], 5, undefined, pokemon.id, ArenaTagSide.PLAYER)) {
+        nothing();
+      }
+      return;
+    }
+
+    switch (key) {
+      case "TRAP_MONEY": {
+        const lost = Math.floor(globalScene.money * MONEY_TRAP_RATIO);
+        if (lost <= 0) {
+          nothing();
+          return;
+        }
+        globalScene.money -= lost;
+        globalScene.updateMoneyText();
+        globalScene.animateMoneyChanged(false);
+        globalScene.phaseManager.queueMessage(apText("trapMoney", { money: lost.toLocaleString() }));
+        return;
+      }
+      case "TRAP_ITEM_DROP": {
+        const heldItems = pokemon.getHeldItems().filter(item => item.isTransferable);
+        if (heldItems.length === 0) {
+          nothing();
+          return;
+        }
+        const heldItem = randomItem(heldItems);
+        const itemName = heldItem.type.name;
+        pokemon.loseHeldItem(heldItem);
+        globalScene.updateModifiers(true);
+        globalScene.phaseManager.queueMessage(apText("trapItemDrop", { pokemon: pokemonName, item: itemName }));
+        return;
+      }
+      case "TRAP_CONFUSION":
+        if (!pokemon.addTag(BattlerTagType.CONFUSED, randomInt(2, 5))) {
+          nothing();
+        }
+        return;
+      case "TRAP_STAT_DOWN":
+      case "EFFECT_STAT_UP":
+        globalScene.phaseManager.unshiftNew("StatStageChangePhase", {
+          battlerIndex: pokemon.getBattlerIndex(),
+          changes: [{ stat: randomItem(EFFECTIVE_STATS), stages: key === "EFFECT_STAT_UP" ? 1 : -1 }],
+          sourcePokemon: undefined,
+        });
+        return;
+      default:
+        console.warn(`[AP] Unknown battle event ${key}`);
+    }
   }
 }

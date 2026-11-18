@@ -8,7 +8,7 @@ import { EggTier } from "#enums/egg-type";
 import { ModifierTier } from "#enums/modifier-tier";
 import { Nature } from "#enums/nature";
 import { SpeciesId } from "#enums/species-id";
-import { ConsumableModifier } from "#modifiers/modifier";
+import { ConsumableModifier, type Modifier, PersistentModifier } from "#modifiers/modifier";
 import {
   getModifierTypeFuncById,
   ModifierType,
@@ -32,6 +32,8 @@ export const AP_GAME: string = apData.game;
 export const AP_BASE_ID: number = apData.base_id;
 export const AP_FINAL_WAVE: number = apData.final_wave;
 export const AP_GATE_INTERVAL: number = apData.gate_interval;
+/** Waves at which the regular shop gets new items: each one unlocks a batch of Archipelago shop items */
+const SHOP_TIER_WAVES: number[] = apData.shop_tier_waves;
 
 export enum ApItemCategory {
   GATE = "gate",
@@ -40,7 +42,30 @@ export enum ApItemCategory {
   BONUS = "bonus",
   POKEMON = "pokemon",
   EGG = "egg",
+  /** Negative effect applied at the next battle turn (or right away for money) */
+  TRAP = "trap",
+  /** Positive battle effect applied at the next battle turn */
+  EFFECT = "effect",
 }
+
+/** Which floor checks exist (`location_mode` option) */
+export enum ApLocationMode {
+  FLOORS = 0,
+  BIOME_FLOORS = 1,
+  BOTH = 2,
+}
+
+/** One-shot item categories: handed out once, whatever happens to them */
+const ONE_SHOT_CATEGORIES = new Set([
+  ApItemCategory.CONSUMABLE,
+  ApItemCategory.HELD,
+  ApItemCategory.EGG,
+  ApItemCategory.TRAP,
+  ApItemCategory.EFFECT,
+]);
+
+/** Item categories applied during a battle (by `ArchipelagoBattleEventPhase`) instead of between floors */
+const BATTLE_EVENT_CATEGORIES = new Set([ApItemCategory.TRAP, ApItemCategory.EFFECT]);
 
 /** Egg tier given by each Archipelago egg item (`undefined`: rolled like a gacha pull) */
 const EGG_ITEM_TIERS: Record<string, EggTier | undefined> = {
@@ -72,6 +97,7 @@ const itemDefsById = new Map<number, ApItemDef>(
 const POKEMON_ITEM_BASE = AP_BASE_ID + apData.pokemon_item_offset;
 const WAVE_LOCATION_BASE = AP_BASE_ID + apData.wave_location_offset;
 const SHOP_LOCATION_BASE = AP_BASE_ID + apData.shop_location_offset;
+const BIOME_LOCATION_BASE = AP_BASE_ID + apData.biome_location_offset;
 
 export function getPokemonItemId(speciesId: SpeciesId): number {
   return POKEMON_ITEM_BASE + speciesId;
@@ -103,6 +129,11 @@ export function getApItemDef(itemId: number): ApItemDef | undefined {
 /** Location id sent when the given wave (floor) is cleared */
 export function getWaveLocationId(wave: number): number {
   return WAVE_LOCATION_BASE + wave;
+}
+
+/** Location id sent when the given floor (1-10) of a biome is cleared */
+export function getBiomeLocationId(biomeId: number, floor: number): number {
+  return BIOME_LOCATION_BASE + biomeId * 10 + floor - 1;
 }
 
 /** Location id of the n-th (1-based) Archipelago shop item */
@@ -270,6 +301,14 @@ export class ArchipelagoManager {
   private shopCache: { wave: number; options: ModifierTypeOption[] } | null = null;
   /** True while the Archipelago profile is swapped into the game data (Archipelago mode) */
   private active = false;
+  /** Biome where the current wave is played (the arena already shows the next biome when the wave is left) */
+  private waveBiome: { wave: number; biomeId: number } | null = null;
+  /** DeathLinks received from the multiworld, applied at the next battle turn */
+  private pendingDeathLinks: { source: string; cause?: string }[] = [];
+  /** Wave where a received DeathLink knocked out the last Pokémon (the resulting game over is not sent back) */
+  private deathLinkWave = -1;
+  /** Time (seconds) of the last DeathLink sent, to ignore its echo */
+  private lastDeathLinkSent = 0;
   /** Messages received from the server (item sends, chat...) kept for display */
   public readonly log: string[] = [];
 
@@ -288,6 +327,7 @@ export class ArchipelagoManager {
         }
         console.log(`[AP] ${text}`);
       },
+      onBounced: packet => this.onBounced(packet),
       onDisconnected: () => console.warn(`[AP] ${apText("disconnected")}`),
       onReconnected: connected => this.onConnected(connected),
     });
@@ -353,6 +393,7 @@ export class ArchipelagoManager {
       this.runBonusDelivered.clear();
     }
     this.slotData = connected.slot_data ?? {};
+    this.client.setTags(this.isDeathLinkEnabled() ? ["DeathLink"] : []);
     // The full item list (ReceivedItems, index 0) arrives together with Connected, before the profile is loaded
     this.applyReceivedUnlocks();
 
@@ -445,6 +486,9 @@ export class ArchipelagoManager {
   startNewRun(): void {
     this.runBonusDelivered.clear();
     this.shopCache = null;
+    this.waveBiome = null;
+    this.pendingDeathLinks = [];
+    this.deathLinkWave = -1;
   }
 
   getSessionState(): ApSessionState | undefined {
@@ -569,8 +613,11 @@ export class ArchipelagoManager {
     return this.receivedItems.some(i => getApItemDef(i.item)?.category === ApItemCategory.POKEMON);
   }
 
-  /** Items that still have to be handed out in the current run, in reception order */
-  getPendingDeliveries(): ApPendingDelivery[] {
+  /**
+   * Items that still have to be handed out in the current run, in reception order
+   * @param battleEvents - `true` for the traps / battle effects (applied during a battle), `false` for the others
+   */
+  getPendingDeliveries(battleEvents = false): ApPendingDelivery[] {
     if (!this.profile) {
       return [];
     }
@@ -578,21 +625,29 @@ export class ArchipelagoManager {
     const pending: ApPendingDelivery[] = [];
     this.receivedItems.forEach((item, index) => {
       const def = getApItemDef(item.item);
-      if (!def) {
+      if (!def || BATTLE_EVENT_CATEGORIES.has(def.category) !== battleEvents) {
         return;
       }
-      const isOneShot =
-        def.category === ApItemCategory.CONSUMABLE
-        || def.category === ApItemCategory.HELD
-        || def.category === ApItemCategory.EGG;
       if (
-        (isOneShot && !oneShot.has(index))
+        (ONE_SHOT_CATEGORIES.has(def.category) && !oneShot.has(index))
         || (def.category === ApItemCategory.BONUS && !this.runBonusDelivered.has(index))
       ) {
         pending.push({ index, item, def });
       }
     });
     return pending;
+  }
+
+  /** Whether traps, battle effects or DeathLinks are waiting for the next battle turn */
+  hasPendingBattleEvents(): boolean {
+    return this.pendingDeathLinks.length > 0 || this.getPendingDeliveries(true).length > 0;
+  }
+
+  /** Takes the DeathLinks received since the last call */
+  takeDeathLinks(): { source: string; cause?: string }[] {
+    const deathLinks = this.pendingDeathLinks;
+    this.pendingDeathLinks = [];
+    return deathLinks;
   }
 
   markDelivered(delivery: ApPendingDelivery): void {
@@ -683,11 +738,40 @@ export class ArchipelagoManager {
       }
       const modifier = this.resolveModifierType(delivery.def)?.newModifier();
       if (modifier) {
-        globalScene.addModifier(modifier, true, false, false, true);
+        if (this.isStackFull(modifier)) {
+          this.grantMoneyInstead(true);
+        } else {
+          globalScene.addModifier(modifier, true, false, false, true);
+        }
       }
       this.markDelivered(delivery);
     }
     globalScene.updateModifiers(true, true);
+  }
+
+  /** Whether the player already holds the maximum number of stacks of a (non held) persistent item */
+  isStackFull(modifier: Modifier): boolean {
+    if (!(modifier instanceof PersistentModifier)) {
+      return false;
+    }
+    const existing = globalScene.findModifier(m => m.match(modifier)) as PersistentModifier | undefined;
+    return !!existing && existing.getStackCount() >= existing.getMaxStackCount();
+  }
+
+  /**
+   * Gives money instead of an item the player cannot hold anymore (same amount as a Nugget).
+   * @param silent - `true` to skip the money animation (start of a run)
+   */
+  grantMoneyInstead(silent = false): void {
+    if (!globalScene.currentBattle) {
+      // The amount depends on the wave: nothing to give before the first battle
+      return;
+    }
+    const nugget = getModifierTypeFuncById("NUGGET");
+    const modifier = nugget?.().withIdFromFunc(nugget).newModifier();
+    if (modifier) {
+      globalScene.addModifier(modifier, true, !silent);
+    }
   }
 
   /* ---------------------------------------------------------------- Locations */
@@ -708,9 +792,26 @@ export class ArchipelagoManager {
     this.saveProfile();
   }
 
+  getLocationMode(): ApLocationMode {
+    return Number(this.slotData.location_mode ?? ApLocationMode.FLOORS) as ApLocationMode;
+  }
+
+  /** Remembers the biome of the wave being played (called when each battle starts, including loaded ones) */
+  onWaveStarted(wave: number, biomeId: number): void {
+    this.waveBiome = { wave, biomeId };
+  }
+
   onWaveCleared(wave: number): void {
     if (wave >= 1 && wave < AP_FINAL_WAVE) {
-      this.checkLocation(getWaveLocationId(wave));
+      const mode = this.getLocationMode();
+      if (mode !== ApLocationMode.BIOME_FLOORS) {
+        this.checkLocation(getWaveLocationId(wave));
+      }
+      if (mode !== ApLocationMode.FLOORS) {
+        // When a floor multiple of 10 is left, the arena already shows the next biome
+        const biomeId = this.waveBiome?.wave === wave ? this.waveBiome.biomeId : globalScene.arena.biomeId;
+        this.checkLocation(getBiomeLocationId(biomeId, ((wave - 1) % AP_GATE_INTERVAL) + 1));
+      }
     }
     this.shopCache = null;
   }
@@ -722,6 +823,56 @@ export class ArchipelagoManager {
     this.profile.goalReached = true;
     this.client.setStatus(ClientStatus.CLIENT_GOAL);
     this.saveProfile();
+  }
+
+  /* ---------------------------------------------------------------- DeathLink */
+
+  isDeathLinkEnabled(): boolean {
+    return !!this.slotData.death_link;
+  }
+
+  private onBounced(packet: any): void {
+    const tags: string[] = packet?.tags ?? [];
+    const data = packet?.data ?? {};
+    if (!(tags.includes("DeathLink") && this.isDeathLinkEnabled())) {
+      return;
+    }
+    // Our own DeathLink comes back to us
+    if (data.source === this.profile?.slotName && Number(data.time) === this.lastDeathLinkSent) {
+      return;
+    }
+    const source = String(data.source ?? "?");
+    console.log(`[AP] DeathLink from ${source}${data.cause ? `: ${data.cause}` : ""}`);
+    // Only applied during an Archipelago run
+    if (this.active && globalScene.gameMode?.isArchipelago && globalScene.currentBattle) {
+      this.pendingDeathLinks.push({ source, cause: data.cause });
+    }
+  }
+
+  /** A received DeathLink knocked out the last Pokémon of the team: the resulting game over is not sent back */
+  markDeathLinkKnockOut(): void {
+    this.deathLinkWave = globalScene.currentBattle?.waveIndex ?? -1;
+  }
+
+  /** The run was lost: send a DeathLink to the multiworld (unless the loss was caused by one) */
+  onRunLost(): void {
+    if (!this.isDeathLinkEnabled() || !this.profile) {
+      return;
+    }
+    if (this.deathLinkWave === globalScene.currentBattle?.waveIndex) {
+      this.deathLinkWave = -1;
+      return;
+    }
+    this.lastDeathLinkSent = Date.now() / 1000;
+    const wave = globalScene.currentBattle?.waveIndex ?? 0;
+    this.client.bounce(
+      {
+        time: this.lastDeathLinkSent,
+        source: this.profile.slotName,
+        cause: `${this.profile.slotName}'s team was wiped out on floor ${wave} of PokeRogue.`,
+      },
+      ["DeathLink"],
+    );
   }
 
   getScoutedItem(locationId: number): NetworkItem | undefined {
@@ -736,6 +887,21 @@ export class ArchipelagoManager {
 
   getShopItemsPerVisit(): number {
     return Math.max(1, Number(this.slotData.shop_items_per_visit ?? 1));
+  }
+
+  /** Number of Archipelago shop items unlocked at each new shop tier (0: all of them from the start) */
+  getShopItemsPerTier(): number {
+    return Math.max(0, Number(this.slotData.shop_items_per_tier ?? 0));
+  }
+
+  /** Number of Archipelago shop items (bought or not) the shop of the given wave may offer */
+  getAvailableShopItemCount(wave: number): number {
+    const perTier = this.getShopItemsPerTier();
+    if (perTier <= 0) {
+      return this.getShopItemCount();
+    }
+    const tiers = SHOP_TIER_WAVES.filter(tierWave => tierWave <= wave).length;
+    return Math.min(this.getShopItemCount(), tiers * perTier);
   }
 
   getShopCostPercent(): number {
@@ -759,6 +925,7 @@ export class ArchipelagoManager {
     }
     const cost = Math.max(1, (baseCost * this.getShopCostPercent()) / 100);
     const options = this.getAllShopLocationIds()
+      .slice(0, this.getAvailableShopItemCount(wave))
       .filter(id => !this.isLocationChecked(id))
       .slice(0, this.getShopItemsPerVisit())
       .map(id => new ModifierTypeOption(createShopItemType(id), 0, cost));

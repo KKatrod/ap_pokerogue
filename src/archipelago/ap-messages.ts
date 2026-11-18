@@ -38,6 +38,12 @@ const messages = {
     eggReceived: "The egg was added to your Archipelago egg list. It hatches during Archipelago runs.",
     eggListFull: "Your Archipelago egg list is full: the egg was lost.",
     goalComplete: "Archipelago goal complete!",
+    itemConvertedToMoney: "You cannot hold more {{item}}: it was converted into money.",
+    eventNoEffect: "But nothing happened!",
+    trapMoney: "You lost ₽{{money}}!",
+    trapItemDrop: "{{pokemon}} dropped its {{item}}!",
+    deathLinkReceived: "DeathLink from {{player}}!",
+    deathLinkReceivedCause: "DeathLink from {{player}}: {{cause}}",
   },
   fr: {
     modeName: "Archipelago",
@@ -72,6 +78,12 @@ const messages = {
     eggReceived: "L'œuf a été ajouté à vos œufs Archipelago. Il éclora pendant les parties Archipelago.",
     eggListFull: "Votre liste d'œufs Archipelago est pleine : l'œuf est perdu.",
     goalComplete: "Objectif Archipelago accompli !",
+    itemConvertedToMoney: "Vous ne pouvez pas avoir plus de {{item}} : l'objet est converti en argent.",
+    eventNoEffect: "Mais rien ne se passe !",
+    trapMoney: "Vous perdez {{money}} ₽ !",
+    trapItemDrop: "{{pokemon}} lâche son objet : {{item}} !",
+    deathLinkReceived: "DeathLink de {{player}} !",
+    deathLinkReceivedCause: "DeathLink de {{player}} : {{cause}}",
   },
 };
 

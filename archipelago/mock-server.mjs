@@ -2,6 +2,7 @@
 // Usage: node archipelago/mock-server.mjs [port]   (default 38281), then connect to localhost:38281
 // It gives 3 starters + a few items, scouts shop locations as items for a fake "Friend" player,
 // and sends a Progressive Floor Pass each time a floor multiple of 5 is cleared.
+// Environment: PASS_EVERY, LOCATION_MODE, SHOP_PER_TIER, DEATHLINK_AT, ITEMS_AT (see below).
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -25,6 +26,27 @@ const shopCount = 5;
 for (let i = 1; i <= shopCount; i++) {
   locationNames[`Shop Item ${i}`] = base + apData.shop_location_offset + i;
 }
+// Biome floor locations (ids only: the mock does not know the biome names)
+for (let biome = 0; biome <= 50; biome++) {
+  for (let floor = 1; floor <= 10; floor++) {
+    locationNames[`Biome ${biome} - Floor ${floor}`] = base + apData.biome_location_offset + biome * 10 + floor - 1;
+  }
+}
+// Options sent in slot_data (LOCATION_MODE: 0 floors, 1 biome floors, 2 both)
+const locationMode = Number.parseInt(process.env.LOCATION_MODE ?? "2");
+const shopItemsPerTier = Number.parseInt(process.env.SHOP_PER_TIER ?? "2");
+// Send a DeathLink when this floor is cleared (0 = never)
+const deathLinkAt = Number.parseInt(process.env.DEATHLINK_AT ?? "0");
+// Items sent when a floor is cleared, e.g. ITEMS_AT="2:TRAP_POISON,EFFECT_STAT_UP;3:MAP"
+const itemsAt = new Map(
+  (process.env.ITEMS_AT ?? "")
+    .split(";")
+    .filter(Boolean)
+    .map(entry => {
+      const [floor, keys] = entry.split(":");
+      return [Number.parseInt(floor), keys.split(",")];
+    }),
+);
 
 const received = [
   { item: pokemon(1), location: -2, player: 0, flags: 1 }, // Bulbasaur
@@ -72,6 +94,9 @@ wss.on("connection", socket => {
               missing_locations: Object.values(locationNames).filter(l => !checked.has(l)),
               checked_locations: [...checked],
               slot_data: {
+                location_mode: locationMode,
+                shop_items_per_tier: shopItemsPerTier,
+                death_link: deathLinkAt > 0,
                 shop_item_count: shopCount,
                 shop_items_per_visit: 2,
                 shop_cost_percent: 50,
@@ -118,14 +143,38 @@ wss.on("connection", socket => {
         case "LocationChecks":
           for (const l of packet.locations) {
             checked.add(l);
-            const wave = l - base - apData.wave_location_offset;
+            // Floor checks, or Town floor checks (the Town is always floors 1-10) in biome floor mode
+            const townFloor = l - base - apData.biome_location_offset;
+            const wave = townFloor >= 0 && townFloor < 10 ? townFloor + 1 : l - base - apData.wave_location_offset;
             if (passEvery > 0 && wave > 0 && wave < apData.final_wave && wave % passEvery === 0) {
               const newItem = { item: item("FLOOR_PASS"), location: l, player: 1, flags: 1 };
               received.push(newItem);
               send([{ cmd: "ReceivedItems", index: received.length - 1, items: [newItem] }]);
             }
+            if (wave > 0 && wave < apData.final_wave) {
+              for (const key of itemsAt.get(wave) ?? []) {
+                const newItem = { item: item(key), location: l, player: 2, flags: key.startsWith("TRAP") ? 4 : 0 };
+                received.push(newItem);
+                send([{ cmd: "ReceivedItems", index: received.length - 1, items: [newItem] }]);
+              }
+              if (wave === deathLinkAt) {
+                send([
+                  {
+                    cmd: "Bounced",
+                    tags: ["DeathLink"],
+                    data: { time: Date.now() / 1000, source: "Friend", cause: "Friend fell into a pit." },
+                  },
+                ]);
+              }
+            }
           }
           send([{ cmd: "RoomUpdate", checked_locations: packet.locations }]);
+          break;
+        case "ConnectUpdate":
+          console.log("Tags:", packet.tags);
+          break;
+        case "Bounce":
+          console.log("Bounce:", JSON.stringify(packet));
           break;
         case "StatusUpdate":
           console.log("Status:", packet.status);

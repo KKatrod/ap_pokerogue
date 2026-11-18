@@ -73,6 +73,10 @@ export class GameOverPhase extends BattlePhase {
     }
     // Otherwise, continue standard Game Over logic
 
+    if (!this.isVictory && globalScene.gameMode.isArchipelago) {
+      archipelago.onRunLost();
+    }
+
     if (this.isVictory && globalScene.gameMode.isEndless) {
       const genderIndex = settings.general.playerGender;
       const genderStr = PlayerGender[genderIndex].toLowerCase();

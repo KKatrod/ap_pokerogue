@@ -1,4 +1,5 @@
 import { applyAbAttrs } from "#abilities/apply-ab-attrs";
+import { archipelago } from "#app/archipelago/archipelago";
 import { PLAYER_PARTY_MAX_SIZE, WEIGHT_INCREMENT_ON_SPAWN_MISS } from "#app/constants";
 import { audioManager } from "#app/global-audio-manager";
 import { globalScene } from "#app/global-scene";
@@ -58,6 +59,10 @@ export class EncounterPhase extends BattlePhase {
     globalScene.initSession();
 
     globalScene.eventTarget.dispatchEvent(new EncounterPhaseEvent());
+
+    if (globalScene.gameMode.isArchipelago) {
+      archipelago.onWaveStarted(globalScene.currentBattle.waveIndex, globalScene.arena.biomeId);
+    }
 
     // Failsafe if players somehow skip floor 200 in classic mode
     if (globalScene.gameMode.isClassic && globalScene.currentBattle.waveIndex > 200) {
