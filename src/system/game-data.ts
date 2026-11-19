@@ -425,6 +425,11 @@ export class GameData {
    * @param systemData - The parsed `SystemSaveData` to initialize from
    */
   private initParsedSystem(systemData: SystemSaveData): void {
+    // System data always belongs to the Classic profile: restore it first if an Archipelago profile is swapped in
+    // (e.g. "Save and quit" reloads the system data without recreating the game data), otherwise the Classic
+    // Pokédex would be merged into the Archipelago one
+    this.swapOutArchipelagoProfile();
+
     applySystemVersionMigration(systemData);
 
     this.appliedMigrators = systemData.appliedMigrators;

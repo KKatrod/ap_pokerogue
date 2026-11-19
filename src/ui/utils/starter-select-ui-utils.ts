@@ -1,3 +1,4 @@
+import { apHooks } from "#app/archipelago/ap-hooks";
 import { VALUE_REDUCTION_MAX } from "#app/constants";
 import { globalScene } from "#app/global-scene";
 import { settings } from "#app/global-settings-manager";
@@ -443,6 +444,10 @@ export function getRunValueLimit(): number {
       break;
     default:
       valueLimit.value = 10;
+  }
+  // Archipelago: 10 points, raised by the Starter Limit +1 items received
+  if (globalScene.gameMode.isArchipelago) {
+    valueLimit.value = apHooks.getStarterValueLimit() ?? valueLimit.value;
   }
 
   applyChallenges(ChallengeType.STARTER_POINTS, valueLimit);

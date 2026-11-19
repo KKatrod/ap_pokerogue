@@ -3,26 +3,31 @@ PokeRogue for Archipelago.
 
 Locations: clearing each floor (1-199) and/or each floor of each biome, and buying the Archipelago items
 offered in the shops.
-Items: Progressive Floor Passes (needed to go past each floor multiple of 10), starter Pokemon unlocks,
-consumables, held items, permanent bonus items, eggs, battle effects and traps. Goal: clear floor 200.
+Items: Progressive Floor Passes (needed to go past each floor multiple of 10), Biome Passes (optional),
+starter Pokemon unlocks, Starter Limit +1, consumables, held items, permanent bonus items, eggs, battle effects and
+traps. Goal: clear floor 200.
 
 Item / location ids come from data.py, generated from the game sources
 (node archipelago/generate-apworld-data.mjs).
 """
 import math
 from collections import deque
-from typing import Dict, List, Optional
+import logging
+from typing import Dict, List, Optional, Set
 
-from BaseClasses import Item, ItemClassification, Location, Region
+from BaseClasses import CollectionState, Item, ItemClassification, Location, Region
+from Options import OptionError
 from worlds.AutoWorld import WebWorld, World
 
-from .data import (BASE_ID, BIOME_LOCATION_OFFSET, BIOMES, FINAL_WAVE, GAME_NAME, GATE_INTERVAL, ITEM_MAX, ITEMS,
-                   POKEMON, SHOP_LOCATION_OFFSET, SHOP_TIER_WAVES, WAVE_LOCATION_OFFSET)
-from .options import LocationMode, PokeRogueOptions
+from .data import (BASE_ID, BIOME_LOCATION_OFFSET, BIOME_PASS_OFFSET, BIOMES, FINAL_WAVE, GAME_NAME, GATE_INTERVAL,
+                   ITEM_MAX, ITEMS, POKEMON, POKEMON_INFO, SHOP_LOCATION_OFFSET, SHOP_TIER_WAVES,
+                   WAVE_LOCATION_OFFSET)
+from .options import LimitedSupport, LocationMode, PokeRogueOptions
 
 FLOOR_PASS = "Progressive Floor Pass"
 VICTORY = "Victory"
 MAP = "Map"
+STARTER_LIMIT = "Starter Limit +1"
 
 TOWN_BIOME = 0
 END_BIOME = 50
@@ -46,12 +51,20 @@ CLASSIFICATIONS = {
     "trap": ItemClassification.trap,
 }
 
+# PokemonType order of the game (the Mono Type challenge value is this index + 1)
+POKEMON_TYPES = ["NORMAL", "FIGHTING", "FLYING", "POISON", "GROUND", "ROCK", "BUG", "GHOST", "STEEL", "FIRE", "WATER",
+                 "GRASS", "ELECTRIC", "PSYCHIC", "ICE", "DRAGON", "DARK", "FAIRY"]
+
 ITEM_TABLE: Dict[str, int] = {name: item_id for name, item_id, _category, _cls in ITEMS}
 ITEM_TABLE.update({name: item_id for name, item_id, _cost in POKEMON})
 ITEM_CATEGORY: Dict[str, str] = {name: category for name, _id, category, _cls in ITEMS}
 ITEM_CLASSIFICATION: Dict[str, str] = {name: cls for name, _id, _category, cls in ITEMS}
 
-CONSUMABLE_FILLERS = [name for name, _id, cat, cls in ITEMS if cat == "consumable" and cls == "filler"]
+# Strong consumables kept out of the random fillers
+RARE_CONSUMABLES = {"Sacred Ash", "Rarer Candy", "Master Ball", "DNA Splicers"}
+# Items placed once in the pool (the game keeps them for every run, at most once per run)
+ONCE_PER_WORLD = ["DNA Splicers"]
+CONSUMABLE_FILLERS = [name for name, _id, cat, _cls in ITEMS if cat == "consumable" and name not in RARE_CONSUMABLES]
 EFFECT_FILLERS = [name for name, _id, cat, _cls in ITEMS if cat == "effect"]
 TRAPS = [name for name, _id, cat, _cls in ITEMS if cat == "trap"]
 
@@ -93,6 +106,37 @@ def compute_biome_depths() -> Dict[int, int]:
 
 BIOME_DEPTHS = compute_biome_depths()
 BIOME_NAMES = {biome_id: name for biome_id, name, _links in BIOMES}
+BIOME_LINKS = {biome_id: links for biome_id, _name, links in BIOMES}
+
+
+def biome_pass_name(biome_id: int) -> str:
+    return f"Biome Pass - {BIOME_NAMES[biome_id]}"
+
+
+# Every biome except the Town (start, and fallback when no next biome is unlocked) and the End (forced at the end)
+BIOME_PASSES: Dict[int, str] = {biome_id: biome_pass_name(biome_id) for biome_id in sorted(BIOME_DEPTHS)
+                                if biome_id not in (TOWN_BIOME, END_BIOME)}
+ITEM_TABLE.update({name: BASE_ID + BIOME_PASS_OFFSET + biome_id for biome_id, name in BIOME_PASSES.items()})
+
+
+def can_reach_biome(state: CollectionState, player: int, target: int) -> bool:
+    """
+    Whether a run can get to the biome with the Floor Passes and Biome Passes collected: the biome changes after each
+    floor multiple of 10 (block k needs k Floor Passes), only towards unlocked biomes.
+    Going back to the Town (no unlocked next biome) never reaches a biome sooner, so it is not followed.
+    """
+    max_depth = min(state.count(FLOOR_PASS, player), BLOCK_COUNT - 2)
+    seen: Set[int] = {TOWN_BIOME}
+    frontier: Set[int] = {TOWN_BIOME}
+    for _depth in range(max_depth):
+        if target in seen:
+            return True
+        frontier = {link for biome in frontier for link in BIOME_LINKS.get(biome, [])
+                    if link != END_BIOME and link not in seen and state.has(BIOME_PASSES[link], player)}
+        if not frontier:
+            break
+        seen |= frontier
+    return target in seen
 
 
 def biome_floors(biome_id: int) -> range:
@@ -162,11 +206,15 @@ class PokeRogueWorld(World):
         "Held Items": {name for name, _id, cat, _cls in ITEMS if cat == "held"},
         "Bonus Items": {name for name, _id, cat, _cls in ITEMS if cat == "bonus"},
         "Eggs": {name for name, _id, cat, _cls in ITEMS if cat == "egg"},
+        "Biome Passes": set(BIOME_PASSES.values()),
         "Battle Effects": set(EFFECT_FILLERS),
         "Traps": set(TRAPS),
     }
 
     def get_shop_item_count(self) -> int:
+        # The Limited Support challenge can remove the shop
+        if self.options.limited_support.value in (LimitedSupport.option_no_shop, LimitedSupport.option_both):
+            return 0
         per_tier = self.options.shop_items_per_tier.value
         per_visit = self.options.shop_items_per_visit.value
         count = 0
@@ -179,6 +227,10 @@ class PokeRogueWorld(World):
             return PokeRogueItem(name, ItemClassification.progression, None, self.player)
         if name in ITEM_CLASSIFICATION:
             classification = CLASSIFICATIONS[ITEM_CLASSIFICATION[name]]
+        elif name in BIOME_PASSES.values():
+            # Only needed to reach the biome floor checks
+            classification = (ItemClassification.progression if self.has_biome_locations()
+                              else ItemClassification.useful)
         else:
             classification = ItemClassification.useful  # Pokemon unlocks
         return PokeRogueItem(name, classification, self.item_name_to_id[name], self.player)
@@ -196,21 +248,69 @@ class PokeRogueWorld(World):
             return self.random.choices(list(EGG_WEIGHTS), weights=list(EGG_WEIGHTS.values()))[0]
         return self.random.choice(CONSUMABLE_FILLERS)
 
+    def has_biome_locations(self) -> bool:
+        return self.options.location_mode.value in (LocationMode.option_biome_floors, LocationMode.option_both)
+
+    def get_mono_type(self) -> Optional[str]:
+        value = self.options.mono_type.value
+        return POKEMON_TYPES[value - 1] if value else None
+
+    def get_usable_pokemon(self) -> List[str]:
+        """Starter Pokemon usable with the Mono Generation / Mono Type challenges."""
+        generation = self.options.mono_generation.value
+        mono_type = self.get_mono_type()
+        return [name for name, _id, _cost in POKEMON
+                if (not generation or POKEMON_INFO[name][0] == generation)
+                and (mono_type is None or mono_type in POKEMON_INFO[name][1])]
+
     def pick_starting_pokemon(self) -> List[str]:
-        """Random starting Pokemon: none above the maximum cost, at least one strong one."""
+        """
+        Random starting Pokemon: none above the maximum cost, at least one strong one, and no type appearing twice
+        (with Mono Type, only the other type of each Pokemon counts).
+        """
         count = self.options.starting_pokemon.value
         max_cost = self.options.starting_pokemon_max_cost.value
-        strong_cost = min(STRONG_STARTER_MIN_COST, max_cost)
-        allowed = [(name, cost) for name, _id, cost in POKEMON if cost <= max_cost]
+        usable = set(self.get_usable_pokemon())
+        allowed = [(name, cost) for name, _id, cost in POKEMON if name in usable and cost <= max_cost]
+        if not allowed:
+            raise OptionError(f"{self.player_name}: no starter Pokemon fits the Mono Generation / Mono Type "
+                              f"challenges with a cost of {max_cost} or less")
+        strong_cost = min(STRONG_STARTER_MIN_COST, max(cost for _name, cost in allowed))
         strong = [name for name, cost in allowed if cost >= strong_cost]
-        chosen = [self.random.choice(strong)]
-        others = [name for name, _cost in allowed if name not in chosen]
-        chosen += self.random.sample(others, min(count - 1, len(others)))
-        self.random.shuffle(chosen)
-        return chosen
+        mono_type = self.get_mono_type()
 
-    def add_location(self, region: Region, name: str) -> None:
-        region.locations.append(PokeRogueLocation(self.player, name, LOCATION_TABLE[name], region))
+        def types(pokemon: str) -> Set[str]:
+            return set(POKEMON_INFO[pokemon][1]) - {mono_type}
+
+        best: List[str] = []
+        for _attempt in range(200):
+            chosen = [self.random.choice(strong)]
+            used = types(chosen[0])
+            others = [name for name, _cost in allowed if name != chosen[0]]
+            self.random.shuffle(others)
+            for name in others:
+                if len(chosen) >= count:
+                    break
+                if not types(name) & used:
+                    chosen.append(name)
+                    used |= types(name)
+            if len(chosen) > len(best):
+                best = chosen
+            if len(best) >= count:
+                break
+        if len(best) < count:
+            # Not enough Pokemon with types not used yet (narrow challenges): complete with any other one
+            logging.warning(f"PokeRogue ({self.player_name}): only {len(best)} starting Pokemon with different "
+                            f"types could be found, the others may share a type")
+            others = [name for name, _cost in allowed if name not in best]
+            best += self.random.sample(others, min(count - len(best), len(others)))
+        self.random.shuffle(best)
+        return best
+
+    def add_location(self, region: Region, name: str) -> Location:
+        location = PokeRogueLocation(self.player, name, LOCATION_TABLE[name], region)
+        region.locations.append(location)
+        return location
 
     def create_regions(self) -> None:
         menu = Region("Menu", self.player, self.multiworld)
@@ -235,11 +335,15 @@ class PokeRogueWorld(World):
             blocks.append(region)
             previous = region
 
-        # Biome floors: available from the first block where the biome can be reached
+        # Biome floors: available from the first block where the biome can be reached (with Biome Passes, also
+        # needs the passes of a path from the Town to the biome)
         if with_biomes:
+            biome_passes = bool(self.options.biome_passes.value)
             for biome_id, depth in sorted(BIOME_DEPTHS.items()):
                 for floor in biome_floors(biome_id):
-                    self.add_location(blocks[depth], biome_location_name(BIOME_NAMES[biome_id], floor))
+                    location = self.add_location(blocks[depth], biome_location_name(BIOME_NAMES[biome_id], floor))
+                    if biome_passes and biome_id in BIOME_PASSES:
+                        location.access_rule = lambda state, b=biome_id: can_reach_biome(state, self.player, b)
 
         per_tier = self.options.shop_items_per_tier.value
         per_visit = self.options.shop_items_per_visit.value
@@ -259,11 +363,15 @@ class PokeRogueWorld(World):
         # Floor passes: one per gate between the first floor block and the last one
         pool += [self.create_item(FLOOR_PASS) for _ in range(BLOCK_COUNT - 1)]
 
-        # Pokemon: a few to start with, some more shuffled in the multiworld
+        # Biome passes: one per biome except the Town and the End
+        if self.options.biome_passes.value:
+            pool += [self.create_item(name) for name in BIOME_PASSES.values()]
+
+        # Pokemon: a few to start with, some more shuffled in the multiworld (only usable ones with the challenges)
         starting = self.pick_starting_pokemon()
         for name in starting:
             self.multiworld.push_precollected(self.create_item(name))
-        remaining = [name for name, _id, _cost in POKEMON if name not in starting]
+        remaining = [name for name in self.get_usable_pokemon() if name not in starting]
         self.random.shuffle(remaining)
         pokemon_count = min(self.options.pokemon_in_pool.value, len(remaining), max(0, location_count - len(pool)))
         pool += [self.create_item(name) for name in remaining[:pokemon_count]]
@@ -287,6 +395,14 @@ class PokeRogueWorld(World):
                 for name, _id, category, _cls in ITEMS:
                     if category == "held" and len(pool) < location_count:
                         pool.append(self.create_item(name))
+                for name in ONCE_PER_WORLD:
+                    if len(pool) < location_count:
+                        pool.append(self.create_item(name))
+
+        # Starter Limit +1: raise the starter points of the team (10 at first, 30 at most)
+        for _ in range(self.options.starter_limit_items.value):
+            if len(pool) < location_count:
+                pool.append(self.create_item(STARTER_LIMIT))
 
         # Fill the remaining locations with consumables, eggs, battle effects and traps
         while len(pool) < location_count:
@@ -305,5 +421,20 @@ class PokeRogueWorld(World):
             "shop_items_per_visit": self.options.shop_items_per_visit.value,
             "shop_cost_percent": self.options.shop_cost_percent.value,
             "death_link": bool(self.options.death_link.value),
+            "trainer_hints": bool(self.options.trainer_hints.value),
+            "biome_passes": bool(self.options.biome_passes.value),
+            # Challenge values, by name of the game's Challenges enum (0: off)
+            "challenges": {
+                "SINGLE_GENERATION": self.options.mono_generation.value,
+                "SINGLE_TYPE": self.options.mono_type.value,
+                "LIMITED_SUPPORT": self.options.limited_support.value,
+                "LIMITED_CATCH": self.options.limited_catch.value,
+                "HARDCORE": self.options.hardcore.value,
+                "MOVESET_RANDOMIZER": self.options.moveset_randomizer.value,
+                "ABILITY_RANDOMIZER": self.options.ability_randomizer.value,
+                "INVERSE_BATTLE": self.options.inverse_battle.value,
+                "FLIP_STAT": self.options.flip_stat.value,
+                "PASSIVES": self.options.active_passives.value,
+            },
             "final_wave": FINAL_WAVE,
         }

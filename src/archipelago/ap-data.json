@@ -17,6 +17,14 @@
       "classification": "progression"
     },
     {
+      "offset": 2,
+      "key": "STARTER_LIMIT",
+      "name": "Starter Limit +1",
+      "category": "starter_limit",
+      "classification": "useful",
+      "max": 20
+    },
+    {
       "offset": 100,
       "key": "POTION",
       "name": "Potion",
@@ -77,7 +85,7 @@
       "key": "SACRED_ASH",
       "name": "Sacred Ash",
       "category": "consumable",
-      "classification": "useful"
+      "classification": "filler"
     },
     {
       "offset": 109,
@@ -126,49 +134,55 @@
       "key": "RARE_CANDY",
       "name": "Rare Candy",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 116,
       "key": "RARER_CANDY",
       "name": "Rarer Candy",
       "category": "consumable",
-      "classification": "useful"
+      "classification": "filler"
     },
     {
       "offset": 117,
       "key": "POKEBALL",
       "name": "5 Poke Balls",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 118,
       "key": "GREAT_BALL",
       "name": "5 Great Balls",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 119,
       "key": "ULTRA_BALL",
       "name": "5 Ultra Balls",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 120,
       "key": "ROGUE_BALL",
       "name": "5 Rogue Balls",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 121,
       "key": "MASTER_BALL",
       "name": "Master Ball",
       "category": "consumable",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 122,
@@ -196,49 +210,65 @@
       "key": "NUGGET",
       "name": "Nugget",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 126,
       "key": "BIG_NUGGET",
       "name": "Big Nugget",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 127,
       "key": "RELIC_GOLD",
       "name": "Relic Gold",
       "category": "consumable",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 128,
+      "key": "DNA_SPLICERS",
+      "name": "DNA Splicers",
+      "category": "consumable",
+      "classification": "useful",
+      "persistent": true,
+      "max": 1
     },
     {
       "offset": 200,
       "key": "LEFTOVERS",
       "name": "Leftovers",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 201,
       "key": "SHELL_BELL",
       "name": "Shell Bell",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 202,
       "key": "LUCKY_EGG",
       "name": "Lucky Egg",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 203,
       "key": "GOLDEN_EGG",
       "name": "Golden Egg",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 204,
@@ -252,70 +282,80 @@
       "key": "SCOPE_LENS",
       "name": "Scope Lens",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 206,
       "key": "QUICK_CLAW",
       "name": "Quick Claw",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 207,
       "key": "KINGS_ROCK",
       "name": "King's Rock",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 208,
       "key": "FOCUS_BAND",
       "name": "Focus Band",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 209,
       "key": "WIDE_LENS",
       "name": "Wide Lens",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 210,
       "key": "MULTI_LENS",
       "name": "Multi Lens",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 211,
       "key": "GRIP_CLAW",
       "name": "Grip Claw",
       "category": "held",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 212,
       "key": "REVIVER_SEED",
       "name": "Reviver Seed",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 213,
       "key": "SOUL_DEW",
       "name": "Soul Dew",
       "category": "held",
-      "classification": "useful"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 214,
       "key": "BATON",
       "name": "Baton",
       "category": "held",
-      "classification": "filler"
+      "classification": "filler",
+      "persistent": true
     },
     {
       "offset": 300,
@@ -346,7 +386,7 @@
       "key": "EXP_CHARM",
       "name": "EXP. Charm",
       "category": "bonus",
-      "classification": "useful",
+      "classification": "filler",
       "max": 99
     },
     {
@@ -354,7 +394,7 @@
       "key": "SUPER_EXP_CHARM",
       "name": "Super EXP. Charm",
       "category": "bonus",
-      "classification": "useful",
+      "classification": "filler",
       "max": 30
     },
     {
@@ -362,7 +402,7 @@
       "key": "GOLDEN_EXP_CHARM",
       "name": "Golden EXP. Charm",
       "category": "bonus",
-      "classification": "useful",
+      "classification": "filler",
       "max": 10
     },
     {
@@ -394,7 +434,7 @@
       "key": "CANDY_JAR",
       "name": "Candy Jar",
       "category": "bonus",
-      "classification": "useful",
+      "classification": "filler",
       "max": 99
     },
     {
@@ -503,7 +543,7 @@
       "key": "EGG_LEGENDARY",
       "name": "Legendary Egg",
       "category": "egg",
-      "classification": "useful"
+      "classification": "filler"
     },
     {
       "offset": 404,
@@ -604,5 +644,6 @@
       "classification": "filler"
     }
   ],
-  "biome_location_offset": 2000
+  "biome_location_offset": 2000,
+  "biome_pass_offset": 700
 }

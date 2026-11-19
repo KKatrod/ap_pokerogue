@@ -15,6 +15,15 @@ export class TurnInitPhase extends FieldPhase {
   start() {
     super.start();
 
+    // Archipelago: floor 1 of a run hands out the items received so far (the kept ones first)
+    if (globalScene.gameMode.isArchipelago && archipelago.shouldHandleRunStart()) {
+      archipelago.markRunStartHandled();
+      globalScene.phaseManager.unshiftNew("ArchipelagoReceivePhase", true);
+      globalScene.phaseManager.unshiftNew("TurnInitPhase");
+      this.end();
+      return;
+    }
+
     // Archipelago traps, battle effects and DeathLinks are applied first, then the turn starts over
     if (globalScene.gameMode.isArchipelago && archipelago.hasPendingBattleEvents()) {
       globalScene.phaseManager.unshiftNew("ArchipelagoBattleEventPhase");

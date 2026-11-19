@@ -10,10 +10,12 @@ import { speciesDataRegistry } from "#app/global-species-data-registry";
 import { activeOverrides } from "#app/overrides";
 import { Phase } from "#app/phase";
 import { bypassLogin } from "#constants/app-constants";
+import { allChallenges, copyChallenge } from "#data/challenge";
 import { getDailyRunStarters, startDailyEventChallenges } from "#data/daily-run";
 import { modifierTypes } from "#data/data-lists";
 import { Gender } from "#data/gender";
 import { BattleType } from "#enums/battle-type";
+import { Challenges } from "#enums/challenges";
 import { GameModes } from "#enums/game-modes";
 import { ModifierPoolType } from "#enums/modifier-pool-type";
 import { UiMode } from "#enums/ui-mode";
@@ -54,7 +56,7 @@ export class TitlePhase extends Phase {
     }
 
     // Back to the title screen: restore the Classic Pokédex if an Archipelago profile was in use
-    if (globalScene.gameData.isArchipelagoProfileActive) {
+    if (archipelago.isActive || globalScene.gameData.isArchipelagoProfileActive) {
       archipelago.deactivate();
     }
 
@@ -449,11 +451,34 @@ export class TitlePhase extends Phase {
     });
   }
 
+  /**
+   * Archipelago: the challenges chosen in the player's options apply to every run, without turning the run into a
+   * Challenge mode run. Nothing changes when no challenge is set.
+   */
+  private applyArchipelagoChallenges(): void {
+    const values = archipelago.getChallengeValues();
+    if (values.length === 0) {
+      return;
+    }
+    const gameMode = globalScene.gameMode;
+    gameMode.challenges = allChallenges.map(c => copyChallenge(c));
+    for (const { name, value } of values) {
+      const challenge = gameMode.challenges.find(c => Challenges[c.id] === name);
+      // Fresh Start makes no sense here: the Archipelago profile already starts from scratch
+      if (challenge && challenge.id !== Challenges.FRESH_START && value <= challenge.maxValue) {
+        challenge.value = value;
+      }
+    }
+  }
+
   // TODO: Refactor this
   end(): void {
     if (!this.loaded && !globalScene.gameMode.isDaily) {
       globalScene.gameMode = getGameMode(this.gameMode);
       globalScene.gameMode.isArchipelago = this.archipelagoRun;
+      if (this.archipelagoRun) {
+        this.applyArchipelagoChallenges();
+      }
       if (this.gameMode === GameModes.CHALLENGE) {
         globalScene.phaseManager.pushNew("SelectChallengePhase");
       } else {

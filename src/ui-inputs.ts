@@ -190,7 +190,9 @@ export class UiInputs {
       // biome-ignore lint/suspicious/noFallthroughSwitchClause: falls through to show menu overlay
       case UiMode.MESSAGE: {
         const messageHandler = globalScene.ui.getHandler<MessageUiHandler>();
-        if (!messageHandler.pendingPrompt || messageHandler.isTextAnimationInProgress()) {
+        // Archipelago: the menu stays available while waiting for a Floor Pass (to save and quit, for instance)
+        const waitingForPass = globalScene.phaseManager.getCurrentPhase()?.phaseName === "ArchipelagoGatePhase";
+        if (!waitingForPass && (!messageHandler.pendingPrompt || messageHandler.isTextAnimationInProgress())) {
           return;
         }
       }

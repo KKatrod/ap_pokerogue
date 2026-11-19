@@ -1,4 +1,5 @@
 import { applyAbAttrs } from "#abilities/apply-ab-attrs";
+import { archipelago } from "#app/archipelago/archipelago";
 import { globalScene } from "#app/global-scene";
 import { LapsingPersistentModifier, LapsingPokemonHeldItemModifier } from "#modifiers/modifier";
 import { BattlePhase } from "#phases/battle-phase";
@@ -34,6 +35,12 @@ export class BattleEndPhase extends BattlePhase {
 
     if (this.isVictory) {
       currentBattle.addBattleScore();
+
+      // Archipelago: the floor's location is sent as soon as the battle is won, so the server's reply (an item
+      // for this player) arrives before the items are handed out at the end of the floor
+      if (gameMode.isArchipelago) {
+        archipelago.onWaveCleared(waveIndex);
+      }
 
       if (trainer) {
         gameStats.trainersDefeated++;

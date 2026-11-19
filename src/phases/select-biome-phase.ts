@@ -1,3 +1,5 @@
+import { apText } from "#app/archipelago/ap-messages";
+import { archipelago } from "#app/archipelago/archipelago";
 import { timedEventManager } from "#app/global-event-manager";
 import { globalScene } from "#app/global-scene";
 import { getDailyForcedBiomes } from "#data/daily-seed/daily-run";
@@ -50,6 +52,14 @@ export class SelectBiomePhase extends BattlePhase {
     const { biomeLinks } = allBiomes.get(currentBiome);
     const eventBiomeLinks = timedEventManager.getEventBiomeLinks(currentBiome);
     const allBiomeLinks: BiomeLinks = [...biomeLinks, ...eventBiomeLinks];
+
+    // Archipelago with Biome Passes: only the unlocked biomes may be chosen, the Town otherwise
+    if (gameMode.isArchipelago && archipelago.isBiomePassesEnabled()) {
+      const links =
+        allBiomeLinks.length === 1 ? allBiomeLinks : allBiomeLinks.filter(b => !Array.isArray(b) || !randSeedInt(b[1]));
+      this.selectArchipelagoBiome(links.map(b => (Array.isArray(b) ? b[0] : b)));
+      return;
+    }
     if (allBiomeLinks.length > 1 || (forcedBiomes != null && forcedBiomes.length > 1)) {
       const biomes: BiomeId[] =
         forcedBiomes != null && forcedBiomes.length > 1
@@ -97,6 +107,45 @@ export class SelectBiomePhase extends BattlePhase {
     }
 
     this.setNextBiomeAndEnd(this.generateNextBiome(nextWaveIndex));
+  }
+
+  /**
+   * Archipelago with Biome Passes: picks the next biome among the unlocked ones. Without any, the player goes back
+   * to the Town; with a Map, the Town is always one of the choices.
+   */
+  private selectArchipelagoBiome(links: BiomeId[]): void {
+    const unlocked = links.filter(b => archipelago.hasBiomePass(b));
+    const hasMap = !!globalScene.findModifier(m => m instanceof MapModifier);
+    const choices = hasMap && !unlocked.includes(BiomeId.TOWN) ? [...unlocked, BiomeId.TOWN] : unlocked;
+
+    if (unlocked.length === 0) {
+      globalScene.ui.showText(apText("biomeFallback"), null, () => this.setNextBiomeAndEnd(BiomeId.TOWN), null, true);
+      return;
+    }
+    if (choices.length === 1) {
+      this.setNextBiomeAndEnd(choices[0]);
+      return;
+    }
+    if (!hasMap) {
+      this.setNextBiomeAndEnd(randSeedItem(choices));
+      return;
+    }
+    globalScene.ui.setMode(UiMode.OPTION_SELECT, {
+      options: choices.map(
+        b =>
+          ({
+            label: getBiomeName(b),
+            handler: () => {
+              globalScene.ui.setMode(UiMode.MESSAGE);
+              this.setNextBiomeAndEnd(b);
+              return true;
+            },
+          }) satisfies OptionSelectItem as OptionSelectItem,
+      ),
+      blockCancelButton: true,
+      inputDelay: 1000,
+      yOffset: 48,
+    } satisfies OptionSelectModeConfig);
   }
 
   private generateNextBiome(waveIndex: number): BiomeId {

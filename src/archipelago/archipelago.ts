@@ -2,22 +2,26 @@ import { globalScene } from "#app/global-scene";
 import { speciesDataRegistry } from "#app/global-species-data-registry";
 import { Egg } from "#data/egg";
 import { AbilityAttr } from "#enums/ability-attr";
+import { BiomeId } from "#enums/biome-id";
 import { DexAttr } from "#enums/dex-attr";
 import { EggSourceType } from "#enums/egg-source-types";
 import { EggTier } from "#enums/egg-type";
 import { ModifierTier } from "#enums/modifier-tier";
 import { Nature } from "#enums/nature";
 import { SpeciesId } from "#enums/species-id";
+import { TrainerType } from "#enums/trainer-type";
 import { ConsumableModifier, type Modifier, PersistentModifier } from "#modifiers/modifier";
 import {
   getModifierTypeFuncById,
   ModifierType,
   ModifierTypeGenerator,
   ModifierTypeOption,
+  PokemonModifierType,
 } from "#modifiers/modifier-type";
 import { EggData } from "#system/egg-data";
 import type { DexData } from "#types/dex-data";
 import type { StarterData } from "#types/save-data";
+import { getBiomeName } from "#utils/common";
 import { ArchipelagoClient, ClientStatus, type ConnectedPacket, ItemFlags, type NetworkItem } from "./ap-client";
 import apData from "./ap-data.json";
 import { type ApSessionState, apHooks } from "./ap-hooks";
@@ -46,7 +50,16 @@ export enum ApItemCategory {
   TRAP = "trap",
   /** Positive battle effect applied at the next battle turn */
   EFFECT = "effect",
+  /** Unlocks a biome as a destination (`biome_passes` option) */
+  BIOME_PASS = "biome_pass",
+  /** Raises the starter points of the team by 1 */
+  STARTER_LIMIT = "starter_limit",
 }
+
+/** Starter points of the team without any Starter Limit +1 (same as Classic) */
+const BASE_STARTER_POINTS = 10;
+/** Most starter points reachable with the Starter Limit +1 items */
+const MAX_STARTER_POINTS = 30;
 
 /** Which floor checks exist (`location_mode` option) */
 export enum ApLocationMode {
@@ -76,6 +89,11 @@ const EGG_ITEM_TIERS: Record<string, EggTier | undefined> = {
   EGG_MYSTERY: undefined,
 };
 
+/** Whether an item has to be given to a Pokémon chosen in the party screen */
+function isTargetedModifierType(type: ModifierType): boolean {
+  return type instanceof PokemonModifierType;
+}
+
 /** Maximum number of eggs a profile can hold (same limit as the game) */
 const MAX_EGGS = 99;
 
@@ -85,12 +103,29 @@ export interface ApItemDef {
   name: string;
   category: ApItemCategory;
   speciesId?: SpeciesId;
+  /** Biome unlocked by a Biome Pass */
+  biomeId?: BiomeId;
+  /**
+   * Given again in every run of the Archipelago session (at floor 1) instead of only once:
+   * the permanent bonus items and the items marked `persistent` in `ap-data.json`
+   */
+  persistent?: boolean;
+  /** Most copies of a kept item given in one run (e.g. 1 DNA Splicers, however many were received) */
+  runMax?: number | undefined;
 }
 
 const itemDefsById = new Map<number, ApItemDef>(
   apData.items.map(i => [
     AP_BASE_ID + i.offset,
-    { id: AP_BASE_ID + i.offset, key: i.key, name: i.name, category: i.category as ApItemCategory },
+    {
+      id: AP_BASE_ID + i.offset,
+      key: i.key,
+      name: i.name,
+      category: i.category as ApItemCategory,
+      persistent: i.category === ApItemCategory.BONUS || ("persistent" in i && i.persistent === true),
+      // For bonus items, `max` is the stack limit of the game (see `isStackFull`), not a per-run limit
+      runMax: i.category !== ApItemCategory.BONUS && "max" in i ? i.max : undefined,
+    },
   ]),
 );
 
@@ -98,6 +133,14 @@ const POKEMON_ITEM_BASE = AP_BASE_ID + apData.pokemon_item_offset;
 const WAVE_LOCATION_BASE = AP_BASE_ID + apData.wave_location_offset;
 const SHOP_LOCATION_BASE = AP_BASE_ID + apData.shop_location_offset;
 const BIOME_LOCATION_BASE = AP_BASE_ID + apData.biome_location_offset;
+const BIOME_PASS_BASE = AP_BASE_ID + apData.biome_pass_offset;
+
+/** Biomes always open with the `biome_passes` option: the Town (start and fallback) and the End (last floors) */
+const FREE_BIOMES = new Set<number>([BiomeId.TOWN, BiomeId.END]);
+
+export function getBiomePassItemId(biomeId: BiomeId): number {
+  return BIOME_PASS_BASE + biomeId;
+}
 
 export function getPokemonItemId(speciesId: SpeciesId): number {
   return POKEMON_ITEM_BASE + speciesId;
@@ -112,6 +155,16 @@ export function getApItemDef(itemId: number): ApItemDef | undefined {
   const def = itemDefsById.get(itemId);
   if (def) {
     return def;
+  }
+  const biomeId = itemId - BIOME_PASS_BASE;
+  if (biomeId >= 0 && biomeId < POKEMON_ITEM_BASE - BIOME_PASS_BASE && BIOME_IDS.has(biomeId)) {
+    return {
+      id: itemId,
+      key: `BIOME_PASS_${biomeId}`,
+      name: apText("biomePassName", { biome: getBiomeName(biomeId as BiomeId) }),
+      category: ApItemCategory.BIOME_PASS,
+      biomeId: biomeId as BiomeId,
+    };
   }
   const speciesId = itemId - POKEMON_ITEM_BASE;
   if (isApStarterSpecies(speciesId)) {
@@ -135,6 +188,9 @@ export function getWaveLocationId(wave: number): number {
 export function getBiomeLocationId(biomeId: number, floor: number): number {
   return BIOME_LOCATION_BASE + biomeId * 10 + floor - 1;
 }
+
+/** Every biome id of the game (biome floor locations of unknown biomes are ignored) */
+const BIOME_IDS = new Set<number>(Object.values(BiomeId));
 
 /** Location id of the n-th (1-based) Archipelago shop item */
 export function getShopLocationId(index: number): number {
@@ -162,6 +218,8 @@ interface ApProfile {
   /** Locations checked locally, re-sent on every (re)connection */
   checkedLocations: number[];
   goalReached: boolean;
+  /** Locations already revealed by a trainer hint */
+  hintedLocations?: number[];
   /** Eggs of the Archipelago profile: they hatch during Archipelago runs */
   eggs?: Egg[];
 }
@@ -226,6 +284,8 @@ function createShopItemType(locationId: number): ModifierType {
       public readonly isArchipelagoShopItem = true;
       /** Texture used instead of the "items" atlas (see ModifierOption) */
       public readonly iconTexture = AP_ITEM_ICON_TEXTURE;
+      /** Colour of the item name in the shop, after the multiworld classification (see ModifierOption) */
+      public textTint: number;
 
       constructor(locationId: number) {
         super(
@@ -237,6 +297,7 @@ function createShopItemType(locationId: number): ModifierType {
         );
         this.locationId = locationId;
         const flags = archipelago.getScoutedItem(locationId)?.flags ?? 0;
+        this.textTint = getClassificationTint(flags);
         this.setTier(
           flags & ItemFlags.PROGRESSION
             ? ModifierTier.ROGUE
@@ -274,6 +335,28 @@ function createShopItemType(locationId: number): ModifierType {
   return new shopItemTypeClass(locationId);
 }
 
+/** Item name colours used by the multiworld clients: progression, useful, trap, filler */
+const CLASSIFICATION_TINTS = {
+  progression: 0xf8d038,
+  useful: 0x4998f8,
+  trap: 0xdb4343,
+  filler: 0xa8a8a8,
+};
+
+/** Colour of an item name after its classification flags (progression wins over the others) */
+export function getClassificationTint(flags: number): number {
+  if (flags & ItemFlags.PROGRESSION) {
+    return CLASSIFICATION_TINTS.progression;
+  }
+  if (flags & ItemFlags.USEFUL) {
+    return CLASSIFICATION_TINTS.useful;
+  }
+  if (flags & ItemFlags.TRAP) {
+    return CLASSIFICATION_TINTS.trap;
+  }
+  return CLASSIFICATION_TINTS.filler;
+}
+
 /** Registers the Archipelago item icon texture (once the game textures are available) */
 export function ensureArchipelagoIconTexture(): void {
   const textures = globalScene?.textures;
@@ -307,6 +390,8 @@ export class ArchipelagoManager {
   private pendingDeathLinks: { source: string; cause?: string }[] = [];
   /** Wave where a received DeathLink knocked out the last Pokémon (the resulting game over is not sent back) */
   private deathLinkWave = -1;
+  /** Whether the items kept for every run were already handed out at floor 1 of this run */
+  private runStartHandled = false;
   /** Time (seconds) of the last DeathLink sent, to ignore its echo */
   private lastDeathLinkSent = 0;
   /** Messages received from the server (item sends, chat...) kept for display */
@@ -334,6 +419,7 @@ export class ArchipelagoManager {
     apHooks.getSessionState = () => this.getSessionState();
     apHooks.restoreSessionState = state => this.restoreSessionState(state);
     apHooks.getShopOptions = (wave, baseCost) => this.getShopOptions(wave, baseCost);
+    apHooks.getStarterValueLimit = () => (this.active ? this.getStarterValueLimit() : null);
     apHooks.getSoldLabel = type =>
       type?.isArchipelagoShopItem && this.isLocationChecked(type.locationId) ? apText("shopItemSold") : null;
   }
@@ -404,9 +490,11 @@ export class ArchipelagoManager {
     this.profile.checkedLocations = [...new Set([...this.profile.checkedLocations, ...connected.checked_locations])];
     this.client.setStatus(this.profile.goalReached ? ClientStatus.CLIENT_GOAL : ClientStatus.CLIENT_PLAYING);
 
-    // Scout every shop location so the shop can display what it sells
+    // Scout every shop location (so the shop can display what it sells) and every other missing location
+    // (so key trainers can hint at the progression items they hold)
     const missingOrChecked = new Set([...connected.missing_locations, ...connected.checked_locations]);
-    this.client.scoutLocations(this.getAllShopLocationIds().filter(l => missingOrChecked.has(l)));
+    const shopLocations = this.getAllShopLocationIds().filter(l => missingOrChecked.has(l));
+    this.client.scoutLocations([...new Set([...shopLocations, ...connected.missing_locations])]);
     this.saveProfile();
   }
 
@@ -489,6 +577,7 @@ export class ArchipelagoManager {
     this.waveBiome = null;
     this.pendingDeathLinks = [];
     this.deathLinkWave = -1;
+    this.runStartHandled = false;
   }
 
   getSessionState(): ApSessionState | undefined {
@@ -593,6 +682,43 @@ export class ArchipelagoManager {
     return Math.floor(wave / AP_GATE_INTERVAL);
   }
 
+  /* -------------------------------------------------------------- Biome passes */
+
+  /** Whether biomes need a Biome Pass to be visited (`biome_passes` option) */
+  isBiomePassesEnabled(): boolean {
+    return !!this.slotData.biome_passes;
+  }
+
+  /** Whether the biome may be chosen as the next destination */
+  hasBiomePass(biomeId: BiomeId): boolean {
+    if (!this.isBiomePassesEnabled() || FREE_BIOMES.has(biomeId)) {
+      return true;
+    }
+    const itemId = getBiomePassItemId(biomeId);
+    return this.receivedItems.some(i => i.item === itemId);
+  }
+
+  /* ------------------------------------------------------------ Starter points */
+
+  /** Starter points of the team: 10, plus 1 per Starter Limit +1 received (30 at most) */
+  getStarterValueLimit(): number {
+    const bonus = this.receivedItems.filter(i => getApItemDef(i.item)?.category === ApItemCategory.STARTER_LIMIT);
+    return Math.min(BASE_STARTER_POINTS + bonus.length, MAX_STARTER_POINTS);
+  }
+
+  /* --------------------------------------------------------------- Challenges */
+
+  /**
+   * Challenge values set in the player's options (`challenges` slot data: challenge name → value).
+   * Unknown challenges and values out of range are ignored by the caller.
+   */
+  getChallengeValues(): { name: string; value: number }[] {
+    const challenges: Record<string, unknown> = this.slotData.challenges ?? {};
+    return Object.entries(challenges)
+      .map(([name, value]) => ({ name, value: Number(value) }))
+      .filter(c => Number.isInteger(c.value) && c.value > 0);
+  }
+
   /** Marks the Floor Passes received so far as announced (the gate screen already told the player) */
   acknowledgeFloorPasses(): void {
     if (this.profile) {
@@ -623,15 +749,24 @@ export class ArchipelagoManager {
     }
     const oneShot = new Set(this.profile.oneShotDelivered);
     const pending: ApPendingDelivery[] = [];
+    /** Copies of each kept item with a per-run limit, given or to give in this run */
+    const runCounts = new Map<string, number>();
     this.receivedItems.forEach((item, index) => {
       const def = getApItemDef(item.item);
       if (!def || BATTLE_EVENT_CATEGORIES.has(def.category) !== battleEvents) {
         return;
       }
-      if (
-        (ONE_SHOT_CATEGORIES.has(def.category) && !oneShot.has(index))
-        || (def.category === ApItemCategory.BONUS && !this.runBonusDelivered.has(index))
-      ) {
+      if (def.persistent && def.runMax !== undefined) {
+        const count = runCounts.get(def.key) ?? 0;
+        if (count >= def.runMax) {
+          return;
+        }
+        runCounts.set(def.key, count + 1);
+      }
+      const pendingNow = def.persistent
+        ? !this.runBonusDelivered.has(index)
+        : ONE_SHOT_CATEGORIES.has(def.category) && !oneShot.has(index);
+      if (pendingNow) {
         pending.push({ index, item, def });
       }
     });
@@ -654,7 +789,7 @@ export class ArchipelagoManager {
     if (!this.profile) {
       return;
     }
-    if (delivery.def.category === ApItemCategory.BONUS) {
+    if (delivery.def.persistent) {
       this.runBonusDelivered.add(delivery.index);
     } else if (!this.profile.oneShotDelivered.includes(delivery.index)) {
       this.profile.oneShotDelivered.push(delivery.index);
@@ -668,11 +803,20 @@ export class ArchipelagoManager {
       return [];
     }
     const messages: string[] = [];
+    let starterLimitReceived = false;
     for (let i = this.profile.announced; i < this.receivedItems.length; i++) {
       const def = getApItemDef(this.receivedItems[i].item);
       if (def?.category === ApItemCategory.POKEMON) {
         messages.push(apText("pokemonUnlocked", { pokemon: def.name }));
+      } else if (def?.category === ApItemCategory.BIOME_PASS && def.biomeId !== undefined) {
+        messages.push(apText("biomePassReceived", { biome: getBiomeName(def.biomeId) }));
+      } else if (def?.category === ApItemCategory.STARTER_LIMIT) {
+        starterLimitReceived = true;
       }
+    }
+    // A single message for all the Starter Limit +1 received since the last announcement
+    if (starterLimitReceived) {
+      messages.push(apText("starterLimitReceived", { points: this.getStarterValueLimit() }));
     }
     this.profile.announced = this.receivedItems.length;
     // A single message for all the passes received since the last announcement
@@ -730,23 +874,48 @@ export class ArchipelagoManager {
     return type;
   }
 
-  /** Grants every permanent bonus item received so far at the beginning of a run (non-targeted ones only) */
-  grantRunStartBonuses(): void {
+  /**
+   * Whether the items received before this run (kept items and the others) still have to be handed out:
+   * this is done once, at the first battle turn of floor 1.
+   */
+  shouldHandleRunStart(): boolean {
+    return (
+      !this.runStartHandled && globalScene.currentBattle?.waveIndex === 1 && this.getPendingDeliveries().length > 0
+    );
+  }
+
+  markRunStartHandled(): void {
+    this.runStartHandled = true;
+  }
+
+  /**
+   * Silently grants the kept items that need no target (bonus items, Poké Balls, nuggets...).
+   * Items already held as many times as possible are converted into money.
+   * @returns the names of the items given, for a single summary message
+   */
+  grantKeptItems(): string[] {
+    const names: string[] = [];
     for (const delivery of this.getPendingDeliveries()) {
-      if (delivery.def.category !== ApItemCategory.BONUS) {
+      if (!delivery.def.persistent) {
         continue;
       }
-      const modifier = this.resolveModifierType(delivery.def)?.newModifier();
+      const type = this.resolveModifierType(delivery.def);
+      if (!type || isTargetedModifierType(type)) {
+        continue;
+      }
+      const modifier = type.newModifier();
       if (modifier) {
         if (this.isStackFull(modifier)) {
           this.grantMoneyInstead(true);
         } else {
           globalScene.addModifier(modifier, true, false, false, true);
         }
+        names.push(type.name);
       }
       this.markDelivered(delivery);
     }
     globalScene.updateModifiers(true, true);
+    return names;
   }
 
   /** Whether the player already holds the maximum number of stacks of a (non held) persistent item */
@@ -790,6 +959,16 @@ export class ArchipelagoManager {
     this.profile.checkedLocations.push(locationId);
     this.client.checkLocations([locationId]);
     this.saveProfile();
+  }
+
+  /** Whether locations were checked while connected but the server has not confirmed them yet */
+  hasUnconfirmedChecks(): boolean {
+    const confirmed = this.client.connected?.checked_locations;
+    if (!(this.isConnected && confirmed && this.profile)) {
+      return false;
+    }
+    const confirmedSet = new Set(confirmed);
+    return this.profile.checkedLocations.some(l => !confirmedSet.has(l));
   }
 
   getLocationMode(): ApLocationMode {
@@ -879,6 +1058,85 @@ export class ArchipelagoManager {
     return this.scoutedLocations.get(locationId);
   }
 
+  /* -------------------------------------------------------------------- Hints */
+
+  isTrainerHintsEnabled(): boolean {
+    return this.slotData.trainer_hints ?? true;
+  }
+
+  /** Whether beating this trainer gives a hint: rival, Gym Leaders, Elite Four, Champion, evil team bosses/admins */
+  isHintTrainer(trainerType: TrainerType | undefined, isBoss: boolean | undefined): boolean {
+    return (
+      !!isBoss || (trainerType !== undefined && trainerType >= TrainerType.RIVAL && trainerType <= TrainerType.RIVAL_6)
+    );
+  }
+
+  /**
+   * Picks a progression item hidden at a location of this world not checked or hinted yet (preferably for another
+   * player), registers the hint on the server and returns its text.
+   * @returns `null` when hints are disabled or there is nothing left to hint at
+   */
+  takeTrainerHint(): string | null {
+    try {
+      return this.pickTrainerHint();
+    } catch (err) {
+      // A hint must never block the end of the battle
+      console.error("[AP] Failed to build a trainer hint", err);
+      return null;
+    }
+  }
+
+  private pickTrainerHint(): string | null {
+    if (!(this.profile && this.isConnected && this.isTrainerHintsEnabled())) {
+      return null;
+    }
+    const hinted = new Set(this.profile.hintedLocations ?? []);
+    const candidates = [...this.scoutedLocations.values()].filter(
+      i =>
+        i.flags & ItemFlags.PROGRESSION
+        && !hinted.has(i.location)
+        && !this.isLocationChecked(i.location)
+        && this.describeLocation(i.location) !== null,
+    );
+    const others = candidates.filter(i => i.player !== this.client.connected?.slot);
+    const pool = others.length > 0 ? others : candidates;
+    if (pool.length === 0) {
+      return null;
+    }
+    const target = pool[Math.floor(Math.random() * pool.length)];
+    this.profile.hintedLocations = [...hinted, target.location];
+    this.saveProfile();
+    // Also listed in the multiworld hints (create_as_hint 2: only new hints are announced)
+    this.client.scoutLocations([target.location], 2);
+    const location = this.describeLocation(target.location)!;
+    return apText(location.key, {
+      item: this.client.getItemName(target.item, target.player),
+      player: this.client.getPlayerName(target.player),
+      floor: location.floor,
+      zone: location.biomeId === undefined ? "" : getBiomeName(location.biomeId),
+    });
+  }
+
+  /** Where a location of this world is, for hints (`null`: not a location the game knows) */
+  private describeLocation(
+    locationId: number,
+  ): { key: "hintFloor" | "hintBiomeFloor" | "hintShop"; floor: number; biomeId?: BiomeId } | null {
+    const wave = locationId - WAVE_LOCATION_BASE;
+    if (wave >= 1 && wave < AP_FINAL_WAVE) {
+      return { key: "hintFloor", floor: wave };
+    }
+    const shopIndex = locationId - SHOP_LOCATION_BASE;
+    if (shopIndex >= 1 && shopIndex <= this.getShopItemCount()) {
+      return { key: "hintShop", floor: this.getShopItemFirstWave(shopIndex) };
+    }
+    const biomeOffset = locationId - BIOME_LOCATION_BASE;
+    const biomeId = Math.floor(biomeOffset / 10);
+    if (biomeOffset >= 0 && BIOME_IDS.has(biomeId)) {
+      return { key: "hintBiomeFloor", floor: (biomeOffset % 10) + 1, biomeId: biomeId as BiomeId };
+    }
+    return null;
+  }
+
   /* --------------------------------------------------------------------- Shop */
 
   getShopItemCount(): number {
@@ -902,6 +1160,15 @@ export class ArchipelagoManager {
     }
     const tiers = SHOP_TIER_WAVES.filter(tierWave => tierWave <= wave).length;
     return Math.min(this.getShopItemCount(), tiers * perTier);
+  }
+
+  /** First floor of the shop tier that unlocks the n-th (1-based) Archipelago shop item */
+  getShopItemFirstWave(index: number): number {
+    const perTier = this.getShopItemsPerTier();
+    if (perTier <= 0) {
+      return SHOP_TIER_WAVES[0];
+    }
+    return SHOP_TIER_WAVES[Math.min(Math.ceil(index / perTier), SHOP_TIER_WAVES.length) - 1];
   }
 
   getShopCostPercent(): number {

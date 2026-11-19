@@ -14,10 +14,17 @@ const port = Number.parseInt(process.argv[2] ?? "38281");
 // Send a Progressive Floor Pass each time a floor multiple of this value is cleared (0 = never, to test the gate)
 const passEvery = Number.parseInt(process.env.PASS_EVERY ?? "5");
 const base = apData.base_id;
-const item = key => base + apData.items.find(i => i.key === key).offset;
+// Item keys of ap-data.json, or BIOME_PASS_<biome id>
+const item = key =>
+  key.startsWith("BIOME_PASS_")
+    ? base + apData.biome_pass_offset + Number.parseInt(key.slice("BIOME_PASS_".length))
+    : base + apData.items.find(i => i.key === key).offset;
 const pokemon = speciesId => base + apData.pokemon_item_offset + speciesId;
 
 const itemNames = Object.fromEntries(apData.items.map(i => [i.name, base + i.offset]));
+for (let biome = 1; biome < 50; biome++) {
+  itemNames[`Biome Pass ${biome}`] = base + apData.biome_pass_offset + biome;
+}
 const locationNames = {};
 for (let w = 1; w < apData.final_wave; w++) {
   locationNames[`Floor ${w} Cleared`] = base + apData.wave_location_offset + w;
@@ -48,12 +55,19 @@ const itemsAt = new Map(
     }),
 );
 
+// BIOME_PASSES=1 turns the Biome Passes on; CHALLENGES='{"SINGLE_TYPE":10}' sets challenges;
+// START_ITEMS="STARTER_LIMIT,BIOME_PASS_1" adds items received from the start
+const biomePasses = process.env.BIOME_PASSES === "1";
+const challenges = JSON.parse(process.env.CHALLENGES ?? "{}");
+const startItems = (process.env.START_ITEMS ?? "").split(",").filter(Boolean);
+
 const received = [
   { item: pokemon(1), location: -2, player: 0, flags: 1 }, // Bulbasaur
   { item: pokemon(4), location: -2, player: 0, flags: 1 }, // Charmander
   { item: pokemon(7), location: -2, player: 0, flags: 1 }, // Squirtle
   { item: item("EXP_CHARM"), location: -2, player: 0, flags: 2 },
   { item: item("POTION"), location: -2, player: 0, flags: 0 },
+  ...startItems.map(key => ({ item: item(key), location: -2, player: 0, flags: 1 })),
 ];
 const checked = new Set();
 
@@ -101,6 +115,8 @@ wss.on("connection", socket => {
                 shop_items_per_visit: 2,
                 shop_cost_percent: 50,
                 final_wave: apData.final_wave,
+                biome_passes: biomePasses,
+                challenges,
               },
               slot_info: {
                 1: { name: packet.name, game: apData.game, type: 1 },

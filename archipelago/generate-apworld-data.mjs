@@ -40,8 +40,16 @@ for (const file of readdirSync(speciesDir)
   for (const block of blocks) {
     const key = /^([A-Z0-9_]+)\]/.exec(block)?.[1];
     const cost = /\bstarterCost:\s*(\d+)/.exec(block)?.[1];
+    // The first generation / types of the block are the species' own (its forms come after)
+    const generation = /\bgeneration:\s*(\d+)/.exec(block)?.[1];
+    const type1 = /\btype1:\s*PokemonType\.([A-Z]+)/.exec(block)?.[1];
+    const type2 = /\btype2:\s*(?:PokemonType\.([A-Z]+)|null|undefined)/.exec(block)?.[1];
     if (key && cost) {
-      starters.push({ key, cost: Number.parseInt(cost) });
+      if (!(generation && type1)) {
+        throw new Error(`Could not parse the generation / types of ${key}`);
+      }
+      const types = [type1, ...(type2 && type2 !== type1 ? [type2] : [])];
+      starters.push({ key, cost: Number.parseInt(cost), generation: Number.parseInt(generation), types });
     }
   }
 }
@@ -58,6 +66,8 @@ const pokemon = starters
     name: `Pokemon - ${toTitle(s.key)}`,
     id: apData.base_id + apData.pokemon_item_offset + speciesIds[s.key],
     cost: s.cost,
+    generation: s.generation,
+    types: s.types,
   }));
 
 // --- Biomes: BiomeId enum and the links of each biome (src/data/balance/biomes/*.ts) ---
@@ -95,6 +105,7 @@ py.push(`WAVE_LOCATION_OFFSET = ${apData.wave_location_offset}`);
 py.push(`SHOP_LOCATION_OFFSET = ${apData.shop_location_offset}`);
 py.push(`BIOME_LOCATION_OFFSET = ${apData.biome_location_offset}`);
 py.push(`POKEMON_ITEM_OFFSET = ${apData.pokemon_item_offset}`);
+py.push(`BIOME_PASS_OFFSET = ${apData.biome_pass_offset}`);
 py.push("# Waves at which the regular shop gets new items (each one unlocks a batch of Archipelago shop items)");
 py.push(`SHOP_TIER_WAVES = [${apData.shop_tier_waves.join(", ")}]`);
 py.push("");
@@ -120,6 +131,13 @@ for (const item of apData.items) {
   );
 }
 py.push("]");
+py.push("");
+py.push("# Starter generation and types (base form), by item name");
+py.push("POKEMON_INFO = {");
+for (const p of pokemon) {
+  py.push(`    ${JSON.stringify(p.name)}: (${p.generation}, ${JSON.stringify(p.types)}),`);
+}
+py.push("}");
 py.push("");
 py.push("# (name, id, starter cost)");
 py.push("POKEMON = [");

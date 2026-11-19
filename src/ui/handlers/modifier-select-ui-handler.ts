@@ -841,8 +841,13 @@ class ModifierOption extends Phaser.GameObjects.Container {
     this.itemText = addTextObject(0, 35, this.modifierTypeOption.type?.name!, TextStyle.PARTY, { align: "center" }); // TODO: is this bang correct?
     this.itemText.setOrigin(0.5, 0);
     this.itemText.setAlpha(0);
+    // Archipelago items are coloured after their multiworld classification instead of their tier
+    const textTint = (this.modifierTypeOption.type as { textTint?: number } | undefined)?.textTint;
     this.itemText.setTint(
-      this.modifierTypeOption.type?.tier ? getModifierTierTextTint(this.modifierTypeOption.type?.tier) : undefined,
+      textTint
+        ?? (this.modifierTypeOption.type?.tier
+          ? getModifierTierTextTint(this.modifierTypeOption.type?.tier)
+          : undefined),
     );
     this.add(this.itemText);
 

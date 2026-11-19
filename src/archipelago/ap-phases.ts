@@ -52,6 +52,8 @@ export class ArchipelagoGatePhase extends Phase {
         }),
       );
 
+    // The menu stays available while waiting (see `UiInputs.buttonMenu`), to save and quit for instance
+    globalScene.disableMenu = false;
     globalScene.ui.setMode(UiMode.MESSAGE).then(() => {
       showWaiting();
       let lastCount = archipelago.getFloorPassCount();
@@ -59,6 +61,16 @@ export class ArchipelagoGatePhase extends Phase {
         delay: 1000,
         loop: true,
         callback: () => {
+          // Left through the menu (back to the title screen): stop waiting
+          if (globalScene.phaseManager.getCurrentPhase() !== this) {
+            this.pollTimer?.remove();
+            this.pollTimer = null;
+            return;
+          }
+          // The menu is open: wait until it is closed
+          if (globalScene.ui.mode !== UiMode.MESSAGE) {
+            return;
+          }
           if (archipelago.canAdvanceFrom(wave)) {
             this.pollTimer?.remove();
             this.pollTimer = null;
@@ -87,14 +99,46 @@ export class ArchipelagoGatePhase extends Phase {
  */
 export class ArchipelagoReceivePhase extends Phase {
   public readonly phaseName = "ArchipelagoReceivePhase";
+  /** Floor 1 of a run: the kept items are handed out first, with a single message for those that need no target */
+  private readonly runStart: boolean;
   private queue: ApPendingDelivery[] = [];
   private messages: string[] = [];
 
+  constructor(runStart = false) {
+    super();
+    this.runStart = runStart;
+  }
+
   start(): void {
     super.start();
+    this.waitForCheckReplies(Date.now());
+  }
 
+  /**
+   * The location of the floor just cleared may hold an item for this player: wait a little for the server's reply
+   * so the item is handed out now and not after the next floor
+   */
+  private waitForCheckReplies(since: number): void {
+    if (archipelago.hasUnconfirmedChecks() && Date.now() - since < CHECK_REPLY_TIMEOUT_MS) {
+      globalScene.time.delayedCall(100, () => this.waitForCheckReplies(since));
+      return;
+    }
+    this.prepare();
+  }
+
+  private prepare(): void {
     this.messages = archipelago.consumeAnnouncements();
+    if (this.runStart) {
+      const kept = archipelago.grantKeptItems();
+      if (kept.length > 0) {
+        this.messages.push(apText("keptItems", { items: kept.join(", ") }));
+      }
+    }
     this.queue = archipelago.getPendingDeliveries();
+    if (this.runStart) {
+      // Fusing Pokémon in the middle of a battle is not supported: DNA Splicers wait for the end of the floor
+      this.queue = this.queue.filter(delivery => !BETWEEN_FLOORS_ITEMS.has(delivery.def.key));
+    }
 
     if (this.messages.length === 0 && this.queue.length === 0) {
       this.end();
@@ -136,14 +180,24 @@ export class ArchipelagoReceivePhase extends Phase {
     }
 
     const type = archipelago.resolveModifierType(delivery.def);
-    if (!type || type instanceof FusePokemonModifierType) {
-      // Unknown or unsupported item for this game version: drop it instead of blocking the queue
+    if (!type) {
+      // Unknown item for this game version: drop it instead of blocking the queue
       archipelago.markDelivered(delivery);
       this.deliverNext();
       return;
     }
-
     const message = archipelago.getReceivedMessage(delivery.item, delivery.def);
+    if (type instanceof FusePokemonModifierType) {
+      archipelago.markDelivered(delivery);
+      if (globalScene.getPlayerParty().length < 2) {
+        // Nothing to fuse: the item is lost for this run
+        audioManager.playSound("se/error");
+        globalScene.ui.showText(`${message}\n${apText("noFusionTarget")}`, null, () => this.deliverNext(), null, true);
+        return;
+      }
+      globalScene.ui.showText(`${message}\n${apText("chooseFusion")}`, null, () => this.selectFusion(type), null, true);
+      return;
+    }
 
     if (
       type instanceof PokemonHeldItemModifierType
@@ -189,6 +243,34 @@ export class ArchipelagoReceivePhase extends Phase {
       () => this.deliverNext(),
       null,
       true,
+    );
+  }
+
+  /** Same party selection flow as buying DNA Splicers in the shop: the first Pokémon chosen absorbs the second */
+  private selectFusion(modifierType: FusePokemonModifierType): void {
+    const party = globalScene.getPlayerParty();
+    globalScene.ui.setMode(
+      UiMode.PARTY,
+      PartyUiMode.SPLICE,
+      -1,
+      (fromSlotIndex: number, spliceSlotIndex: number) => {
+        globalScene.ui.setMode(UiMode.MESSAGE).then(() => {
+          if (
+            spliceSlotIndex !== undefined
+            && fromSlotIndex < 6
+            && spliceSlotIndex < 6
+            && fromSlotIndex !== spliceSlotIndex
+          ) {
+            const modifier = modifierType.newModifier(party[fromSlotIndex], party[spliceSlotIndex]);
+            if (modifier) {
+              globalScene.addModifier(modifier, false, true);
+            }
+          }
+          // Declined: the item was offered once and is not offered again in this run
+          this.deliverNext();
+        });
+      },
+      modifierType.selectFilter,
     );
   }
 
@@ -238,6 +320,12 @@ export class ArchipelagoReceivePhase extends Phase {
     );
   }
 }
+
+/** Items handed out between two floors only, never at the first battle turn of a run */
+const BETWEEN_FLOORS_ITEMS = new Set(["DNA_SPLICERS"]);
+
+/** Longest wait (ms) for the server to confirm the locations just checked */
+const CHECK_REPLY_TIMEOUT_MS = 2000;
 
 /** Status inflicted by each status trap */
 const STATUS_TRAPS: Record<string, StatusEffect> = {

@@ -110,9 +110,8 @@ export class SelectStarterPhase extends Phase {
     overrideModifiers();
     overrideHeldItems(party[0]);
     if (globalScene.gameMode.isArchipelago) {
-      // Permanent Archipelago bonus items received so far are given at the start of every run
+      // The Archipelago items kept for every run are handed out at floor 1 (see TurnInitPhase)
       archipelago.startNewRun();
-      archipelago.grantRunStartBonuses();
     }
     Promise.all(loadPokemonAssets).then(() => {
       audioManager.playBgm(undefined, true);

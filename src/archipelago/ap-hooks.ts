@@ -17,6 +17,8 @@ export interface ApHooks {
   getShopOptions(waveIndex: number, baseCost: number): any[];
   /** Label to display instead of the price when a shop entry was already bought, or null */
   getSoldLabel(modifierType: any): string | null;
+  /** Starter points of an Archipelago team, or null outside the Archipelago mode */
+  getStarterValueLimit(): number | null;
 }
 
 export const apHooks: ApHooks = {
@@ -24,4 +26,5 @@ export const apHooks: ApHooks = {
   restoreSessionState: () => {},
   getShopOptions: () => [],
   getSoldLabel: () => null,
+  getStarterValueLimit: () => null,
 };
