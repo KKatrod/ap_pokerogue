@@ -34,6 +34,9 @@ END_BIOME = 50
 
 # Starting Pokemon: at least one costs this much (to avoid a too weak starting team)
 STRONG_STARTER_MIN_COST = 5
+# Starting Pokemon (2 or more): their average cost stays within these bounds (not too many expensive ones)
+STARTER_AVERAGE_COST_MIN = 3
+STARTER_AVERAGE_COST_MAX = 3.5
 
 # Relative weights of the egg fillers
 EGG_WEIGHTS = {
@@ -68,7 +71,7 @@ CONSUMABLE_FILLERS = [name for name, _id, cat, _cls in ITEMS if cat == "consumab
 EFFECT_FILLERS = [name for name, _id, cat, _cls in ITEMS if cat == "effect"]
 TRAPS = [name for name, _id, cat, _cls in ITEMS if cat == "trap"]
 
-MAX_SHOP_ITEMS = 150 * 3
+MAX_SHOP_ITEMS = 350
 BLOCK_COUNT = FINAL_WAVE // GATE_INTERVAL
 
 
@@ -265,8 +268,9 @@ class PokeRogueWorld(World):
 
     def pick_starting_pokemon(self) -> List[str]:
         """
-        Random starting Pokemon: none above the maximum cost, at least one strong one, and no type appearing twice
-        (with Mono Type, only the other type of each Pokemon counts).
+        Random starting Pokemon: none above the maximum cost, at least one strong one, no type appearing twice
+        (with Mono Type, only the other type of each Pokemon counts), and with 2 Pokemon or more an average cost
+        between 3 and 3.5.
         """
         count = self.options.starting_pokemon.value
         max_cost = self.options.starting_pokemon_max_cost.value
@@ -282,22 +286,38 @@ class PokeRogueWorld(World):
         def types(pokemon: str) -> Set[str]:
             return set(POKEMON_INFO[pokemon][1]) - {mono_type}
 
+        costs = dict(allowed)
+        cheapest = min(costs.values())
+        # Total cost bounds (no bound for a single Pokemon: it is the strong one)
+        min_total = STARTER_AVERAGE_COST_MIN * count if count > 1 else 0
+        max_total = STARTER_AVERAGE_COST_MAX * count if count > 1 else float("inf")
+
         best: List[str] = []
+        best_cost_ok = False
         for _attempt in range(200):
             chosen = [self.random.choice(strong)]
             used = types(chosen[0])
+            total = costs[chosen[0]]
             others = [name for name, _cost in allowed if name != chosen[0]]
             self.random.shuffle(others)
             for name in others:
                 if len(chosen) >= count:
                     break
+                # Keep room for the Pokemon still to pick, at the cheapest cost
+                if total + costs[name] + cheapest * (count - len(chosen) - 1) > max_total:
+                    continue
                 if not types(name) & used:
                     chosen.append(name)
                     used |= types(name)
-            if len(chosen) > len(best):
-                best = chosen
-            if len(best) >= count:
+                    total += costs[name]
+            cost_ok = min_total <= total <= max_total
+            if (len(chosen), cost_ok) > (len(best), best_cost_ok):
+                best, best_cost_ok = chosen, cost_ok
+            if len(best) >= count and best_cost_ok:
                 break
+        if len(best) >= count and not best_cost_ok:
+            logging.warning(f"PokeRogue ({self.player_name}): the starting Pokemon could not be given an average "
+                            f"cost between {STARTER_AVERAGE_COST_MIN} and {STARTER_AVERAGE_COST_MAX}")
         if len(best) < count:
             # Not enough Pokemon with types not used yet (narrow challenges): complete with any other one
             logging.warning(f"PokeRogue ({self.player_name}): only {len(best)} starting Pokemon with different "

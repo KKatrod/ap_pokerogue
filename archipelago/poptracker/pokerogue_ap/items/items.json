@@ -245,7 +245,7 @@
     "img": "images/settings/shop_count.png",
     "codes": "shop_count",
     "min_quantity": 0,
-    "max_quantity": 150,
+    "max_quantity": 350,
     "increment": 1
   },
   {
@@ -254,7 +254,7 @@
     "img": "images/settings/per_tier.png",
     "codes": "shop_per_tier",
     "min_quantity": 0,
-    "max_quantity": 150,
+    "max_quantity": 50,
     "increment": 1
   },
   {

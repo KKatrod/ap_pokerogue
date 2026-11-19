@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 from Options import Choice, DeathLink, DefaultOnToggle, PerGameCommonOptions, Range, Toggle
 
+from .data import POKEMON
+
 
 class LocationMode(Choice):
     """Which floor checks exist.
@@ -20,8 +22,8 @@ class ShopItemCount(Range):
     """Total number of Archipelago items that can be bought in the shops (one location each)."""
     display_name = "Shop Item Count"
     range_start = 0
-    range_end = 150
-    default = 30
+    range_end = 350
+    default = 70
 
 
 class ShopItemsPerTier(Range):
@@ -30,7 +32,7 @@ class ShopItemsPerTier(Range):
     The total is limited to 7 times this value."""
     display_name = "Shop Items Per Tier"
     range_start = 0
-    range_end = 150
+    range_end = 50
     default = 10
 
 
@@ -52,7 +54,8 @@ class ShopCostPercent(Range):
 
 class StartingPokemon(Range):
     """Number of random starter Pokemon you begin with ("random" picks a number between 1 and 10).
-    No type appears twice among them (with Mono Type, only their other type counts)."""
+    No type appears twice among them (with Mono Type, only their other type counts), and with 2 or more their
+    average starter cost stays between 3 and 3.5."""
     display_name = "Starting Pokemon"
     range_start = 1
     range_end = 10
@@ -110,10 +113,10 @@ class TrapPercent(Range):
 
 
 class PokemonInPool(Range):
-    """Number of starter Pokemon unlocks shuffled into the multiworld."""
+    """Number of starter Pokemon unlocks shuffled into the multiworld (at most every PokeRogue starter)."""
     display_name = "Pokemon In Pool"
     range_start = 0
-    range_end = 300
+    range_end = len(POKEMON)  # every PokeRogue starter
     default = 40
 
 

@@ -5,7 +5,7 @@
 -- Defaults of the apworld options (replaced by slot_data when connected)
 DEFAULT_SETTINGS = {
     location_mode = 0,   -- 0 floors, 1 biome_floors, 2 both
-    shop_count = 30,
+    shop_count = 70,
     shop_per_tier = 10,
     shop_per_visit = 1,
     biome_passes = false,

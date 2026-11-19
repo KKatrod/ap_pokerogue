@@ -36,7 +36,8 @@ GATE = data["GATE_INTERVAL"]
 BLOCK_COUNT = FINAL_WAVE // GATE
 TOWN, PLAINS, END = 0, 1, 50
 ITEM_IDS = {name: item_id for name, item_id, _cat, _cls in data["ITEMS"]}
-MAX_SHOP_ITEMS = 150  # ShopItemCount.range_end in options.py
+MAX_SHOP_ITEMS = 350  # ShopItemCount.range_end in options.py
+MAX_SHOP_ITEMS_PER_TIER = 50  # ShopItemsPerTier.range_end in options.py
 
 
 def compute_biome_depths():
@@ -183,7 +184,7 @@ def items_json():
          "codes": "shop_count", "min_quantity": 0, "max_quantity": MAX_SHOP_ITEMS, "increment": 1},
         {"name": "Shop Items Per Tier (0: all from floor 1)", "type": "consumable",
          "img": "images/settings/per_tier.png", "codes": "shop_per_tier", "min_quantity": 0,
-         "max_quantity": MAX_SHOP_ITEMS, "increment": 1},
+         "max_quantity": MAX_SHOP_ITEMS_PER_TIER, "increment": 1},
         {"name": "Shop Items Per Visit", "type": "consumable", "img": "images/settings/per_visit.png",
          "codes": "shop_per_visit", "min_quantity": 1, "max_quantity": 3, "increment": 1},
         {"name": "Biome Passes (option)", "type": "toggle", "img": "images/settings/biome_passes.png",
