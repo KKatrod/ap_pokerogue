@@ -10,7 +10,6 @@ traps. Goal: clear floor 200.
 Item / location ids come from data.py, generated from the game sources
 (node archipelago/generate-apworld-data.mjs).
 """
-import math
 from collections import deque
 import logging
 from typing import Dict, List, Optional, Set
@@ -158,25 +157,18 @@ for _biome_id in sorted(BIOME_DEPTHS):
         LOCATION_TABLE[biome_location_name(BIOME_NAMES[_biome_id], _floor)] = biome_location_id(_biome_id, _floor)
 
 
-def shop_item_wave(index: int, per_tier: int, per_visit: int) -> Optional[int]:
+def shop_item_wave(index: int, per_tier: int) -> Optional[int]:
     """
-    Earliest floor whose shop offers the given (1-based) shop item, mirroring the game client: the items are
-    unlocked by batches of `per_tier` each time the regular shop gets new items (all at once if `per_tier` is 0),
-    and each shop offers the first `per_visit` items not bought yet. Shops are closed on floors multiple of 10.
-    @returns None if the item can never be offered
+    First floor of the shop tier that unlocks the given (1-based) shop item, like the game client: the items are
+    unlocked by batches of `per_tier` each time the regular shop gets new items (all at once if `per_tier` is 0).
+    Each shop only offers the first `shop_items_per_visit` items not bought yet, but bought items stay bought from
+    one run to the next, so over enough runs every item of the tier can be bought from that floor on.
+    @returns None if the item is never unlocked (past the last tier)
     """
-    tier, position = ((index - 1) // per_tier, (index - 1) % per_tier + 1) if per_tier > 0 else (0, index)
+    tier = (index - 1) // per_tier if per_tier > 0 else 0
     if tier >= len(SHOP_TIER_WAVES):
         return None
-    visit = math.ceil(position / per_visit)
-    wave = SHOP_TIER_WAVES[tier]
-    while wave < FINAL_WAVE:
-        if wave % GATE_INTERVAL:
-            visit -= 1
-            if visit == 0:
-                return wave
-        wave += 1
-    return None
+    return SHOP_TIER_WAVES[tier]
 
 
 class PokeRogueItem(Item):
@@ -218,12 +210,10 @@ class PokeRogueWorld(World):
         # The Limited Support challenge can remove the shop
         if self.options.limited_support.value in (LimitedSupport.option_no_shop, LimitedSupport.option_both):
             return 0
+        # Only the items unlocked by one of the shop tiers exist (at most 7 times shop_items_per_tier)
         per_tier = self.options.shop_items_per_tier.value
-        per_visit = self.options.shop_items_per_visit.value
-        count = 0
-        while count < self.options.shop_item_count.value and shop_item_wave(count + 1, per_tier, per_visit):
-            count += 1
-        return count
+        count = self.options.shop_item_count.value
+        return min(count, len(SHOP_TIER_WAVES) * per_tier) if per_tier > 0 else count
 
     def create_item(self, name: str) -> Item:
         if name == VICTORY:
@@ -365,10 +355,10 @@ class PokeRogueWorld(World):
                     if biome_passes and biome_id in BIOME_PASSES:
                         location.access_rule = lambda state, b=biome_id: can_reach_biome(state, self.player, b)
 
+        # Shop items: available from the block of their tier's first floor (over several runs if needed)
         per_tier = self.options.shop_items_per_tier.value
-        per_visit = self.options.shop_items_per_visit.value
         for index in range(1, self.get_shop_item_count() + 1):
-            wave = shop_item_wave(index, per_tier, per_visit)
+            wave = shop_item_wave(index, per_tier)
             self.add_location(blocks[(wave - 1) // GATE_INTERVAL], shop_location_name(index))
 
         goal_region = blocks[-1]

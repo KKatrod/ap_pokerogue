@@ -66,18 +66,10 @@ Elle suit l'apworld (`__init__.py`) :
 - **Shop** : la boutique débloque `shop_items_per_tier` items à chaque tier de la boutique normale (étages 1,
   21, 51, 81, 111, 141 et 171 ; tous à l'étage 1 si la valeur est 0). L'onglet a une case par tier. Un item
   n'apparaît que dans son tier : chaque tier contient tous les items qu'il peut recevoir, mais le tracker masque
-  ceux d'un autre tier avec les réglages de la seed. `Shop Item n` est disponible dès le bloc de
-  `shop_item_wave(n, shop_items_per_tier, shop_items_per_visit)` (même calcul qu'en jeu, réécrit en Lua dans
-  `scripts/logic.lua`). C'est la règle de l'apworld, qui ne regarde qu'une seule run : chaque boutique ne
-  propose que `shop_items_per_visit` items, et il n'y a pas de boutique sur les étages multiples de 10.
-  Les items au-delà de `shop_item_count` sont masqués.
-
-  Règle propre au tracker : les items achetés le restent d'une run à l'autre, et chaque boutique propose les
-  premiers items pas encore achetés. Plusieurs runs permettent donc d'acheter tous les items d'un tier dès que
-  son premier étage est accessible. Ces items sont affichés **en jaune** (hors logique). Exemple avec 30 items
-  par tier, 3 par visite et 11 Floor Passes : dans le Tier 5 (à partir de l'étage 111), les items 121 à 147 sont
-  verts, car une run suffit pour les acheter aux étages 111 à 119. Les items 148 à 150 sont jaunes : dans une
-  seule run, ils n'arrivent qu'à l'étage 121, ce qui demande un 12ᵉ Floor Pass.
+  ceux d'un autre tier avec les réglages de la seed. `Shop Item n` est en logique dès que le premier étage de son
+  tier est accessible (`shop_item_wave` de l'apworld, réécrit en Lua dans `scripts/logic.lua`). Une boutique ne
+  propose que `shop_items_per_visit` items, mais les achats restent acquis d'une run à l'autre : plusieurs runs
+  permettent donc d'acheter tous les items du tier. Les items au-delà de `shop_item_count` sont masqués.
 
 - **Biome Passes** (option `biome_passes`) : un biome n'est accessible que par un chemin depuis Town dont
   chaque biome a son Biome Pass. Il faut aussi un Floor Pass par changement de biome (`can_reach_biome` de

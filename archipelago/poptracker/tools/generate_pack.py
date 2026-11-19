@@ -268,9 +268,7 @@ def shop_locations(centres):
             "name": shop_tier_name(tier),
             "visibility_rules": [f"$shop_tier_exists|{tier}"],
             "sections": [
-                {"name": f"Shop Item {n}",
-                 # in logic within one run (apworld rule), else a sequence break over several runs
-                 "access_rules": [f"$shop_tier_reachable|{n},[$shop_reachable|{n}]"],
+                {"name": f"Shop Item {n}", "access_rules": [f"$shop_reachable|{n}"],
                  "visibility_rules": [f"$shop_in_tier|{tier}_{n}"]}
                 for n in shop_tier_items(tier)
             ],
