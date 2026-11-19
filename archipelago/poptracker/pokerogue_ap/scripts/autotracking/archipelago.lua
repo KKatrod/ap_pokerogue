@@ -3,6 +3,19 @@
 
 CUR_INDEX = -1
 SLOT_DATA = nil
+local applying_settings = false
+
+-- A location id maps to one section ("@Location/Section"), or to several (a shop item is listed in each tier
+-- it can belong to)
+local function each_section(codes, callback)
+    if type(codes) == "table" then
+        for _, code in ipairs(codes) do
+            callback(code)
+        end
+    elseif codes then
+        callback(codes)
+    end
+end
 
 local function reset_items()
     for _, v in pairs(ITEM_MAPPING) do
@@ -18,11 +31,13 @@ local function reset_items()
 end
 
 local function reset_locations()
-    for _, code in pairs(LOCATION_MAPPING) do
-        local obj = Tracker:FindObjectForCode(code)
-        if obj then
-            obj.AvailableChestCount = obj.ChestCount
-        end
+    for _, codes in pairs(LOCATION_MAPPING) do
+        each_section(codes, function(code)
+            local obj = Tracker:FindObjectForCode(code)
+            if obj then
+                obj.AvailableChestCount = obj.ChestCount
+            end
+        end)
     end
 end
 
@@ -34,17 +49,37 @@ local function slot_number(slot_data, key, default)
     return tonumber(value) or default
 end
 
+-- Shows the options of the slot (or the defaults when not connected)
+local function apply_settings()
+    applying_settings = true
+    if SLOT_DATA then
+        set_settings(
+            slot_number(SLOT_DATA, "location_mode", DEFAULT_SETTINGS.location_mode),
+            slot_number(SLOT_DATA, "shop_item_count", DEFAULT_SETTINGS.shop_count),
+            slot_number(SLOT_DATA, "shop_items_per_tier", DEFAULT_SETTINGS.shop_per_tier),
+            slot_number(SLOT_DATA, "shop_items_per_visit", DEFAULT_SETTINGS.shop_per_visit),
+            slot_number(SLOT_DATA, "biome_passes", 0) ~= 0)
+    end
+    applying_settings = false
+end
+
+-- Once the server sent the options, the settings cannot be changed by hand: a click is undone
+local function on_setting_changed(_code)
+    if SLOT_DATA and not applying_settings then
+        apply_settings()
+    end
+end
+
+for _, code in ipairs({ "location_mode", "biome_passes", "shop_count", "shop_per_tier", "shop_per_visit" }) do
+    ScriptHost:AddWatchForCode("lock setting " .. code, code, on_setting_changed)
+end
+
 function onClear(slot_data)
     SLOT_DATA = slot_data
     CUR_INDEX = -1
     reset_locations()
     reset_items()
-    set_settings(
-        slot_number(slot_data, "location_mode", DEFAULT_SETTINGS.location_mode),
-        slot_number(slot_data, "shop_item_count", DEFAULT_SETTINGS.shop_count),
-        slot_number(slot_data, "shop_items_per_tier", DEFAULT_SETTINGS.shop_per_tier),
-        slot_number(slot_data, "shop_items_per_visit", DEFAULT_SETTINGS.shop_per_visit),
-        slot_number(slot_data, "biome_passes", 0) ~= 0)
+    apply_settings()
 end
 
 function onItem(index, item_id, item_name, player_number)
@@ -68,14 +103,12 @@ function onItem(index, item_id, item_name, player_number)
 end
 
 function onLocation(location_id, location_name)
-    local code = LOCATION_MAPPING[location_id]
-    if not code then
-        return
-    end
-    local obj = Tracker:FindObjectForCode(code)
-    if obj and obj.AvailableChestCount > 0 then
-        obj.AvailableChestCount = obj.AvailableChestCount - 1
-    end
+    each_section(LOCATION_MAPPING[location_id], function(code)
+        local obj = Tracker:FindObjectForCode(code)
+        if obj and obj.AvailableChestCount > 0 then
+            obj.AvailableChestCount = obj.AvailableChestCount - 1
+        end
+    end)
 end
 
 Archipelago:AddClearHandler("pokerogue clear handler", onClear)

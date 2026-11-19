@@ -92,8 +92,26 @@ def block_name(block):
     return f"Floors {first}-{last}"
 
 
-def shop_group_name(group):
-    return f"Shop Items {group * 10 + 1}-{group * 10 + 10}"
+TIER_COUNT = len(data["SHOP_TIER_WAVES"])
+
+
+def shop_tier_name(tier):
+    return f"Shop Tier {tier + 1}"
+
+
+def shop_tier_floors(tier):
+    """Floors of the regular shop tier: from its first wave to the floor before the next tier."""
+    waves = data["SHOP_TIER_WAVES"]
+    last = waves[tier + 1] - 1 if tier + 1 < len(waves) else FINAL_WAVE - 1
+    return waves[tier], last
+
+
+def shop_tier_items(tier):
+    """Shop items that can belong to the tier for some shop_items_per_tier value: every item for the first tier
+    (per tier 0: all from floor 1), items k+1 to 50*(k+1) for tier k."""
+    if tier == 0:
+        return range(1, MAX_SHOP_ITEMS + 1)
+    return range(tier + 1, min(MAX_SHOP_ITEMS, MAX_SHOP_ITEMS_PER_TIER * (tier + 1)) + 1)
 
 
 def write(path, content):
@@ -242,17 +260,21 @@ def biome_locations(grid_centres, chart_positions):
 
 
 def shop_locations(centres):
+    """One location per regular shop tier; its sections are shown only for the items of the tier with the slot's
+    shop_items_per_tier (scripts/logic.lua)."""
     locations = []
-    for group in range(MAX_SHOP_ITEMS // 10):
+    for tier in range(TIER_COUNT):
         locations.append({
-            "name": shop_group_name(group),
-            "visibility_rules": [f"$shop_exists|{group * 10 + 1}"],
+            "name": shop_tier_name(tier),
+            "visibility_rules": [f"$shop_tier_exists|{tier}"],
             "sections": [
-                {"name": f"Shop Item {n}", "access_rules": [f"$shop_reachable|{n}"],
-                 "visibility_rules": [f"$shop_exists|{n}"]}
-                for n in range(group * 10 + 1, group * 10 + 11)
+                {"name": f"Shop Item {n}",
+                 # in logic within one run (apworld rule), else a sequence break over several runs
+                 "access_rules": [f"$shop_tier_reachable|{n},[$shop_reachable|{n}]"],
+                 "visibility_rules": [f"$shop_in_tier|{tier}_{n}"]}
+                for n in shop_tier_items(tier)
             ],
-            "map_locations": [{"map": "shop", "x": centres[group][0], "y": centres[group][1]}],
+            "map_locations": [{"map": "shop", "x": centres[tier][0], "y": centres[tier][1]}],
         })
     return locations
 
@@ -266,9 +288,10 @@ def location_mapping_lua():
     for wave in range(1, FINAL_WAVE):
         block = (wave - 1) // GATE
         lines.append(f'  [{BASE_ID + data["WAVE_LOCATION_OFFSET"] + wave}] = "@{block_name(block)}/Floor {wave} Cleared",')
+    # A shop item is listed in every tier it can belong to (only the one of the slot's settings is shown)
     for n in range(1, MAX_SHOP_ITEMS + 1):
-        group = (n - 1) // 10
-        lines.append(f'  [{BASE_ID + data["SHOP_LOCATION_OFFSET"] + n}] = "@{shop_group_name(group)}/Shop Item {n}",')
+        codes = ", ".join(f'"@{shop_tier_name(t)}/Shop Item {n}"' for t in range(TIER_COUNT) if n in shop_tier_items(t))
+        lines.append(f'  [{BASE_ID + data["SHOP_LOCATION_OFFSET"] + n}] = {{{codes}}},')
     for biome_id in sorted(DEPTHS):
         for floor in biome_floors(biome_id):
             location_id = BASE_ID + data["BIOME_LOCATION_OFFSET"] + biome_id * 10 + floor - 1
@@ -352,14 +375,16 @@ def main():
         [(BIOME_NAMES[b], f"{block_name(DEPTHS[b])} - {passes_label(DEPTHS[b])}", block_color(DEPTHS[b]))
          for b in BIOMES], 5, 260, 130)
     shop_centres = grid_map(
-        "images/maps/shop.png", "Archipelago shop items (by groups of 10)",
-        [(shop_group_name(g), "", (120, 95, 50)) for g in range(MAX_SHOP_ITEMS // 10)], 5, 240, 130)
+        "images/maps/shop.png", "Archipelago shop items - by tier of the regular shop",
+        [(f"{shop_tier_name(t)}: floors {shop_tier_floors(t)[0]}-{shop_tier_floors(t)[1]}",
+          f"unlocked on floor {shop_tier_floors(t)[0]}", block_color((shop_tier_floors(t)[0] - 1) // GATE))
+         for t in range(TIER_COUNT)], 4, 330, 170)
 
     maps = [
         {"name": "floors", "location_size": 56, "location_border_thickness": 4, "img": "images/maps/floors.png"},
         {"name": "biomes_grid", "location_size": 52, "location_border_thickness": 4,
          "img": "images/maps/biomes_grid.png"},
-        {"name": "shop", "location_size": 56, "location_border_thickness": 4, "img": "images/maps/shop.png"},
+        {"name": "shop", "location_size": 64, "location_border_thickness": 4, "img": "images/maps/shop.png"},
     ]
     if chart_positions is not None:
         size = max(24, round(min(chart_size) / 30))
@@ -407,7 +432,7 @@ def main():
                     "type": "itemgrid", "item_margin": "3,3", "item_size": 36,
                     "rows": [[biome_pass_code(b) for b in BIOME_PASSES[i:i + 6]]
                              for i in range(0, len(BIOME_PASSES), 6)]}},
-                {"type": "group", "header": "Settings (slot_data)", "content": {
+                {"type": "group", "header": "Settings (from the server)", "content": {
                     "type": "itemgrid", "item_margin": "4,4", "item_size": 48,
                     "rows": [["location_mode", "biome_passes"], ["shop_count", "shop_per_tier", "shop_per_visit"]]}},
             ],

@@ -30,7 +30,7 @@ Onglets :
 |---|---|
 | **Floors** | Une case par bloc de 10 étages (`Floors 1-10` … `Floors 191-199`) avec les checks `Floor N Cleared` (N = 1 à 199). |
 | **Biomes** | Un marqueur par biome avec ses checks `<Biome> - Floor 1` à `<Biome> - Floor 10` (`End` : étages 1 à 9 ; le 10ᵉ est le boss final, l'objectif). |
-| **Shop** | Les checks `Shop Item N`, par groupes de 10. |
+| **Shop** | Les checks `Shop Item N`, regroupés par tier de la boutique (Tier 1 : étages 1-20, Tier 2 : 21-50, 51-80, 81-110, 111-140, 141-170, Tier 7 : 171-199). |
 
 Les variantes viennent de `slot_data.location_mode`, appliqué à la connexion :
 
@@ -40,10 +40,11 @@ Les variantes viennent de `slot_data.location_mode`, appliqué à la connexion :
 | `1` (`biome_floors`) | Biomes + Shop |
 | `2` (`both`) | Floors + Biomes + Shop |
 
-Le panneau *Settings (slot_data)* montre les valeurs lues : mode (FL, BI, F+B), `biome_passes` (BP, allumé
-si l'option est active), `shop_item_count` (SH), `shop_items_per_tier` (/T) et `shop_items_per_visit` (/V).
+Le panneau *Settings (from the server)* montre les valeurs lues dans `slot_data` : mode (FL, BI, F+B),
+`biome_passes` (BP, allumé si l'option est active), `shop_item_count` (SH), `shop_items_per_tier` (/T) et
+`shop_items_per_visit` (/V). Une fois connecté, ces réglages viennent du serveur et un clic dessus est annulé.
 Sans connexion, on peut les régler à la main (clic gauche / clic droit). Les valeurs par défaut sont celles de
-l'apworld (floors, pas de Biome Passes, 30, 10, 1).
+l'apworld (floors, pas de Biome Passes, 70, 10, 1).
 
 Objets suivis :
 
@@ -62,9 +63,21 @@ Elle suit l'apworld (`__init__.py`) :
 - **Biomes** : les étages d'un biome sont disponibles dès le premier bloc où ce biome peut être atteint
   (`BIOME_DEPTHS` : parcours en largeur depuis Town sur les liens de biomes de `data.py` ; End est forcé au
   bloc 19). L'onglet affiche pour chaque biome ce bloc et le nombre de passes demandé.
-- **Shop** : `Shop Item n` est disponible dès le bloc de `shop_item_wave(n, shop_items_per_tier,
-  shop_items_per_visit)` (même calcul qu'en jeu, réécrit en Lua dans `scripts/logic.lua`). Les items au-delà
-  de `shop_item_count` sont masqués.
+- **Shop** : la boutique débloque `shop_items_per_tier` items à chaque tier de la boutique normale (étages 1,
+  21, 51, 81, 111, 141 et 171 ; tous à l'étage 1 si la valeur est 0). L'onglet a une case par tier. Un item
+  n'apparaît que dans son tier : chaque tier contient tous les items qu'il peut recevoir, mais le tracker masque
+  ceux d'un autre tier avec les réglages de la seed. `Shop Item n` est disponible dès le bloc de
+  `shop_item_wave(n, shop_items_per_tier, shop_items_per_visit)` (même calcul qu'en jeu, réécrit en Lua dans
+  `scripts/logic.lua`). C'est la règle de l'apworld, qui ne regarde qu'une seule run : chaque boutique ne
+  propose que `shop_items_per_visit` items, et il n'y a pas de boutique sur les étages multiples de 10.
+  Les items au-delà de `shop_item_count` sont masqués.
+
+  Règle propre au tracker : les items achetés le restent d'une run à l'autre, et chaque boutique propose les
+  premiers items pas encore achetés. Plusieurs runs permettent donc d'acheter tous les items d'un tier dès que
+  son premier étage est accessible. Ces items sont affichés **en jaune** (hors logique). Exemple avec 30 items
+  par tier, 3 par visite et 11 Floor Passes : dans le Tier 5 (à partir de l'étage 111), les items 121 à 147 sont
+  verts, car une run suffit pour les acheter aux étages 111 à 119. Les items 148 à 150 sont jaunes : dans une
+  seule run, ils n'arrivent qu'à l'étage 121, ce qui demande un 12ᵉ Floor Pass.
 
 - **Biome Passes** (option `biome_passes`) : un biome n'est accessible que par un chemin depuis Town dont
   chaque biome a son Biome Pass. Il faut aussi un Floor Pass par changement de biome (`can_reach_biome` de

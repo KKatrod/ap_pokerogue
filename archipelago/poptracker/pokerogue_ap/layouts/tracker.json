@@ -87,7 +87,7 @@
       },
       {
         "type": "group",
-        "header": "Settings (slot_data)",
+        "header": "Settings (from the server)",
         "content": {
           "type": "itemgrid",
           "item_margin": "4,4",

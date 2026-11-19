@@ -19,7 +19,7 @@
   },
   {
     "name": "shop",
-    "location_size": 56,
+    "location_size": 64,
     "location_border_thickness": 4,
     "img": "images/maps/shop.png"
   }
