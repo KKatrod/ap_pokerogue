@@ -1,0 +1,878 @@
+[
+  {
+    "name": "Floors 1-10",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 1 Cleared"
+      },
+      {
+        "name": "Floor 2 Cleared"
+      },
+      {
+        "name": "Floor 3 Cleared"
+      },
+      {
+        "name": "Floor 4 Cleared"
+      },
+      {
+        "name": "Floor 5 Cleared"
+      },
+      {
+        "name": "Floor 6 Cleared"
+      },
+      {
+        "name": "Floor 7 Cleared"
+      },
+      {
+        "name": "Floor 8 Cleared"
+      },
+      {
+        "name": "Floor 9 Cleared"
+      },
+      {
+        "name": "Floor 10 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 110,
+        "y": 139
+      }
+    ]
+  },
+  {
+    "name": "Floors 11-20",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 11 Cleared"
+      },
+      {
+        "name": "Floor 12 Cleared"
+      },
+      {
+        "name": "Floor 13 Cleared"
+      },
+      {
+        "name": "Floor 14 Cleared"
+      },
+      {
+        "name": "Floor 15 Cleared"
+      },
+      {
+        "name": "Floor 16 Cleared"
+      },
+      {
+        "name": "Floor 17 Cleared"
+      },
+      {
+        "name": "Floor 18 Cleared"
+      },
+      {
+        "name": "Floor 19 Cleared"
+      },
+      {
+        "name": "Floor 20 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 330,
+        "y": 139
+      }
+    ],
+    "access_rules": ["pass:1"]
+  },
+  {
+    "name": "Floors 21-30",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 21 Cleared"
+      },
+      {
+        "name": "Floor 22 Cleared"
+      },
+      {
+        "name": "Floor 23 Cleared"
+      },
+      {
+        "name": "Floor 24 Cleared"
+      },
+      {
+        "name": "Floor 25 Cleared"
+      },
+      {
+        "name": "Floor 26 Cleared"
+      },
+      {
+        "name": "Floor 27 Cleared"
+      },
+      {
+        "name": "Floor 28 Cleared"
+      },
+      {
+        "name": "Floor 29 Cleared"
+      },
+      {
+        "name": "Floor 30 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 550,
+        "y": 139
+      }
+    ],
+    "access_rules": ["pass:2"]
+  },
+  {
+    "name": "Floors 31-40",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 31 Cleared"
+      },
+      {
+        "name": "Floor 32 Cleared"
+      },
+      {
+        "name": "Floor 33 Cleared"
+      },
+      {
+        "name": "Floor 34 Cleared"
+      },
+      {
+        "name": "Floor 35 Cleared"
+      },
+      {
+        "name": "Floor 36 Cleared"
+      },
+      {
+        "name": "Floor 37 Cleared"
+      },
+      {
+        "name": "Floor 38 Cleared"
+      },
+      {
+        "name": "Floor 39 Cleared"
+      },
+      {
+        "name": "Floor 40 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 770,
+        "y": 139
+      }
+    ],
+    "access_rules": ["pass:3"]
+  },
+  {
+    "name": "Floors 41-50",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 41 Cleared"
+      },
+      {
+        "name": "Floor 42 Cleared"
+      },
+      {
+        "name": "Floor 43 Cleared"
+      },
+      {
+        "name": "Floor 44 Cleared"
+      },
+      {
+        "name": "Floor 45 Cleared"
+      },
+      {
+        "name": "Floor 46 Cleared"
+      },
+      {
+        "name": "Floor 47 Cleared"
+      },
+      {
+        "name": "Floor 48 Cleared"
+      },
+      {
+        "name": "Floor 49 Cleared"
+      },
+      {
+        "name": "Floor 50 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 990,
+        "y": 139
+      }
+    ],
+    "access_rules": ["pass:4"]
+  },
+  {
+    "name": "Floors 51-60",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 51 Cleared"
+      },
+      {
+        "name": "Floor 52 Cleared"
+      },
+      {
+        "name": "Floor 53 Cleared"
+      },
+      {
+        "name": "Floor 54 Cleared"
+      },
+      {
+        "name": "Floor 55 Cleared"
+      },
+      {
+        "name": "Floor 56 Cleared"
+      },
+      {
+        "name": "Floor 57 Cleared"
+      },
+      {
+        "name": "Floor 58 Cleared"
+      },
+      {
+        "name": "Floor 59 Cleared"
+      },
+      {
+        "name": "Floor 60 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 110,
+        "y": 289
+      }
+    ],
+    "access_rules": ["pass:5"]
+  },
+  {
+    "name": "Floors 61-70",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 61 Cleared"
+      },
+      {
+        "name": "Floor 62 Cleared"
+      },
+      {
+        "name": "Floor 63 Cleared"
+      },
+      {
+        "name": "Floor 64 Cleared"
+      },
+      {
+        "name": "Floor 65 Cleared"
+      },
+      {
+        "name": "Floor 66 Cleared"
+      },
+      {
+        "name": "Floor 67 Cleared"
+      },
+      {
+        "name": "Floor 68 Cleared"
+      },
+      {
+        "name": "Floor 69 Cleared"
+      },
+      {
+        "name": "Floor 70 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 330,
+        "y": 289
+      }
+    ],
+    "access_rules": ["pass:6"]
+  },
+  {
+    "name": "Floors 71-80",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 71 Cleared"
+      },
+      {
+        "name": "Floor 72 Cleared"
+      },
+      {
+        "name": "Floor 73 Cleared"
+      },
+      {
+        "name": "Floor 74 Cleared"
+      },
+      {
+        "name": "Floor 75 Cleared"
+      },
+      {
+        "name": "Floor 76 Cleared"
+      },
+      {
+        "name": "Floor 77 Cleared"
+      },
+      {
+        "name": "Floor 78 Cleared"
+      },
+      {
+        "name": "Floor 79 Cleared"
+      },
+      {
+        "name": "Floor 80 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 550,
+        "y": 289
+      }
+    ],
+    "access_rules": ["pass:7"]
+  },
+  {
+    "name": "Floors 81-90",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 81 Cleared"
+      },
+      {
+        "name": "Floor 82 Cleared"
+      },
+      {
+        "name": "Floor 83 Cleared"
+      },
+      {
+        "name": "Floor 84 Cleared"
+      },
+      {
+        "name": "Floor 85 Cleared"
+      },
+      {
+        "name": "Floor 86 Cleared"
+      },
+      {
+        "name": "Floor 87 Cleared"
+      },
+      {
+        "name": "Floor 88 Cleared"
+      },
+      {
+        "name": "Floor 89 Cleared"
+      },
+      {
+        "name": "Floor 90 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 770,
+        "y": 289
+      }
+    ],
+    "access_rules": ["pass:8"]
+  },
+  {
+    "name": "Floors 91-100",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 91 Cleared"
+      },
+      {
+        "name": "Floor 92 Cleared"
+      },
+      {
+        "name": "Floor 93 Cleared"
+      },
+      {
+        "name": "Floor 94 Cleared"
+      },
+      {
+        "name": "Floor 95 Cleared"
+      },
+      {
+        "name": "Floor 96 Cleared"
+      },
+      {
+        "name": "Floor 97 Cleared"
+      },
+      {
+        "name": "Floor 98 Cleared"
+      },
+      {
+        "name": "Floor 99 Cleared"
+      },
+      {
+        "name": "Floor 100 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 990,
+        "y": 289
+      }
+    ],
+    "access_rules": ["pass:9"]
+  },
+  {
+    "name": "Floors 101-110",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 101 Cleared"
+      },
+      {
+        "name": "Floor 102 Cleared"
+      },
+      {
+        "name": "Floor 103 Cleared"
+      },
+      {
+        "name": "Floor 104 Cleared"
+      },
+      {
+        "name": "Floor 105 Cleared"
+      },
+      {
+        "name": "Floor 106 Cleared"
+      },
+      {
+        "name": "Floor 107 Cleared"
+      },
+      {
+        "name": "Floor 108 Cleared"
+      },
+      {
+        "name": "Floor 109 Cleared"
+      },
+      {
+        "name": "Floor 110 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 110,
+        "y": 439
+      }
+    ],
+    "access_rules": ["pass:10"]
+  },
+  {
+    "name": "Floors 111-120",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 111 Cleared"
+      },
+      {
+        "name": "Floor 112 Cleared"
+      },
+      {
+        "name": "Floor 113 Cleared"
+      },
+      {
+        "name": "Floor 114 Cleared"
+      },
+      {
+        "name": "Floor 115 Cleared"
+      },
+      {
+        "name": "Floor 116 Cleared"
+      },
+      {
+        "name": "Floor 117 Cleared"
+      },
+      {
+        "name": "Floor 118 Cleared"
+      },
+      {
+        "name": "Floor 119 Cleared"
+      },
+      {
+        "name": "Floor 120 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 330,
+        "y": 439
+      }
+    ],
+    "access_rules": ["pass:11"]
+  },
+  {
+    "name": "Floors 121-130",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 121 Cleared"
+      },
+      {
+        "name": "Floor 122 Cleared"
+      },
+      {
+        "name": "Floor 123 Cleared"
+      },
+      {
+        "name": "Floor 124 Cleared"
+      },
+      {
+        "name": "Floor 125 Cleared"
+      },
+      {
+        "name": "Floor 126 Cleared"
+      },
+      {
+        "name": "Floor 127 Cleared"
+      },
+      {
+        "name": "Floor 128 Cleared"
+      },
+      {
+        "name": "Floor 129 Cleared"
+      },
+      {
+        "name": "Floor 130 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 550,
+        "y": 439
+      }
+    ],
+    "access_rules": ["pass:12"]
+  },
+  {
+    "name": "Floors 131-140",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 131 Cleared"
+      },
+      {
+        "name": "Floor 132 Cleared"
+      },
+      {
+        "name": "Floor 133 Cleared"
+      },
+      {
+        "name": "Floor 134 Cleared"
+      },
+      {
+        "name": "Floor 135 Cleared"
+      },
+      {
+        "name": "Floor 136 Cleared"
+      },
+      {
+        "name": "Floor 137 Cleared"
+      },
+      {
+        "name": "Floor 138 Cleared"
+      },
+      {
+        "name": "Floor 139 Cleared"
+      },
+      {
+        "name": "Floor 140 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 770,
+        "y": 439
+      }
+    ],
+    "access_rules": ["pass:13"]
+  },
+  {
+    "name": "Floors 141-150",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 141 Cleared"
+      },
+      {
+        "name": "Floor 142 Cleared"
+      },
+      {
+        "name": "Floor 143 Cleared"
+      },
+      {
+        "name": "Floor 144 Cleared"
+      },
+      {
+        "name": "Floor 145 Cleared"
+      },
+      {
+        "name": "Floor 146 Cleared"
+      },
+      {
+        "name": "Floor 147 Cleared"
+      },
+      {
+        "name": "Floor 148 Cleared"
+      },
+      {
+        "name": "Floor 149 Cleared"
+      },
+      {
+        "name": "Floor 150 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 990,
+        "y": 439
+      }
+    ],
+    "access_rules": ["pass:14"]
+  },
+  {
+    "name": "Floors 151-160",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 151 Cleared"
+      },
+      {
+        "name": "Floor 152 Cleared"
+      },
+      {
+        "name": "Floor 153 Cleared"
+      },
+      {
+        "name": "Floor 154 Cleared"
+      },
+      {
+        "name": "Floor 155 Cleared"
+      },
+      {
+        "name": "Floor 156 Cleared"
+      },
+      {
+        "name": "Floor 157 Cleared"
+      },
+      {
+        "name": "Floor 158 Cleared"
+      },
+      {
+        "name": "Floor 159 Cleared"
+      },
+      {
+        "name": "Floor 160 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 110,
+        "y": 589
+      }
+    ],
+    "access_rules": ["pass:15"]
+  },
+  {
+    "name": "Floors 161-170",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 161 Cleared"
+      },
+      {
+        "name": "Floor 162 Cleared"
+      },
+      {
+        "name": "Floor 163 Cleared"
+      },
+      {
+        "name": "Floor 164 Cleared"
+      },
+      {
+        "name": "Floor 165 Cleared"
+      },
+      {
+        "name": "Floor 166 Cleared"
+      },
+      {
+        "name": "Floor 167 Cleared"
+      },
+      {
+        "name": "Floor 168 Cleared"
+      },
+      {
+        "name": "Floor 169 Cleared"
+      },
+      {
+        "name": "Floor 170 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 330,
+        "y": 589
+      }
+    ],
+    "access_rules": ["pass:16"]
+  },
+  {
+    "name": "Floors 171-180",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 171 Cleared"
+      },
+      {
+        "name": "Floor 172 Cleared"
+      },
+      {
+        "name": "Floor 173 Cleared"
+      },
+      {
+        "name": "Floor 174 Cleared"
+      },
+      {
+        "name": "Floor 175 Cleared"
+      },
+      {
+        "name": "Floor 176 Cleared"
+      },
+      {
+        "name": "Floor 177 Cleared"
+      },
+      {
+        "name": "Floor 178 Cleared"
+      },
+      {
+        "name": "Floor 179 Cleared"
+      },
+      {
+        "name": "Floor 180 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 550,
+        "y": 589
+      }
+    ],
+    "access_rules": ["pass:17"]
+  },
+  {
+    "name": "Floors 181-190",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 181 Cleared"
+      },
+      {
+        "name": "Floor 182 Cleared"
+      },
+      {
+        "name": "Floor 183 Cleared"
+      },
+      {
+        "name": "Floor 184 Cleared"
+      },
+      {
+        "name": "Floor 185 Cleared"
+      },
+      {
+        "name": "Floor 186 Cleared"
+      },
+      {
+        "name": "Floor 187 Cleared"
+      },
+      {
+        "name": "Floor 188 Cleared"
+      },
+      {
+        "name": "Floor 189 Cleared"
+      },
+      {
+        "name": "Floor 190 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 770,
+        "y": 589
+      }
+    ],
+    "access_rules": ["pass:18"]
+  },
+  {
+    "name": "Floors 191-199",
+    "visibility_rules": ["floors"],
+    "sections": [
+      {
+        "name": "Floor 191 Cleared"
+      },
+      {
+        "name": "Floor 192 Cleared"
+      },
+      {
+        "name": "Floor 193 Cleared"
+      },
+      {
+        "name": "Floor 194 Cleared"
+      },
+      {
+        "name": "Floor 195 Cleared"
+      },
+      {
+        "name": "Floor 196 Cleared"
+      },
+      {
+        "name": "Floor 197 Cleared"
+      },
+      {
+        "name": "Floor 198 Cleared"
+      },
+      {
+        "name": "Floor 199 Cleared"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "floors",
+        "x": 990,
+        "y": 589
+      }
+    ],
+    "access_rules": ["pass:19"]
+  }
+]

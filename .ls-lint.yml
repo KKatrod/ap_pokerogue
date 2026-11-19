@@ -36,3 +36,4 @@ ignore:
    - .devcontainer
    - "LICENSES"
    - .idea
+   - archipelago/poptracker # PopTracker packs follow their own naming
