@@ -110,16 +110,6 @@ node archipelago/generate-apworld-data.mjs
 
 Le générateur extrait aussi la génération et les types (forme de base) de chaque starter (`POKEMON_INFO`), utilisés pour les types distincts et les challenges Monogénération / Monotype. Les pass de biome ont l'ID `base_id + biome_pass_offset (700) + id du biome`.
 
-## Test local sans multiworld
-
-```bash
-node archipelago/mock-server.mjs
-```
-
-puis se connecter à `localhost:38281` (n'importe quel nom de slot). Le faux serveur donne Bulbizarre, Salamèche, Carapuce, un Charme Exp. et une Potion, et envoie un Passe d'étage à chaque étage multiple de 5 terminé.
-
-Variables d'environnement : `PASS_EVERY` (passe tous les N étages, 0 = jamais), `LOCATION_MODE` (0/1/2, défaut 2), `SHOP_PER_TIER` (défaut 2), `DEATHLINK_AT` (étage après lequel un DeathLink est reçu, 0 = DeathLink désactivé), `ITEMS_AT` (objets envoyés après un étage, ex. `1:TRAP_POISON,EFFECT_STAT_UP;3:MAP,MAP`), `BIOME_PASSES=1` (active les pass de biome), `START_ITEMS` (objets reçus dès la connexion, ex. `STARTER_LIMIT,BIOME_PASS_1`), `CHALLENGES` (JSON, ex. `{"SINGLE_TYPE":10,"INVERSE_BATTLE":1}`). Les pass de biome s'écrivent `BIOME_PASS_<id du biome>`. En mode biome, seuls les étages de la Ville déclenchent ces envois.
-
 ## Fichiers
 
 - `src/archipelago/ap-client.ts` – client du protocole réseau Archipelago (WebSocket).
