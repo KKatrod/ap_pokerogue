@@ -1,0 +1,649 @@
+{
+  "game": "PokeRogue",
+  "version": 2,
+  "base_id": 8571000,
+  "final_wave": 200,
+  "gate_interval": 10,
+  "wave_location_offset": 0,
+  "shop_location_offset": 1000,
+  "pokemon_item_offset": 10000,
+  "shop_tier_waves": [1, 21, 51, 81, 111, 141, 171],
+  "items": [
+    {
+      "offset": 1,
+      "key": "FLOOR_PASS",
+      "name": "Progressive Floor Pass",
+      "category": "gate",
+      "classification": "progression"
+    },
+    {
+      "offset": 2,
+      "key": "STARTER_LIMIT",
+      "name": "Starter Limit +1",
+      "category": "starter_limit",
+      "classification": "useful",
+      "max": 20
+    },
+    {
+      "offset": 100,
+      "key": "POTION",
+      "name": "Potion",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 101,
+      "key": "SUPER_POTION",
+      "name": "Super Potion",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 102,
+      "key": "HYPER_POTION",
+      "name": "Hyper Potion",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 103,
+      "key": "MAX_POTION",
+      "name": "Max Potion",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 104,
+      "key": "FULL_RESTORE",
+      "name": "Full Restore",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 105,
+      "key": "REVIVE",
+      "name": "Revive",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 106,
+      "key": "MAX_REVIVE",
+      "name": "Max Revive",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 107,
+      "key": "FULL_HEAL",
+      "name": "Full Heal",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 108,
+      "key": "SACRED_ASH",
+      "name": "Sacred Ash",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 109,
+      "key": "ETHER",
+      "name": "Ether",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 110,
+      "key": "MAX_ETHER",
+      "name": "Max Ether",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 111,
+      "key": "ELIXIR",
+      "name": "Elixir",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 112,
+      "key": "MAX_ELIXIR",
+      "name": "Max Elixir",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 113,
+      "key": "PP_UP",
+      "name": "PP Up",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 114,
+      "key": "PP_MAX",
+      "name": "PP Max",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 115,
+      "key": "RARE_CANDY",
+      "name": "Rare Candy",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 116,
+      "key": "RARER_CANDY",
+      "name": "Rarer Candy",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 117,
+      "key": "POKEBALL",
+      "name": "5 Poke Balls",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 118,
+      "key": "GREAT_BALL",
+      "name": "5 Great Balls",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 119,
+      "key": "ULTRA_BALL",
+      "name": "5 Ultra Balls",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 120,
+      "key": "ROGUE_BALL",
+      "name": "5 Rogue Balls",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 121,
+      "key": "MASTER_BALL",
+      "name": "Master Ball",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 122,
+      "key": "LURE",
+      "name": "Lure",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 123,
+      "key": "SUPER_LURE",
+      "name": "Super Lure",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 124,
+      "key": "MAX_LURE",
+      "name": "Max Lure",
+      "category": "consumable",
+      "classification": "filler"
+    },
+    {
+      "offset": 125,
+      "key": "NUGGET",
+      "name": "Nugget",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 126,
+      "key": "BIG_NUGGET",
+      "name": "Big Nugget",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 127,
+      "key": "RELIC_GOLD",
+      "name": "Relic Gold",
+      "category": "consumable",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 128,
+      "key": "DNA_SPLICERS",
+      "name": "DNA Splicers",
+      "category": "consumable",
+      "classification": "useful",
+      "persistent": true,
+      "max": 1
+    },
+    {
+      "offset": 200,
+      "key": "LEFTOVERS",
+      "name": "Leftovers",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 201,
+      "key": "SHELL_BELL",
+      "name": "Shell Bell",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 202,
+      "key": "LUCKY_EGG",
+      "name": "Lucky Egg",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 203,
+      "key": "GOLDEN_EGG",
+      "name": "Golden Egg",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 204,
+      "key": "SOOTHE_BELL",
+      "name": "Soothe Bell",
+      "category": "held",
+      "classification": "filler"
+    },
+    {
+      "offset": 205,
+      "key": "SCOPE_LENS",
+      "name": "Scope Lens",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 206,
+      "key": "QUICK_CLAW",
+      "name": "Quick Claw",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 207,
+      "key": "KINGS_ROCK",
+      "name": "King's Rock",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 208,
+      "key": "FOCUS_BAND",
+      "name": "Focus Band",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 209,
+      "key": "WIDE_LENS",
+      "name": "Wide Lens",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 210,
+      "key": "MULTI_LENS",
+      "name": "Multi Lens",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 211,
+      "key": "GRIP_CLAW",
+      "name": "Grip Claw",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 212,
+      "key": "REVIVER_SEED",
+      "name": "Reviver Seed",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 213,
+      "key": "SOUL_DEW",
+      "name": "Soul Dew",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 214,
+      "key": "BATON",
+      "name": "Baton",
+      "category": "held",
+      "classification": "filler",
+      "persistent": true
+    },
+    {
+      "offset": 300,
+      "key": "EXP_SHARE",
+      "name": "EXP. All",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 5
+    },
+    {
+      "offset": 301,
+      "key": "EXP_BALANCE",
+      "name": "EXP. Balance",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 4
+    },
+    {
+      "offset": 302,
+      "key": "OVAL_CHARM",
+      "name": "Oval Charm",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 5
+    },
+    {
+      "offset": 303,
+      "key": "EXP_CHARM",
+      "name": "EXP. Charm",
+      "category": "bonus",
+      "classification": "filler",
+      "max": 99
+    },
+    {
+      "offset": 304,
+      "key": "SUPER_EXP_CHARM",
+      "name": "Super EXP. Charm",
+      "category": "bonus",
+      "classification": "filler",
+      "max": 30
+    },
+    {
+      "offset": 305,
+      "key": "GOLDEN_EXP_CHARM",
+      "name": "Golden EXP. Charm",
+      "category": "bonus",
+      "classification": "filler",
+      "max": 10
+    },
+    {
+      "offset": 306,
+      "key": "AMULET_COIN",
+      "name": "Amulet Coin",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 5
+    },
+    {
+      "offset": 307,
+      "key": "LOCK_CAPSULE",
+      "name": "Lock Capsule",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 1
+    },
+    {
+      "offset": 308,
+      "key": "HEALING_CHARM",
+      "name": "Healing Charm",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 5
+    },
+    {
+      "offset": 309,
+      "key": "CANDY_JAR",
+      "name": "Candy Jar",
+      "category": "bonus",
+      "classification": "filler",
+      "max": 99
+    },
+    {
+      "offset": 310,
+      "key": "BERRY_POUCH",
+      "name": "Berry Pouch",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 3
+    },
+    {
+      "offset": 311,
+      "key": "SHINY_CHARM",
+      "name": "Shiny Charm",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 4
+    },
+    {
+      "offset": 312,
+      "key": "ABILITY_CHARM",
+      "name": "Ability Charm",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 4
+    },
+    {
+      "offset": 313,
+      "key": "IV_SCANNER",
+      "name": "IV Scanner",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 1
+    },
+    {
+      "offset": 314,
+      "key": "MEGA_BRACELET",
+      "name": "Mega Bracelet",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 1
+    },
+    {
+      "offset": 315,
+      "key": "DYNAMAX_BAND",
+      "name": "Dynamax Band",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 1
+    },
+    {
+      "offset": 316,
+      "key": "TERA_ORB",
+      "name": "Tera Orb",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 1
+    },
+    {
+      "offset": 317,
+      "key": "MAP",
+      "name": "Map",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 1
+    },
+    {
+      "offset": 318,
+      "key": "GOLDEN_POKEBALL",
+      "name": "Golden Poke Ball",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 3
+    },
+    {
+      "offset": 319,
+      "key": "COIN_CASE",
+      "name": "Coin Case",
+      "category": "bonus",
+      "classification": "useful",
+      "max": 5
+    },
+    {
+      "offset": 400,
+      "key": "EGG_COMMON",
+      "name": "Common Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 401,
+      "key": "EGG_RARE",
+      "name": "Rare Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 402,
+      "key": "EGG_EPIC",
+      "name": "Epic Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 403,
+      "key": "EGG_LEGENDARY",
+      "name": "Legendary Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 404,
+      "key": "EGG_MYSTERY",
+      "name": "Mystery Egg",
+      "category": "egg",
+      "classification": "filler"
+    },
+    {
+      "offset": 500,
+      "key": "TRAP_MONEY",
+      "name": "Money Loss Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 501,
+      "key": "TRAP_ITEM_DROP",
+      "name": "Item Drop Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 502,
+      "key": "TRAP_POISON",
+      "name": "Poison Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 503,
+      "key": "TRAP_PARALYSIS",
+      "name": "Paralysis Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 504,
+      "key": "TRAP_BURN",
+      "name": "Burn Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 505,
+      "key": "TRAP_SLEEP",
+      "name": "Sleep Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 506,
+      "key": "TRAP_CONFUSION",
+      "name": "Confusion Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 507,
+      "key": "TRAP_STAT_DOWN",
+      "name": "Stat Down Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 600,
+      "key": "EFFECT_STAT_UP",
+      "name": "Stat Boost",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 601,
+      "key": "EFFECT_REFLECT",
+      "name": "Reflect",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 602,
+      "key": "EFFECT_LIGHT_SCREEN",
+      "name": "Light Screen",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 603,
+      "key": "EFFECT_SAFEGUARD",
+      "name": "Safeguard",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 604,
+      "key": "EFFECT_MIST",
+      "name": "Mist",
+      "category": "effect",
+      "classification": "filler"
+    }
+  ],
+  "biome_location_offset": 2000,
+  "biome_pass_offset": 700
+}

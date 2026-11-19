@@ -1,5 +1,7 @@
 import { pokerogueApi } from "#api/api";
 import { loggedInUser } from "#app/account";
+import { apText } from "#app/archipelago/ap-messages";
+import { archipelago } from "#app/archipelago/archipelago";
 import { GameMode, getGameMode } from "#app/game-mode";
 import { audioManager } from "#app/global-audio-manager";
 import { timedEventManager } from "#app/global-event-manager";
@@ -8,10 +10,12 @@ import { speciesDataRegistry } from "#app/global-species-data-registry";
 import { activeOverrides } from "#app/overrides";
 import { Phase } from "#app/phase";
 import { bypassLogin } from "#constants/app-constants";
+import { allChallenges, copyChallenge } from "#data/challenge";
 import { getDailyRunStarters, startDailyEventChallenges } from "#data/daily-run";
 import { modifierTypes } from "#data/data-lists";
 import { Gender } from "#data/gender";
 import { BattleType } from "#enums/battle-type";
+import { Challenges } from "#enums/challenges";
 import { GameModes } from "#enums/game-modes";
 import { ModifierPoolType } from "#enums/modifier-pool-type";
 import { UiMode } from "#enums/ui-mode";
@@ -20,6 +24,7 @@ import { getBiomeKey } from "#field/arena";
 import type { Modifier } from "#modifiers/modifier";
 import { getDailyRunStarterModifiers, regenerateModifierPoolThresholds } from "#modifiers/modifier-type";
 import { vouchers } from "#system/voucher";
+import type { SessionSaveData } from "#types/save-data";
 import type { OptionSelectItem, OptionSelectModeConfig } from "#types/ui-types";
 import { SaveSlotUiMode } from "#ui/save-slot-select-ui-handler";
 import { isLocalServerConnected } from "#utils/common";
@@ -32,6 +37,8 @@ export class TitlePhase extends Phase {
   private loaded = false;
   // TODO: Make `end` take a `GameModes` as a parameter rather than storing it on the class itself
   public gameMode: GameModes;
+  /** Whether the new run is an Archipelago run (a Classic run connected to a multiworld) */
+  private archipelagoRun = false;
 
   async start(): Promise<void> {
     super.start();
@@ -46,6 +53,11 @@ export class TitlePhase extends Phase {
       audioManager.playBgm("halloween_title", true);
     } else {
       audioManager.playBgm("title", true);
+    }
+
+    // Back to the title screen: restore the Classic Pokédex if an Archipelago profile was in use
+    if (archipelago.isActive || globalScene.gameData.isArchipelagoProfileActive) {
+      archipelago.deactivate();
     }
 
     const lastSlot = await this.checkLastSaveSlot();
@@ -144,6 +156,13 @@ export class TitlePhase extends Phase {
               });
             }
           }
+          newGameOptions.push({
+            label: "Archipelago",
+            handler: () => {
+              this.startArchipelago();
+              return true;
+            },
+          });
           // Cancel button = back to title
           newGameOptions.push({
             label: i18next.t("menu:cancel"),
@@ -194,8 +213,89 @@ export class TitlePhase extends Phase {
     await ui.setMode(UiMode.TITLE, config);
   }
 
+  /** Starts a new Archipelago run, connecting to the multiworld first if needed */
+  private startArchipelago(): void {
+    const { ui } = globalScene;
+    const proceed = () => {
+      archipelago.activate();
+      ui.setMode(UiMode.MESSAGE);
+      if (!archipelago.hasUnlockedStarters()) {
+        ui.showText(
+          apText("noStarters"),
+          null,
+          () => {
+            archipelago.deactivate();
+            globalScene.phaseManager.toTitleScreen();
+            super.end();
+          },
+          null,
+          true,
+        );
+        return;
+      }
+      // The starters received so far are shown in the starter selection: no need to announce them in battle
+      archipelago.acknowledgePokemonUnlocks();
+      this.gameMode = GameModes.CLASSIC;
+      this.archipelagoRun = true;
+      ui.clearText();
+      this.end();
+    };
+    const cancel = () => {
+      globalScene.phaseManager.toTitleScreen();
+      super.end();
+    };
+    if (archipelago.isConnected) {
+      proceed();
+      return;
+    }
+    ui.setMode(UiMode.ARCHIPELAGO_CONNECT, { buttonActions: [proceed, cancel] });
+  }
+
+  /** Makes sure the multiworld of an Archipelago session is connected before loading it */
+  private ensureArchipelagoSession(sessionData: SessionSaveData, onReady: () => void): void {
+    const { ui } = globalScene;
+    const backToTitle = () => {
+      globalScene.phaseManager.toTitleScreen();
+      super.end();
+    };
+    const check = () => {
+      const error = archipelago.validateSession(sessionData.archipelago);
+      if (error) {
+        ui.setMode(UiMode.MESSAGE);
+        ui.showText(error, null, backToTitle, null, true);
+        return;
+      }
+      archipelago.activate();
+      onReady();
+    };
+    if (archipelago.isConnected) {
+      check();
+      return;
+    }
+    ui.setMode(UiMode.MESSAGE);
+    ui.showText(
+      apText("needConnection"),
+      null,
+      () => ui.setMode(UiMode.ARCHIPELAGO_CONNECT, { buttonActions: [check, backToTitle] }),
+      null,
+      true,
+    );
+  }
+
   // TODO: Make callers actually wait for the save slot to load
   private async loadSaveSlot(slotId: number): Promise<void> {
+    // Archipelago runs need their multiworld to be connected (and the Archipelago profile active) before loading
+    let sessionData: SessionSaveData | undefined;
+    try {
+      sessionData = await globalScene.gameData.getSession(slotId);
+    } catch (err) {
+      console.error(err);
+    }
+    if (sessionData?.archipelago && !archipelago.isActive) {
+      this.ensureArchipelagoSession(sessionData, () => this.loadSaveSlot(slotId));
+      return;
+    }
+
     // TODO: Do we need to `await` this?
     globalScene.ui.setMode(UiMode.MESSAGE);
     globalScene.ui.resetModeChain();
@@ -351,10 +451,34 @@ export class TitlePhase extends Phase {
     });
   }
 
+  /**
+   * Archipelago: the challenges chosen in the player's options apply to every run, without turning the run into a
+   * Challenge mode run. Nothing changes when no challenge is set.
+   */
+  private applyArchipelagoChallenges(): void {
+    const values = archipelago.getChallengeValues();
+    if (values.length === 0) {
+      return;
+    }
+    const gameMode = globalScene.gameMode;
+    gameMode.challenges = allChallenges.map(c => copyChallenge(c));
+    for (const { name, value } of values) {
+      const challenge = gameMode.challenges.find(c => Challenges[c.id] === name);
+      // Fresh Start makes no sense here: the Archipelago profile already starts from scratch
+      if (challenge && challenge.id !== Challenges.FRESH_START && value <= challenge.maxValue) {
+        challenge.value = value;
+      }
+    }
+  }
+
   // TODO: Refactor this
   end(): void {
     if (!this.loaded && !globalScene.gameMode.isDaily) {
       globalScene.gameMode = getGameMode(this.gameMode);
+      globalScene.gameMode.isArchipelago = this.archipelagoRun;
+      if (this.archipelagoRun) {
+        this.applyArchipelagoChallenges();
+      }
       if (this.gameMode === GameModes.CHALLENGE) {
         globalScene.phaseManager.pushNew("SelectChallengePhase");
       } else {

@@ -1,3 +1,4 @@
+import { apHooks } from "#app/archipelago/ap-hooks";
 import { TYPE_BOOST_ITEM_BOOST_PERCENT } from "#app/constants";
 import { timedEventManager } from "#app/global-event-manager";
 import { globalScene } from "#app/global-scene";
@@ -2624,14 +2625,18 @@ export function getPlayerShopModifierTypeOptionsForWave(waveIndex: number, baseC
     [new ModifierTypeOption(modifierTypeInitObj.SACRED_ASH(), 0, baseCost * 10)],
   ];
 
-  return options
-    .slice(0, Math.ceil(Math.max(waveIndex + 10, 0) / 30))
-    .flat()
-    .filter(shopItem => {
-      const status = new BooleanHolder(true);
-      applyChallenges(ChallengeType.SHOP_ITEM, shopItem, status);
-      return status.value;
-    });
+  return (
+    options
+      .slice(0, Math.ceil(Math.max(waveIndex + 10, 0) / 30))
+      .flat()
+      .filter(shopItem => {
+        const status = new BooleanHolder(true);
+        applyChallenges(ChallengeType.SHOP_ITEM, shopItem, status);
+        return status.value;
+      })
+      // Archipelago shop locations are appended last so they never shift the regular shop indexes
+      .concat(apHooks.getShopOptions(waveIndex, baseCost) as ModifierTypeOption[])
+  );
 }
 
 export function getEnemyBuffModifierForWave(

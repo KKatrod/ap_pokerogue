@@ -1,0 +1,1713 @@
+[
+  {
+    "name": "Town",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 101,
+        "y": 720
+      },
+      {
+        "map": "biomes_grid",
+        "x": 130,
+        "y": 129
+      }
+    ]
+  },
+  {
+    "name": "Plains",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 275,
+        "y": 597
+      },
+      {
+        "map": "biomes_grid",
+        "x": 390,
+        "y": 129
+      }
+    ],
+    "access_rules": ["$biome_reachable|1,[$biome_in_logic|1]"]
+  },
+  {
+    "name": "Grass",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 275,
+        "y": 720
+      },
+      {
+        "map": "biomes_grid",
+        "x": 650,
+        "y": 129
+      }
+    ],
+    "access_rules": ["$biome_reachable|2,[$biome_in_logic|2]"]
+  },
+  {
+    "name": "Lake",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1318,
+        "y": 597
+      },
+      {
+        "map": "biomes_grid",
+        "x": 910,
+        "y": 129
+      }
+    ],
+    "access_rules": ["$biome_reachable|9,[$biome_in_logic|9]"]
+  },
+  {
+    "name": "Metropolis",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 101,
+        "y": 597
+      },
+      {
+        "map": "biomes_grid",
+        "x": 1170,
+        "y": 129
+      }
+    ],
+    "access_rules": ["$biome_reachable|4,[$biome_in_logic|4]"]
+  },
+  {
+    "name": "Beach",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1492,
+        "y": 597
+      },
+      {
+        "map": "biomes_grid",
+        "x": 130,
+        "y": 259
+      }
+    ],
+    "access_rules": ["$biome_reachable|8,[$biome_in_logic|8]"]
+  },
+  {
+    "name": "Construction Site",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 449,
+        "y": 228
+      },
+      {
+        "map": "biomes_grid",
+        "x": 390,
+        "y": 259
+      }
+    ],
+    "access_rules": ["$biome_reachable|26,[$biome_in_logic|26]"]
+  },
+  {
+    "name": "Slum",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 101,
+        "y": 474
+      },
+      {
+        "map": "biomes_grid",
+        "x": 650,
+        "y": 259
+      }
+    ],
+    "access_rules": ["$biome_reachable|30,[$biome_in_logic|30]"]
+  },
+  {
+    "name": "Swamp",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 970,
+        "y": 656
+      },
+      {
+        "map": "biomes_grid",
+        "x": 910,
+        "y": 259
+      }
+    ],
+    "access_rules": ["$biome_reachable|7,[$biome_in_logic|7]"]
+  },
+  {
+    "name": "Tall Grass",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 623,
+        "y": 720
+      },
+      {
+        "map": "biomes_grid",
+        "x": 1170,
+        "y": 259
+      }
+    ],
+    "access_rules": ["$biome_reachable|3,[$biome_in_logic|3]"]
+  },
+  {
+    "name": "Cave",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1318,
+        "y": 720
+      },
+      {
+        "map": "biomes_grid",
+        "x": 130,
+        "y": 389
+      }
+    ],
+    "access_rules": ["$biome_reachable|13,[$biome_in_logic|13]"]
+  },
+  {
+    "name": "Dojo",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 276,
+        "y": 105
+      },
+      {
+        "map": "biomes_grid",
+        "x": 390,
+        "y": 389
+      }
+    ],
+    "access_rules": ["$biome_reachable|20,[$biome_in_logic|20]"]
+  },
+  {
+    "name": "Forest",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 623,
+        "y": 474
+      },
+      {
+        "map": "biomes_grid",
+        "x": 650,
+        "y": 389
+      }
+    ],
+    "access_rules": ["$biome_reachable|5,[$biome_in_logic|5]"]
+  },
+  {
+    "name": "Graveyard",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 970,
+        "y": 843
+      },
+      {
+        "map": "biomes_grid",
+        "x": 910,
+        "y": 389
+      }
+    ],
+    "access_rules": ["$biome_reachable|19,[$biome_in_logic|19]"]
+  },
+  {
+    "name": "Island",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1492,
+        "y": 720
+      },
+      {
+        "map": "biomes_grid",
+        "x": 1170,
+        "y": 389
+      }
+    ],
+    "access_rules": ["$biome_reachable|40,[$biome_in_logic|40]"]
+  },
+  {
+    "name": "Power Plant",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 275,
+        "y": 351
+      },
+      {
+        "map": "biomes_grid",
+        "x": 130,
+        "y": 519
+      }
+    ],
+    "access_rules": ["$biome_reachable|17,[$biome_in_logic|17]"]
+  },
+  {
+    "name": "Sea",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1666,
+        "y": 720
+      },
+      {
+        "map": "biomes_grid",
+        "x": 390,
+        "y": 519
+      }
+    ],
+    "access_rules": ["$biome_reachable|6,[$biome_in_logic|6]"]
+  },
+  {
+    "name": "Abyss",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1145,
+        "y": 843
+      },
+      {
+        "map": "biomes_grid",
+        "x": 650,
+        "y": 519
+      }
+    ],
+    "access_rules": ["$biome_reachable|24,[$biome_in_logic|24]"]
+  },
+  {
+    "name": "Badlands",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1318,
+        "y": 966
+      },
+      {
+        "map": "biomes_grid",
+        "x": 910,
+        "y": 519
+      }
+    ],
+    "access_rules": ["$biome_reachable|12,[$biome_in_logic|12]"]
+  },
+  {
+    "name": "Factory",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 449,
+        "y": 474
+      },
+      {
+        "map": "biomes_grid",
+        "x": 1170,
+        "y": 519
+      }
+    ],
+    "access_rules": ["$biome_reachable|21,[$biome_in_logic|21]"]
+  },
+  {
+    "name": "Ice Cave",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1666,
+        "y": 351
+      },
+      {
+        "map": "biomes_grid",
+        "x": 130,
+        "y": 649
+      }
+    ],
+    "access_rules": ["$biome_reachable|15,[$biome_in_logic|15]"]
+  },
+  {
+    "name": "Jungle",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 623,
+        "y": 105
+      },
+      {
+        "map": "biomes_grid",
+        "x": 390,
+        "y": 649
+      }
+    ],
+    "access_rules": ["$biome_reachable|27,[$biome_in_logic|27]"]
+  },
+  {
+    "name": "Laboratory",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 449,
+        "y": 351
+      },
+      {
+        "map": "biomes_grid",
+        "x": 650,
+        "y": 649
+      }
+    ],
+    "access_rules": ["$biome_reachable|41,[$biome_in_logic|41]"]
+  },
+  {
+    "name": "Meadow",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 970,
+        "y": 474
+      },
+      {
+        "map": "biomes_grid",
+        "x": 910,
+        "y": 649
+      }
+    ],
+    "access_rules": ["$biome_reachable|16,[$biome_in_logic|16]"]
+  },
+  {
+    "name": "Seabed",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1492,
+        "y": 843
+      },
+      {
+        "map": "biomes_grid",
+        "x": 1170,
+        "y": 649
+      }
+    ],
+    "access_rules": ["$biome_reachable|10,[$biome_in_logic|10]"]
+  },
+  {
+    "name": "Temple",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 797,
+        "y": 105
+      },
+      {
+        "map": "biomes_grid",
+        "x": 130,
+        "y": 779
+      }
+    ],
+    "access_rules": ["$biome_reachable|29,[$biome_in_logic|29]"]
+  },
+  {
+    "name": "Desert",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 797,
+        "y": 228
+      },
+      {
+        "map": "biomes_grid",
+        "x": 390,
+        "y": 779
+      }
+    ],
+    "access_rules": ["$biome_reachable|14,[$biome_in_logic|14]"]
+  },
+  {
+    "name": "Fairy Cave",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1492,
+        "y": 351
+      },
+      {
+        "map": "biomes_grid",
+        "x": 650,
+        "y": 779
+      }
+    ],
+    "access_rules": ["$biome_reachable|28,[$biome_in_logic|28]"]
+  },
+  {
+    "name": "Mountain",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1898,
+        "y": 474
+      },
+      {
+        "map": "biomes_grid",
+        "x": 910,
+        "y": 779
+      }
+    ],
+    "access_rules": ["$biome_reachable|11,[$biome_in_logic|11]"]
+  },
+  {
+    "name": "Ruins",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 970,
+        "y": 228
+      },
+      {
+        "map": "biomes_grid",
+        "x": 1170,
+        "y": 779
+      }
+    ],
+    "access_rules": ["$biome_reachable|22,[$biome_in_logic|22]"]
+  },
+  {
+    "name": "Snowy Forest",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1492,
+        "y": 474
+      },
+      {
+        "map": "biomes_grid",
+        "x": 130,
+        "y": 909
+      }
+    ],
+    "access_rules": ["$biome_reachable|31,[$biome_in_logic|31]"]
+  },
+  {
+    "name": "Space",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1145,
+        "y": 228
+      },
+      {
+        "map": "biomes_grid",
+        "x": 390,
+        "y": 909
+      }
+    ],
+    "access_rules": ["$biome_reachable|25,[$biome_in_logic|25]"]
+  },
+  {
+    "name": "Volcano",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1782,
+        "y": 597
+      },
+      {
+        "map": "biomes_grid",
+        "x": 650,
+        "y": 909
+      }
+    ],
+    "access_rules": ["$biome_reachable|18,[$biome_in_logic|18]"]
+  },
+  {
+    "name": "Wasteland",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      },
+      {
+        "name": "Floor 10"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 1666,
+        "y": 908
+      },
+      {
+        "map": "biomes_grid",
+        "x": 910,
+        "y": 909
+      }
+    ],
+    "access_rules": ["$biome_reachable|23,[$biome_in_logic|23]"]
+  },
+  {
+    "name": "End",
+    "visibility_rules": ["biomes"],
+    "sections": [
+      {
+        "name": "Floor 1"
+      },
+      {
+        "name": "Floor 2"
+      },
+      {
+        "name": "Floor 3"
+      },
+      {
+        "name": "Floor 4"
+      },
+      {
+        "name": "Floor 5"
+      },
+      {
+        "name": "Floor 6"
+      },
+      {
+        "name": "Floor 7"
+      },
+      {
+        "name": "Floor 8"
+      },
+      {
+        "name": "Floor 9"
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "biome_chart",
+        "x": 200,
+        "y": 960
+      },
+      {
+        "map": "biomes_grid",
+        "x": 1170,
+        "y": 909
+      }
+    ],
+    "access_rules": ["pass:19"]
+  }
+]

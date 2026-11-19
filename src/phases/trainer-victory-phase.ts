@@ -1,3 +1,4 @@
+import { archipelago } from "#app/archipelago/archipelago";
 import { audioManager } from "#app/global-audio-manager";
 import { timedEventManager } from "#app/global-event-manager";
 import { globalScene } from "#app/global-scene";
@@ -87,6 +88,23 @@ export class TrainerVictoryPhase extends BattlePhase {
           showMessageOrEnd();
         };
         let showMessageOrEnd = () => this.end();
+        // Archipelago: key trainers give a hint about a progression item of the multiworld once beaten
+        const trainerConfig = globalScene.currentBattle.trainer?.config;
+        if (
+          globalScene.gameMode.isArchipelago
+          && archipelago.isHintTrainer(trainerConfig?.trainerType, trainerConfig?.isBoss)
+        ) {
+          const hint = archipelago.takeTrainerHint();
+          if (hint) {
+            showMessageOrEnd = () =>
+              globalScene.ui.showDialogue(
+                hint,
+                globalScene.currentBattle.trainer?.getName(TrainerSlot.TRAINER, true),
+                null,
+                () => this.end(),
+              );
+          }
+        }
         if (victoryMessages?.length > 0) {
           if (globalScene.currentBattle.trainer?.config.hasCharSprite && !globalScene.ui.shouldSkipDialogue(message)) {
             const originalFunc = showMessageOrEnd;

@@ -70,7 +70,10 @@ export class SwitchBiomePhase extends BattlePhase {
               globalScene.lastEnemyTrainer.destroy();
             }
             // Clear previous biome textures now that the transition is complete
-            globalScene.clearBiomeAssets(previousBiome);
+            // (not when staying in the same biome, e.g. an Archipelago player sent back to the Town)
+            if (previousBiome !== this.nextBiome) {
+              globalScene.clearBiomeAssets(previousBiome);
+            }
             this.end();
           },
         });

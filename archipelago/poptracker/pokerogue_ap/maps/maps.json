@@ -1,0 +1,26 @@
+[
+  {
+    "name": "floors",
+    "location_size": 56,
+    "location_border_thickness": 4,
+    "img": "images/maps/floors.png"
+  },
+  {
+    "name": "biome_chart",
+    "location_size": 36,
+    "location_border_thickness": 3,
+    "img": "images/maps/biome_chart.png"
+  },
+  {
+    "name": "biomes_grid",
+    "location_size": 52,
+    "location_border_thickness": 4,
+    "img": "images/maps/biomes_grid.png"
+  },
+  {
+    "name": "shop",
+    "location_size": 56,
+    "location_border_thickness": 4,
+    "img": "images/maps/shop.png"
+  }
+]

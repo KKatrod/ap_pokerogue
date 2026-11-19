@@ -1,0 +1,112 @@
+{
+  "tracker_default": {
+    "type": "container",
+    "background": "#00000000",
+    "content": {
+      "type": "dock",
+      "dropshadow": true,
+      "content": [
+        {
+          "type": "dock",
+          "dock": "left",
+          "v_alignment": "stretch",
+          "content": [
+            {
+              "type": "layout",
+              "key": "shared_item_grid"
+            }
+          ]
+        },
+        {
+          "type": "tabbed",
+          "tabs": [
+            {
+              "title": "Floors",
+              "content": {
+                "type": "map",
+                "maps": ["floors"]
+              }
+            },
+            {
+              "title": "Biomes",
+              "content": {
+                "type": "map",
+                "maps": ["biome_chart"]
+              }
+            },
+            {
+              "title": "Biomes (grid)",
+              "content": {
+                "type": "map",
+                "maps": ["biomes_grid"]
+              }
+            },
+            {
+              "title": "Shop",
+              "content": {
+                "type": "map",
+                "maps": ["shop"]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "shared_item_grid": {
+    "type": "array",
+    "orientation": "vertical",
+    "margin": "0,0",
+    "content": [
+      {
+        "type": "group",
+        "header": "Items",
+        "content": {
+          "type": "itemgrid",
+          "item_margin": "4,4",
+          "item_size": 48,
+          "rows": [["pass", "map"]]
+        }
+      },
+      {
+        "type": "group",
+        "header": "Biome Passes",
+        "content": {
+          "type": "itemgrid",
+          "item_margin": "3,3",
+          "item_size": 36,
+          "rows": [
+            ["biome_pass_1", "biome_pass_2", "biome_pass_9", "biome_pass_4", "biome_pass_8", "biome_pass_26"],
+            ["biome_pass_30", "biome_pass_7", "biome_pass_3", "biome_pass_13", "biome_pass_20", "biome_pass_5"],
+            ["biome_pass_19", "biome_pass_40", "biome_pass_17", "biome_pass_6", "biome_pass_24", "biome_pass_12"],
+            ["biome_pass_21", "biome_pass_15", "biome_pass_27", "biome_pass_41", "biome_pass_16", "biome_pass_10"],
+            ["biome_pass_29", "biome_pass_14", "biome_pass_28", "biome_pass_11", "biome_pass_22", "biome_pass_31"],
+            ["biome_pass_25", "biome_pass_18", "biome_pass_23"]
+          ]
+        }
+      },
+      {
+        "type": "group",
+        "header": "Settings (slot_data)",
+        "content": {
+          "type": "itemgrid",
+          "item_margin": "4,4",
+          "item_size": 48,
+          "rows": [["location_mode", "biome_passes"], ["shop_count", "shop_per_tier", "shop_per_visit"]]
+        }
+      }
+    ]
+  },
+  "tracker_broadcast": {
+    "type": "array",
+    "orientation": "horizontal",
+    "content": [
+      {
+        "type": "itemgrid",
+        "item_margin": "4,4",
+        "item_size": 48,
+        "rows": [["pass", "map"]]
+      }
+    ]
+  }
+}

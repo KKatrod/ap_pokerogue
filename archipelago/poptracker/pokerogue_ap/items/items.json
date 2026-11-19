@@ -1,0 +1,275 @@
+[
+  {
+    "name": "Progressive Floor Pass",
+    "type": "consumable",
+    "img": "images/items/floor_pass.png",
+    "codes": "pass",
+    "min_quantity": 0,
+    "max_quantity": 19,
+    "increment": 1
+  },
+  {
+    "name": "Map",
+    "type": "toggle",
+    "img": "images/items/map.png",
+    "codes": "map"
+  },
+  {
+    "name": "Biome Pass - Plains",
+    "type": "toggle",
+    "img": "images/items/biome_pass_1.png",
+    "codes": "biome_pass_1"
+  },
+  {
+    "name": "Biome Pass - Grass",
+    "type": "toggle",
+    "img": "images/items/biome_pass_2.png",
+    "codes": "biome_pass_2"
+  },
+  {
+    "name": "Biome Pass - Lake",
+    "type": "toggle",
+    "img": "images/items/biome_pass_9.png",
+    "codes": "biome_pass_9"
+  },
+  {
+    "name": "Biome Pass - Metropolis",
+    "type": "toggle",
+    "img": "images/items/biome_pass_4.png",
+    "codes": "biome_pass_4"
+  },
+  {
+    "name": "Biome Pass - Beach",
+    "type": "toggle",
+    "img": "images/items/biome_pass_8.png",
+    "codes": "biome_pass_8"
+  },
+  {
+    "name": "Biome Pass - Construction Site",
+    "type": "toggle",
+    "img": "images/items/biome_pass_26.png",
+    "codes": "biome_pass_26"
+  },
+  {
+    "name": "Biome Pass - Slum",
+    "type": "toggle",
+    "img": "images/items/biome_pass_30.png",
+    "codes": "biome_pass_30"
+  },
+  {
+    "name": "Biome Pass - Swamp",
+    "type": "toggle",
+    "img": "images/items/biome_pass_7.png",
+    "codes": "biome_pass_7"
+  },
+  {
+    "name": "Biome Pass - Tall Grass",
+    "type": "toggle",
+    "img": "images/items/biome_pass_3.png",
+    "codes": "biome_pass_3"
+  },
+  {
+    "name": "Biome Pass - Cave",
+    "type": "toggle",
+    "img": "images/items/biome_pass_13.png",
+    "codes": "biome_pass_13"
+  },
+  {
+    "name": "Biome Pass - Dojo",
+    "type": "toggle",
+    "img": "images/items/biome_pass_20.png",
+    "codes": "biome_pass_20"
+  },
+  {
+    "name": "Biome Pass - Forest",
+    "type": "toggle",
+    "img": "images/items/biome_pass_5.png",
+    "codes": "biome_pass_5"
+  },
+  {
+    "name": "Biome Pass - Graveyard",
+    "type": "toggle",
+    "img": "images/items/biome_pass_19.png",
+    "codes": "biome_pass_19"
+  },
+  {
+    "name": "Biome Pass - Island",
+    "type": "toggle",
+    "img": "images/items/biome_pass_40.png",
+    "codes": "biome_pass_40"
+  },
+  {
+    "name": "Biome Pass - Power Plant",
+    "type": "toggle",
+    "img": "images/items/biome_pass_17.png",
+    "codes": "biome_pass_17"
+  },
+  {
+    "name": "Biome Pass - Sea",
+    "type": "toggle",
+    "img": "images/items/biome_pass_6.png",
+    "codes": "biome_pass_6"
+  },
+  {
+    "name": "Biome Pass - Abyss",
+    "type": "toggle",
+    "img": "images/items/biome_pass_24.png",
+    "codes": "biome_pass_24"
+  },
+  {
+    "name": "Biome Pass - Badlands",
+    "type": "toggle",
+    "img": "images/items/biome_pass_12.png",
+    "codes": "biome_pass_12"
+  },
+  {
+    "name": "Biome Pass - Factory",
+    "type": "toggle",
+    "img": "images/items/biome_pass_21.png",
+    "codes": "biome_pass_21"
+  },
+  {
+    "name": "Biome Pass - Ice Cave",
+    "type": "toggle",
+    "img": "images/items/biome_pass_15.png",
+    "codes": "biome_pass_15"
+  },
+  {
+    "name": "Biome Pass - Jungle",
+    "type": "toggle",
+    "img": "images/items/biome_pass_27.png",
+    "codes": "biome_pass_27"
+  },
+  {
+    "name": "Biome Pass - Laboratory",
+    "type": "toggle",
+    "img": "images/items/biome_pass_41.png",
+    "codes": "biome_pass_41"
+  },
+  {
+    "name": "Biome Pass - Meadow",
+    "type": "toggle",
+    "img": "images/items/biome_pass_16.png",
+    "codes": "biome_pass_16"
+  },
+  {
+    "name": "Biome Pass - Seabed",
+    "type": "toggle",
+    "img": "images/items/biome_pass_10.png",
+    "codes": "biome_pass_10"
+  },
+  {
+    "name": "Biome Pass - Temple",
+    "type": "toggle",
+    "img": "images/items/biome_pass_29.png",
+    "codes": "biome_pass_29"
+  },
+  {
+    "name": "Biome Pass - Desert",
+    "type": "toggle",
+    "img": "images/items/biome_pass_14.png",
+    "codes": "biome_pass_14"
+  },
+  {
+    "name": "Biome Pass - Fairy Cave",
+    "type": "toggle",
+    "img": "images/items/biome_pass_28.png",
+    "codes": "biome_pass_28"
+  },
+  {
+    "name": "Biome Pass - Mountain",
+    "type": "toggle",
+    "img": "images/items/biome_pass_11.png",
+    "codes": "biome_pass_11"
+  },
+  {
+    "name": "Biome Pass - Ruins",
+    "type": "toggle",
+    "img": "images/items/biome_pass_22.png",
+    "codes": "biome_pass_22"
+  },
+  {
+    "name": "Biome Pass - Snowy Forest",
+    "type": "toggle",
+    "img": "images/items/biome_pass_31.png",
+    "codes": "biome_pass_31"
+  },
+  {
+    "name": "Biome Pass - Space",
+    "type": "toggle",
+    "img": "images/items/biome_pass_25.png",
+    "codes": "biome_pass_25"
+  },
+  {
+    "name": "Biome Pass - Volcano",
+    "type": "toggle",
+    "img": "images/items/biome_pass_18.png",
+    "codes": "biome_pass_18"
+  },
+  {
+    "name": "Biome Pass - Wasteland",
+    "type": "toggle",
+    "img": "images/items/biome_pass_23.png",
+    "codes": "biome_pass_23"
+  },
+  {
+    "name": "Location Mode",
+    "type": "progressive",
+    "loop": true,
+    "allow_disabled": false,
+    "codes": "location_mode",
+    "stages": [
+      {
+        "name": "Location Mode: floors",
+        "img": "images/settings/mode_floors.png",
+        "codes": "floors",
+        "inherit_codes": false
+      },
+      {
+        "name": "Location Mode: biome_floors",
+        "img": "images/settings/mode_biomes.png",
+        "codes": "biomes",
+        "inherit_codes": false
+      },
+      {
+        "name": "Location Mode: both",
+        "img": "images/settings/mode_both.png",
+        "codes": "floors,biomes",
+        "inherit_codes": false
+      }
+    ]
+  },
+  {
+    "name": "Shop Item Count",
+    "type": "consumable",
+    "img": "images/settings/shop_count.png",
+    "codes": "shop_count",
+    "min_quantity": 0,
+    "max_quantity": 350,
+    "increment": 1
+  },
+  {
+    "name": "Shop Items Per Tier (0: all from floor 1)",
+    "type": "consumable",
+    "img": "images/settings/per_tier.png",
+    "codes": "shop_per_tier",
+    "min_quantity": 0,
+    "max_quantity": 50,
+    "increment": 1
+  },
+  {
+    "name": "Shop Items Per Visit",
+    "type": "consumable",
+    "img": "images/settings/per_visit.png",
+    "codes": "shop_per_visit",
+    "min_quantity": 1,
+    "max_quantity": 3,
+    "increment": 1
+  },
+  {
+    "name": "Biome Passes (option)",
+    "type": "toggle",
+    "img": "images/settings/biome_passes.png",
+    "codes": "biome_passes"
+  }
+]

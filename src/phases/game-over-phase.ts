@@ -1,5 +1,6 @@
 import { pokerogueApi } from "#api/api";
 import { clientSessionId } from "#app/account";
+import { archipelago } from "#app/archipelago/archipelago";
 import { audioManager } from "#app/global-audio-manager";
 import { globalScene } from "#app/global-scene";
 import { settings } from "#app/global-settings-manager";
@@ -55,6 +56,10 @@ export class GameOverPhase extends BattlePhase {
       this.isVictory = true;
     }
 
+    if (this.isVictory && globalScene.gameMode.isArchipelago) {
+      archipelago.sendGoal();
+    }
+
     // Handle Mystery Encounter special Game Over cases
     // Situations such as when player lost a battle, but it isn't treated as full Game Over
     if (
@@ -67,6 +72,10 @@ export class GameOverPhase extends BattlePhase {
       return;
     }
     // Otherwise, continue standard Game Over logic
+
+    if (!this.isVictory && globalScene.gameMode.isArchipelago) {
+      archipelago.onRunLost();
+    }
 
     if (this.isVictory && globalScene.gameMode.isEndless) {
       const genderIndex = settings.general.playerGender;

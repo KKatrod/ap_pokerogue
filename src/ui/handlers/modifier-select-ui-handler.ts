@@ -1,3 +1,4 @@
+import { apHooks } from "#app/archipelago/ap-hooks";
 import { audioManager } from "#app/global-audio-manager";
 import { globalScene } from "#app/global-scene";
 import { settings } from "#app/global-settings-manager";
@@ -820,7 +821,11 @@ class ModifierOption extends Phaser.GameObjects.Container {
     this.add(this.itemContainer);
 
     const getItem = () => {
-      const item = globalScene.add.sprite(0, 0, "items", this.modifierTypeOption.type?.iconImage);
+      // Some entries (Archipelago items) use their own texture instead of the "items" atlas
+      const iconTexture = (this.modifierTypeOption.type as { iconTexture?: string } | undefined)?.iconTexture;
+      const item = iconTexture
+        ? globalScene.add.sprite(0, 0, iconTexture)
+        : globalScene.add.sprite(0, 0, "items", this.modifierTypeOption.type?.iconImage);
       return item;
     };
 
@@ -836,8 +841,13 @@ class ModifierOption extends Phaser.GameObjects.Container {
     this.itemText = addTextObject(0, 35, this.modifierTypeOption.type?.name!, TextStyle.PARTY, { align: "center" }); // TODO: is this bang correct?
     this.itemText.setOrigin(0.5, 0);
     this.itemText.setAlpha(0);
+    // Archipelago items are coloured after their multiworld classification instead of their tier
+    const textTint = (this.modifierTypeOption.type as { textTint?: number } | undefined)?.textTint;
     this.itemText.setTint(
-      this.modifierTypeOption.type?.tier ? getModifierTierTextTint(this.modifierTypeOption.type?.tier) : undefined,
+      textTint
+        ?? (this.modifierTypeOption.type?.tier
+          ? getModifierTierTextTint(this.modifierTypeOption.type?.tier)
+          : undefined),
     );
     this.add(this.itemText);
 
@@ -1051,6 +1061,16 @@ class ModifierOption extends Phaser.GameObjects.Container {
   }
 
   updateCostText(): void {
+    // Archipelago shop items can only be bought once: show them as sold
+    const soldLabel = apHooks.getSoldLabel(this.modifierTypeOption.type);
+    if (soldLabel) {
+      this.setAlpha(0.5);
+      this.itemCostText.setText(soldLabel);
+      this.itemCostText.setColor(getTextColor(TextStyle.PARTY_RED, false));
+      this.itemCostText.setShadowColor(getTextColor(TextStyle.PARTY_RED, true));
+      return;
+    }
+
     const cost = activeOverrides.WAIVE_ROLL_FEE_OVERRIDE ? 0 : this.modifierTypeOption.cost;
     const textStyle = cost <= globalScene.money ? TextStyle.MONEY : TextStyle.PARTY_RED;
 

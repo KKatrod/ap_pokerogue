@@ -10,6 +10,7 @@ import { AchvBar } from "#ui/achv-bar";
 import { AchvsUiHandler } from "#ui/achvs-ui-handler";
 import { AdminUiHandler } from "#ui/admin-ui-handler";
 import { AlertModalUiHandler } from "#ui/alert-modal-ui-handler";
+import { ArchipelagoConnectUiHandler } from "#ui/archipelago-connect-ui-handler";
 import { SettingsAudioUiHandler } from "#ui/audio-settings-ui-handler";
 import { AutoCompleteUiHandler } from "#ui/autocomplete-ui-handler";
 import { AwaitableUiHandler } from "#ui/awaitable-ui-handler";
@@ -108,6 +109,7 @@ const noTransitionModes = [
   UiMode.RUN_INFO,
   UiMode.CHANGE_PASSWORD_FORM,
   UiMode.ALERT_MODAL,
+  UiMode.ARCHIPELAGO_CONNECT,
 ];
 
 // biome-ignore lint/style/useNamingConvention: a unique case (only 2 letters)
@@ -183,6 +185,7 @@ export class UI extends Phaser.GameObjects.Container {
       new MysteryEncounterUiHandler(),
       new ChangePasswordFormUiHandler(),
       new AlertModalUiHandler(),
+      new ArchipelagoConnectUiHandler(),
     ];
   }
 

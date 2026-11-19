@@ -1,3 +1,4 @@
+import { archipelago } from "#app/archipelago/archipelago";
 import { globalScene } from "#app/global-scene";
 import { BattlerIndex } from "#enums/battler-index";
 import { TurnInitEvent } from "#events/battle-scene";
@@ -13,6 +14,23 @@ export class TurnInitPhase extends FieldPhase {
   public readonly phaseName = "TurnInitPhase";
   start() {
     super.start();
+
+    // Archipelago: floor 1 of a run hands out the items received so far (the kept ones first)
+    if (globalScene.gameMode.isArchipelago && archipelago.shouldHandleRunStart()) {
+      archipelago.markRunStartHandled();
+      globalScene.phaseManager.unshiftNew("ArchipelagoReceivePhase", true);
+      globalScene.phaseManager.unshiftNew("TurnInitPhase");
+      this.end();
+      return;
+    }
+
+    // Archipelago traps, battle effects and DeathLinks are applied first, then the turn starts over
+    if (globalScene.gameMode.isArchipelago && archipelago.hasPendingBattleEvents()) {
+      globalScene.phaseManager.unshiftNew("ArchipelagoBattleEventPhase");
+      globalScene.phaseManager.unshiftNew("TurnInitPhase");
+      this.end();
+      return;
+    }
 
     globalScene.getPlayerField().forEach(p => {
       // If this pokemon is in play and evolved into something illegal under the current challenge, force a switch

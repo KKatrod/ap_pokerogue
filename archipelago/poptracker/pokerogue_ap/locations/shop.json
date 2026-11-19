@@ -1,0 +1,2207 @@
+[
+  {
+    "name": "Shop Items 1-10",
+    "visibility_rules": ["$shop_exists|1"],
+    "sections": [
+      {
+        "name": "Shop Item 1",
+        "access_rules": ["$shop_reachable|1"],
+        "visibility_rules": ["$shop_exists|1"]
+      },
+      {
+        "name": "Shop Item 2",
+        "access_rules": ["$shop_reachable|2"],
+        "visibility_rules": ["$shop_exists|2"]
+      },
+      {
+        "name": "Shop Item 3",
+        "access_rules": ["$shop_reachable|3"],
+        "visibility_rules": ["$shop_exists|3"]
+      },
+      {
+        "name": "Shop Item 4",
+        "access_rules": ["$shop_reachable|4"],
+        "visibility_rules": ["$shop_exists|4"]
+      },
+      {
+        "name": "Shop Item 5",
+        "access_rules": ["$shop_reachable|5"],
+        "visibility_rules": ["$shop_exists|5"]
+      },
+      {
+        "name": "Shop Item 6",
+        "access_rules": ["$shop_reachable|6"],
+        "visibility_rules": ["$shop_exists|6"]
+      },
+      {
+        "name": "Shop Item 7",
+        "access_rules": ["$shop_reachable|7"],
+        "visibility_rules": ["$shop_exists|7"]
+      },
+      {
+        "name": "Shop Item 8",
+        "access_rules": ["$shop_reachable|8"],
+        "visibility_rules": ["$shop_exists|8"]
+      },
+      {
+        "name": "Shop Item 9",
+        "access_rules": ["$shop_reachable|9"],
+        "visibility_rules": ["$shop_exists|9"]
+      },
+      {
+        "name": "Shop Item 10",
+        "access_rules": ["$shop_reachable|10"],
+        "visibility_rules": ["$shop_exists|10"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 120,
+        "y": 129
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 11-20",
+    "visibility_rules": ["$shop_exists|11"],
+    "sections": [
+      {
+        "name": "Shop Item 11",
+        "access_rules": ["$shop_reachable|11"],
+        "visibility_rules": ["$shop_exists|11"]
+      },
+      {
+        "name": "Shop Item 12",
+        "access_rules": ["$shop_reachable|12"],
+        "visibility_rules": ["$shop_exists|12"]
+      },
+      {
+        "name": "Shop Item 13",
+        "access_rules": ["$shop_reachable|13"],
+        "visibility_rules": ["$shop_exists|13"]
+      },
+      {
+        "name": "Shop Item 14",
+        "access_rules": ["$shop_reachable|14"],
+        "visibility_rules": ["$shop_exists|14"]
+      },
+      {
+        "name": "Shop Item 15",
+        "access_rules": ["$shop_reachable|15"],
+        "visibility_rules": ["$shop_exists|15"]
+      },
+      {
+        "name": "Shop Item 16",
+        "access_rules": ["$shop_reachable|16"],
+        "visibility_rules": ["$shop_exists|16"]
+      },
+      {
+        "name": "Shop Item 17",
+        "access_rules": ["$shop_reachable|17"],
+        "visibility_rules": ["$shop_exists|17"]
+      },
+      {
+        "name": "Shop Item 18",
+        "access_rules": ["$shop_reachable|18"],
+        "visibility_rules": ["$shop_exists|18"]
+      },
+      {
+        "name": "Shop Item 19",
+        "access_rules": ["$shop_reachable|19"],
+        "visibility_rules": ["$shop_exists|19"]
+      },
+      {
+        "name": "Shop Item 20",
+        "access_rules": ["$shop_reachable|20"],
+        "visibility_rules": ["$shop_exists|20"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 360,
+        "y": 129
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 21-30",
+    "visibility_rules": ["$shop_exists|21"],
+    "sections": [
+      {
+        "name": "Shop Item 21",
+        "access_rules": ["$shop_reachable|21"],
+        "visibility_rules": ["$shop_exists|21"]
+      },
+      {
+        "name": "Shop Item 22",
+        "access_rules": ["$shop_reachable|22"],
+        "visibility_rules": ["$shop_exists|22"]
+      },
+      {
+        "name": "Shop Item 23",
+        "access_rules": ["$shop_reachable|23"],
+        "visibility_rules": ["$shop_exists|23"]
+      },
+      {
+        "name": "Shop Item 24",
+        "access_rules": ["$shop_reachable|24"],
+        "visibility_rules": ["$shop_exists|24"]
+      },
+      {
+        "name": "Shop Item 25",
+        "access_rules": ["$shop_reachable|25"],
+        "visibility_rules": ["$shop_exists|25"]
+      },
+      {
+        "name": "Shop Item 26",
+        "access_rules": ["$shop_reachable|26"],
+        "visibility_rules": ["$shop_exists|26"]
+      },
+      {
+        "name": "Shop Item 27",
+        "access_rules": ["$shop_reachable|27"],
+        "visibility_rules": ["$shop_exists|27"]
+      },
+      {
+        "name": "Shop Item 28",
+        "access_rules": ["$shop_reachable|28"],
+        "visibility_rules": ["$shop_exists|28"]
+      },
+      {
+        "name": "Shop Item 29",
+        "access_rules": ["$shop_reachable|29"],
+        "visibility_rules": ["$shop_exists|29"]
+      },
+      {
+        "name": "Shop Item 30",
+        "access_rules": ["$shop_reachable|30"],
+        "visibility_rules": ["$shop_exists|30"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 600,
+        "y": 129
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 31-40",
+    "visibility_rules": ["$shop_exists|31"],
+    "sections": [
+      {
+        "name": "Shop Item 31",
+        "access_rules": ["$shop_reachable|31"],
+        "visibility_rules": ["$shop_exists|31"]
+      },
+      {
+        "name": "Shop Item 32",
+        "access_rules": ["$shop_reachable|32"],
+        "visibility_rules": ["$shop_exists|32"]
+      },
+      {
+        "name": "Shop Item 33",
+        "access_rules": ["$shop_reachable|33"],
+        "visibility_rules": ["$shop_exists|33"]
+      },
+      {
+        "name": "Shop Item 34",
+        "access_rules": ["$shop_reachable|34"],
+        "visibility_rules": ["$shop_exists|34"]
+      },
+      {
+        "name": "Shop Item 35",
+        "access_rules": ["$shop_reachable|35"],
+        "visibility_rules": ["$shop_exists|35"]
+      },
+      {
+        "name": "Shop Item 36",
+        "access_rules": ["$shop_reachable|36"],
+        "visibility_rules": ["$shop_exists|36"]
+      },
+      {
+        "name": "Shop Item 37",
+        "access_rules": ["$shop_reachable|37"],
+        "visibility_rules": ["$shop_exists|37"]
+      },
+      {
+        "name": "Shop Item 38",
+        "access_rules": ["$shop_reachable|38"],
+        "visibility_rules": ["$shop_exists|38"]
+      },
+      {
+        "name": "Shop Item 39",
+        "access_rules": ["$shop_reachable|39"],
+        "visibility_rules": ["$shop_exists|39"]
+      },
+      {
+        "name": "Shop Item 40",
+        "access_rules": ["$shop_reachable|40"],
+        "visibility_rules": ["$shop_exists|40"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 840,
+        "y": 129
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 41-50",
+    "visibility_rules": ["$shop_exists|41"],
+    "sections": [
+      {
+        "name": "Shop Item 41",
+        "access_rules": ["$shop_reachable|41"],
+        "visibility_rules": ["$shop_exists|41"]
+      },
+      {
+        "name": "Shop Item 42",
+        "access_rules": ["$shop_reachable|42"],
+        "visibility_rules": ["$shop_exists|42"]
+      },
+      {
+        "name": "Shop Item 43",
+        "access_rules": ["$shop_reachable|43"],
+        "visibility_rules": ["$shop_exists|43"]
+      },
+      {
+        "name": "Shop Item 44",
+        "access_rules": ["$shop_reachable|44"],
+        "visibility_rules": ["$shop_exists|44"]
+      },
+      {
+        "name": "Shop Item 45",
+        "access_rules": ["$shop_reachable|45"],
+        "visibility_rules": ["$shop_exists|45"]
+      },
+      {
+        "name": "Shop Item 46",
+        "access_rules": ["$shop_reachable|46"],
+        "visibility_rules": ["$shop_exists|46"]
+      },
+      {
+        "name": "Shop Item 47",
+        "access_rules": ["$shop_reachable|47"],
+        "visibility_rules": ["$shop_exists|47"]
+      },
+      {
+        "name": "Shop Item 48",
+        "access_rules": ["$shop_reachable|48"],
+        "visibility_rules": ["$shop_exists|48"]
+      },
+      {
+        "name": "Shop Item 49",
+        "access_rules": ["$shop_reachable|49"],
+        "visibility_rules": ["$shop_exists|49"]
+      },
+      {
+        "name": "Shop Item 50",
+        "access_rules": ["$shop_reachable|50"],
+        "visibility_rules": ["$shop_exists|50"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 1080,
+        "y": 129
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 51-60",
+    "visibility_rules": ["$shop_exists|51"],
+    "sections": [
+      {
+        "name": "Shop Item 51",
+        "access_rules": ["$shop_reachable|51"],
+        "visibility_rules": ["$shop_exists|51"]
+      },
+      {
+        "name": "Shop Item 52",
+        "access_rules": ["$shop_reachable|52"],
+        "visibility_rules": ["$shop_exists|52"]
+      },
+      {
+        "name": "Shop Item 53",
+        "access_rules": ["$shop_reachable|53"],
+        "visibility_rules": ["$shop_exists|53"]
+      },
+      {
+        "name": "Shop Item 54",
+        "access_rules": ["$shop_reachable|54"],
+        "visibility_rules": ["$shop_exists|54"]
+      },
+      {
+        "name": "Shop Item 55",
+        "access_rules": ["$shop_reachable|55"],
+        "visibility_rules": ["$shop_exists|55"]
+      },
+      {
+        "name": "Shop Item 56",
+        "access_rules": ["$shop_reachable|56"],
+        "visibility_rules": ["$shop_exists|56"]
+      },
+      {
+        "name": "Shop Item 57",
+        "access_rules": ["$shop_reachable|57"],
+        "visibility_rules": ["$shop_exists|57"]
+      },
+      {
+        "name": "Shop Item 58",
+        "access_rules": ["$shop_reachable|58"],
+        "visibility_rules": ["$shop_exists|58"]
+      },
+      {
+        "name": "Shop Item 59",
+        "access_rules": ["$shop_reachable|59"],
+        "visibility_rules": ["$shop_exists|59"]
+      },
+      {
+        "name": "Shop Item 60",
+        "access_rules": ["$shop_reachable|60"],
+        "visibility_rules": ["$shop_exists|60"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 120,
+        "y": 259
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 61-70",
+    "visibility_rules": ["$shop_exists|61"],
+    "sections": [
+      {
+        "name": "Shop Item 61",
+        "access_rules": ["$shop_reachable|61"],
+        "visibility_rules": ["$shop_exists|61"]
+      },
+      {
+        "name": "Shop Item 62",
+        "access_rules": ["$shop_reachable|62"],
+        "visibility_rules": ["$shop_exists|62"]
+      },
+      {
+        "name": "Shop Item 63",
+        "access_rules": ["$shop_reachable|63"],
+        "visibility_rules": ["$shop_exists|63"]
+      },
+      {
+        "name": "Shop Item 64",
+        "access_rules": ["$shop_reachable|64"],
+        "visibility_rules": ["$shop_exists|64"]
+      },
+      {
+        "name": "Shop Item 65",
+        "access_rules": ["$shop_reachable|65"],
+        "visibility_rules": ["$shop_exists|65"]
+      },
+      {
+        "name": "Shop Item 66",
+        "access_rules": ["$shop_reachable|66"],
+        "visibility_rules": ["$shop_exists|66"]
+      },
+      {
+        "name": "Shop Item 67",
+        "access_rules": ["$shop_reachable|67"],
+        "visibility_rules": ["$shop_exists|67"]
+      },
+      {
+        "name": "Shop Item 68",
+        "access_rules": ["$shop_reachable|68"],
+        "visibility_rules": ["$shop_exists|68"]
+      },
+      {
+        "name": "Shop Item 69",
+        "access_rules": ["$shop_reachable|69"],
+        "visibility_rules": ["$shop_exists|69"]
+      },
+      {
+        "name": "Shop Item 70",
+        "access_rules": ["$shop_reachable|70"],
+        "visibility_rules": ["$shop_exists|70"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 360,
+        "y": 259
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 71-80",
+    "visibility_rules": ["$shop_exists|71"],
+    "sections": [
+      {
+        "name": "Shop Item 71",
+        "access_rules": ["$shop_reachable|71"],
+        "visibility_rules": ["$shop_exists|71"]
+      },
+      {
+        "name": "Shop Item 72",
+        "access_rules": ["$shop_reachable|72"],
+        "visibility_rules": ["$shop_exists|72"]
+      },
+      {
+        "name": "Shop Item 73",
+        "access_rules": ["$shop_reachable|73"],
+        "visibility_rules": ["$shop_exists|73"]
+      },
+      {
+        "name": "Shop Item 74",
+        "access_rules": ["$shop_reachable|74"],
+        "visibility_rules": ["$shop_exists|74"]
+      },
+      {
+        "name": "Shop Item 75",
+        "access_rules": ["$shop_reachable|75"],
+        "visibility_rules": ["$shop_exists|75"]
+      },
+      {
+        "name": "Shop Item 76",
+        "access_rules": ["$shop_reachable|76"],
+        "visibility_rules": ["$shop_exists|76"]
+      },
+      {
+        "name": "Shop Item 77",
+        "access_rules": ["$shop_reachable|77"],
+        "visibility_rules": ["$shop_exists|77"]
+      },
+      {
+        "name": "Shop Item 78",
+        "access_rules": ["$shop_reachable|78"],
+        "visibility_rules": ["$shop_exists|78"]
+      },
+      {
+        "name": "Shop Item 79",
+        "access_rules": ["$shop_reachable|79"],
+        "visibility_rules": ["$shop_exists|79"]
+      },
+      {
+        "name": "Shop Item 80",
+        "access_rules": ["$shop_reachable|80"],
+        "visibility_rules": ["$shop_exists|80"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 600,
+        "y": 259
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 81-90",
+    "visibility_rules": ["$shop_exists|81"],
+    "sections": [
+      {
+        "name": "Shop Item 81",
+        "access_rules": ["$shop_reachable|81"],
+        "visibility_rules": ["$shop_exists|81"]
+      },
+      {
+        "name": "Shop Item 82",
+        "access_rules": ["$shop_reachable|82"],
+        "visibility_rules": ["$shop_exists|82"]
+      },
+      {
+        "name": "Shop Item 83",
+        "access_rules": ["$shop_reachable|83"],
+        "visibility_rules": ["$shop_exists|83"]
+      },
+      {
+        "name": "Shop Item 84",
+        "access_rules": ["$shop_reachable|84"],
+        "visibility_rules": ["$shop_exists|84"]
+      },
+      {
+        "name": "Shop Item 85",
+        "access_rules": ["$shop_reachable|85"],
+        "visibility_rules": ["$shop_exists|85"]
+      },
+      {
+        "name": "Shop Item 86",
+        "access_rules": ["$shop_reachable|86"],
+        "visibility_rules": ["$shop_exists|86"]
+      },
+      {
+        "name": "Shop Item 87",
+        "access_rules": ["$shop_reachable|87"],
+        "visibility_rules": ["$shop_exists|87"]
+      },
+      {
+        "name": "Shop Item 88",
+        "access_rules": ["$shop_reachable|88"],
+        "visibility_rules": ["$shop_exists|88"]
+      },
+      {
+        "name": "Shop Item 89",
+        "access_rules": ["$shop_reachable|89"],
+        "visibility_rules": ["$shop_exists|89"]
+      },
+      {
+        "name": "Shop Item 90",
+        "access_rules": ["$shop_reachable|90"],
+        "visibility_rules": ["$shop_exists|90"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 840,
+        "y": 259
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 91-100",
+    "visibility_rules": ["$shop_exists|91"],
+    "sections": [
+      {
+        "name": "Shop Item 91",
+        "access_rules": ["$shop_reachable|91"],
+        "visibility_rules": ["$shop_exists|91"]
+      },
+      {
+        "name": "Shop Item 92",
+        "access_rules": ["$shop_reachable|92"],
+        "visibility_rules": ["$shop_exists|92"]
+      },
+      {
+        "name": "Shop Item 93",
+        "access_rules": ["$shop_reachable|93"],
+        "visibility_rules": ["$shop_exists|93"]
+      },
+      {
+        "name": "Shop Item 94",
+        "access_rules": ["$shop_reachable|94"],
+        "visibility_rules": ["$shop_exists|94"]
+      },
+      {
+        "name": "Shop Item 95",
+        "access_rules": ["$shop_reachable|95"],
+        "visibility_rules": ["$shop_exists|95"]
+      },
+      {
+        "name": "Shop Item 96",
+        "access_rules": ["$shop_reachable|96"],
+        "visibility_rules": ["$shop_exists|96"]
+      },
+      {
+        "name": "Shop Item 97",
+        "access_rules": ["$shop_reachable|97"],
+        "visibility_rules": ["$shop_exists|97"]
+      },
+      {
+        "name": "Shop Item 98",
+        "access_rules": ["$shop_reachable|98"],
+        "visibility_rules": ["$shop_exists|98"]
+      },
+      {
+        "name": "Shop Item 99",
+        "access_rules": ["$shop_reachable|99"],
+        "visibility_rules": ["$shop_exists|99"]
+      },
+      {
+        "name": "Shop Item 100",
+        "access_rules": ["$shop_reachable|100"],
+        "visibility_rules": ["$shop_exists|100"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 1080,
+        "y": 259
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 101-110",
+    "visibility_rules": ["$shop_exists|101"],
+    "sections": [
+      {
+        "name": "Shop Item 101",
+        "access_rules": ["$shop_reachable|101"],
+        "visibility_rules": ["$shop_exists|101"]
+      },
+      {
+        "name": "Shop Item 102",
+        "access_rules": ["$shop_reachable|102"],
+        "visibility_rules": ["$shop_exists|102"]
+      },
+      {
+        "name": "Shop Item 103",
+        "access_rules": ["$shop_reachable|103"],
+        "visibility_rules": ["$shop_exists|103"]
+      },
+      {
+        "name": "Shop Item 104",
+        "access_rules": ["$shop_reachable|104"],
+        "visibility_rules": ["$shop_exists|104"]
+      },
+      {
+        "name": "Shop Item 105",
+        "access_rules": ["$shop_reachable|105"],
+        "visibility_rules": ["$shop_exists|105"]
+      },
+      {
+        "name": "Shop Item 106",
+        "access_rules": ["$shop_reachable|106"],
+        "visibility_rules": ["$shop_exists|106"]
+      },
+      {
+        "name": "Shop Item 107",
+        "access_rules": ["$shop_reachable|107"],
+        "visibility_rules": ["$shop_exists|107"]
+      },
+      {
+        "name": "Shop Item 108",
+        "access_rules": ["$shop_reachable|108"],
+        "visibility_rules": ["$shop_exists|108"]
+      },
+      {
+        "name": "Shop Item 109",
+        "access_rules": ["$shop_reachable|109"],
+        "visibility_rules": ["$shop_exists|109"]
+      },
+      {
+        "name": "Shop Item 110",
+        "access_rules": ["$shop_reachable|110"],
+        "visibility_rules": ["$shop_exists|110"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 120,
+        "y": 389
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 111-120",
+    "visibility_rules": ["$shop_exists|111"],
+    "sections": [
+      {
+        "name": "Shop Item 111",
+        "access_rules": ["$shop_reachable|111"],
+        "visibility_rules": ["$shop_exists|111"]
+      },
+      {
+        "name": "Shop Item 112",
+        "access_rules": ["$shop_reachable|112"],
+        "visibility_rules": ["$shop_exists|112"]
+      },
+      {
+        "name": "Shop Item 113",
+        "access_rules": ["$shop_reachable|113"],
+        "visibility_rules": ["$shop_exists|113"]
+      },
+      {
+        "name": "Shop Item 114",
+        "access_rules": ["$shop_reachable|114"],
+        "visibility_rules": ["$shop_exists|114"]
+      },
+      {
+        "name": "Shop Item 115",
+        "access_rules": ["$shop_reachable|115"],
+        "visibility_rules": ["$shop_exists|115"]
+      },
+      {
+        "name": "Shop Item 116",
+        "access_rules": ["$shop_reachable|116"],
+        "visibility_rules": ["$shop_exists|116"]
+      },
+      {
+        "name": "Shop Item 117",
+        "access_rules": ["$shop_reachable|117"],
+        "visibility_rules": ["$shop_exists|117"]
+      },
+      {
+        "name": "Shop Item 118",
+        "access_rules": ["$shop_reachable|118"],
+        "visibility_rules": ["$shop_exists|118"]
+      },
+      {
+        "name": "Shop Item 119",
+        "access_rules": ["$shop_reachable|119"],
+        "visibility_rules": ["$shop_exists|119"]
+      },
+      {
+        "name": "Shop Item 120",
+        "access_rules": ["$shop_reachable|120"],
+        "visibility_rules": ["$shop_exists|120"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 360,
+        "y": 389
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 121-130",
+    "visibility_rules": ["$shop_exists|121"],
+    "sections": [
+      {
+        "name": "Shop Item 121",
+        "access_rules": ["$shop_reachable|121"],
+        "visibility_rules": ["$shop_exists|121"]
+      },
+      {
+        "name": "Shop Item 122",
+        "access_rules": ["$shop_reachable|122"],
+        "visibility_rules": ["$shop_exists|122"]
+      },
+      {
+        "name": "Shop Item 123",
+        "access_rules": ["$shop_reachable|123"],
+        "visibility_rules": ["$shop_exists|123"]
+      },
+      {
+        "name": "Shop Item 124",
+        "access_rules": ["$shop_reachable|124"],
+        "visibility_rules": ["$shop_exists|124"]
+      },
+      {
+        "name": "Shop Item 125",
+        "access_rules": ["$shop_reachable|125"],
+        "visibility_rules": ["$shop_exists|125"]
+      },
+      {
+        "name": "Shop Item 126",
+        "access_rules": ["$shop_reachable|126"],
+        "visibility_rules": ["$shop_exists|126"]
+      },
+      {
+        "name": "Shop Item 127",
+        "access_rules": ["$shop_reachable|127"],
+        "visibility_rules": ["$shop_exists|127"]
+      },
+      {
+        "name": "Shop Item 128",
+        "access_rules": ["$shop_reachable|128"],
+        "visibility_rules": ["$shop_exists|128"]
+      },
+      {
+        "name": "Shop Item 129",
+        "access_rules": ["$shop_reachable|129"],
+        "visibility_rules": ["$shop_exists|129"]
+      },
+      {
+        "name": "Shop Item 130",
+        "access_rules": ["$shop_reachable|130"],
+        "visibility_rules": ["$shop_exists|130"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 600,
+        "y": 389
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 131-140",
+    "visibility_rules": ["$shop_exists|131"],
+    "sections": [
+      {
+        "name": "Shop Item 131",
+        "access_rules": ["$shop_reachable|131"],
+        "visibility_rules": ["$shop_exists|131"]
+      },
+      {
+        "name": "Shop Item 132",
+        "access_rules": ["$shop_reachable|132"],
+        "visibility_rules": ["$shop_exists|132"]
+      },
+      {
+        "name": "Shop Item 133",
+        "access_rules": ["$shop_reachable|133"],
+        "visibility_rules": ["$shop_exists|133"]
+      },
+      {
+        "name": "Shop Item 134",
+        "access_rules": ["$shop_reachable|134"],
+        "visibility_rules": ["$shop_exists|134"]
+      },
+      {
+        "name": "Shop Item 135",
+        "access_rules": ["$shop_reachable|135"],
+        "visibility_rules": ["$shop_exists|135"]
+      },
+      {
+        "name": "Shop Item 136",
+        "access_rules": ["$shop_reachable|136"],
+        "visibility_rules": ["$shop_exists|136"]
+      },
+      {
+        "name": "Shop Item 137",
+        "access_rules": ["$shop_reachable|137"],
+        "visibility_rules": ["$shop_exists|137"]
+      },
+      {
+        "name": "Shop Item 138",
+        "access_rules": ["$shop_reachable|138"],
+        "visibility_rules": ["$shop_exists|138"]
+      },
+      {
+        "name": "Shop Item 139",
+        "access_rules": ["$shop_reachable|139"],
+        "visibility_rules": ["$shop_exists|139"]
+      },
+      {
+        "name": "Shop Item 140",
+        "access_rules": ["$shop_reachable|140"],
+        "visibility_rules": ["$shop_exists|140"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 840,
+        "y": 389
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 141-150",
+    "visibility_rules": ["$shop_exists|141"],
+    "sections": [
+      {
+        "name": "Shop Item 141",
+        "access_rules": ["$shop_reachable|141"],
+        "visibility_rules": ["$shop_exists|141"]
+      },
+      {
+        "name": "Shop Item 142",
+        "access_rules": ["$shop_reachable|142"],
+        "visibility_rules": ["$shop_exists|142"]
+      },
+      {
+        "name": "Shop Item 143",
+        "access_rules": ["$shop_reachable|143"],
+        "visibility_rules": ["$shop_exists|143"]
+      },
+      {
+        "name": "Shop Item 144",
+        "access_rules": ["$shop_reachable|144"],
+        "visibility_rules": ["$shop_exists|144"]
+      },
+      {
+        "name": "Shop Item 145",
+        "access_rules": ["$shop_reachable|145"],
+        "visibility_rules": ["$shop_exists|145"]
+      },
+      {
+        "name": "Shop Item 146",
+        "access_rules": ["$shop_reachable|146"],
+        "visibility_rules": ["$shop_exists|146"]
+      },
+      {
+        "name": "Shop Item 147",
+        "access_rules": ["$shop_reachable|147"],
+        "visibility_rules": ["$shop_exists|147"]
+      },
+      {
+        "name": "Shop Item 148",
+        "access_rules": ["$shop_reachable|148"],
+        "visibility_rules": ["$shop_exists|148"]
+      },
+      {
+        "name": "Shop Item 149",
+        "access_rules": ["$shop_reachable|149"],
+        "visibility_rules": ["$shop_exists|149"]
+      },
+      {
+        "name": "Shop Item 150",
+        "access_rules": ["$shop_reachable|150"],
+        "visibility_rules": ["$shop_exists|150"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 1080,
+        "y": 389
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 151-160",
+    "visibility_rules": ["$shop_exists|151"],
+    "sections": [
+      {
+        "name": "Shop Item 151",
+        "access_rules": ["$shop_reachable|151"],
+        "visibility_rules": ["$shop_exists|151"]
+      },
+      {
+        "name": "Shop Item 152",
+        "access_rules": ["$shop_reachable|152"],
+        "visibility_rules": ["$shop_exists|152"]
+      },
+      {
+        "name": "Shop Item 153",
+        "access_rules": ["$shop_reachable|153"],
+        "visibility_rules": ["$shop_exists|153"]
+      },
+      {
+        "name": "Shop Item 154",
+        "access_rules": ["$shop_reachable|154"],
+        "visibility_rules": ["$shop_exists|154"]
+      },
+      {
+        "name": "Shop Item 155",
+        "access_rules": ["$shop_reachable|155"],
+        "visibility_rules": ["$shop_exists|155"]
+      },
+      {
+        "name": "Shop Item 156",
+        "access_rules": ["$shop_reachable|156"],
+        "visibility_rules": ["$shop_exists|156"]
+      },
+      {
+        "name": "Shop Item 157",
+        "access_rules": ["$shop_reachable|157"],
+        "visibility_rules": ["$shop_exists|157"]
+      },
+      {
+        "name": "Shop Item 158",
+        "access_rules": ["$shop_reachable|158"],
+        "visibility_rules": ["$shop_exists|158"]
+      },
+      {
+        "name": "Shop Item 159",
+        "access_rules": ["$shop_reachable|159"],
+        "visibility_rules": ["$shop_exists|159"]
+      },
+      {
+        "name": "Shop Item 160",
+        "access_rules": ["$shop_reachable|160"],
+        "visibility_rules": ["$shop_exists|160"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 120,
+        "y": 519
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 161-170",
+    "visibility_rules": ["$shop_exists|161"],
+    "sections": [
+      {
+        "name": "Shop Item 161",
+        "access_rules": ["$shop_reachable|161"],
+        "visibility_rules": ["$shop_exists|161"]
+      },
+      {
+        "name": "Shop Item 162",
+        "access_rules": ["$shop_reachable|162"],
+        "visibility_rules": ["$shop_exists|162"]
+      },
+      {
+        "name": "Shop Item 163",
+        "access_rules": ["$shop_reachable|163"],
+        "visibility_rules": ["$shop_exists|163"]
+      },
+      {
+        "name": "Shop Item 164",
+        "access_rules": ["$shop_reachable|164"],
+        "visibility_rules": ["$shop_exists|164"]
+      },
+      {
+        "name": "Shop Item 165",
+        "access_rules": ["$shop_reachable|165"],
+        "visibility_rules": ["$shop_exists|165"]
+      },
+      {
+        "name": "Shop Item 166",
+        "access_rules": ["$shop_reachable|166"],
+        "visibility_rules": ["$shop_exists|166"]
+      },
+      {
+        "name": "Shop Item 167",
+        "access_rules": ["$shop_reachable|167"],
+        "visibility_rules": ["$shop_exists|167"]
+      },
+      {
+        "name": "Shop Item 168",
+        "access_rules": ["$shop_reachable|168"],
+        "visibility_rules": ["$shop_exists|168"]
+      },
+      {
+        "name": "Shop Item 169",
+        "access_rules": ["$shop_reachable|169"],
+        "visibility_rules": ["$shop_exists|169"]
+      },
+      {
+        "name": "Shop Item 170",
+        "access_rules": ["$shop_reachable|170"],
+        "visibility_rules": ["$shop_exists|170"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 360,
+        "y": 519
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 171-180",
+    "visibility_rules": ["$shop_exists|171"],
+    "sections": [
+      {
+        "name": "Shop Item 171",
+        "access_rules": ["$shop_reachable|171"],
+        "visibility_rules": ["$shop_exists|171"]
+      },
+      {
+        "name": "Shop Item 172",
+        "access_rules": ["$shop_reachable|172"],
+        "visibility_rules": ["$shop_exists|172"]
+      },
+      {
+        "name": "Shop Item 173",
+        "access_rules": ["$shop_reachable|173"],
+        "visibility_rules": ["$shop_exists|173"]
+      },
+      {
+        "name": "Shop Item 174",
+        "access_rules": ["$shop_reachable|174"],
+        "visibility_rules": ["$shop_exists|174"]
+      },
+      {
+        "name": "Shop Item 175",
+        "access_rules": ["$shop_reachable|175"],
+        "visibility_rules": ["$shop_exists|175"]
+      },
+      {
+        "name": "Shop Item 176",
+        "access_rules": ["$shop_reachable|176"],
+        "visibility_rules": ["$shop_exists|176"]
+      },
+      {
+        "name": "Shop Item 177",
+        "access_rules": ["$shop_reachable|177"],
+        "visibility_rules": ["$shop_exists|177"]
+      },
+      {
+        "name": "Shop Item 178",
+        "access_rules": ["$shop_reachable|178"],
+        "visibility_rules": ["$shop_exists|178"]
+      },
+      {
+        "name": "Shop Item 179",
+        "access_rules": ["$shop_reachable|179"],
+        "visibility_rules": ["$shop_exists|179"]
+      },
+      {
+        "name": "Shop Item 180",
+        "access_rules": ["$shop_reachable|180"],
+        "visibility_rules": ["$shop_exists|180"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 600,
+        "y": 519
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 181-190",
+    "visibility_rules": ["$shop_exists|181"],
+    "sections": [
+      {
+        "name": "Shop Item 181",
+        "access_rules": ["$shop_reachable|181"],
+        "visibility_rules": ["$shop_exists|181"]
+      },
+      {
+        "name": "Shop Item 182",
+        "access_rules": ["$shop_reachable|182"],
+        "visibility_rules": ["$shop_exists|182"]
+      },
+      {
+        "name": "Shop Item 183",
+        "access_rules": ["$shop_reachable|183"],
+        "visibility_rules": ["$shop_exists|183"]
+      },
+      {
+        "name": "Shop Item 184",
+        "access_rules": ["$shop_reachable|184"],
+        "visibility_rules": ["$shop_exists|184"]
+      },
+      {
+        "name": "Shop Item 185",
+        "access_rules": ["$shop_reachable|185"],
+        "visibility_rules": ["$shop_exists|185"]
+      },
+      {
+        "name": "Shop Item 186",
+        "access_rules": ["$shop_reachable|186"],
+        "visibility_rules": ["$shop_exists|186"]
+      },
+      {
+        "name": "Shop Item 187",
+        "access_rules": ["$shop_reachable|187"],
+        "visibility_rules": ["$shop_exists|187"]
+      },
+      {
+        "name": "Shop Item 188",
+        "access_rules": ["$shop_reachable|188"],
+        "visibility_rules": ["$shop_exists|188"]
+      },
+      {
+        "name": "Shop Item 189",
+        "access_rules": ["$shop_reachable|189"],
+        "visibility_rules": ["$shop_exists|189"]
+      },
+      {
+        "name": "Shop Item 190",
+        "access_rules": ["$shop_reachable|190"],
+        "visibility_rules": ["$shop_exists|190"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 840,
+        "y": 519
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 191-200",
+    "visibility_rules": ["$shop_exists|191"],
+    "sections": [
+      {
+        "name": "Shop Item 191",
+        "access_rules": ["$shop_reachable|191"],
+        "visibility_rules": ["$shop_exists|191"]
+      },
+      {
+        "name": "Shop Item 192",
+        "access_rules": ["$shop_reachable|192"],
+        "visibility_rules": ["$shop_exists|192"]
+      },
+      {
+        "name": "Shop Item 193",
+        "access_rules": ["$shop_reachable|193"],
+        "visibility_rules": ["$shop_exists|193"]
+      },
+      {
+        "name": "Shop Item 194",
+        "access_rules": ["$shop_reachable|194"],
+        "visibility_rules": ["$shop_exists|194"]
+      },
+      {
+        "name": "Shop Item 195",
+        "access_rules": ["$shop_reachable|195"],
+        "visibility_rules": ["$shop_exists|195"]
+      },
+      {
+        "name": "Shop Item 196",
+        "access_rules": ["$shop_reachable|196"],
+        "visibility_rules": ["$shop_exists|196"]
+      },
+      {
+        "name": "Shop Item 197",
+        "access_rules": ["$shop_reachable|197"],
+        "visibility_rules": ["$shop_exists|197"]
+      },
+      {
+        "name": "Shop Item 198",
+        "access_rules": ["$shop_reachable|198"],
+        "visibility_rules": ["$shop_exists|198"]
+      },
+      {
+        "name": "Shop Item 199",
+        "access_rules": ["$shop_reachable|199"],
+        "visibility_rules": ["$shop_exists|199"]
+      },
+      {
+        "name": "Shop Item 200",
+        "access_rules": ["$shop_reachable|200"],
+        "visibility_rules": ["$shop_exists|200"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 1080,
+        "y": 519
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 201-210",
+    "visibility_rules": ["$shop_exists|201"],
+    "sections": [
+      {
+        "name": "Shop Item 201",
+        "access_rules": ["$shop_reachable|201"],
+        "visibility_rules": ["$shop_exists|201"]
+      },
+      {
+        "name": "Shop Item 202",
+        "access_rules": ["$shop_reachable|202"],
+        "visibility_rules": ["$shop_exists|202"]
+      },
+      {
+        "name": "Shop Item 203",
+        "access_rules": ["$shop_reachable|203"],
+        "visibility_rules": ["$shop_exists|203"]
+      },
+      {
+        "name": "Shop Item 204",
+        "access_rules": ["$shop_reachable|204"],
+        "visibility_rules": ["$shop_exists|204"]
+      },
+      {
+        "name": "Shop Item 205",
+        "access_rules": ["$shop_reachable|205"],
+        "visibility_rules": ["$shop_exists|205"]
+      },
+      {
+        "name": "Shop Item 206",
+        "access_rules": ["$shop_reachable|206"],
+        "visibility_rules": ["$shop_exists|206"]
+      },
+      {
+        "name": "Shop Item 207",
+        "access_rules": ["$shop_reachable|207"],
+        "visibility_rules": ["$shop_exists|207"]
+      },
+      {
+        "name": "Shop Item 208",
+        "access_rules": ["$shop_reachable|208"],
+        "visibility_rules": ["$shop_exists|208"]
+      },
+      {
+        "name": "Shop Item 209",
+        "access_rules": ["$shop_reachable|209"],
+        "visibility_rules": ["$shop_exists|209"]
+      },
+      {
+        "name": "Shop Item 210",
+        "access_rules": ["$shop_reachable|210"],
+        "visibility_rules": ["$shop_exists|210"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 120,
+        "y": 649
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 211-220",
+    "visibility_rules": ["$shop_exists|211"],
+    "sections": [
+      {
+        "name": "Shop Item 211",
+        "access_rules": ["$shop_reachable|211"],
+        "visibility_rules": ["$shop_exists|211"]
+      },
+      {
+        "name": "Shop Item 212",
+        "access_rules": ["$shop_reachable|212"],
+        "visibility_rules": ["$shop_exists|212"]
+      },
+      {
+        "name": "Shop Item 213",
+        "access_rules": ["$shop_reachable|213"],
+        "visibility_rules": ["$shop_exists|213"]
+      },
+      {
+        "name": "Shop Item 214",
+        "access_rules": ["$shop_reachable|214"],
+        "visibility_rules": ["$shop_exists|214"]
+      },
+      {
+        "name": "Shop Item 215",
+        "access_rules": ["$shop_reachable|215"],
+        "visibility_rules": ["$shop_exists|215"]
+      },
+      {
+        "name": "Shop Item 216",
+        "access_rules": ["$shop_reachable|216"],
+        "visibility_rules": ["$shop_exists|216"]
+      },
+      {
+        "name": "Shop Item 217",
+        "access_rules": ["$shop_reachable|217"],
+        "visibility_rules": ["$shop_exists|217"]
+      },
+      {
+        "name": "Shop Item 218",
+        "access_rules": ["$shop_reachable|218"],
+        "visibility_rules": ["$shop_exists|218"]
+      },
+      {
+        "name": "Shop Item 219",
+        "access_rules": ["$shop_reachable|219"],
+        "visibility_rules": ["$shop_exists|219"]
+      },
+      {
+        "name": "Shop Item 220",
+        "access_rules": ["$shop_reachable|220"],
+        "visibility_rules": ["$shop_exists|220"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 360,
+        "y": 649
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 221-230",
+    "visibility_rules": ["$shop_exists|221"],
+    "sections": [
+      {
+        "name": "Shop Item 221",
+        "access_rules": ["$shop_reachable|221"],
+        "visibility_rules": ["$shop_exists|221"]
+      },
+      {
+        "name": "Shop Item 222",
+        "access_rules": ["$shop_reachable|222"],
+        "visibility_rules": ["$shop_exists|222"]
+      },
+      {
+        "name": "Shop Item 223",
+        "access_rules": ["$shop_reachable|223"],
+        "visibility_rules": ["$shop_exists|223"]
+      },
+      {
+        "name": "Shop Item 224",
+        "access_rules": ["$shop_reachable|224"],
+        "visibility_rules": ["$shop_exists|224"]
+      },
+      {
+        "name": "Shop Item 225",
+        "access_rules": ["$shop_reachable|225"],
+        "visibility_rules": ["$shop_exists|225"]
+      },
+      {
+        "name": "Shop Item 226",
+        "access_rules": ["$shop_reachable|226"],
+        "visibility_rules": ["$shop_exists|226"]
+      },
+      {
+        "name": "Shop Item 227",
+        "access_rules": ["$shop_reachable|227"],
+        "visibility_rules": ["$shop_exists|227"]
+      },
+      {
+        "name": "Shop Item 228",
+        "access_rules": ["$shop_reachable|228"],
+        "visibility_rules": ["$shop_exists|228"]
+      },
+      {
+        "name": "Shop Item 229",
+        "access_rules": ["$shop_reachable|229"],
+        "visibility_rules": ["$shop_exists|229"]
+      },
+      {
+        "name": "Shop Item 230",
+        "access_rules": ["$shop_reachable|230"],
+        "visibility_rules": ["$shop_exists|230"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 600,
+        "y": 649
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 231-240",
+    "visibility_rules": ["$shop_exists|231"],
+    "sections": [
+      {
+        "name": "Shop Item 231",
+        "access_rules": ["$shop_reachable|231"],
+        "visibility_rules": ["$shop_exists|231"]
+      },
+      {
+        "name": "Shop Item 232",
+        "access_rules": ["$shop_reachable|232"],
+        "visibility_rules": ["$shop_exists|232"]
+      },
+      {
+        "name": "Shop Item 233",
+        "access_rules": ["$shop_reachable|233"],
+        "visibility_rules": ["$shop_exists|233"]
+      },
+      {
+        "name": "Shop Item 234",
+        "access_rules": ["$shop_reachable|234"],
+        "visibility_rules": ["$shop_exists|234"]
+      },
+      {
+        "name": "Shop Item 235",
+        "access_rules": ["$shop_reachable|235"],
+        "visibility_rules": ["$shop_exists|235"]
+      },
+      {
+        "name": "Shop Item 236",
+        "access_rules": ["$shop_reachable|236"],
+        "visibility_rules": ["$shop_exists|236"]
+      },
+      {
+        "name": "Shop Item 237",
+        "access_rules": ["$shop_reachable|237"],
+        "visibility_rules": ["$shop_exists|237"]
+      },
+      {
+        "name": "Shop Item 238",
+        "access_rules": ["$shop_reachable|238"],
+        "visibility_rules": ["$shop_exists|238"]
+      },
+      {
+        "name": "Shop Item 239",
+        "access_rules": ["$shop_reachable|239"],
+        "visibility_rules": ["$shop_exists|239"]
+      },
+      {
+        "name": "Shop Item 240",
+        "access_rules": ["$shop_reachable|240"],
+        "visibility_rules": ["$shop_exists|240"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 840,
+        "y": 649
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 241-250",
+    "visibility_rules": ["$shop_exists|241"],
+    "sections": [
+      {
+        "name": "Shop Item 241",
+        "access_rules": ["$shop_reachable|241"],
+        "visibility_rules": ["$shop_exists|241"]
+      },
+      {
+        "name": "Shop Item 242",
+        "access_rules": ["$shop_reachable|242"],
+        "visibility_rules": ["$shop_exists|242"]
+      },
+      {
+        "name": "Shop Item 243",
+        "access_rules": ["$shop_reachable|243"],
+        "visibility_rules": ["$shop_exists|243"]
+      },
+      {
+        "name": "Shop Item 244",
+        "access_rules": ["$shop_reachable|244"],
+        "visibility_rules": ["$shop_exists|244"]
+      },
+      {
+        "name": "Shop Item 245",
+        "access_rules": ["$shop_reachable|245"],
+        "visibility_rules": ["$shop_exists|245"]
+      },
+      {
+        "name": "Shop Item 246",
+        "access_rules": ["$shop_reachable|246"],
+        "visibility_rules": ["$shop_exists|246"]
+      },
+      {
+        "name": "Shop Item 247",
+        "access_rules": ["$shop_reachable|247"],
+        "visibility_rules": ["$shop_exists|247"]
+      },
+      {
+        "name": "Shop Item 248",
+        "access_rules": ["$shop_reachable|248"],
+        "visibility_rules": ["$shop_exists|248"]
+      },
+      {
+        "name": "Shop Item 249",
+        "access_rules": ["$shop_reachable|249"],
+        "visibility_rules": ["$shop_exists|249"]
+      },
+      {
+        "name": "Shop Item 250",
+        "access_rules": ["$shop_reachable|250"],
+        "visibility_rules": ["$shop_exists|250"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 1080,
+        "y": 649
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 251-260",
+    "visibility_rules": ["$shop_exists|251"],
+    "sections": [
+      {
+        "name": "Shop Item 251",
+        "access_rules": ["$shop_reachable|251"],
+        "visibility_rules": ["$shop_exists|251"]
+      },
+      {
+        "name": "Shop Item 252",
+        "access_rules": ["$shop_reachable|252"],
+        "visibility_rules": ["$shop_exists|252"]
+      },
+      {
+        "name": "Shop Item 253",
+        "access_rules": ["$shop_reachable|253"],
+        "visibility_rules": ["$shop_exists|253"]
+      },
+      {
+        "name": "Shop Item 254",
+        "access_rules": ["$shop_reachable|254"],
+        "visibility_rules": ["$shop_exists|254"]
+      },
+      {
+        "name": "Shop Item 255",
+        "access_rules": ["$shop_reachable|255"],
+        "visibility_rules": ["$shop_exists|255"]
+      },
+      {
+        "name": "Shop Item 256",
+        "access_rules": ["$shop_reachable|256"],
+        "visibility_rules": ["$shop_exists|256"]
+      },
+      {
+        "name": "Shop Item 257",
+        "access_rules": ["$shop_reachable|257"],
+        "visibility_rules": ["$shop_exists|257"]
+      },
+      {
+        "name": "Shop Item 258",
+        "access_rules": ["$shop_reachable|258"],
+        "visibility_rules": ["$shop_exists|258"]
+      },
+      {
+        "name": "Shop Item 259",
+        "access_rules": ["$shop_reachable|259"],
+        "visibility_rules": ["$shop_exists|259"]
+      },
+      {
+        "name": "Shop Item 260",
+        "access_rules": ["$shop_reachable|260"],
+        "visibility_rules": ["$shop_exists|260"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 120,
+        "y": 779
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 261-270",
+    "visibility_rules": ["$shop_exists|261"],
+    "sections": [
+      {
+        "name": "Shop Item 261",
+        "access_rules": ["$shop_reachable|261"],
+        "visibility_rules": ["$shop_exists|261"]
+      },
+      {
+        "name": "Shop Item 262",
+        "access_rules": ["$shop_reachable|262"],
+        "visibility_rules": ["$shop_exists|262"]
+      },
+      {
+        "name": "Shop Item 263",
+        "access_rules": ["$shop_reachable|263"],
+        "visibility_rules": ["$shop_exists|263"]
+      },
+      {
+        "name": "Shop Item 264",
+        "access_rules": ["$shop_reachable|264"],
+        "visibility_rules": ["$shop_exists|264"]
+      },
+      {
+        "name": "Shop Item 265",
+        "access_rules": ["$shop_reachable|265"],
+        "visibility_rules": ["$shop_exists|265"]
+      },
+      {
+        "name": "Shop Item 266",
+        "access_rules": ["$shop_reachable|266"],
+        "visibility_rules": ["$shop_exists|266"]
+      },
+      {
+        "name": "Shop Item 267",
+        "access_rules": ["$shop_reachable|267"],
+        "visibility_rules": ["$shop_exists|267"]
+      },
+      {
+        "name": "Shop Item 268",
+        "access_rules": ["$shop_reachable|268"],
+        "visibility_rules": ["$shop_exists|268"]
+      },
+      {
+        "name": "Shop Item 269",
+        "access_rules": ["$shop_reachable|269"],
+        "visibility_rules": ["$shop_exists|269"]
+      },
+      {
+        "name": "Shop Item 270",
+        "access_rules": ["$shop_reachable|270"],
+        "visibility_rules": ["$shop_exists|270"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 360,
+        "y": 779
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 271-280",
+    "visibility_rules": ["$shop_exists|271"],
+    "sections": [
+      {
+        "name": "Shop Item 271",
+        "access_rules": ["$shop_reachable|271"],
+        "visibility_rules": ["$shop_exists|271"]
+      },
+      {
+        "name": "Shop Item 272",
+        "access_rules": ["$shop_reachable|272"],
+        "visibility_rules": ["$shop_exists|272"]
+      },
+      {
+        "name": "Shop Item 273",
+        "access_rules": ["$shop_reachable|273"],
+        "visibility_rules": ["$shop_exists|273"]
+      },
+      {
+        "name": "Shop Item 274",
+        "access_rules": ["$shop_reachable|274"],
+        "visibility_rules": ["$shop_exists|274"]
+      },
+      {
+        "name": "Shop Item 275",
+        "access_rules": ["$shop_reachable|275"],
+        "visibility_rules": ["$shop_exists|275"]
+      },
+      {
+        "name": "Shop Item 276",
+        "access_rules": ["$shop_reachable|276"],
+        "visibility_rules": ["$shop_exists|276"]
+      },
+      {
+        "name": "Shop Item 277",
+        "access_rules": ["$shop_reachable|277"],
+        "visibility_rules": ["$shop_exists|277"]
+      },
+      {
+        "name": "Shop Item 278",
+        "access_rules": ["$shop_reachable|278"],
+        "visibility_rules": ["$shop_exists|278"]
+      },
+      {
+        "name": "Shop Item 279",
+        "access_rules": ["$shop_reachable|279"],
+        "visibility_rules": ["$shop_exists|279"]
+      },
+      {
+        "name": "Shop Item 280",
+        "access_rules": ["$shop_reachable|280"],
+        "visibility_rules": ["$shop_exists|280"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 600,
+        "y": 779
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 281-290",
+    "visibility_rules": ["$shop_exists|281"],
+    "sections": [
+      {
+        "name": "Shop Item 281",
+        "access_rules": ["$shop_reachable|281"],
+        "visibility_rules": ["$shop_exists|281"]
+      },
+      {
+        "name": "Shop Item 282",
+        "access_rules": ["$shop_reachable|282"],
+        "visibility_rules": ["$shop_exists|282"]
+      },
+      {
+        "name": "Shop Item 283",
+        "access_rules": ["$shop_reachable|283"],
+        "visibility_rules": ["$shop_exists|283"]
+      },
+      {
+        "name": "Shop Item 284",
+        "access_rules": ["$shop_reachable|284"],
+        "visibility_rules": ["$shop_exists|284"]
+      },
+      {
+        "name": "Shop Item 285",
+        "access_rules": ["$shop_reachable|285"],
+        "visibility_rules": ["$shop_exists|285"]
+      },
+      {
+        "name": "Shop Item 286",
+        "access_rules": ["$shop_reachable|286"],
+        "visibility_rules": ["$shop_exists|286"]
+      },
+      {
+        "name": "Shop Item 287",
+        "access_rules": ["$shop_reachable|287"],
+        "visibility_rules": ["$shop_exists|287"]
+      },
+      {
+        "name": "Shop Item 288",
+        "access_rules": ["$shop_reachable|288"],
+        "visibility_rules": ["$shop_exists|288"]
+      },
+      {
+        "name": "Shop Item 289",
+        "access_rules": ["$shop_reachable|289"],
+        "visibility_rules": ["$shop_exists|289"]
+      },
+      {
+        "name": "Shop Item 290",
+        "access_rules": ["$shop_reachable|290"],
+        "visibility_rules": ["$shop_exists|290"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 840,
+        "y": 779
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 291-300",
+    "visibility_rules": ["$shop_exists|291"],
+    "sections": [
+      {
+        "name": "Shop Item 291",
+        "access_rules": ["$shop_reachable|291"],
+        "visibility_rules": ["$shop_exists|291"]
+      },
+      {
+        "name": "Shop Item 292",
+        "access_rules": ["$shop_reachable|292"],
+        "visibility_rules": ["$shop_exists|292"]
+      },
+      {
+        "name": "Shop Item 293",
+        "access_rules": ["$shop_reachable|293"],
+        "visibility_rules": ["$shop_exists|293"]
+      },
+      {
+        "name": "Shop Item 294",
+        "access_rules": ["$shop_reachable|294"],
+        "visibility_rules": ["$shop_exists|294"]
+      },
+      {
+        "name": "Shop Item 295",
+        "access_rules": ["$shop_reachable|295"],
+        "visibility_rules": ["$shop_exists|295"]
+      },
+      {
+        "name": "Shop Item 296",
+        "access_rules": ["$shop_reachable|296"],
+        "visibility_rules": ["$shop_exists|296"]
+      },
+      {
+        "name": "Shop Item 297",
+        "access_rules": ["$shop_reachable|297"],
+        "visibility_rules": ["$shop_exists|297"]
+      },
+      {
+        "name": "Shop Item 298",
+        "access_rules": ["$shop_reachable|298"],
+        "visibility_rules": ["$shop_exists|298"]
+      },
+      {
+        "name": "Shop Item 299",
+        "access_rules": ["$shop_reachable|299"],
+        "visibility_rules": ["$shop_exists|299"]
+      },
+      {
+        "name": "Shop Item 300",
+        "access_rules": ["$shop_reachable|300"],
+        "visibility_rules": ["$shop_exists|300"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 1080,
+        "y": 779
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 301-310",
+    "visibility_rules": ["$shop_exists|301"],
+    "sections": [
+      {
+        "name": "Shop Item 301",
+        "access_rules": ["$shop_reachable|301"],
+        "visibility_rules": ["$shop_exists|301"]
+      },
+      {
+        "name": "Shop Item 302",
+        "access_rules": ["$shop_reachable|302"],
+        "visibility_rules": ["$shop_exists|302"]
+      },
+      {
+        "name": "Shop Item 303",
+        "access_rules": ["$shop_reachable|303"],
+        "visibility_rules": ["$shop_exists|303"]
+      },
+      {
+        "name": "Shop Item 304",
+        "access_rules": ["$shop_reachable|304"],
+        "visibility_rules": ["$shop_exists|304"]
+      },
+      {
+        "name": "Shop Item 305",
+        "access_rules": ["$shop_reachable|305"],
+        "visibility_rules": ["$shop_exists|305"]
+      },
+      {
+        "name": "Shop Item 306",
+        "access_rules": ["$shop_reachable|306"],
+        "visibility_rules": ["$shop_exists|306"]
+      },
+      {
+        "name": "Shop Item 307",
+        "access_rules": ["$shop_reachable|307"],
+        "visibility_rules": ["$shop_exists|307"]
+      },
+      {
+        "name": "Shop Item 308",
+        "access_rules": ["$shop_reachable|308"],
+        "visibility_rules": ["$shop_exists|308"]
+      },
+      {
+        "name": "Shop Item 309",
+        "access_rules": ["$shop_reachable|309"],
+        "visibility_rules": ["$shop_exists|309"]
+      },
+      {
+        "name": "Shop Item 310",
+        "access_rules": ["$shop_reachable|310"],
+        "visibility_rules": ["$shop_exists|310"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 120,
+        "y": 909
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 311-320",
+    "visibility_rules": ["$shop_exists|311"],
+    "sections": [
+      {
+        "name": "Shop Item 311",
+        "access_rules": ["$shop_reachable|311"],
+        "visibility_rules": ["$shop_exists|311"]
+      },
+      {
+        "name": "Shop Item 312",
+        "access_rules": ["$shop_reachable|312"],
+        "visibility_rules": ["$shop_exists|312"]
+      },
+      {
+        "name": "Shop Item 313",
+        "access_rules": ["$shop_reachable|313"],
+        "visibility_rules": ["$shop_exists|313"]
+      },
+      {
+        "name": "Shop Item 314",
+        "access_rules": ["$shop_reachable|314"],
+        "visibility_rules": ["$shop_exists|314"]
+      },
+      {
+        "name": "Shop Item 315",
+        "access_rules": ["$shop_reachable|315"],
+        "visibility_rules": ["$shop_exists|315"]
+      },
+      {
+        "name": "Shop Item 316",
+        "access_rules": ["$shop_reachable|316"],
+        "visibility_rules": ["$shop_exists|316"]
+      },
+      {
+        "name": "Shop Item 317",
+        "access_rules": ["$shop_reachable|317"],
+        "visibility_rules": ["$shop_exists|317"]
+      },
+      {
+        "name": "Shop Item 318",
+        "access_rules": ["$shop_reachable|318"],
+        "visibility_rules": ["$shop_exists|318"]
+      },
+      {
+        "name": "Shop Item 319",
+        "access_rules": ["$shop_reachable|319"],
+        "visibility_rules": ["$shop_exists|319"]
+      },
+      {
+        "name": "Shop Item 320",
+        "access_rules": ["$shop_reachable|320"],
+        "visibility_rules": ["$shop_exists|320"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 360,
+        "y": 909
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 321-330",
+    "visibility_rules": ["$shop_exists|321"],
+    "sections": [
+      {
+        "name": "Shop Item 321",
+        "access_rules": ["$shop_reachable|321"],
+        "visibility_rules": ["$shop_exists|321"]
+      },
+      {
+        "name": "Shop Item 322",
+        "access_rules": ["$shop_reachable|322"],
+        "visibility_rules": ["$shop_exists|322"]
+      },
+      {
+        "name": "Shop Item 323",
+        "access_rules": ["$shop_reachable|323"],
+        "visibility_rules": ["$shop_exists|323"]
+      },
+      {
+        "name": "Shop Item 324",
+        "access_rules": ["$shop_reachable|324"],
+        "visibility_rules": ["$shop_exists|324"]
+      },
+      {
+        "name": "Shop Item 325",
+        "access_rules": ["$shop_reachable|325"],
+        "visibility_rules": ["$shop_exists|325"]
+      },
+      {
+        "name": "Shop Item 326",
+        "access_rules": ["$shop_reachable|326"],
+        "visibility_rules": ["$shop_exists|326"]
+      },
+      {
+        "name": "Shop Item 327",
+        "access_rules": ["$shop_reachable|327"],
+        "visibility_rules": ["$shop_exists|327"]
+      },
+      {
+        "name": "Shop Item 328",
+        "access_rules": ["$shop_reachable|328"],
+        "visibility_rules": ["$shop_exists|328"]
+      },
+      {
+        "name": "Shop Item 329",
+        "access_rules": ["$shop_reachable|329"],
+        "visibility_rules": ["$shop_exists|329"]
+      },
+      {
+        "name": "Shop Item 330",
+        "access_rules": ["$shop_reachable|330"],
+        "visibility_rules": ["$shop_exists|330"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 600,
+        "y": 909
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 331-340",
+    "visibility_rules": ["$shop_exists|331"],
+    "sections": [
+      {
+        "name": "Shop Item 331",
+        "access_rules": ["$shop_reachable|331"],
+        "visibility_rules": ["$shop_exists|331"]
+      },
+      {
+        "name": "Shop Item 332",
+        "access_rules": ["$shop_reachable|332"],
+        "visibility_rules": ["$shop_exists|332"]
+      },
+      {
+        "name": "Shop Item 333",
+        "access_rules": ["$shop_reachable|333"],
+        "visibility_rules": ["$shop_exists|333"]
+      },
+      {
+        "name": "Shop Item 334",
+        "access_rules": ["$shop_reachable|334"],
+        "visibility_rules": ["$shop_exists|334"]
+      },
+      {
+        "name": "Shop Item 335",
+        "access_rules": ["$shop_reachable|335"],
+        "visibility_rules": ["$shop_exists|335"]
+      },
+      {
+        "name": "Shop Item 336",
+        "access_rules": ["$shop_reachable|336"],
+        "visibility_rules": ["$shop_exists|336"]
+      },
+      {
+        "name": "Shop Item 337",
+        "access_rules": ["$shop_reachable|337"],
+        "visibility_rules": ["$shop_exists|337"]
+      },
+      {
+        "name": "Shop Item 338",
+        "access_rules": ["$shop_reachable|338"],
+        "visibility_rules": ["$shop_exists|338"]
+      },
+      {
+        "name": "Shop Item 339",
+        "access_rules": ["$shop_reachable|339"],
+        "visibility_rules": ["$shop_exists|339"]
+      },
+      {
+        "name": "Shop Item 340",
+        "access_rules": ["$shop_reachable|340"],
+        "visibility_rules": ["$shop_exists|340"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 840,
+        "y": 909
+      }
+    ]
+  },
+  {
+    "name": "Shop Items 341-350",
+    "visibility_rules": ["$shop_exists|341"],
+    "sections": [
+      {
+        "name": "Shop Item 341",
+        "access_rules": ["$shop_reachable|341"],
+        "visibility_rules": ["$shop_exists|341"]
+      },
+      {
+        "name": "Shop Item 342",
+        "access_rules": ["$shop_reachable|342"],
+        "visibility_rules": ["$shop_exists|342"]
+      },
+      {
+        "name": "Shop Item 343",
+        "access_rules": ["$shop_reachable|343"],
+        "visibility_rules": ["$shop_exists|343"]
+      },
+      {
+        "name": "Shop Item 344",
+        "access_rules": ["$shop_reachable|344"],
+        "visibility_rules": ["$shop_exists|344"]
+      },
+      {
+        "name": "Shop Item 345",
+        "access_rules": ["$shop_reachable|345"],
+        "visibility_rules": ["$shop_exists|345"]
+      },
+      {
+        "name": "Shop Item 346",
+        "access_rules": ["$shop_reachable|346"],
+        "visibility_rules": ["$shop_exists|346"]
+      },
+      {
+        "name": "Shop Item 347",
+        "access_rules": ["$shop_reachable|347"],
+        "visibility_rules": ["$shop_exists|347"]
+      },
+      {
+        "name": "Shop Item 348",
+        "access_rules": ["$shop_reachable|348"],
+        "visibility_rules": ["$shop_exists|348"]
+      },
+      {
+        "name": "Shop Item 349",
+        "access_rules": ["$shop_reachable|349"],
+        "visibility_rules": ["$shop_exists|349"]
+      },
+      {
+        "name": "Shop Item 350",
+        "access_rules": ["$shop_reachable|350"],
+        "visibility_rules": ["$shop_exists|350"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "shop",
+        "x": 1080,
+        "y": 909
+      }
+    ]
+  }
+]

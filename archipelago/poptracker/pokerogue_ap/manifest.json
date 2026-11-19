@@ -1,0 +1,15 @@
+{
+  "name": "PokeRogue Archipelago Tracker",
+  "game_name": "PokeRogue",
+  "package_version": "0.5.0",
+  "package_uid": "pokerogue_ap",
+  "author": "PokeRogue Archipelago contributors",
+  "platform": "Web",
+  "min_poptracker_version": "0.26.0",
+  "variants": {
+    "standard": {
+      "display_name": "Tracker (Archipelago)",
+      "flags": ["ap"]
+    }
+  }
+}
