@@ -9,6 +9,8 @@ DEFAULT_SETTINGS = {
     shop_per_tier = 10,
     shop_per_visit = 1,
     biome_passes = false,
+    blitz = false,
+    floor_checks = 1,
 }
 
 local function count(code)
@@ -22,23 +24,60 @@ local function set_count(code, value)
     end
 end
 
-function set_settings(location_mode, shop_count, shop_per_tier, shop_per_visit, biome_passes)
+local function set_toggle(code, value)
+    local obj = Tracker:FindObjectForCode(code)
+    if obj then
+        obj.Active = value and true or false
+    end
+end
+
+-- settings: table with the keys of DEFAULT_SETTINGS
+function set_settings(settings)
     local mode = Tracker:FindObjectForCode("location_mode")
     if mode then
-        mode.CurrentStage = location_mode
+        mode.CurrentStage = settings.location_mode
     end
-    local passes = Tracker:FindObjectForCode("biome_passes")
-    if passes then
-        passes.Active = biome_passes and true or false
-    end
-    set_count("shop_count", shop_count)
-    set_count("shop_per_tier", shop_per_tier)
-    set_count("shop_per_visit", shop_per_visit)
+    set_toggle("biome_passes", settings.biome_passes)
+    set_toggle("blitz", settings.blitz)
+    set_count("floor_checks", settings.floor_checks)
+    set_count("shop_count", settings.shop_count)
+    set_count("shop_per_tier", settings.shop_per_tier)
+    set_count("shop_per_visit", settings.shop_per_visit)
 end
 
 function set_default_settings()
-    set_settings(DEFAULT_SETTINGS.location_mode, DEFAULT_SETTINGS.shop_count, DEFAULT_SETTINGS.shop_per_tier,
-        DEFAULT_SETTINGS.shop_per_visit, DEFAULT_SETTINGS.biome_passes)
+    set_settings(DEFAULT_SETTINGS)
+end
+
+-- Blitz option and floor checks -------------------------------------------------------------------------------
+
+local function is_blitz()
+    return count("blitz") > 0
+end
+
+-- Last floor of the run: 200, or 100 with the Blitz option
+local function final_wave()
+    return is_blitz() and BLITZ_FINAL_WAVE or FINAL_WAVE
+end
+
+-- Blocks of 10 floors of the run (20, or 10 with the Blitz option)
+local function block_count()
+    return final_wave() // GATE_INTERVAL
+end
+
+-- The block (0-based) of floors exists in this run
+function block_exists(block)
+    return tonumber(block) < block_count()
+end
+
+-- "Floor N Bonus" checks exist (floor_checks: 2)
+function floor_bonus()
+    return count("floor_checks") >= 2
+end
+
+-- The End is forced on the last block: one Floor Pass per block before it
+function end_reachable()
+    return count("pass") >= block_count() - 1
 end
 
 -- Biome floors ------------------------------------------------------------------------------------------------
@@ -51,7 +90,7 @@ end
 -- Same as can_reach_biome() in the apworld: the biome changes after each floor multiple of 10 (block k needs
 -- k Floor Passes), only towards biomes whose Biome Pass was received
 function can_reach_biome(target)
-    local max_depth = math.min(count("pass"), BLOCK_COUNT - 2)
+    local max_depth = math.min(count("pass"), block_count() - 2)
     local seen = { [TOWN_BIOME] = true }
     local frontier = { TOWN_BIOME }
     for _ = 1, max_depth do
@@ -144,6 +183,7 @@ function shop_reachable(index)
     if not shop_exists(index) then
         return false
     end
-    local first_wave = SHOP_TIER_WAVES[shop_tier(index) + 1]
+    local tier_waves = is_blitz() and BLITZ_SHOP_TIER_WAVES or SHOP_TIER_WAVES
+    local first_wave = tier_waves[shop_tier(index) + 1]
     return count("pass") >= (first_wave - 1) // GATE_INTERVAL
 end

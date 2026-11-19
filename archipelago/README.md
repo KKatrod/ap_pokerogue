@@ -58,7 +58,7 @@ La connexion se reconnecte automatiquement ; les locations faites hors-ligne son
 
 `archipelago/apworld/pokerogue/` est le monde Archipelago (Python). Pour l'utiliser : zipper le dossier `pokerogue` en `pokerogue.apworld` et le placer dans `custom_worlds/` (ou `lib/worlds/`) d'Archipelago. Après chaque nouvelle version, **fermer puis relancer le Launcher** avant de régénérer le template YAML (*Generate Template Options*) : un Launcher déjà ouvert garde l'ancienne version en mémoire et produit un template sans les nouvelles options.
 
-Options YAML : `location_mode` (floors / biome_floors / both, floors), `shop_item_count` (0–350, 70), `shop_items_per_tier` (0–50, 10), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10 ou `random`, 5), `starting_pokemon_max_cost` (1–10, 6), `start_with_map` (true/false, true), `pokemon_in_pool` (0 à 572 = tous les starters de PokeRogue, 40), `bonus_item_copies` (1–5, 1), `egg_filler_percent` (0–100, 25), `effect_filler_percent` (0–100, 10), `trap_percent` (0–100, 0), `death_link` (true/false, false), `trainer_hints` (true/false, true), `biome_passes` (true/false, false), `starter_limit_items` (0–20, 20).
+Options YAML : `location_mode` (floors / biome_floors / both, floors), `shop_item_count` (0–350, 70), `shop_items_per_tier` (0–50, 10), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10 ou `random`, 5), `starting_pokemon_max_cost` (1–10, 6), `start_with_map` (true/false, true), `pokemon_in_pool` (0 à 572 = tous les starters de PokeRogue, 40), `bonus_item_copies` (1–5, 1), `egg_filler_percent` (0–100, 25), `effect_filler_percent` (0–100, 10), `trap_percent` (0–100, 0), `death_link` (true/false, false), `trainer_hints` (true/false, true), `biome_passes` (true/false, false), `starter_limit_items` (0–20, 20), `blitz` (true/false, false : partie de 100 étages, voir [BLITZ.md](BLITZ.md)), `floor_checks` (1–2, 1 : avec 2, un check `Floor N Bonus` en plus de `Floor N Cleared`).
 
 Challenges (défaut : désactivé) : `mono_generation` (off / gen_1 … gen_9), `mono_type` (off / normal, fighting, flying, poison, ground, rock, bug, ghost, steel, fire, water, grass, electric, psychic, ice, dragon, dark, fairy), `limited_support` (off / no_heal / no_shop / both), `limited_catch` (true/false), `hardcore` (true/false), `moveset_randomizer` (off / on / lite), `ability_randomizer` (off / abilities / all / lite), `inverse_battle` (true/false), `flip_stat` (true/false), `active_passives` (off / trainers / all). Ils sont envoyés dans le slot data (`challenges`, par nom de l'enum `Challenges` du jeu).
 
@@ -85,6 +85,8 @@ PokeRogue:
   death_link: false
   trainer_hints: true
   biome_passes: false
+  blitz: false
+  floor_checks: 1
   starter_limit_items: 20
   mono_generation: off
   mono_type: off

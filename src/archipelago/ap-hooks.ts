@@ -19,6 +19,8 @@ export interface ApHooks {
   getSoldLabel(modifierType: any): string | null;
   /** Starter points of an Archipelago team, or null outside the Archipelago mode */
   getStarterValueLimit(): number | null;
+  /** Whether the connected seed uses the Blitz option (100 floors, see `blitz.ts`) */
+  isBlitz(): boolean;
 }
 
 export const apHooks: ApHooks = {
@@ -27,4 +29,5 @@ export const apHooks: ApHooks = {
   getShopOptions: () => [],
   getSoldLabel: () => null,
   getStarterValueLimit: () => null,
+  isBlitz: () => false,
 };

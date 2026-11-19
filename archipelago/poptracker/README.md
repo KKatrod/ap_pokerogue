@@ -28,9 +28,9 @@ Onglets :
 
 | Onglet | Contenu |
 |---|---|
-| **Floors** | Une case par bloc de 10 étages (`Floors 1-10` … `Floors 191-199`) avec les checks `Floor N Cleared` (N = 1 à 199). |
+| **Floors** | Une case par bloc de 10 étages (`Floors 1-10` … `Floors 191-199`) avec les checks `Floor N Cleared` (N = 1 à 199), et `Floor N Bonus` avec `floor_checks: 2`. En Blitz, les blocs au-delà de l'étage 99 sont masqués. |
 | **Biomes** | Un marqueur par biome avec ses checks `<Biome> - Floor 1` à `<Biome> - Floor 10` (`End` : étages 1 à 9 ; le 10ᵉ est le boss final, l'objectif). |
-| **Shop** | Les checks `Shop Item N`, regroupés par tier de la boutique (Tier 1 : étages 1-20, Tier 2 : 21-50, 51-80, 81-110, 111-140, 141-170, Tier 7 : 171-199). |
+| **Shop** | Les checks `Shop Item N`, regroupés par tier de la boutique (Tier 1 : étages 1-20, Tier 2 : 21-50, 51-80, 81-110, 111-140, 141-170, Tier 7 : 171-199 ; en Blitz : 1, 11, 26, 41, 56, 71 et 86). |
 
 Les variantes viennent de `slot_data.location_mode`, appliqué à la connexion :
 
@@ -41,14 +41,15 @@ Les variantes viennent de `slot_data.location_mode`, appliqué à la connexion :
 | `2` (`both`) | Floors + Biomes + Shop |
 
 Le panneau *Settings (from the server)* montre les valeurs lues dans `slot_data` : mode (FL, BI, F+B),
-`biome_passes` (BP, allumé si l'option est active), `shop_item_count` (SH), `shop_items_per_tier` (/T) et
-`shop_items_per_visit` (/V). Une fois connecté, ces réglages viennent du serveur et un clic dessus est annulé.
-Sans connexion, on peut les régler à la main (clic gauche / clic droit). Les valeurs par défaut sont celles de
-l'apworld (floors, pas de Biome Passes, 70, 10, 1).
+`biome_passes` (BP, allumé si l'option est active), `blitz` (BZ, allumé en Blitz), `floor_checks` (FC, 1 ou 2),
+`shop_item_count` (SH), `shop_items_per_tier` (/T) et `shop_items_per_visit` (/V). Une fois connecté, ces réglages
+viennent du serveur et un clic dessus est annulé. Sans connexion, on peut les régler à la main (clic gauche /
+clic droit). Les valeurs par défaut sont celles de l'apworld (floors, pas de Biome Passes, pas de Blitz, 1 check
+par étage, 70, 10, 1).
 
 Objets suivis :
 
-- **Progressive Floor Pass** : compteur de 0 à 19.
+- **Progressive Floor Pass** : compteur de 0 à 19 (9 suffisent en Blitz).
 - **Map** : la Map de départ (`start_with_map`) arrive avec l'inventaire de départ, elle est donc aussi
   détectée.
 - **Biome Pass - <Biome>** : un par biome sauf Town et End, soit 33. Ils sont dans le groupe *Biome Passes*,
@@ -59,7 +60,10 @@ Objets suivis :
 
 Elle suit l'apworld (`__init__.py`) :
 
-- **Étages** : le bloc k (étages 10k+1 à 10k+10) demande k `Progressive Floor Pass`.
+- **Étages** : le bloc k (étages 10k+1 à 10k+10) demande k `Progressive Floor Pass`. `Floor N Bonus` suit la
+  même règle que `Floor N Cleared`.
+- **Blitz** (option `blitz`, voir `archipelago/BLITZ.md`) : la partie s'arrête à l'étage 100, End occupe le bloc 9
+  (9 passes au lieu de 19) et les tiers de boutique commencent aux étages 1, 11, 26, 41, 56, 71 et 86.
 - **Biomes** : les étages d'un biome sont disponibles dès le premier bloc où ce biome peut être atteint
   (`BIOME_DEPTHS` : parcours en largeur depuis Town sur les liens de biomes de `data.py` ; End est forcé au
   bloc 19). L'onglet affiche pour chaque biome ce bloc et le nombre de passes demandé.

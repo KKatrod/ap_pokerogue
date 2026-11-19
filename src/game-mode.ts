@@ -1,3 +1,12 @@
+import { apHooks } from "#app/archipelago/ap-hooks";
+import {
+  BLITZ_FINAL_WAVE,
+  BLITZ_FIXED_BOSS_WAVES,
+  BLITZ_GYM_WAVES,
+  BLITZ_MYSTERY_ENCOUNTER_WAVES,
+  BLITZ_VIRTUAL_WAVE_FACTOR,
+  getClassicWaveOfBlitzWave,
+} from "#app/archipelago/blitz";
 import { FixedBattleConfig } from "#app/battle";
 import { CHALLENGE_MODE_MYSTERY_ENCOUNTER_WAVES, CLASSIC_MODE_MYSTERY_ENCOUNTER_WAVES } from "#app/constants";
 import { globalScene } from "#app/global-scene";
@@ -16,6 +25,7 @@ import type { PokemonSpecies } from "#data/pokemon-species";
 import { BiomeId } from "#enums/biome-id";
 import { ChallengeType } from "#enums/challenge-type";
 import { Challenges } from "#enums/challenges";
+import type { ClassicFixedBossWaves } from "#enums/fixed-boss-waves";
 import { GameModes } from "#enums/game-modes";
 import { SpeciesId } from "#enums/species-id";
 import { classicFixedBattles, type FixedBattleConfigs } from "#trainers/fixed-battle-configs";
@@ -69,6 +79,40 @@ export class GameMode implements GameModeConfig {
       this.challenges = allChallenges.map(c => copyChallenge(c));
     }
     this.battleConfig = battleConfig || {};
+  }
+
+  /** Archipelago run of a seed with the Blitz option: 100 floors, compressed difficulty and story */
+  get isBlitz(): boolean {
+    return this.isArchipelago && apHooks.isBlitz();
+  }
+
+  /**
+   * Floor used for the difficulty, the shop tiers and the Gym Leaders: twice the real floor in a Blitz run,
+   * the real floor otherwise
+   */
+  getVirtualWave(waveIndex: number): number {
+    return this.isBlitz ? waveIndex * BLITZ_VIRTUAL_WAVE_FACTOR : waveIndex;
+  }
+
+  /** Floor of a Classic story battle in this run (moved in a Blitz run) */
+  getFixedBossWave(classicWave: ClassicFixedBossWaves): number {
+    return this.isBlitz ? BLITZ_FIXED_BOSS_WAVES[classicWave] : classicWave;
+  }
+
+  /**
+   * Classic floor of the story battle held on this floor, used to look up the fixed battle configs
+   * (in a Blitz run, `-1` when there is none)
+   */
+  getClassicFixedWave(waveIndex: number): number {
+    return this.isBlitz ? (getClassicWaveOfBlitzWave(waveIndex) ?? -1) : waveIndex;
+  }
+
+  /** Whether a Gym Leader is fought on this floor (Classic: every 30 floors, from floor 20 or 30) */
+  isGymWave(waveIndex: number, offsetGym: boolean): boolean {
+    if (this.isBlitz) {
+      return BLITZ_GYM_WAVES.includes(waveIndex);
+    }
+    return waveIndex % 30 === (offsetGym ? 0 : 20);
   }
 
   /**
@@ -198,7 +242,7 @@ export class GameMode implements GameModeConfig {
       case GameModes.DAILY:
         return waveIndex + 30 + (ignoreCurveChanges ? 0 : Math.floor(waveIndex / 5));
       default:
-        return waveIndex;
+        return this.getVirtualWave(waveIndex);
     }
   }
 
@@ -218,7 +262,7 @@ export class GameMode implements GameModeConfig {
       }
       return waveIndex % 10 === 5 || (!(waveIndex % 10) && waveIndex > 10 && !this.isWaveFinal(waveIndex));
     }
-    if (waveIndex % 30 === (offsetGym ? 0 : 20) && !this.isWaveFinal(waveIndex)) {
+    if (this.isGymWave(waveIndex, offsetGym) && !this.isWaveFinal(waveIndex)) {
       return true;
     }
     if (waveIndex % 10 !== 1 && waveIndex % 10) {
@@ -235,7 +279,7 @@ export class GameMode implements GameModeConfig {
           if (w === waveIndex) {
             continue;
           }
-          if (w % 30 === (offsetGym ? 0 : 20) || this.isFixedBattle(w)) {
+          if (this.isGymWave(w, offsetGym) || this.isFixedBattle(w)) {
             allowTrainerBattle = false;
             break;
           }
@@ -263,7 +307,7 @@ export class GameMode implements GameModeConfig {
         return waveIndex > 10 && waveIndex < 50 && !(waveIndex % 10);
       default:
         return (
-          waveIndex % 30 === (offsetGym ? 0 : 20)
+          this.isGymWave(waveIndex, offsetGym)
           && (biomeType !== BiomeId.END || this.isClassic || this.isWaveFinal(waveIndex))
         );
     }
@@ -301,7 +345,7 @@ export class GameMode implements GameModeConfig {
     switch (modeId) {
       case GameModes.CLASSIC:
       case GameModes.CHALLENGE:
-        return waveIndex === 200;
+        return waveIndex === (this.isBlitz && modeId === this.modeId ? BLITZ_FINAL_WAVE : 200);
       case GameModes.ENDLESS:
       case GameModes.SPLICED_ENDLESS:
         return waveIndex % 250 === 0;
@@ -360,9 +404,10 @@ export class GameMode implements GameModeConfig {
    */
   isFixedBattle(waveIndex: number): boolean {
     const dummyConfig = new FixedBattleConfig();
+    const classicWave = this.getClassicFixedWave(waveIndex);
     return (
-      Object.hasOwn(this.battleConfig, waveIndex)
-      || applyChallenges(ChallengeType.FIXED_BATTLES, waveIndex, dummyConfig)
+      Object.hasOwn(this.battleConfig, classicWave)
+      || applyChallenges(ChallengeType.FIXED_BATTLES, classicWave, dummyConfig)
     );
   }
 
@@ -373,10 +418,11 @@ export class GameMode implements GameModeConfig {
    */
   getFixedBattle(waveIndex: number): FixedBattleConfig | undefined {
     const challengeConfig = new FixedBattleConfig();
-    if (applyChallenges(ChallengeType.FIXED_BATTLES, waveIndex, challengeConfig)) {
+    const classicWave = this.getClassicFixedWave(waveIndex);
+    if (applyChallenges(ChallengeType.FIXED_BATTLES, classicWave, challengeConfig)) {
       return challengeConfig;
     }
-    return this.battleConfig[waveIndex];
+    return this.battleConfig[classicWave];
   }
 
   /**
@@ -435,6 +481,9 @@ export class GameMode implements GameModeConfig {
    * Returns the wave range where MEs can spawn for the game mode [min, max]
    */
   getMysteryEncounterLegalWaves(): [minWave: number, maxWave: number] {
+    if (this.isBlitz) {
+      return BLITZ_MYSTERY_ENCOUNTER_WAVES;
+    }
     switch (this.modeId) {
       case GameModes.CLASSIC:
         return CLASSIC_MODE_MYSTERY_ENCOUNTER_WAVES;

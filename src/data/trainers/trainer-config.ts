@@ -3372,7 +3372,10 @@ export const trainerConfigs: TrainerConfigs = {
     .setPartyMemberFunc(
       5,
       getRandomPartyMemberFunc([SpeciesId.REVAVROOM], TrainerSlot.TRAINER, true, p => {
-        if (globalScene.currentBattle.waveIndex === ClassicFixedBossWaves.EVIL_ADMIN_1) {
+        if (
+          globalScene.currentBattle.waveIndex
+          === globalScene.gameMode.getFixedBossWave(ClassicFixedBossWaves.EVIL_ADMIN_1)
+        ) {
           p.formIndex = 0;
           p.generateAndPopulateMoveset();
         } else {
@@ -3399,7 +3402,10 @@ export const trainerConfigs: TrainerConfigs = {
     .setPartyMemberFunc(
       5,
       getRandomPartyMemberFunc([SpeciesId.REVAVROOM], TrainerSlot.TRAINER, true, p => {
-        if (globalScene.currentBattle.waveIndex === ClassicFixedBossWaves.EVIL_ADMIN_1) {
+        if (
+          globalScene.currentBattle.waveIndex
+          === globalScene.gameMode.getFixedBossWave(ClassicFixedBossWaves.EVIL_ADMIN_1)
+        ) {
           p.formIndex = 0;
           p.generateAndPopulateMoveset();
         } else {
@@ -3426,7 +3432,10 @@ export const trainerConfigs: TrainerConfigs = {
     .setPartyMemberFunc(
       5,
       getRandomPartyMemberFunc([SpeciesId.REVAVROOM], TrainerSlot.TRAINER, true, p => {
-        if (globalScene.currentBattle.waveIndex === ClassicFixedBossWaves.EVIL_ADMIN_1) {
+        if (
+          globalScene.currentBattle.waveIndex
+          === globalScene.gameMode.getFixedBossWave(ClassicFixedBossWaves.EVIL_ADMIN_1)
+        ) {
           p.formIndex = 0;
           p.generateAndPopulateMoveset();
         } else {
@@ -3453,7 +3462,10 @@ export const trainerConfigs: TrainerConfigs = {
     .setPartyMemberFunc(
       5,
       getRandomPartyMemberFunc([SpeciesId.REVAVROOM], TrainerSlot.TRAINER, true, p => {
-        if (globalScene.currentBattle.waveIndex === ClassicFixedBossWaves.EVIL_ADMIN_1) {
+        if (
+          globalScene.currentBattle.waveIndex
+          === globalScene.gameMode.getFixedBossWave(ClassicFixedBossWaves.EVIL_ADMIN_1)
+        ) {
           p.formIndex = 0;
           p.generateAndPopulateMoveset();
         } else {
@@ -3480,7 +3492,10 @@ export const trainerConfigs: TrainerConfigs = {
     .setPartyMemberFunc(
       5,
       getRandomPartyMemberFunc([SpeciesId.REVAVROOM], TrainerSlot.TRAINER, true, p => {
-        if (globalScene.currentBattle.waveIndex === ClassicFixedBossWaves.EVIL_ADMIN_1) {
+        if (
+          globalScene.currentBattle.waveIndex
+          === globalScene.gameMode.getFixedBossWave(ClassicFixedBossWaves.EVIL_ADMIN_1)
+        ) {
           p.formIndex = 0;
           p.generateAndPopulateMoveset();
         } else {

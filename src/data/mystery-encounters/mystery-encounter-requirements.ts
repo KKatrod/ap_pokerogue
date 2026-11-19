@@ -246,7 +246,8 @@ export class WaveRangeRequirement extends EncounterSceneRequirement {
 
   override meetsRequirement(): boolean {
     if (this.waveRange != null && this.waveRange[0] <= this.waveRange[1]) {
-      const waveIndex = globalScene.currentBattle.waveIndex;
+      // The ranges are set for a Classic run: an Archipelago Blitz run uses its virtual floor (twice the real one)
+      const waveIndex = globalScene.gameMode.getVirtualWave(globalScene.currentBattle.waveIndex);
       if (
         (waveIndex >= 0 && this.waveRange[0] >= 0 && this.waveRange[0] > waveIndex)
         || (this.waveRange[1] >= 0 && this.waveRange[1] < waveIndex)

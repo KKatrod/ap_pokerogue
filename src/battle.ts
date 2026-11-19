@@ -1,3 +1,4 @@
+import { BLITZ_MONEY_MULTIPLIER } from "#app/archipelago/blitz";
 import { DAILY_BOSS_LEVEL } from "#app/constants";
 import type { GameMode } from "#app/game-mode";
 import { globalScene } from "#app/global-scene";
@@ -197,6 +198,9 @@ export class Battle {
   pickUpScatteredMoney(): void {
     const moneyAmount = new NumberHolder(globalScene.currentBattle.moneyScattered);
     globalScene.applyModifiers(MoneyMultiplierModifier, true, moneyAmount);
+    if (globalScene.gameMode.isBlitz) {
+      moneyAmount.value *= BLITZ_MONEY_MULTIPLIER;
+    }
 
     if (globalScene.arena.getTag(ArenaTagType.HAPPY_HOUR)) {
       moneyAmount.value *= 2;

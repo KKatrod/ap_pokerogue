@@ -1,37 +1,77 @@
 [
   {
     "name": "Floors 1-10",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|0"],
     "sections": [
       {
         "name": "Floor 1 Cleared"
       },
       {
+        "name": "Floor 1 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 2 Cleared"
+      },
+      {
+        "name": "Floor 2 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 3 Cleared"
       },
       {
+        "name": "Floor 3 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 4 Cleared"
+      },
+      {
+        "name": "Floor 4 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 5 Cleared"
       },
       {
+        "name": "Floor 5 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 6 Cleared"
+      },
+      {
+        "name": "Floor 6 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 7 Cleared"
       },
       {
+        "name": "Floor 7 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 8 Cleared"
+      },
+      {
+        "name": "Floor 8 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 9 Cleared"
       },
       {
+        "name": "Floor 9 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 10 Cleared"
+      },
+      {
+        "name": "Floor 10 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -44,37 +84,77 @@
   },
   {
     "name": "Floors 11-20",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|1"],
     "sections": [
       {
         "name": "Floor 11 Cleared"
       },
       {
+        "name": "Floor 11 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 12 Cleared"
+      },
+      {
+        "name": "Floor 12 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 13 Cleared"
       },
       {
+        "name": "Floor 13 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 14 Cleared"
+      },
+      {
+        "name": "Floor 14 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 15 Cleared"
       },
       {
+        "name": "Floor 15 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 16 Cleared"
+      },
+      {
+        "name": "Floor 16 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 17 Cleared"
       },
       {
+        "name": "Floor 17 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 18 Cleared"
+      },
+      {
+        "name": "Floor 18 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 19 Cleared"
       },
       {
+        "name": "Floor 19 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 20 Cleared"
+      },
+      {
+        "name": "Floor 20 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -88,37 +168,77 @@
   },
   {
     "name": "Floors 21-30",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|2"],
     "sections": [
       {
         "name": "Floor 21 Cleared"
       },
       {
+        "name": "Floor 21 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 22 Cleared"
+      },
+      {
+        "name": "Floor 22 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 23 Cleared"
       },
       {
+        "name": "Floor 23 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 24 Cleared"
+      },
+      {
+        "name": "Floor 24 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 25 Cleared"
       },
       {
+        "name": "Floor 25 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 26 Cleared"
+      },
+      {
+        "name": "Floor 26 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 27 Cleared"
       },
       {
+        "name": "Floor 27 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 28 Cleared"
+      },
+      {
+        "name": "Floor 28 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 29 Cleared"
       },
       {
+        "name": "Floor 29 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 30 Cleared"
+      },
+      {
+        "name": "Floor 30 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -132,37 +252,77 @@
   },
   {
     "name": "Floors 31-40",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|3"],
     "sections": [
       {
         "name": "Floor 31 Cleared"
       },
       {
+        "name": "Floor 31 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 32 Cleared"
+      },
+      {
+        "name": "Floor 32 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 33 Cleared"
       },
       {
+        "name": "Floor 33 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 34 Cleared"
+      },
+      {
+        "name": "Floor 34 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 35 Cleared"
       },
       {
+        "name": "Floor 35 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 36 Cleared"
+      },
+      {
+        "name": "Floor 36 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 37 Cleared"
       },
       {
+        "name": "Floor 37 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 38 Cleared"
+      },
+      {
+        "name": "Floor 38 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 39 Cleared"
       },
       {
+        "name": "Floor 39 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 40 Cleared"
+      },
+      {
+        "name": "Floor 40 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -176,37 +336,77 @@
   },
   {
     "name": "Floors 41-50",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|4"],
     "sections": [
       {
         "name": "Floor 41 Cleared"
       },
       {
+        "name": "Floor 41 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 42 Cleared"
+      },
+      {
+        "name": "Floor 42 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 43 Cleared"
       },
       {
+        "name": "Floor 43 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 44 Cleared"
+      },
+      {
+        "name": "Floor 44 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 45 Cleared"
       },
       {
+        "name": "Floor 45 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 46 Cleared"
+      },
+      {
+        "name": "Floor 46 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 47 Cleared"
       },
       {
+        "name": "Floor 47 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 48 Cleared"
+      },
+      {
+        "name": "Floor 48 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 49 Cleared"
       },
       {
+        "name": "Floor 49 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 50 Cleared"
+      },
+      {
+        "name": "Floor 50 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -220,37 +420,77 @@
   },
   {
     "name": "Floors 51-60",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|5"],
     "sections": [
       {
         "name": "Floor 51 Cleared"
       },
       {
+        "name": "Floor 51 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 52 Cleared"
+      },
+      {
+        "name": "Floor 52 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 53 Cleared"
       },
       {
+        "name": "Floor 53 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 54 Cleared"
+      },
+      {
+        "name": "Floor 54 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 55 Cleared"
       },
       {
+        "name": "Floor 55 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 56 Cleared"
+      },
+      {
+        "name": "Floor 56 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 57 Cleared"
       },
       {
+        "name": "Floor 57 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 58 Cleared"
+      },
+      {
+        "name": "Floor 58 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 59 Cleared"
       },
       {
+        "name": "Floor 59 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 60 Cleared"
+      },
+      {
+        "name": "Floor 60 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -264,37 +504,77 @@
   },
   {
     "name": "Floors 61-70",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|6"],
     "sections": [
       {
         "name": "Floor 61 Cleared"
       },
       {
+        "name": "Floor 61 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 62 Cleared"
+      },
+      {
+        "name": "Floor 62 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 63 Cleared"
       },
       {
+        "name": "Floor 63 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 64 Cleared"
+      },
+      {
+        "name": "Floor 64 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 65 Cleared"
       },
       {
+        "name": "Floor 65 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 66 Cleared"
+      },
+      {
+        "name": "Floor 66 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 67 Cleared"
       },
       {
+        "name": "Floor 67 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 68 Cleared"
+      },
+      {
+        "name": "Floor 68 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 69 Cleared"
       },
       {
+        "name": "Floor 69 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 70 Cleared"
+      },
+      {
+        "name": "Floor 70 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -308,37 +588,77 @@
   },
   {
     "name": "Floors 71-80",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|7"],
     "sections": [
       {
         "name": "Floor 71 Cleared"
       },
       {
+        "name": "Floor 71 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 72 Cleared"
+      },
+      {
+        "name": "Floor 72 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 73 Cleared"
       },
       {
+        "name": "Floor 73 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 74 Cleared"
+      },
+      {
+        "name": "Floor 74 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 75 Cleared"
       },
       {
+        "name": "Floor 75 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 76 Cleared"
+      },
+      {
+        "name": "Floor 76 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 77 Cleared"
       },
       {
+        "name": "Floor 77 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 78 Cleared"
+      },
+      {
+        "name": "Floor 78 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 79 Cleared"
       },
       {
+        "name": "Floor 79 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 80 Cleared"
+      },
+      {
+        "name": "Floor 80 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -352,37 +672,77 @@
   },
   {
     "name": "Floors 81-90",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|8"],
     "sections": [
       {
         "name": "Floor 81 Cleared"
       },
       {
+        "name": "Floor 81 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 82 Cleared"
+      },
+      {
+        "name": "Floor 82 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 83 Cleared"
       },
       {
+        "name": "Floor 83 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 84 Cleared"
+      },
+      {
+        "name": "Floor 84 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 85 Cleared"
       },
       {
+        "name": "Floor 85 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 86 Cleared"
+      },
+      {
+        "name": "Floor 86 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 87 Cleared"
       },
       {
+        "name": "Floor 87 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 88 Cleared"
+      },
+      {
+        "name": "Floor 88 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 89 Cleared"
       },
       {
+        "name": "Floor 89 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 90 Cleared"
+      },
+      {
+        "name": "Floor 90 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -396,37 +756,77 @@
   },
   {
     "name": "Floors 91-100",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|9"],
     "sections": [
       {
         "name": "Floor 91 Cleared"
       },
       {
+        "name": "Floor 91 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 92 Cleared"
+      },
+      {
+        "name": "Floor 92 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 93 Cleared"
       },
       {
+        "name": "Floor 93 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 94 Cleared"
+      },
+      {
+        "name": "Floor 94 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 95 Cleared"
       },
       {
+        "name": "Floor 95 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 96 Cleared"
+      },
+      {
+        "name": "Floor 96 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 97 Cleared"
       },
       {
+        "name": "Floor 97 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 98 Cleared"
+      },
+      {
+        "name": "Floor 98 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 99 Cleared"
       },
       {
+        "name": "Floor 99 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 100 Cleared"
+      },
+      {
+        "name": "Floor 100 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -440,37 +840,77 @@
   },
   {
     "name": "Floors 101-110",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|10"],
     "sections": [
       {
         "name": "Floor 101 Cleared"
       },
       {
+        "name": "Floor 101 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 102 Cleared"
+      },
+      {
+        "name": "Floor 102 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 103 Cleared"
       },
       {
+        "name": "Floor 103 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 104 Cleared"
+      },
+      {
+        "name": "Floor 104 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 105 Cleared"
       },
       {
+        "name": "Floor 105 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 106 Cleared"
+      },
+      {
+        "name": "Floor 106 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 107 Cleared"
       },
       {
+        "name": "Floor 107 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 108 Cleared"
+      },
+      {
+        "name": "Floor 108 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 109 Cleared"
       },
       {
+        "name": "Floor 109 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 110 Cleared"
+      },
+      {
+        "name": "Floor 110 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -484,37 +924,77 @@
   },
   {
     "name": "Floors 111-120",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|11"],
     "sections": [
       {
         "name": "Floor 111 Cleared"
       },
       {
+        "name": "Floor 111 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 112 Cleared"
+      },
+      {
+        "name": "Floor 112 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 113 Cleared"
       },
       {
+        "name": "Floor 113 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 114 Cleared"
+      },
+      {
+        "name": "Floor 114 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 115 Cleared"
       },
       {
+        "name": "Floor 115 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 116 Cleared"
+      },
+      {
+        "name": "Floor 116 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 117 Cleared"
       },
       {
+        "name": "Floor 117 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 118 Cleared"
+      },
+      {
+        "name": "Floor 118 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 119 Cleared"
       },
       {
+        "name": "Floor 119 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 120 Cleared"
+      },
+      {
+        "name": "Floor 120 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -528,37 +1008,77 @@
   },
   {
     "name": "Floors 121-130",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|12"],
     "sections": [
       {
         "name": "Floor 121 Cleared"
       },
       {
+        "name": "Floor 121 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 122 Cleared"
+      },
+      {
+        "name": "Floor 122 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 123 Cleared"
       },
       {
+        "name": "Floor 123 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 124 Cleared"
+      },
+      {
+        "name": "Floor 124 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 125 Cleared"
       },
       {
+        "name": "Floor 125 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 126 Cleared"
+      },
+      {
+        "name": "Floor 126 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 127 Cleared"
       },
       {
+        "name": "Floor 127 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 128 Cleared"
+      },
+      {
+        "name": "Floor 128 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 129 Cleared"
       },
       {
+        "name": "Floor 129 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 130 Cleared"
+      },
+      {
+        "name": "Floor 130 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -572,37 +1092,77 @@
   },
   {
     "name": "Floors 131-140",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|13"],
     "sections": [
       {
         "name": "Floor 131 Cleared"
       },
       {
+        "name": "Floor 131 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 132 Cleared"
+      },
+      {
+        "name": "Floor 132 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 133 Cleared"
       },
       {
+        "name": "Floor 133 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 134 Cleared"
+      },
+      {
+        "name": "Floor 134 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 135 Cleared"
       },
       {
+        "name": "Floor 135 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 136 Cleared"
+      },
+      {
+        "name": "Floor 136 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 137 Cleared"
       },
       {
+        "name": "Floor 137 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 138 Cleared"
+      },
+      {
+        "name": "Floor 138 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 139 Cleared"
       },
       {
+        "name": "Floor 139 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 140 Cleared"
+      },
+      {
+        "name": "Floor 140 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -616,37 +1176,77 @@
   },
   {
     "name": "Floors 141-150",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|14"],
     "sections": [
       {
         "name": "Floor 141 Cleared"
       },
       {
+        "name": "Floor 141 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 142 Cleared"
+      },
+      {
+        "name": "Floor 142 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 143 Cleared"
       },
       {
+        "name": "Floor 143 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 144 Cleared"
+      },
+      {
+        "name": "Floor 144 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 145 Cleared"
       },
       {
+        "name": "Floor 145 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 146 Cleared"
+      },
+      {
+        "name": "Floor 146 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 147 Cleared"
       },
       {
+        "name": "Floor 147 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 148 Cleared"
+      },
+      {
+        "name": "Floor 148 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 149 Cleared"
       },
       {
+        "name": "Floor 149 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 150 Cleared"
+      },
+      {
+        "name": "Floor 150 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -660,37 +1260,77 @@
   },
   {
     "name": "Floors 151-160",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|15"],
     "sections": [
       {
         "name": "Floor 151 Cleared"
       },
       {
+        "name": "Floor 151 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 152 Cleared"
+      },
+      {
+        "name": "Floor 152 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 153 Cleared"
       },
       {
+        "name": "Floor 153 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 154 Cleared"
+      },
+      {
+        "name": "Floor 154 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 155 Cleared"
       },
       {
+        "name": "Floor 155 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 156 Cleared"
+      },
+      {
+        "name": "Floor 156 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 157 Cleared"
       },
       {
+        "name": "Floor 157 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 158 Cleared"
+      },
+      {
+        "name": "Floor 158 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 159 Cleared"
       },
       {
+        "name": "Floor 159 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 160 Cleared"
+      },
+      {
+        "name": "Floor 160 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -704,37 +1344,77 @@
   },
   {
     "name": "Floors 161-170",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|16"],
     "sections": [
       {
         "name": "Floor 161 Cleared"
       },
       {
+        "name": "Floor 161 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 162 Cleared"
+      },
+      {
+        "name": "Floor 162 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 163 Cleared"
       },
       {
+        "name": "Floor 163 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 164 Cleared"
+      },
+      {
+        "name": "Floor 164 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 165 Cleared"
       },
       {
+        "name": "Floor 165 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 166 Cleared"
+      },
+      {
+        "name": "Floor 166 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 167 Cleared"
       },
       {
+        "name": "Floor 167 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 168 Cleared"
+      },
+      {
+        "name": "Floor 168 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 169 Cleared"
       },
       {
+        "name": "Floor 169 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 170 Cleared"
+      },
+      {
+        "name": "Floor 170 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -748,37 +1428,77 @@
   },
   {
     "name": "Floors 171-180",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|17"],
     "sections": [
       {
         "name": "Floor 171 Cleared"
       },
       {
+        "name": "Floor 171 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 172 Cleared"
+      },
+      {
+        "name": "Floor 172 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 173 Cleared"
       },
       {
+        "name": "Floor 173 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 174 Cleared"
+      },
+      {
+        "name": "Floor 174 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 175 Cleared"
       },
       {
+        "name": "Floor 175 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 176 Cleared"
+      },
+      {
+        "name": "Floor 176 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 177 Cleared"
       },
       {
+        "name": "Floor 177 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 178 Cleared"
+      },
+      {
+        "name": "Floor 178 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 179 Cleared"
       },
       {
+        "name": "Floor 179 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 180 Cleared"
+      },
+      {
+        "name": "Floor 180 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -792,37 +1512,77 @@
   },
   {
     "name": "Floors 181-190",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|18"],
     "sections": [
       {
         "name": "Floor 181 Cleared"
       },
       {
+        "name": "Floor 181 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 182 Cleared"
+      },
+      {
+        "name": "Floor 182 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 183 Cleared"
       },
       {
+        "name": "Floor 183 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 184 Cleared"
+      },
+      {
+        "name": "Floor 184 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 185 Cleared"
       },
       {
+        "name": "Floor 185 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 186 Cleared"
+      },
+      {
+        "name": "Floor 186 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 187 Cleared"
       },
       {
+        "name": "Floor 187 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 188 Cleared"
+      },
+      {
+        "name": "Floor 188 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 189 Cleared"
       },
       {
+        "name": "Floor 189 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 190 Cleared"
+      },
+      {
+        "name": "Floor 190 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [
@@ -836,34 +1596,70 @@
   },
   {
     "name": "Floors 191-199",
-    "visibility_rules": ["floors"],
+    "visibility_rules": ["floors,$block_exists|19"],
     "sections": [
       {
         "name": "Floor 191 Cleared"
       },
       {
+        "name": "Floor 191 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 192 Cleared"
+      },
+      {
+        "name": "Floor 192 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 193 Cleared"
       },
       {
+        "name": "Floor 193 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 194 Cleared"
+      },
+      {
+        "name": "Floor 194 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 195 Cleared"
       },
       {
+        "name": "Floor 195 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 196 Cleared"
+      },
+      {
+        "name": "Floor 196 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       },
       {
         "name": "Floor 197 Cleared"
       },
       {
+        "name": "Floor 197 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 198 Cleared"
       },
       {
+        "name": "Floor 198 Bonus",
+        "visibility_rules": ["$floor_bonus"]
+      },
+      {
         "name": "Floor 199 Cleared"
+      },
+      {
+        "name": "Floor 199 Bonus",
+        "visibility_rules": ["$floor_bonus"]
       }
     ],
     "map_locations": [

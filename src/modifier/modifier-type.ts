@@ -2627,7 +2627,7 @@ export function getPlayerShopModifierTypeOptionsForWave(waveIndex: number, baseC
 
   return (
     options
-      .slice(0, Math.ceil(Math.max(waveIndex + 10, 0) / 30))
+      .slice(0, Math.ceil(Math.max(globalScene.gameMode.getVirtualWave(waveIndex) + 10, 0) / 30))
       .flat()
       .filter(shopItem => {
         const status = new BooleanHolder(true);

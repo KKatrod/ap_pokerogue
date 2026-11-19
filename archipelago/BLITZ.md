@@ -1,6 +1,7 @@
 # Option Blitz – spécification
 
-Statut : **conception validée, non implémentée**.
+Statut : **implémentée** (apworld 0.9.0, jeu et tracker). Les écarts et précisions par rapport à la conception
+sont listés en section 11.
 
 Blitz est une option de l'apworld qui ramène une partie à **100 étages** au lieu de 200, pour des seeds plus
 courtes. Elle garde la structure d'une partie Classic : biomes, combats de l'histoire, champions d'arène, tiers
@@ -152,3 +153,21 @@ passer avant le Conseil 4, et non au milieu. Ces étages ne croisent aucun comba
 - La force réelle de la progression : expérience, objets, et argent ×2.
 - La durée d'une run Blitz par rapport à une run Classic.
 - Les rencontres mystères (section 2).
+
+## 11. Implémentation : précisions
+
+- **Code du jeu.** Les constantes Blitz (étage final, table des combats, champions, plage des rencontres
+  mystères, multiplicateur d'argent) sont dans `src/archipelago/blitz.ts`. `GameMode.isBlitz` vaut vrai pour une
+  partie Archipelago dont la seed a l'option ; `GameMode.getVirtualWave`, `getFixedBossWave`,
+  `getClassicFixedWave` et `isGymWave` appliquent les règles des sections 2 et 4.
+- **Seconde phase de récompense.** Elle est précédée d'`ArchipelagoBonusRewardPhase`, qui envoie
+  `Floor N Bonus` et renouvelle les items AP de la boutique. Elle tire ses récompenses avec une autre graine
+  (étage + 1000), sinon elle proposerait les mêmes objets que la première.
+- **Étages multiples de 10.** Ils n'ont pas de boutique : leurs récompenses fixes (Charme Exp., Golden Poké Ball…)
+  sont données deux fois.
+- **`Floor N Bonus` sans seconde phase** (rencontre mystère, fuite) : le check part quand le joueur quitte l'étage,
+  comme `Floor N Cleared`.
+- **Rencontres mystères.** Elles apparaissent entre les étages 5 et 90, et leurs conditions d'étage sont vérifiées
+  sur l'étage virtuel. Leur nombre total par run reste celui du Classic, donc elles sont deux fois plus fréquentes.
+- **Tracker.** La carte de l'onglet Floors garde ses 20 cases : en Blitz, les cases au-delà de l'étage 100 sont
+  vides (leurs checks sont masqués).

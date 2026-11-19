@@ -99,10 +99,11 @@ def shop_tier_name(tier):
     return f"Shop Tier {tier + 1}"
 
 
-def shop_tier_floors(tier):
+def shop_tier_floors(tier, blitz=False):
     """Floors of the regular shop tier: from its first wave to the floor before the next tier."""
-    waves = data["SHOP_TIER_WAVES"]
-    last = waves[tier + 1] - 1 if tier + 1 < len(waves) else FINAL_WAVE - 1
+    waves = data["BLITZ_SHOP_TIER_WAVES" if blitz else "SHOP_TIER_WAVES"]
+    final_wave = data["BLITZ_FINAL_WAVE"] if blitz else FINAL_WAVE
+    last = waves[tier + 1] - 1 if tier + 1 < len(waves) else final_wave - 1
     return waves[tier], last
 
 
@@ -207,6 +208,11 @@ def items_json():
          "codes": "shop_per_visit", "min_quantity": 1, "max_quantity": 3, "increment": 1},
         {"name": "Biome Passes (option)", "type": "toggle", "img": "images/settings/biome_passes.png",
          "codes": "biome_passes"},
+        {"name": "Blitz (option): 100 floors", "type": "toggle", "img": "images/settings/blitz.png",
+         "codes": "blitz"},
+        {"name": "Floor Checks (option): 1 or 2 per floor", "type": "consumable",
+         "img": "images/settings/floor_checks.png", "codes": "floor_checks", "min_quantity": 1, "max_quantity": 2,
+         "increment": 1},
     ]
 
 
@@ -216,10 +222,16 @@ def floor_locations(centres):
     locations = []
     for block in range(BLOCK_COUNT):
         first, last = block * GATE + 1, min((block + 1) * GATE, FINAL_WAVE - 1)
+        sections = []
+        for wave in range(first, last + 1):
+            sections.append({"name": f"Floor {wave} Cleared"})
+            # Second check of the floor (floor_checks: 2)
+            sections.append({"name": f"Floor {wave} Bonus", "visibility_rules": ["$floor_bonus"]})
         location = {
             "name": block_name(block),
-            "visibility_rules": ["floors"],
-            "sections": [{"name": f"Floor {wave} Cleared"} for wave in range(first, last + 1)],
+            # The blocks past the last floor of a Blitz run are hidden
+            "visibility_rules": [f"floors,$block_exists|{block}"],
+            "sections": sections,
             "map_locations": [{"map": "floors", "x": centres[block][0], "y": centres[block][1]}],
         }
         if block:
@@ -232,7 +244,7 @@ def biome_access_rules(biome_id):
     if biome_id == TOWN:
         return None
     if biome_id == END:
-        return [f"pass:{DEPTHS[END]}"]  # forced at the last block, no Biome Pass
+        return ["$end_reachable"]  # forced at the last block (19, or 9 with Blitz), no Biome Pass
     # scripts/logic.lua: reachable with the Floor Passes (and the Biome Passes with the biome_passes option);
     # in logic once biome_in_logic is also true, otherwise a sequence break ([...] is an optional requirement)
     return [f"$biome_reachable|{biome_id},[$biome_in_logic|{biome_id}]"]
@@ -286,6 +298,7 @@ def location_mapping_lua():
     for wave in range(1, FINAL_WAVE):
         block = (wave - 1) // GATE
         lines.append(f'  [{BASE_ID + data["WAVE_LOCATION_OFFSET"] + wave}] = "@{block_name(block)}/Floor {wave} Cleared",')
+        lines.append(f'  [{BASE_ID + data["WAVE_BONUS_LOCATION_OFFSET"] + wave}] = "@{block_name(block)}/Floor {wave} Bonus",')
     # A shop item is listed in every tier it can belong to (only the one of the slot's settings is shown)
     for n in range(1, MAX_SHOP_ITEMS + 1):
         codes = ", ".join(f'"@{shop_tier_name(t)}/Shop Item {n}"' for t in range(TIER_COUNT) if n in shop_tier_items(t))
@@ -320,6 +333,9 @@ def location_mapping_lua():
         f"FINAL_WAVE = {FINAL_WAVE}",
         f"GATE_INTERVAL = {GATE}",
         "SHOP_TIER_WAVES = {" + ", ".join(str(w) for w in data["SHOP_TIER_WAVES"]) + "}",
+        "-- Blitz option: last floor and shop tiers",
+        f"BLITZ_FINAL_WAVE = {data['BLITZ_FINAL_WAVE']}",
+        "BLITZ_SHOP_TIER_WAVES = {" + ", ".join(str(w) for w in data["BLITZ_SHOP_TIER_WAVES"]) + "}",
         "",
     ]
     return "\n".join(lines)
@@ -335,7 +351,7 @@ def build_chart(end_position):
     draw.rounded_rectangle((x - 75, y - 52, x + 75, y + 52), radius=8, fill=(150, 50, 160), outline=(60, 60, 60),
                            width=3)
     draw.text((x, y - 38), "End (forced)", font=font(16), fill=(255, 255, 255), anchor="mm")
-    draw.text((x, y + 38), f"{block_name(DEPTHS[END])}", font=font(13), fill=(255, 255, 255), anchor="mm")
+    draw.text((x, y + 38), "last 10 floors", font=font(13), fill=(255, 255, 255), anchor="mm")
     save_image(chart.convert("RGB"), CHART_IMAGE)
     return chart.size
 
@@ -361,6 +377,8 @@ def main():
     icon("images/settings/per_tier.png", "/T", (150, 110, 40, 255))
     icon("images/settings/per_visit.png", "/V", (150, 110, 40, 255))
     icon("images/settings/biome_passes.png", "BP", (60, 140, 90, 255))
+    icon("images/settings/blitz.png", "BZ", (190, 70, 40, 255))
+    icon("images/settings/floor_checks.png", "FC", (90, 90, 110, 255))
     for b, label in biome_abbreviations().items():
         icon(f"images/items/biome_pass_{b}.png", label, block_color(DEPTHS[b]) + (255,), "rect")
 
@@ -370,12 +388,14 @@ def main():
         [(block_name(b), passes_label(b), block_color(b)) for b in range(BLOCK_COUNT)], 5, 220, 150)
     biome_centres = grid_map(
         "images/maps/biomes_grid.png", "Biomes - earliest block where each biome can be reached",
-        [(BIOME_NAMES[b], f"{block_name(DEPTHS[b])} - {passes_label(DEPTHS[b])}", block_color(DEPTHS[b]))
+        [(BIOME_NAMES[b], f"{block_name(DEPTHS[b])} - {passes_label(DEPTHS[b])}" if b != END
+          else "last block - 19 passes (Blitz 9)", block_color(DEPTHS[b]))
          for b in BIOMES], 5, 260, 130)
     shop_centres = grid_map(
         "images/maps/shop.png", "Archipelago shop items - by tier of the regular shop",
         [(f"{shop_tier_name(t)}: floors {shop_tier_floors(t)[0]}-{shop_tier_floors(t)[1]}",
-          f"unlocked on floor {shop_tier_floors(t)[0]}", block_color((shop_tier_floors(t)[0] - 1) // GATE))
+          f"Blitz: floors {shop_tier_floors(t, True)[0]}-{shop_tier_floors(t, True)[1]}",
+          block_color((shop_tier_floors(t)[0] - 1) // GATE))
          for t in range(TIER_COUNT)], 4, 330, 170)
 
     maps = [
@@ -432,7 +452,8 @@ def main():
                              for i in range(0, len(BIOME_PASSES), 6)]}},
                 {"type": "group", "header": "Settings (from the server)", "content": {
                     "type": "itemgrid", "item_margin": "4,4", "item_size": 48,
-                    "rows": [["location_mode", "biome_passes"], ["shop_count", "shop_per_tier", "shop_per_visit"]]}},
+                    "rows": [["location_mode", "biome_passes", "blitz", "floor_checks"],
+                             ["shop_count", "shop_per_tier", "shop_per_visit"]]}},
             ],
         },
         "tracker_broadcast": {

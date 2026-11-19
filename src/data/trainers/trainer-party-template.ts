@@ -270,16 +270,18 @@ export const trainerPartyTemplates = {
  */
 export function getEvilGruntPartyTemplate(): TrainerPartyTemplate {
   const waveIndex = globalScene.currentBattle?.waveIndex;
-  if (waveIndex <= ClassicFixedBossWaves.EVIL_GRUNT_1) {
+  // Story battle floors of this run (moved in an Archipelago Blitz run)
+  const fixedWave = (wave: ClassicFixedBossWaves) => globalScene.gameMode.getFixedBossWave(wave);
+  if (waveIndex <= fixedWave(ClassicFixedBossWaves.EVIL_GRUNT_1)) {
     return trainerPartyTemplates.TWO_AVG;
   }
-  if (waveIndex <= ClassicFixedBossWaves.EVIL_GRUNT_2) {
+  if (waveIndex <= fixedWave(ClassicFixedBossWaves.EVIL_GRUNT_2)) {
     return trainerPartyTemplates.THREE_AVG;
   }
-  if (waveIndex <= ClassicFixedBossWaves.EVIL_GRUNT_3) {
+  if (waveIndex <= fixedWave(ClassicFixedBossWaves.EVIL_GRUNT_3)) {
     return trainerPartyTemplates.TWO_AVG_ONE_STRONG;
   }
-  if (waveIndex <= ClassicFixedBossWaves.EVIL_ADMIN_1) {
+  if (waveIndex <= fixedWave(ClassicFixedBossWaves.EVIL_ADMIN_1)) {
     return trainerPartyTemplates.GYM_LEADER_5; // 3avg 2 strong 1 stronger
   }
   return trainerPartyTemplates.GYM_LEADER_5; // 3 avg 2 strong 1 stronger

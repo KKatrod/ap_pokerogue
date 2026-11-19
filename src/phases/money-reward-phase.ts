@@ -1,3 +1,4 @@
+import { BLITZ_MONEY_MULTIPLIER } from "#app/archipelago/blitz";
 import { globalScene } from "#app/global-scene";
 import { ArenaTagType } from "#enums/arena-tag-type";
 import { MoneyMultiplierModifier } from "#modifiers/modifier";
@@ -19,6 +20,9 @@ export class MoneyRewardPhase extends BattlePhase {
     const moneyAmount = new NumberHolder(globalScene.getWaveMoneyAmount(this.moneyMultiplier));
 
     globalScene.applyModifiers(MoneyMultiplierModifier, true, moneyAmount);
+    if (globalScene.gameMode.isBlitz) {
+      moneyAmount.value *= BLITZ_MONEY_MULTIPLIER;
+    }
 
     if (globalScene.arena.getTag(ArenaTagType.HAPPY_HOUR)) {
       moneyAmount.value *= 2;

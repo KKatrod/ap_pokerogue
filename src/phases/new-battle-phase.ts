@@ -17,7 +17,7 @@ export class NewBattlePhase extends BattlePhase {
 
     if (globalScene.gameMode.isArchipelago && !this.archipelagoChecked) {
       // Leaving a floor (by any means) is an Archipelago location
-      archipelago.onWaveCleared(globalScene.currentBattle.waveIndex);
+      archipelago.onWaveCleared(globalScene.currentBattle.waveIndex, true);
       // Hand out received items, then wait for a Floor Pass if the next floor is locked
       globalScene.phaseManager.removeAllPhasesOfType("NewBattlePhase");
       globalScene.phaseManager.unshiftNew("ArchipelagoReceivePhase");

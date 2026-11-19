@@ -271,5 +271,20 @@
     "type": "toggle",
     "img": "images/settings/biome_passes.png",
     "codes": "biome_passes"
+  },
+  {
+    "name": "Blitz (option): 100 floors",
+    "type": "toggle",
+    "img": "images/settings/blitz.png",
+    "codes": "blitz"
+  },
+  {
+    "name": "Floor Checks (option): 1 or 2 per floor",
+    "type": "consumable",
+    "img": "images/settings/floor_checks.png",
+    "codes": "floor_checks",
+    "min_quantity": 1,
+    "max_quantity": 2,
+    "increment": 1
   }
 ]

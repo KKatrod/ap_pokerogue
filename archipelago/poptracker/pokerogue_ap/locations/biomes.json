@@ -1708,6 +1708,6 @@
         "y": 909
       }
     ],
-    "access_rules": ["pass:19"]
+    "access_rules": ["$end_reachable"]
   }
 ]

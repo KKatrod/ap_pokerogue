@@ -10,8 +10,12 @@ SHOP_LOCATION_OFFSET = 1000
 BIOME_LOCATION_OFFSET = 2000
 POKEMON_ITEM_OFFSET = 10000
 BIOME_PASS_OFFSET = 700
+WAVE_BONUS_LOCATION_OFFSET = 3000
 # Waves at which the regular shop gets new items (each one unlocks a batch of Archipelago shop items)
 SHOP_TIER_WAVES = [1, 21, 51, 81, 111, 141, 171]
+# Blitz option: last floor and shop tiers (the regular shop follows the virtual floor, twice the real one)
+BLITZ_FINAL_WAVE = 100
+BLITZ_SHOP_TIER_WAVES = [1, 11, 26, 41, 56, 71, 86]
 
 # Maximum number of stacks the player can hold, for the permanent bonus items
 ITEM_MAX = {

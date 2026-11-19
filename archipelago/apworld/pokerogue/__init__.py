@@ -18,9 +18,9 @@ from BaseClasses import CollectionState, Item, ItemClassification, Location, Reg
 from Options import OptionError
 from worlds.AutoWorld import WebWorld, World
 
-from .data import (BASE_ID, BIOME_LOCATION_OFFSET, BIOME_PASS_OFFSET, BIOMES, FINAL_WAVE, GAME_NAME, GATE_INTERVAL,
-                   ITEM_MAX, ITEMS, POKEMON, POKEMON_INFO, SHOP_LOCATION_OFFSET, SHOP_TIER_WAVES,
-                   WAVE_LOCATION_OFFSET)
+from .data import (BASE_ID, BIOME_LOCATION_OFFSET, BIOME_PASS_OFFSET, BIOMES, BLITZ_FINAL_WAVE,
+                   BLITZ_SHOP_TIER_WAVES, FINAL_WAVE, GAME_NAME, GATE_INTERVAL, ITEM_MAX, ITEMS, POKEMON, POKEMON_INFO,
+                   SHOP_LOCATION_OFFSET, SHOP_TIER_WAVES, WAVE_BONUS_LOCATION_OFFSET, WAVE_LOCATION_OFFSET)
 from .options import LimitedSupport, LocationMode, PokeRogueOptions
 
 FLOOR_PASS = "Progressive Floor Pass"
@@ -71,11 +71,16 @@ EFFECT_FILLERS = [name for name, _id, cat, _cls in ITEMS if cat == "effect"]
 TRAPS = [name for name, _id, cat, _cls in ITEMS if cat == "trap"]
 
 MAX_SHOP_ITEMS = 350
+# Blocks of 10 floors of a Classic run (the Blitz option has BLITZ_FINAL_WAVE // GATE_INTERVAL)
 BLOCK_COUNT = FINAL_WAVE // GATE_INTERVAL
 
 
 def wave_location_name(wave: int) -> str:
     return f"Floor {wave} Cleared"
+
+
+def wave_bonus_location_name(wave: int) -> str:
+    return f"Floor {wave} Bonus"
 
 
 def shop_location_name(index: int) -> str:
@@ -91,7 +96,8 @@ def compute_biome_depths() -> Dict[int, int]:
     Earliest floor block (0 = floors 1-10) where each biome can be visited in a Classic run.
     The run starts in the Town, the biome changes after each floor multiple of 10 following the biome links
     (weighted links are only offered sometimes, but are offered eventually), and the End is forced for the last
-    block.
+    block. With the Blitz option (10 blocks) every biome keeps its depth (the deepest one is 6) and the End moves
+    to the last block: see PokeRogueWorld.get_biome_depth.
     """
     links = {biome_id: biome_links for biome_id, _name, biome_links in BIOMES}
     depths = {TOWN_BIOME: 0}
@@ -121,13 +127,13 @@ BIOME_PASSES: Dict[int, str] = {biome_id: biome_pass_name(biome_id) for biome_id
 ITEM_TABLE.update({name: BASE_ID + BIOME_PASS_OFFSET + biome_id for biome_id, name in BIOME_PASSES.items()})
 
 
-def can_reach_biome(state: CollectionState, player: int, target: int) -> bool:
+def can_reach_biome(state: CollectionState, player: int, target: int, block_count: int = BLOCK_COUNT) -> bool:
     """
     Whether a run can get to the biome with the Floor Passes and Biome Passes collected: the biome changes after each
     floor multiple of 10 (block k needs k Floor Passes), only towards unlocked biomes.
     Going back to the Town (no unlocked next biome) never reaches a biome sooner, so it is not followed.
     """
-    max_depth = min(state.count(FLOOR_PASS, player), BLOCK_COUNT - 2)
+    max_depth = min(state.count(FLOOR_PASS, player), block_count - 2)
     seen: Set[int] = {TOWN_BIOME}
     frontier: Set[int] = {TOWN_BIOME}
     for _depth in range(max_depth):
@@ -151,13 +157,15 @@ def biome_location_id(biome_id: int, floor: int) -> int:
 
 
 LOCATION_TABLE: Dict[str, int] = {wave_location_name(w): BASE_ID + WAVE_LOCATION_OFFSET + w for w in range(1, FINAL_WAVE)}
+LOCATION_TABLE.update({wave_bonus_location_name(w): BASE_ID + WAVE_BONUS_LOCATION_OFFSET + w
+                       for w in range(1, FINAL_WAVE)})
 LOCATION_TABLE.update({shop_location_name(i): BASE_ID + SHOP_LOCATION_OFFSET + i for i in range(1, MAX_SHOP_ITEMS + 1)})
 for _biome_id in sorted(BIOME_DEPTHS):
     for _floor in biome_floors(_biome_id):
         LOCATION_TABLE[biome_location_name(BIOME_NAMES[_biome_id], _floor)] = biome_location_id(_biome_id, _floor)
 
 
-def shop_item_wave(index: int, per_tier: int) -> Optional[int]:
+def shop_item_wave(index: int, per_tier: int, tier_waves: List[int] = SHOP_TIER_WAVES) -> Optional[int]:
     """
     First floor of the shop tier that unlocks the given (1-based) shop item, like the game client: the items are
     unlocked by batches of `per_tier` each time the regular shop gets new items (all at once if `per_tier` is 0).
@@ -166,9 +174,9 @@ def shop_item_wave(index: int, per_tier: int) -> Optional[int]:
     @returns None if the item is never unlocked (past the last tier)
     """
     tier = (index - 1) // per_tier if per_tier > 0 else 0
-    if tier >= len(SHOP_TIER_WAVES):
+    if tier >= len(tier_waves):
         return None
-    return SHOP_TIER_WAVES[tier]
+    return tier_waves[tier]
 
 
 class PokeRogueItem(Item):
@@ -185,7 +193,8 @@ class PokeRogueWeb(WebWorld):
 
 class PokeRogueWorld(World):
     """
-    PokeRogue is a Pokemon roguelite: climb 200 floors with a team of starters, picking items between battles.
+    PokeRogue is a Pokemon roguelite: climb 200 floors (100 with the Blitz option) with a team of starters, picking
+    items between battles.
     """
     game = GAME_NAME
     web = PokeRogueWeb()
@@ -206,6 +215,22 @@ class PokeRogueWorld(World):
         "Traps": set(TRAPS),
     }
 
+    def is_blitz(self) -> bool:
+        return bool(self.options.blitz.value)
+
+    def get_final_wave(self) -> int:
+        return BLITZ_FINAL_WAVE if self.is_blitz() else FINAL_WAVE
+
+    def get_block_count(self) -> int:
+        return self.get_final_wave() // GATE_INTERVAL
+
+    def get_shop_tier_waves(self) -> List[int]:
+        return BLITZ_SHOP_TIER_WAVES if self.is_blitz() else SHOP_TIER_WAVES
+
+    def get_biome_depth(self, biome_id: int) -> int:
+        """Earliest block where the biome can be visited (the End is forced on the last block)."""
+        return self.get_block_count() - 1 if biome_id == END_BIOME else BIOME_DEPTHS[biome_id]
+
     def get_shop_item_count(self) -> int:
         # The Limited Support challenge can remove the shop
         if self.options.limited_support.value in (LimitedSupport.option_no_shop, LimitedSupport.option_both):
@@ -213,7 +238,7 @@ class PokeRogueWorld(World):
         # Only the items unlocked by one of the shop tiers exist (at most 7 times shop_items_per_tier)
         per_tier = self.options.shop_items_per_tier.value
         count = self.options.shop_item_count.value
-        return min(count, len(SHOP_TIER_WAVES) * per_tier) if per_tier > 0 else count
+        return min(count, len(self.get_shop_tier_waves()) * per_tier) if per_tier > 0 else count
 
     def create_item(self, name: str) -> Item:
         if name == VICTORY:
@@ -330,15 +355,21 @@ class PokeRogueWorld(World):
         with_floors = mode in (LocationMode.option_floors, LocationMode.option_both)
         with_biomes = mode in (LocationMode.option_biome_floors, LocationMode.option_both)
 
+        final_wave = self.get_final_wave()
+        block_count = self.get_block_count()
+        with_bonus = with_floors and self.options.floor_checks.value >= 2
+
         # One region per block of 10 floors: block k needs k Floor Passes
         blocks: List[Region] = []
         previous = menu
-        for block in range(BLOCK_COUNT):
+        for block in range(block_count):
             first, last = block * GATE_INTERVAL + 1, (block + 1) * GATE_INTERVAL
             region = Region(f"Floors {first}-{last}", self.player, self.multiworld)
             if with_floors:
-                for wave in range(first, min(last, FINAL_WAVE - 1) + 1):
+                for wave in range(first, min(last, final_wave - 1) + 1):
                     self.add_location(region, wave_location_name(wave))
+                    if with_bonus:
+                        self.add_location(region, wave_bonus_location_name(wave))
             self.multiworld.regions.append(region)
             previous.connect(region, f"Floor Pass {block}",
                              lambda state, p=block: state.has(FLOOR_PASS, self.player, p))
@@ -349,20 +380,23 @@ class PokeRogueWorld(World):
         # needs the passes of a path from the Town to the biome)
         if with_biomes:
             biome_passes = bool(self.options.biome_passes.value)
-            for biome_id, depth in sorted(BIOME_DEPTHS.items()):
+            for biome_id in sorted(BIOME_DEPTHS):
+                depth = self.get_biome_depth(biome_id)
                 for floor in biome_floors(biome_id):
                     location = self.add_location(blocks[depth], biome_location_name(BIOME_NAMES[biome_id], floor))
                     if biome_passes and biome_id in BIOME_PASSES:
-                        location.access_rule = lambda state, b=biome_id: can_reach_biome(state, self.player, b)
+                        location.access_rule = lambda state, b=biome_id: can_reach_biome(state, self.player, b,
+                                                                                         block_count)
 
         # Shop items: available from the block of their tier's first floor (over several runs if needed)
         per_tier = self.options.shop_items_per_tier.value
+        tier_waves = self.get_shop_tier_waves()
         for index in range(1, self.get_shop_item_count() + 1):
-            wave = shop_item_wave(index, per_tier)
+            wave = shop_item_wave(index, per_tier, tier_waves)
             self.add_location(blocks[(wave - 1) // GATE_INTERVAL], shop_location_name(index))
 
         goal_region = blocks[-1]
-        victory = PokeRogueLocation(self.player, f"Floor {FINAL_WAVE} Cleared", None, goal_region)
+        victory = PokeRogueLocation(self.player, f"Floor {final_wave} Cleared", None, goal_region)
         victory.place_locked_item(self.create_item(VICTORY))
         goal_region.locations.append(victory)
 
@@ -371,7 +405,7 @@ class PokeRogueWorld(World):
         pool: List[Item] = []
 
         # Floor passes: one per gate between the first floor block and the last one
-        pool += [self.create_item(FLOOR_PASS) for _ in range(BLOCK_COUNT - 1)]
+        pool += [self.create_item(FLOOR_PASS) for _ in range(self.get_block_count() - 1)]
 
         # Biome passes: one per biome except the Town and the End
         if self.options.biome_passes.value:
@@ -446,5 +480,8 @@ class PokeRogueWorld(World):
                 "FLIP_STAT": self.options.flip_stat.value,
                 "PASSIVES": self.options.active_passives.value,
             },
-            "final_wave": FINAL_WAVE,
+            "blitz": self.is_blitz(),
+            "floor_checks": self.options.floor_checks.value,
+            "final_wave": self.get_final_wave(),
+            "shop_tier_waves": self.get_shop_tier_waves(),
         }

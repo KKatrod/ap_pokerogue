@@ -645,5 +645,8 @@
     }
   ],
   "biome_location_offset": 2000,
-  "biome_pass_offset": 700
+  "biome_pass_offset": 700,
+  "wave_bonus_location_offset": 3000,
+  "blitz_final_wave": 100,
+  "blitz_shop_tier_waves": [1, 11, 26, 41, 56, 71, 86]
 }

@@ -7,7 +7,12 @@
  * @module
  */
 
-import { ArchipelagoBattleEventPhase, ArchipelagoGatePhase, ArchipelagoReceivePhase } from "#app/archipelago/ap-phases";
+import {
+  ArchipelagoBattleEventPhase,
+  ArchipelagoBonusRewardPhase,
+  ArchipelagoGatePhase,
+  ArchipelagoReceivePhase,
+} from "#app/archipelago/ap-phases";
 import { DynamicQueueManager } from "#app/dynamic-queue-manager";
 import { globalScene } from "#app/global-scene";
 import type { Phase } from "#app/phase";
@@ -127,6 +132,7 @@ import type { NonEmptyTuple } from "type-fest";
  */
 const PHASES = Object.freeze({
   ArchipelagoBattleEventPhase,
+  ArchipelagoBonusRewardPhase,
   ArchipelagoGatePhase,
   ArchipelagoReceivePhase,
   AddEnemyBuffModifierPhase,

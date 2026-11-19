@@ -464,3 +464,17 @@ export class ArchipelagoBattleEventPhase extends Phase {
     }
   }
 }
+
+/**
+ * Archipelago Blitz: queued between the two reward phases of a floor. Sends the "Floor N Bonus" check and renews
+ * the Archipelago shop items, so the second shop offers the next items not bought yet.
+ */
+export class ArchipelagoBonusRewardPhase extends Phase {
+  public readonly phaseName = "ArchipelagoBonusRewardPhase";
+
+  start(): void {
+    super.start();
+    archipelago.onBonusRewardPhase(globalScene.currentBattle.waveIndex);
+    this.end();
+  }
+}

@@ -127,6 +127,24 @@ class BiomePasses(Toggle):
     display_name = "Biome Passes"
 
 
+class Blitz(Toggle):
+    """Shorter seeds: the run ends on floor 100 instead of 200 (End biome on floors 91-100, Eternatus on floor 100).
+    Difficulty, story battles, Gym Leaders and shop tiers are compressed to fit, every battle gives two reward
+    phases (the Archipelago shop items are renewed between them) and the money gained is doubled.
+    9 Floor Passes instead of 19."""
+    display_name = "Blitz"
+
+
+class FloorChecks(Range):
+    """Checks per floor cleared, with the floors and both location modes: 1 = "Floor N Cleared",
+    2 = also "Floor N Bonus" (sent at the second reward phase with Blitz, with the first check otherwise).
+    The biome floor checks are not affected."""
+    display_name = "Floor Checks"
+    range_start = 1
+    range_end = 2
+    default = 1
+
+
 class StarterLimitItems(Range):
     """Number of "Starter Limit +1" items in the pool: each one raises the starter points of your team by 1
     (10 at first, 30 at most)."""
@@ -253,6 +271,8 @@ class TrainerHints(DefaultOnToggle):
 @dataclass
 class PokeRogueOptions(PerGameCommonOptions):
     location_mode: LocationMode
+    blitz: Blitz
+    floor_checks: FloorChecks
     shop_item_count: ShopItemCount
     shop_items_per_tier: ShopItemsPerTier
     shop_items_per_visit: ShopItemsPerVisit

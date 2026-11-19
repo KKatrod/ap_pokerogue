@@ -34,10 +34,15 @@ export type { ApSessionState };
 
 export const AP_GAME: string = apData.game;
 export const AP_BASE_ID: number = apData.base_id;
+/** Last floor of a Classic run (`final_wave` in the slot data gives the one of the seed) */
 export const AP_FINAL_WAVE: number = apData.final_wave;
 export const AP_GATE_INTERVAL: number = apData.gate_interval;
-/** Waves at which the regular shop gets new items: each one unlocks a batch of Archipelago shop items */
+/**
+ * Waves at which the regular shop gets new items: each one unlocks a batch of Archipelago shop items
+ * (`shop_tier_waves` in the slot data gives the ones of the seed)
+ */
 const SHOP_TIER_WAVES: number[] = apData.shop_tier_waves;
+const BLITZ_SHOP_TIER_WAVES: number[] = apData.blitz_shop_tier_waves;
 
 export enum ApItemCategory {
   GATE = "gate",
@@ -131,6 +136,7 @@ const itemDefsById = new Map<number, ApItemDef>(
 
 const POKEMON_ITEM_BASE = AP_BASE_ID + apData.pokemon_item_offset;
 const WAVE_LOCATION_BASE = AP_BASE_ID + apData.wave_location_offset;
+const WAVE_BONUS_LOCATION_BASE = AP_BASE_ID + apData.wave_bonus_location_offset;
 const SHOP_LOCATION_BASE = AP_BASE_ID + apData.shop_location_offset;
 const BIOME_LOCATION_BASE = AP_BASE_ID + apData.biome_location_offset;
 const BIOME_PASS_BASE = AP_BASE_ID + apData.biome_pass_offset;
@@ -182,6 +188,11 @@ export function getApItemDef(itemId: number): ApItemDef | undefined {
 /** Location id sent when the given wave (floor) is cleared */
 export function getWaveLocationId(wave: number): number {
   return WAVE_LOCATION_BASE + wave;
+}
+
+/** Location id of the second check of a cleared floor ("Floor N Bonus", `floor_checks: 2`) */
+export function getWaveBonusLocationId(wave: number): number {
+  return WAVE_BONUS_LOCATION_BASE + wave;
 }
 
 /** Location id sent when the given floor (1-10) of a biome is cleared */
@@ -420,6 +431,7 @@ export class ArchipelagoManager {
     apHooks.restoreSessionState = state => this.restoreSessionState(state);
     apHooks.getShopOptions = (wave, baseCost) => this.getShopOptions(wave, baseCost);
     apHooks.getStarterValueLimit = () => (this.active ? this.getStarterValueLimit() : null);
+    apHooks.isBlitz = () => this.active && this.isBlitz();
     apHooks.getSoldLabel = type =>
       type?.isArchipelagoShopItem && this.isLocationChecked(type.locationId) ? apText("shopItemSold") : null;
   }
@@ -670,7 +682,24 @@ export class ArchipelagoManager {
 
   /** Highest floor the player may currently reach */
   getMaxWave(): number {
-    return Math.min((this.getFloorPassCount() + 1) * AP_GATE_INTERVAL, AP_FINAL_WAVE);
+    return Math.min((this.getFloorPassCount() + 1) * AP_GATE_INTERVAL, this.getFinalWave());
+  }
+
+  /* -------------------------------------------------------------------- Blitz */
+
+  /** Whether the seed uses the Blitz option: a 100-floor run (see `blitz.ts`) */
+  isBlitz(): boolean {
+    return !!this.slotData.blitz;
+  }
+
+  /** Last floor of the run: 200, or 100 with the Blitz option */
+  getFinalWave(): number {
+    return Number(this.slotData.final_wave ?? AP_FINAL_WAVE);
+  }
+
+  /** Checks per cleared floor (`floor_checks`): 1 = "Floor N Cleared", 2 = also "Floor N Bonus" */
+  getFloorChecks(): number {
+    return Number(this.slotData.floor_checks ?? 1);
   }
 
   /** Whether the player may go from the given (just cleared) wave to the next one */
@@ -980,17 +1009,42 @@ export class ArchipelagoManager {
     this.waveBiome = { wave, biomeId };
   }
 
-  onWaveCleared(wave: number): void {
-    if (wave >= 1 && wave < AP_FINAL_WAVE) {
+  /**
+   * Sends the checks of a cleared floor: when the battle is won, and again when the floor is left (by any means)
+   * @param leaving - The floor is left: in a Blitz run, also sends the "Floor N Bonus" check if no second reward
+   *   phase sent it (e.g. after a Mystery Encounter)
+   */
+  onWaveCleared(wave: number, leaving = false): void {
+    if (wave >= 1 && wave < this.getFinalWave()) {
       const mode = this.getLocationMode();
       if (mode !== ApLocationMode.BIOME_FLOORS) {
         this.checkLocation(getWaveLocationId(wave));
+        // "Floor N Bonus": with the first check, or at the second reward phase in a Blitz run
+        if (this.getFloorChecks() >= 2 && (leaving || !this.isBlitz())) {
+          this.checkLocation(getWaveBonusLocationId(wave));
+        }
       }
       if (mode !== ApLocationMode.FLOORS) {
         // When a floor multiple of 10 is left, the arena already shows the next biome
         const biomeId = this.waveBiome?.wave === wave ? this.waveBiome.biomeId : globalScene.arena.biomeId;
         this.checkLocation(getBiomeLocationId(biomeId, ((wave - 1) % AP_GATE_INTERVAL) + 1));
       }
+    }
+    this.shopCache = null;
+  }
+
+  /**
+   * Second reward phase of a floor in a Blitz run: sends the "Floor N Bonus" check and renews the Archipelago
+   * shop items (the shop then offers the next items not bought yet)
+   */
+  onBonusRewardPhase(wave: number): void {
+    if (
+      wave >= 1
+      && wave < this.getFinalWave()
+      && this.getFloorChecks() >= 2
+      && this.getLocationMode() !== ApLocationMode.BIOME_FLOORS
+    ) {
+      this.checkLocation(getWaveBonusLocationId(wave));
     }
     this.shopCache = null;
   }
@@ -1122,8 +1176,12 @@ export class ArchipelagoManager {
     locationId: number,
   ): { key: "hintFloor" | "hintBiomeFloor" | "hintShop"; floor: number; biomeId?: BiomeId } | null {
     const wave = locationId - WAVE_LOCATION_BASE;
-    if (wave >= 1 && wave < AP_FINAL_WAVE) {
+    if (wave >= 1 && wave < this.getFinalWave()) {
       return { key: "hintFloor", floor: wave };
+    }
+    const bonusWave = locationId - WAVE_BONUS_LOCATION_BASE;
+    if (bonusWave >= 1 && bonusWave < this.getFinalWave()) {
+      return { key: "hintFloor", floor: bonusWave };
     }
     const shopIndex = locationId - SHOP_LOCATION_BASE;
     if (shopIndex >= 1 && shopIndex <= this.getShopItemCount()) {
@@ -1152,23 +1210,33 @@ export class ArchipelagoManager {
     return Math.max(0, Number(this.slotData.shop_items_per_tier ?? 0));
   }
 
+  /** Floors where the regular shop gets new items, each one unlocking a batch of Archipelago shop items */
+  getShopTierWaves(): number[] {
+    const waves = this.slotData.shop_tier_waves;
+    if (Array.isArray(waves) && waves.length > 0) {
+      return waves.map(Number);
+    }
+    return this.isBlitz() ? BLITZ_SHOP_TIER_WAVES : SHOP_TIER_WAVES;
+  }
+
   /** Number of Archipelago shop items (bought or not) the shop of the given wave may offer */
   getAvailableShopItemCount(wave: number): number {
     const perTier = this.getShopItemsPerTier();
     if (perTier <= 0) {
       return this.getShopItemCount();
     }
-    const tiers = SHOP_TIER_WAVES.filter(tierWave => tierWave <= wave).length;
+    const tiers = this.getShopTierWaves().filter(tierWave => tierWave <= wave).length;
     return Math.min(this.getShopItemCount(), tiers * perTier);
   }
 
   /** First floor of the shop tier that unlocks the n-th (1-based) Archipelago shop item */
   getShopItemFirstWave(index: number): number {
     const perTier = this.getShopItemsPerTier();
+    const tierWaves = this.getShopTierWaves();
     if (perTier <= 0) {
-      return SHOP_TIER_WAVES[0];
+      return tierWaves[0];
     }
-    return SHOP_TIER_WAVES[Math.min(Math.ceil(index / perTier), SHOP_TIER_WAVES.length) - 1];
+    return tierWaves[Math.min(Math.ceil(index / perTier), tierWaves.length) - 1];
   }
 
   getShopCostPercent(): number {
@@ -1181,7 +1249,8 @@ export class ArchipelagoManager {
 
   /**
    * Archipelago items offered in the shop of the given wave.
-   * The result is cached for the whole wave so the shop UI and the selection phase see the same list.
+   * The result is cached for the whole wave so the shop UI and the selection phase see the same list
+   * (a Blitz run renews it for the second reward phase: see `onBonusRewardPhase`).
    */
   getShopOptions(wave: number, baseCost: number): ModifierTypeOption[] {
     if (!(this.profile && this.active)) {

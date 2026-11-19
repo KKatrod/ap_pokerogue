@@ -43,6 +43,11 @@ export class SelectModifierPhase extends BattlePhase {
   private readonly modifierTiers?: ModifierTier[] | undefined;
   private readonly customModifierSettings?: CustomModifierSettings | undefined;
   private readonly isCopy: boolean;
+  /**
+   * Offset added to the wave for the reward seed: the second reward phase of an Archipelago Blitz floor uses one,
+   * so it offers other rewards than the first phase
+   */
+  private readonly seedWaveOffset: number;
 
   private typeOptions: ModifierTypeOption[];
 
@@ -51,6 +56,7 @@ export class SelectModifierPhase extends BattlePhase {
     modifierTiers?: ModifierTier[],
     customModifierSettings?: CustomModifierSettings,
     isCopy = false,
+    seedWaveOffset = 0,
   ) {
     super();
 
@@ -58,6 +64,7 @@ export class SelectModifierPhase extends BattlePhase {
     this.modifierTiers = modifierTiers;
     this.customModifierSettings = customModifierSettings;
     this.isCopy = isCopy;
+    this.seedWaveOffset = seedWaveOffset;
   }
 
   start() {
@@ -424,7 +431,7 @@ export class SelectModifierPhase extends BattlePhase {
   }
 
   updateSeed(): void {
-    globalScene.resetSeed();
+    globalScene.resetSeed(this.seedWaveOffset ? globalScene.currentBattle.waveIndex + this.seedWaveOffset : undefined);
   }
 
   isPlayer(): boolean {

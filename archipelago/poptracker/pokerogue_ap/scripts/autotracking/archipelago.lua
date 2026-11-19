@@ -53,12 +53,15 @@ end
 local function apply_settings()
     applying_settings = true
     if SLOT_DATA then
-        set_settings(
-            slot_number(SLOT_DATA, "location_mode", DEFAULT_SETTINGS.location_mode),
-            slot_number(SLOT_DATA, "shop_item_count", DEFAULT_SETTINGS.shop_count),
-            slot_number(SLOT_DATA, "shop_items_per_tier", DEFAULT_SETTINGS.shop_per_tier),
-            slot_number(SLOT_DATA, "shop_items_per_visit", DEFAULT_SETTINGS.shop_per_visit),
-            slot_number(SLOT_DATA, "biome_passes", 0) ~= 0)
+        set_settings({
+            location_mode = slot_number(SLOT_DATA, "location_mode", DEFAULT_SETTINGS.location_mode),
+            shop_count = slot_number(SLOT_DATA, "shop_item_count", DEFAULT_SETTINGS.shop_count),
+            shop_per_tier = slot_number(SLOT_DATA, "shop_items_per_tier", DEFAULT_SETTINGS.shop_per_tier),
+            shop_per_visit = slot_number(SLOT_DATA, "shop_items_per_visit", DEFAULT_SETTINGS.shop_per_visit),
+            biome_passes = slot_number(SLOT_DATA, "biome_passes", 0) ~= 0,
+            blitz = slot_number(SLOT_DATA, "blitz", 0) ~= 0,
+            floor_checks = slot_number(SLOT_DATA, "floor_checks", DEFAULT_SETTINGS.floor_checks),
+        })
     end
     applying_settings = false
 end
@@ -70,7 +73,8 @@ local function on_setting_changed(_code)
     end
 end
 
-for _, code in ipairs({ "location_mode", "biome_passes", "shop_count", "shop_per_tier", "shop_per_visit" }) do
+for _, code in ipairs({ "location_mode", "biome_passes", "blitz", "floor_checks", "shop_count", "shop_per_tier",
+    "shop_per_visit" }) do
     ScriptHost:AddWatchForCode("lock setting " .. code, code, on_setting_changed)
 end
 
