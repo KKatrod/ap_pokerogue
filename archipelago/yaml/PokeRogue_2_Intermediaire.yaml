@@ -1,0 +1,44 @@
+# PokeRogue - modèle 2 : durée intermédiaire
+# 200 étages, checks d'étage et checks de biome, pas de Biome Pass, 210 objets de boutique (30 par tier).
+# Les autres options sont à leur valeur par défaut.
+name: Joueur
+game: PokeRogue
+description: PokeRogue - durée intermédiaire
+requires:
+  version: 0.6.0
+
+PokeRogue:
+  # --- Réglages du modèle ---
+  blitz: false
+  location_mode: both
+  biome_passes: false
+  shop_item_count: 210
+  shop_items_per_tier: 30
+
+  # --- Valeurs par défaut ---
+  floor_checks: 1
+  shop_items_per_visit: 1
+  shop_cost_percent: 100
+  starting_pokemon: 5
+  starting_pokemon_max_cost: 6
+  start_with_map: true
+  pokemon_in_pool: 40
+  pokemon_pool_costs: unbiased
+  bonus_item_copies: 1
+  egg_filler_percent: 25
+  effect_filler_percent: 10
+  trap_percent: 0
+  death_link: false
+  trainer_hints: true
+  biome_pass_priority: true
+  starter_limit_items: 20
+  mono_generation: off
+  mono_type: off
+  limited_support: off
+  limited_catch: false
+  hardcore: false
+  moveset_randomizer: off
+  ability_randomizer: off
+  inverse_battle: false
+  flip_stat: false
+  active_passives: off

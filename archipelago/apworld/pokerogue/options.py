@@ -120,11 +120,33 @@ class PokemonInPool(Range):
     default = 40
 
 
+class PokemonPoolCosts(Choice):
+    """Starter costs of the Pokemon shuffled into the multiworld (pokemon_in_pool).
+    unbiased: picked at random among the usable starters, with no bias (most of them cost 2 to 4).
+    varied: as many Pokemon of each cost as possible (1 to 10), for a wide range of costs.
+    low_cost: mostly cheap Pokemon. high_cost: mostly expensive Pokemon."""
+    display_name = "Pokemon Pool Costs"
+    option_unbiased = 0
+    option_varied = 1
+    option_low_cost = 2
+    option_high_cost = 3
+    default = 0
+
+
 class BiomePasses(Toggle):
     """Each biome (except the Town and the End) needs its Biome Pass to be visited, on top of the Floor Passes.
     When none of the next biomes is unlocked, you go back to the Town. With the Map, the Town is always one of the
     choices."""
     display_name = "Biome Passes"
+
+
+class BiomePassPriority(DefaultOnToggle):
+    """With Biome Passes, the generator places the passes of the biomes close to the Town earlier in the multiworld
+    than those of the farther biomes, so the biomes come into logic roughly in the order of a run.
+    In PokeRogue, the pass of a biome is never found more than 2 floor blocks after the first block where the biome
+    can be visited (e.g. the pass of a biome of floors 11-20 is found by floor 40 at most). In the other games of the
+    multiworld, it is only a bias of the item placement."""
+    display_name = "Biome Pass Priority"
 
 
 class Blitz(Toggle):
@@ -281,6 +303,7 @@ class PokeRogueOptions(PerGameCommonOptions):
     starting_pokemon_max_cost: StartingPokemonMaxCost
     start_with_map: StartWithMap
     pokemon_in_pool: PokemonInPool
+    pokemon_pool_costs: PokemonPoolCosts
     bonus_item_copies: BonusItemCopies
     egg_filler_percent: EggFillerPercent
     effect_filler_percent: EffectFillerPercent
@@ -288,6 +311,7 @@ class PokeRogueOptions(PerGameCommonOptions):
     death_link: DeathLink
     trainer_hints: TrainerHints
     biome_passes: BiomePasses
+    biome_pass_priority: BiomePassPriority
     starter_limit_items: StarterLimitItems
     mono_generation: MonoGeneration
     mono_type: MonoType

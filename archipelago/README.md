@@ -58,7 +58,13 @@ La connexion se reconnecte automatiquement ; les locations faites hors-ligne son
 
 `archipelago/apworld/pokerogue/` est le monde Archipelago (Python). Pour l'utiliser : zipper le dossier `pokerogue` en `pokerogue.apworld` et le placer dans `custom_worlds/` (ou `lib/worlds/`) d'Archipelago. Après chaque nouvelle version, **fermer puis relancer le Launcher** avant de régénérer le template YAML (*Generate Template Options*) : un Launcher déjà ouvert garde l'ancienne version en mémoire et produit un template sans les nouvelles options.
 
-Options YAML : `location_mode` (floors / biome_floors / both, floors), `shop_item_count` (0–350, 70), `shop_items_per_tier` (0–50, 10), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10 ou `random`, 5), `starting_pokemon_max_cost` (1–10, 6), `start_with_map` (true/false, true), `pokemon_in_pool` (0 à 572 = tous les starters de PokeRogue, 40), `bonus_item_copies` (1–5, 1), `egg_filler_percent` (0–100, 25), `effect_filler_percent` (0–100, 10), `trap_percent` (0–100, 0), `death_link` (true/false, false), `trainer_hints` (true/false, true), `biome_passes` (true/false, false), `starter_limit_items` (0–20, 20), `blitz` (true/false, false : partie de 100 étages, voir [BLITZ.md](BLITZ.md)), `floor_checks` (1–2, 1 : avec 2, un check `Floor N Bonus` en plus de `Floor N Cleared`).
+Options YAML : `location_mode` (floors / biome_floors / both, floors), `shop_item_count` (0–350, 70), `shop_items_per_tier` (0–50, 10), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10 ou `random`, 5), `starting_pokemon_max_cost` (1–10, 6), `start_with_map` (true/false, true), `pokemon_in_pool` (0 à 572 = tous les starters de PokeRogue, 40), `pokemon_pool_costs` (unbiased / varied / low_cost / high_cost, unbiased : coûts des Pokémon du pool, voir ci-dessous), `bonus_item_copies` (1–5, 1), `egg_filler_percent` (0–100, 25), `effect_filler_percent` (0–100, 10), `trap_percent` (0–100, 0), `death_link` (true/false, false), `trainer_hints` (true/false, true), `biome_passes` (true/false, false), `biome_pass_priority` (true/false, true : voir ci-dessous), `starter_limit_items` (0–20, 20), `blitz` (true/false, false : partie de 100 étages, voir [BLITZ.md](BLITZ.md)), `floor_checks` (1–2, 1 : avec 2, un check `Floor N Bonus` en plus de `Floor N Cleared`).
+
+**Coûts des Pokémon du pool** (`pokemon_pool_costs`) : `unbiased` tire les Pokémon au hasard parmi les starters utilisables (la plupart coûtent 2 à 4) ; `varied` prend autant de Pokémon de chaque coût (1 à 10) que possible ; `low_cost` et `high_cost` tirent d'abord un coût, avec un poids multiplié par 1,5 à chaque point de coût en moins (ou en plus), puis un Pokémon de ce coût.
+
+**Priorité des Biome Passes** (`biome_pass_priority`, avec `biome_passes` et des checks de biome) : le remplissage de la progression place les objets d'un joueur de la fin de la liste vers son début, et les derniers placés ne peuvent aller que là où mènent les objets déjà placés : ils arrivent donc plus tôt dans le multiworld. Les pass des biomes proches de la Ville sont mis en tête de liste (les plus proches en premier), ceux des biomes lointains en fin de liste. De plus, dans les locations PokeRogue, le pass d'un biome n'est jamais placé plus de 2 blocs de 10 étages après le premier bloc où le biome peut être visité (par exemple, le pass d'un biome des étages 11-20 se trouve au plus tard à l'étage 40). Les biomes entrent ainsi en logique à peu près dans l'ordre d'une run. Dans les autres jeux du multiworld, ce n'est qu'un biais.
+
+Des modèles prêts à l'emploi sont dans [`yaml/`](yaml) : seed courte (Blitz, étages seuls, 70 objets de boutique), durée intermédiaire (étages et biomes, 210 objets) et complexité élevée (étages, biomes et Biome Passes, 350 objets).
 
 Challenges (défaut : désactivé) : `mono_generation` (off / gen_1 … gen_9), `mono_type` (off / normal, fighting, flying, poison, ground, rock, bug, ghost, steel, fire, water, grass, electric, psychic, ice, dragon, dark, fairy), `limited_support` (off / no_heal / no_shop / both), `limited_catch` (true/false), `hardcore` (true/false), `moveset_randomizer` (off / on / lite), `ability_randomizer` (off / abilities / all / lite), `inverse_battle` (true/false), `flip_stat` (true/false), `active_passives` (off / trainers / all). Ils sont envoyés dans le slot data (`challenges`, par nom de l'enum `Challenges` du jeu).
 
@@ -78,6 +84,7 @@ PokeRogue:
   starting_pokemon_max_cost: 6
   start_with_map: true
   pokemon_in_pool: 40
+  pokemon_pool_costs: unbiased
   bonus_item_copies: 1
   egg_filler_percent: 25
   effect_filler_percent: 10
@@ -85,6 +92,7 @@ PokeRogue:
   death_link: false
   trainer_hints: true
   biome_passes: false
+  biome_pass_priority: true
   blitz: false
   floor_checks: 1
   starter_limit_items: 20

@@ -21,7 +21,7 @@ from worlds.AutoWorld import WebWorld, World
 from .data import (BASE_ID, BIOME_LOCATION_OFFSET, BIOME_PASS_OFFSET, BIOMES, BLITZ_FINAL_WAVE,
                    BLITZ_SHOP_TIER_WAVES, FINAL_WAVE, GAME_NAME, GATE_INTERVAL, ITEM_MAX, ITEMS, POKEMON, POKEMON_INFO,
                    SHOP_LOCATION_OFFSET, SHOP_TIER_WAVES, WAVE_BONUS_LOCATION_OFFSET, WAVE_LOCATION_OFFSET)
-from .options import LimitedSupport, LocationMode, PokeRogueOptions
+from .options import LimitedSupport, LocationMode, PokemonPoolCosts, PokeRogueOptions
 
 FLOOR_PASS = "Progressive Floor Pass"
 VICTORY = "Victory"
@@ -36,6 +36,10 @@ STRONG_STARTER_MIN_COST = 5
 # Starting Pokemon (2 or more): their average cost stays within these bounds (not too many expensive ones)
 STARTER_AVERAGE_COST_MIN = 3
 STARTER_AVERAGE_COST_MAX = 3.5
+# Pokemon in the pool with a low_cost / high_cost bias: weight factor of a cost against the next one
+POOL_COST_BIAS = 1.5
+# Biome Pass priority: a PokeRogue location never holds the pass of a biome reached this many blocks before it or more
+BIOME_PASS_BLOCK_SLACK = 2
 
 # Relative weights of the egg fillers
 EGG_WEIGHTS = {
@@ -61,6 +65,7 @@ ITEM_TABLE: Dict[str, int] = {name: item_id for name, item_id, _category, _cls i
 ITEM_TABLE.update({name: item_id for name, item_id, _cost in POKEMON})
 ITEM_CATEGORY: Dict[str, str] = {name: category for name, _id, category, _cls in ITEMS}
 ITEM_CLASSIFICATION: Dict[str, str] = {name: cls for name, _id, _category, cls in ITEMS}
+POKEMON_COSTS: Dict[str, int] = {name: cost for name, _id, cost in POKEMON}
 
 # Strong consumables kept out of the random fillers
 RARE_CONSUMABLES = {"Sacred Ash", "Rarer Candy", "Master Ball", "DNA Splicers"}
@@ -125,6 +130,7 @@ def biome_pass_name(biome_id: int) -> str:
 BIOME_PASSES: Dict[int, str] = {biome_id: biome_pass_name(biome_id) for biome_id in sorted(BIOME_DEPTHS)
                                 if biome_id not in (TOWN_BIOME, END_BIOME)}
 ITEM_TABLE.update({name: BASE_ID + BIOME_PASS_OFFSET + biome_id for biome_id, name in BIOME_PASSES.items()})
+BIOME_PASS_IDS: Dict[str, int] = {name: biome_id for biome_id, name in BIOME_PASSES.items()}
 
 
 def can_reach_biome(state: CollectionState, player: int, target: int, block_count: int = BLOCK_COUNT) -> bool:
@@ -342,6 +348,67 @@ class PokeRogueWorld(World):
         self.random.shuffle(best)
         return best
 
+    def pick_pool_pokemon(self, candidates: List[str], count: int) -> List[str]:
+        """
+        Pokemon shuffled into the multiworld, following pokemon_pool_costs: at random, the same number of each
+        cost (varied), or with a bias towards the cheap or expensive costs (a cost is drawn with a weight growing
+        by POOL_COST_BIAS per cost step, among the costs that still have Pokemon, then a Pokemon of that cost).
+        """
+        mode = self.options.pokemon_pool_costs.value
+        if mode == PokemonPoolCosts.option_unbiased:
+            picked = list(candidates)
+            self.random.shuffle(picked)
+            return picked[:count]
+
+        by_cost: Dict[int, List[str]] = {}
+        for name in candidates:
+            by_cost.setdefault(POKEMON_COSTS[name], []).append(name)
+        for names in by_cost.values():
+            self.random.shuffle(names)
+
+        picked: List[str] = []
+        if mode == PokemonPoolCosts.option_varied:
+            # One Pokemon of each cost in turn (random order of the costs at each round)
+            while len(picked) < count:
+                costs = [cost for cost, names in by_cost.items() if names]
+                self.random.shuffle(costs)
+                for cost in costs[:count - len(picked)]:
+                    picked.append(by_cost[cost].pop())
+            return picked
+
+        low = mode == PokemonPoolCosts.option_low_cost
+        while len(picked) < count:
+            costs = [cost for cost, names in by_cost.items() if names]
+            weights = [POOL_COST_BIAS ** (-cost if low else cost) for cost in costs]
+            cost = self.random.choices(costs, weights=weights)[0]
+            picked.append(by_cost[cost].pop())
+        return picked
+
+    @classmethod
+    def stage_fill_hook(cls, multiworld, progitempool, usefulitempool, filleritempool, fill_locations) -> None:
+        """
+        Biome Pass priority: the progression fill places the items of a player from the end of the pool to its
+        start, and the items placed last can only go where the items already placed lead, so they land earlier in
+        the multiworld. The passes of the near biomes are moved to the start of the pool (the nearest first) and
+        those of the far biomes to its end (the farthest last).
+        """
+        for world in multiworld.get_game_worlds(GAME_NAME):
+            if not (world.options.biome_passes.value and world.options.biome_pass_priority.value
+                    and world.has_biome_locations()):
+                continue
+            passes = [item for item in progitempool if item.player == world.player and item.name in BIOME_PASS_IDS]
+            if not passes:
+                continue
+            pass_ids = {id(item) for item in passes}
+            progitempool[:] = [item for item in progitempool if id(item) not in pass_ids]
+            world.random.shuffle(passes)  # random order within a depth (the sort below is stable)
+            passes.sort(key=lambda item: BIOME_DEPTHS[BIOME_PASS_IDS[item.name]])
+            middle = max(BIOME_DEPTHS[BIOME_PASS_IDS[item.name]] for item in passes) / 2
+            near = [item for item in passes if BIOME_DEPTHS[BIOME_PASS_IDS[item.name]] <= middle]
+            far = [item for item in passes if BIOME_DEPTHS[BIOME_PASS_IDS[item.name]] > middle]
+            progitempool[:0] = near
+            progitempool += far
+
     def add_location(self, region: Region, name: str) -> Location:
         location = PokeRogueLocation(self.player, name, LOCATION_TABLE[name], region)
         region.locations.append(location)
@@ -395,6 +462,14 @@ class PokeRogueWorld(World):
             wave = shop_item_wave(index, per_tier, tier_waves)
             self.add_location(blocks[(wave - 1) // GATE_INTERVAL], shop_location_name(index))
 
+        # Biome Pass priority: the PokeRogue locations of a block don't hold the passes of the biomes much closer
+        if (with_biomes and self.options.biome_passes.value and self.options.biome_pass_priority.value):
+            for block, region in enumerate(blocks):
+                for location in region.locations:
+                    location.item_rule = lambda item, b=block: not (
+                        item.player == self.player and item.name in BIOME_PASS_IDS
+                        and BIOME_DEPTHS[BIOME_PASS_IDS[item.name]] + BIOME_PASS_BLOCK_SLACK < b)
+
         goal_region = blocks[-1]
         victory = PokeRogueLocation(self.player, f"Floor {final_wave} Cleared", None, goal_region)
         victory.place_locked_item(self.create_item(VICTORY))
@@ -416,9 +491,8 @@ class PokeRogueWorld(World):
         for name in starting:
             self.multiworld.push_precollected(self.create_item(name))
         remaining = [name for name in self.get_usable_pokemon() if name not in starting]
-        self.random.shuffle(remaining)
         pokemon_count = min(self.options.pokemon_in_pool.value, len(remaining), max(0, location_count - len(pool)))
-        pool += [self.create_item(name) for name in remaining[:pokemon_count]]
+        pool += [self.create_item(name) for name in self.pick_pool_pokemon(remaining, pokemon_count)]
 
         # Map given from the start (permanent bonus item: the game grants it at the start of every run)
         start_with_map = bool(self.options.start_with_map.value)
