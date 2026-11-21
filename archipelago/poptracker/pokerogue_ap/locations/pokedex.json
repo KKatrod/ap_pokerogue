@@ -1,0 +1,7686 @@
+[
+  {
+    "name": "Pokedex - Town",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|0"],
+    "sections": [
+      {
+        "name": "Caterpie",
+        "visibility_rules": ["$dex_all|10", "$dex_starter|10"]
+      },
+      {
+        "name": "Metapod",
+        "visibility_rules": ["$dex_all|11"]
+      },
+      {
+        "name": "Butterfree",
+        "visibility_rules": ["$dex_all|12"]
+      },
+      {
+        "name": "Weedle",
+        "visibility_rules": ["$dex_all|13", "$dex_starter|13"]
+      },
+      {
+        "name": "Kakuna",
+        "visibility_rules": ["$dex_all|14"]
+      },
+      {
+        "name": "Beedrill",
+        "visibility_rules": ["$dex_all|15"]
+      },
+      {
+        "name": "Pidgey",
+        "visibility_rules": ["$dex_all|16", "$dex_starter|16"]
+      },
+      {
+        "name": "Pidgeotto",
+        "visibility_rules": ["$dex_all|17"]
+      },
+      {
+        "name": "Pidgeot",
+        "visibility_rules": ["$dex_all|18"]
+      },
+      {
+        "name": "Rattata",
+        "visibility_rules": ["$dex_all|19", "$dex_starter|19"]
+      },
+      {
+        "name": "Raticate",
+        "visibility_rules": ["$dex_all|20"]
+      },
+      {
+        "name": "Spearow",
+        "visibility_rules": ["$dex_all|21", "$dex_starter|21"]
+      },
+      {
+        "name": "Fearow",
+        "visibility_rules": ["$dex_all|22"]
+      },
+      {
+        "name": "Ekans",
+        "visibility_rules": ["$dex_all|23", "$dex_starter|23"]
+      },
+      {
+        "name": "Arbok",
+        "visibility_rules": ["$dex_all|24"]
+      },
+      {
+        "name": "Pikachu",
+        "visibility_rules": ["$dex_all|25"]
+      },
+      {
+        "name": "Raichu",
+        "visibility_rules": ["$dex_all|26"]
+      },
+      {
+        "name": "Nidoran F",
+        "visibility_rules": ["$dex_all|29", "$dex_starter|29"]
+      },
+      {
+        "name": "Nidorina",
+        "visibility_rules": ["$dex_all|30"]
+      },
+      {
+        "name": "Nidoqueen",
+        "visibility_rules": ["$dex_all|31"]
+      },
+      {
+        "name": "Nidoran M",
+        "visibility_rules": ["$dex_all|32", "$dex_starter|32"]
+      },
+      {
+        "name": "Nidorino",
+        "visibility_rules": ["$dex_all|33"]
+      },
+      {
+        "name": "Nidoking",
+        "visibility_rules": ["$dex_all|34"]
+      },
+      {
+        "name": "Clefairy",
+        "visibility_rules": ["$dex_all|35"]
+      },
+      {
+        "name": "Clefable",
+        "visibility_rules": ["$dex_all|36"]
+      },
+      {
+        "name": "Jigglypuff",
+        "visibility_rules": ["$dex_all|39"]
+      },
+      {
+        "name": "Wigglytuff",
+        "visibility_rules": ["$dex_all|40"]
+      },
+      {
+        "name": "Oddish",
+        "visibility_rules": ["$dex_all|43", "$dex_starter|43"]
+      },
+      {
+        "name": "Gloom",
+        "visibility_rules": ["$dex_all|44"]
+      },
+      {
+        "name": "Vileplume",
+        "visibility_rules": ["$dex_all|45"]
+      },
+      {
+        "name": "Paras",
+        "visibility_rules": ["$dex_all|46", "$dex_starter|46"]
+      },
+      {
+        "name": "Parasect",
+        "visibility_rules": ["$dex_all|47"]
+      },
+      {
+        "name": "Venonat",
+        "visibility_rules": ["$dex_all|48", "$dex_starter|48"]
+      },
+      {
+        "name": "Venomoth",
+        "visibility_rules": ["$dex_all|49"]
+      },
+      {
+        "name": "Meowth",
+        "visibility_rules": ["$dex_all|52", "$dex_starter|52"]
+      },
+      {
+        "name": "Persian",
+        "visibility_rules": ["$dex_all|53"]
+      },
+      {
+        "name": "Abra",
+        "visibility_rules": ["$dex_all|63", "$dex_starter|63"]
+      },
+      {
+        "name": "Kadabra",
+        "visibility_rules": ["$dex_all|64"]
+      },
+      {
+        "name": "Alakazam",
+        "visibility_rules": ["$dex_all|65"]
+      },
+      {
+        "name": "Bellsprout",
+        "visibility_rules": ["$dex_all|69", "$dex_starter|69"]
+      },
+      {
+        "name": "Weepinbell",
+        "visibility_rules": ["$dex_all|70"]
+      },
+      {
+        "name": "Victreebel",
+        "visibility_rules": ["$dex_all|71"]
+      },
+      {
+        "name": "Chansey",
+        "visibility_rules": ["$dex_all|113"]
+      },
+      {
+        "name": "Ditto",
+        "visibility_rules": ["$dex_all|132", "$dex_starter|132"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_all|133", "$dex_starter|133"]
+      },
+      {
+        "name": "Vaporeon",
+        "visibility_rules": ["$dex_all|134"]
+      },
+      {
+        "name": "Jolteon",
+        "visibility_rules": ["$dex_all|135"]
+      },
+      {
+        "name": "Flareon",
+        "visibility_rules": ["$dex_all|136"]
+      },
+      {
+        "name": "Snorlax",
+        "visibility_rules": ["$dex_all|143"]
+      },
+      {
+        "name": "Sentret",
+        "visibility_rules": ["$dex_all|161", "$dex_starter|161"]
+      },
+      {
+        "name": "Furret",
+        "visibility_rules": ["$dex_all|162"]
+      },
+      {
+        "name": "Hoothoot",
+        "visibility_rules": ["$dex_all|163", "$dex_starter|163"]
+      },
+      {
+        "name": "Noctowl",
+        "visibility_rules": ["$dex_all|164"]
+      },
+      {
+        "name": "Ledyba",
+        "visibility_rules": ["$dex_all|165", "$dex_starter|165"]
+      },
+      {
+        "name": "Ledian",
+        "visibility_rules": ["$dex_all|166"]
+      },
+      {
+        "name": "Spinarak",
+        "visibility_rules": ["$dex_all|167", "$dex_starter|167"]
+      },
+      {
+        "name": "Ariados",
+        "visibility_rules": ["$dex_all|168"]
+      },
+      {
+        "name": "Pichu",
+        "visibility_rules": ["$dex_all|172", "$dex_starter|172"]
+      },
+      {
+        "name": "Cleffa",
+        "visibility_rules": ["$dex_all|173", "$dex_starter|173"]
+      },
+      {
+        "name": "Igglybuff",
+        "visibility_rules": ["$dex_all|174", "$dex_starter|174"]
+      },
+      {
+        "name": "Togepi",
+        "visibility_rules": ["$dex_all|175", "$dex_starter|175"]
+      },
+      {
+        "name": "Togetic",
+        "visibility_rules": ["$dex_all|176"]
+      },
+      {
+        "name": "Bellossom",
+        "visibility_rules": ["$dex_all|182"]
+      },
+      {
+        "name": "Hoppip",
+        "visibility_rules": ["$dex_all|187", "$dex_starter|187"]
+      },
+      {
+        "name": "Skiploom",
+        "visibility_rules": ["$dex_all|188"]
+      },
+      {
+        "name": "Jumpluff",
+        "visibility_rules": ["$dex_all|189"]
+      },
+      {
+        "name": "Sunkern",
+        "visibility_rules": ["$dex_all|191", "$dex_starter|191"]
+      },
+      {
+        "name": "Sunflora",
+        "visibility_rules": ["$dex_all|192"]
+      },
+      {
+        "name": "Espeon",
+        "visibility_rules": ["$dex_all|196"]
+      },
+      {
+        "name": "Umbreon",
+        "visibility_rules": ["$dex_all|197"]
+      },
+      {
+        "name": "Blissey",
+        "visibility_rules": ["$dex_all|242"]
+      },
+      {
+        "name": "Poochyena",
+        "visibility_rules": ["$dex_all|261", "$dex_starter|261"]
+      },
+      {
+        "name": "Mightyena",
+        "visibility_rules": ["$dex_all|262"]
+      },
+      {
+        "name": "Zigzagoon",
+        "visibility_rules": ["$dex_all|263", "$dex_starter|263"]
+      },
+      {
+        "name": "Linoone",
+        "visibility_rules": ["$dex_all|264"]
+      },
+      {
+        "name": "Wurmple",
+        "visibility_rules": ["$dex_all|265", "$dex_starter|265"]
+      },
+      {
+        "name": "Silcoon",
+        "visibility_rules": ["$dex_all|266"]
+      },
+      {
+        "name": "Beautifly",
+        "visibility_rules": ["$dex_all|267"]
+      },
+      {
+        "name": "Cascoon",
+        "visibility_rules": ["$dex_all|268"]
+      },
+      {
+        "name": "Dustox",
+        "visibility_rules": ["$dex_all|269"]
+      },
+      {
+        "name": "Lotad",
+        "visibility_rules": ["$dex_all|270", "$dex_starter|270"]
+      },
+      {
+        "name": "Lombre",
+        "visibility_rules": ["$dex_all|271"]
+      },
+      {
+        "name": "Ludicolo",
+        "visibility_rules": ["$dex_all|272"]
+      },
+      {
+        "name": "Seedot",
+        "visibility_rules": ["$dex_all|273", "$dex_starter|273"]
+      },
+      {
+        "name": "Nuzleaf",
+        "visibility_rules": ["$dex_all|274"]
+      },
+      {
+        "name": "Shiftry",
+        "visibility_rules": ["$dex_all|275"]
+      },
+      {
+        "name": "Taillow",
+        "visibility_rules": ["$dex_all|276", "$dex_starter|276"]
+      },
+      {
+        "name": "Swellow",
+        "visibility_rules": ["$dex_all|277"]
+      },
+      {
+        "name": "Ralts",
+        "visibility_rules": ["$dex_all|280", "$dex_starter|280"]
+      },
+      {
+        "name": "Kirlia",
+        "visibility_rules": ["$dex_all|281"]
+      },
+      {
+        "name": "Gardevoir",
+        "visibility_rules": ["$dex_all|282"]
+      },
+      {
+        "name": "Surskit",
+        "visibility_rules": ["$dex_all|283", "$dex_starter|283"]
+      },
+      {
+        "name": "Masquerain",
+        "visibility_rules": ["$dex_all|284"]
+      },
+      {
+        "name": "Shroomish",
+        "visibility_rules": ["$dex_all|285", "$dex_starter|285"]
+      },
+      {
+        "name": "Breloom",
+        "visibility_rules": ["$dex_all|286"]
+      },
+      {
+        "name": "Nincada",
+        "visibility_rules": ["$dex_all|290", "$dex_starter|290"]
+      },
+      {
+        "name": "Ninjask",
+        "visibility_rules": ["$dex_all|291"]
+      },
+      {
+        "name": "Shedinja",
+        "visibility_rules": ["$dex_all|292"]
+      },
+      {
+        "name": "Whismur",
+        "visibility_rules": ["$dex_all|293", "$dex_starter|293"]
+      },
+      {
+        "name": "Loudred",
+        "visibility_rules": ["$dex_all|294"]
+      },
+      {
+        "name": "Exploud",
+        "visibility_rules": ["$dex_all|295"]
+      },
+      {
+        "name": "Skitty",
+        "visibility_rules": ["$dex_all|300", "$dex_starter|300"]
+      },
+      {
+        "name": "Delcatty",
+        "visibility_rules": ["$dex_all|301"]
+      },
+      {
+        "name": "Starly",
+        "visibility_rules": ["$dex_all|396", "$dex_starter|396"]
+      },
+      {
+        "name": "Staravia",
+        "visibility_rules": ["$dex_all|397"]
+      },
+      {
+        "name": "Staraptor",
+        "visibility_rules": ["$dex_all|398"]
+      },
+      {
+        "name": "Bidoof",
+        "visibility_rules": ["$dex_all|399", "$dex_starter|399"]
+      },
+      {
+        "name": "Bibarel",
+        "visibility_rules": ["$dex_all|400"]
+      },
+      {
+        "name": "Kricketot",
+        "visibility_rules": ["$dex_all|401", "$dex_starter|401"]
+      },
+      {
+        "name": "Kricketune",
+        "visibility_rules": ["$dex_all|402"]
+      },
+      {
+        "name": "Combee",
+        "visibility_rules": ["$dex_all|415", "$dex_starter|415"]
+      },
+      {
+        "name": "Vespiquen",
+        "visibility_rules": ["$dex_all|416"]
+      },
+      {
+        "name": "Cherubi",
+        "visibility_rules": ["$dex_all|420", "$dex_starter|420"]
+      },
+      {
+        "name": "Cherrim",
+        "visibility_rules": ["$dex_all|421"]
+      },
+      {
+        "name": "Happiny",
+        "visibility_rules": ["$dex_all|440", "$dex_starter|440"]
+      },
+      {
+        "name": "Munchlax",
+        "visibility_rules": ["$dex_all|446", "$dex_starter|446"]
+      },
+      {
+        "name": "Riolu",
+        "visibility_rules": ["$dex_all|447", "$dex_starter|447"]
+      },
+      {
+        "name": "Lucario",
+        "visibility_rules": ["$dex_all|448"]
+      },
+      {
+        "name": "Togekiss",
+        "visibility_rules": ["$dex_all|468"]
+      },
+      {
+        "name": "Leafeon",
+        "visibility_rules": ["$dex_all|470"]
+      },
+      {
+        "name": "Glaceon",
+        "visibility_rules": ["$dex_all|471"]
+      },
+      {
+        "name": "Gallade",
+        "visibility_rules": ["$dex_all|475"]
+      },
+      {
+        "name": "Patrat",
+        "visibility_rules": ["$dex_all|504", "$dex_starter|504"]
+      },
+      {
+        "name": "Watchog",
+        "visibility_rules": ["$dex_all|505"]
+      },
+      {
+        "name": "Lillipup",
+        "visibility_rules": ["$dex_all|506", "$dex_starter|506"]
+      },
+      {
+        "name": "Herdier",
+        "visibility_rules": ["$dex_all|507"]
+      },
+      {
+        "name": "Stoutland",
+        "visibility_rules": ["$dex_all|508"]
+      },
+      {
+        "name": "Purrloin",
+        "visibility_rules": ["$dex_all|509", "$dex_starter|509"]
+      },
+      {
+        "name": "Liepard",
+        "visibility_rules": ["$dex_all|510"]
+      },
+      {
+        "name": "Pidove",
+        "visibility_rules": ["$dex_all|519", "$dex_starter|519"]
+      },
+      {
+        "name": "Tranquill",
+        "visibility_rules": ["$dex_all|520"]
+      },
+      {
+        "name": "Unfezant",
+        "visibility_rules": ["$dex_all|521"]
+      },
+      {
+        "name": "Venipede",
+        "visibility_rules": ["$dex_all|543", "$dex_starter|543"]
+      },
+      {
+        "name": "Whirlipede",
+        "visibility_rules": ["$dex_all|544"]
+      },
+      {
+        "name": "Scolipede",
+        "visibility_rules": ["$dex_all|545"]
+      },
+      {
+        "name": "Cottonee",
+        "visibility_rules": ["$dex_all|546", "$dex_starter|546"]
+      },
+      {
+        "name": "Whimsicott",
+        "visibility_rules": ["$dex_all|547"]
+      },
+      {
+        "name": "Zorua",
+        "visibility_rules": ["$dex_all|570", "$dex_starter|570"]
+      },
+      {
+        "name": "Zoroark",
+        "visibility_rules": ["$dex_all|571"]
+      },
+      {
+        "name": "Minccino",
+        "visibility_rules": ["$dex_all|572", "$dex_starter|572"]
+      },
+      {
+        "name": "Cinccino",
+        "visibility_rules": ["$dex_all|573"]
+      },
+      {
+        "name": "Fletchling",
+        "visibility_rules": ["$dex_all|661", "$dex_starter|661"]
+      },
+      {
+        "name": "Fletchinder",
+        "visibility_rules": ["$dex_all|662"]
+      },
+      {
+        "name": "Talonflame",
+        "visibility_rules": ["$dex_all|663"]
+      },
+      {
+        "name": "Scatterbug",
+        "visibility_rules": ["$dex_all|664", "$dex_starter|664"]
+      },
+      {
+        "name": "Spewpa",
+        "visibility_rules": ["$dex_all|665"]
+      },
+      {
+        "name": "Vivillon",
+        "visibility_rules": ["$dex_all|666"]
+      },
+      {
+        "name": "Sylveon",
+        "visibility_rules": ["$dex_all|700"]
+      },
+      {
+        "name": "Yungoos",
+        "visibility_rules": ["$dex_all|734", "$dex_starter|734"]
+      },
+      {
+        "name": "Gumshoos",
+        "visibility_rules": ["$dex_all|735"]
+      },
+      {
+        "name": "Skwovet",
+        "visibility_rules": ["$dex_all|819", "$dex_starter|819"]
+      },
+      {
+        "name": "Greedent",
+        "visibility_rules": ["$dex_all|820"]
+      },
+      {
+        "name": "Rookidee",
+        "visibility_rules": ["$dex_all|821", "$dex_starter|821"]
+      },
+      {
+        "name": "Corvisquire",
+        "visibility_rules": ["$dex_all|822"]
+      },
+      {
+        "name": "Corviknight",
+        "visibility_rules": ["$dex_all|823"]
+      },
+      {
+        "name": "Blipbug",
+        "visibility_rules": ["$dex_all|824", "$dex_starter|824"]
+      },
+      {
+        "name": "Dottler",
+        "visibility_rules": ["$dex_all|825"]
+      },
+      {
+        "name": "Orbeetle",
+        "visibility_rules": ["$dex_all|826"]
+      },
+      {
+        "name": "Wooloo",
+        "visibility_rules": ["$dex_all|831", "$dex_starter|831"]
+      },
+      {
+        "name": "Dubwool",
+        "visibility_rules": ["$dex_all|832"]
+      },
+      {
+        "name": "Lechonk",
+        "visibility_rules": ["$dex_all|915", "$dex_starter|915"]
+      },
+      {
+        "name": "Oinkologne",
+        "visibility_rules": ["$dex_all|916"]
+      },
+      {
+        "name": "Pawmi",
+        "visibility_rules": ["$dex_all|921", "$dex_starter|921"]
+      },
+      {
+        "name": "Pawmo",
+        "visibility_rules": ["$dex_all|922"]
+      },
+      {
+        "name": "Pawmot",
+        "visibility_rules": ["$dex_all|923"]
+      },
+      {
+        "name": "Tandemaus",
+        "visibility_rules": ["$dex_all|924", "$dex_starter|924"]
+      },
+      {
+        "name": "Maushold",
+        "visibility_rules": ["$dex_all|925"]
+      },
+      {
+        "name": "Fidough",
+        "visibility_rules": ["$dex_all|926", "$dex_starter|926"]
+      },
+      {
+        "name": "Dachsbun",
+        "visibility_rules": ["$dex_all|927"]
+      },
+      {
+        "name": "Alola Raichu",
+        "visibility_rules": ["$dex_all|2026"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 115,
+        "y": 124
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Plains",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|1"],
+    "sections": [
+      {
+        "name": "Pidgey",
+        "visibility_rules": ["$dex_all|16", "$dex_starter|16"]
+      },
+      {
+        "name": "Pidgeotto",
+        "visibility_rules": ["$dex_all|17"]
+      },
+      {
+        "name": "Pidgeot",
+        "visibility_rules": ["$dex_all|18"]
+      },
+      {
+        "name": "Spearow",
+        "visibility_rules": ["$dex_all|21", "$dex_starter|21"]
+      },
+      {
+        "name": "Fearow",
+        "visibility_rules": ["$dex_all|22"]
+      },
+      {
+        "name": "Pikachu",
+        "visibility_rules": ["$dex_all|25"]
+      },
+      {
+        "name": "Raichu",
+        "visibility_rules": ["$dex_all|26"]
+      },
+      {
+        "name": "Zubat",
+        "visibility_rules": ["$dex_all|41", "$dex_starter|41"]
+      },
+      {
+        "name": "Golbat",
+        "visibility_rules": ["$dex_all|42"]
+      },
+      {
+        "name": "Meowth",
+        "visibility_rules": ["$dex_all|52", "$dex_starter|52"]
+      },
+      {
+        "name": "Persian",
+        "visibility_rules": ["$dex_all|53"]
+      },
+      {
+        "name": "Mankey",
+        "visibility_rules": ["$dex_all|56", "$dex_starter|56"]
+      },
+      {
+        "name": "Primeape",
+        "visibility_rules": ["$dex_all|57"]
+      },
+      {
+        "name": "Abra",
+        "visibility_rules": ["$dex_all|63", "$dex_starter|63"]
+      },
+      {
+        "name": "Kadabra",
+        "visibility_rules": ["$dex_all|64"]
+      },
+      {
+        "name": "Alakazam",
+        "visibility_rules": ["$dex_all|65"]
+      },
+      {
+        "name": "Farfetchd",
+        "visibility_rules": ["$dex_all|83", "$dex_starter|83"]
+      },
+      {
+        "name": "Doduo",
+        "visibility_rules": ["$dex_all|84", "$dex_starter|84"]
+      },
+      {
+        "name": "Dodrio",
+        "visibility_rules": ["$dex_all|85"]
+      },
+      {
+        "name": "Lickitung",
+        "visibility_rules": ["$dex_all|108", "$dex_starter|108"]
+      },
+      {
+        "name": "Chansey",
+        "visibility_rules": ["$dex_all|113"]
+      },
+      {
+        "name": "Ditto",
+        "visibility_rules": ["$dex_all|132", "$dex_starter|132"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_all|133", "$dex_starter|133"]
+      },
+      {
+        "name": "Vaporeon",
+        "visibility_rules": ["$dex_all|134"]
+      },
+      {
+        "name": "Jolteon",
+        "visibility_rules": ["$dex_all|135"]
+      },
+      {
+        "name": "Flareon",
+        "visibility_rules": ["$dex_all|136"]
+      },
+      {
+        "name": "Snorlax",
+        "visibility_rules": ["$dex_all|143"]
+      },
+      {
+        "name": "Sentret",
+        "visibility_rules": ["$dex_all|161", "$dex_starter|161"]
+      },
+      {
+        "name": "Furret",
+        "visibility_rules": ["$dex_all|162"]
+      },
+      {
+        "name": "Crobat",
+        "visibility_rules": ["$dex_all|169"]
+      },
+      {
+        "name": "Pichu",
+        "visibility_rules": ["$dex_starter|172"]
+      },
+      {
+        "name": "Espeon",
+        "visibility_rules": ["$dex_all|196"]
+      },
+      {
+        "name": "Umbreon",
+        "visibility_rules": ["$dex_all|197"]
+      },
+      {
+        "name": "Dunsparce",
+        "visibility_rules": ["$dex_all|206", "$dex_starter|206"]
+      },
+      {
+        "name": "Blissey",
+        "visibility_rules": ["$dex_all|242"]
+      },
+      {
+        "name": "Poochyena",
+        "visibility_rules": ["$dex_all|261", "$dex_starter|261"]
+      },
+      {
+        "name": "Mightyena",
+        "visibility_rules": ["$dex_all|262"]
+      },
+      {
+        "name": "Zigzagoon",
+        "visibility_rules": ["$dex_all|263", "$dex_starter|263"]
+      },
+      {
+        "name": "Linoone",
+        "visibility_rules": ["$dex_all|264"]
+      },
+      {
+        "name": "Latias",
+        "visibility_rules": ["$dex_all|380", "$dex_starter|380"]
+      },
+      {
+        "name": "Latios",
+        "visibility_rules": ["$dex_all|381", "$dex_starter|381"]
+      },
+      {
+        "name": "Starly",
+        "visibility_rules": ["$dex_all|396", "$dex_starter|396"]
+      },
+      {
+        "name": "Staravia",
+        "visibility_rules": ["$dex_all|397"]
+      },
+      {
+        "name": "Staraptor",
+        "visibility_rules": ["$dex_all|398"]
+      },
+      {
+        "name": "Bidoof",
+        "visibility_rules": ["$dex_all|399", "$dex_starter|399"]
+      },
+      {
+        "name": "Bibarel",
+        "visibility_rules": ["$dex_all|400"]
+      },
+      {
+        "name": "Shinx",
+        "visibility_rules": ["$dex_all|403", "$dex_starter|403"]
+      },
+      {
+        "name": "Luxio",
+        "visibility_rules": ["$dex_all|404"]
+      },
+      {
+        "name": "Luxray",
+        "visibility_rules": ["$dex_all|405"]
+      },
+      {
+        "name": "Buneary",
+        "visibility_rules": ["$dex_all|427", "$dex_starter|427"]
+      },
+      {
+        "name": "Lopunny",
+        "visibility_rules": ["$dex_all|428"]
+      },
+      {
+        "name": "Happiny",
+        "visibility_rules": ["$dex_starter|440"]
+      },
+      {
+        "name": "Munchlax",
+        "visibility_rules": ["$dex_starter|446"]
+      },
+      {
+        "name": "Lickilicky",
+        "visibility_rules": ["$dex_all|463"]
+      },
+      {
+        "name": "Leafeon",
+        "visibility_rules": ["$dex_all|470"]
+      },
+      {
+        "name": "Glaceon",
+        "visibility_rules": ["$dex_all|471"]
+      },
+      {
+        "name": "Pidove",
+        "visibility_rules": ["$dex_all|519", "$dex_starter|519"]
+      },
+      {
+        "name": "Tranquill",
+        "visibility_rules": ["$dex_all|520"]
+      },
+      {
+        "name": "Unfezant",
+        "visibility_rules": ["$dex_all|521"]
+      },
+      {
+        "name": "Fletchling",
+        "visibility_rules": ["$dex_all|661", "$dex_starter|661"]
+      },
+      {
+        "name": "Fletchinder",
+        "visibility_rules": ["$dex_all|662"]
+      },
+      {
+        "name": "Talonflame",
+        "visibility_rules": ["$dex_all|663"]
+      },
+      {
+        "name": "Sylveon",
+        "visibility_rules": ["$dex_all|700"]
+      },
+      {
+        "name": "Yungoos",
+        "visibility_rules": ["$dex_all|734", "$dex_starter|734"]
+      },
+      {
+        "name": "Gumshoos",
+        "visibility_rules": ["$dex_all|735"]
+      },
+      {
+        "name": "Rockruff",
+        "visibility_rules": ["$dex_all|744", "$dex_starter|744"]
+      },
+      {
+        "name": "Lycanroc",
+        "visibility_rules": ["$dex_all|745"]
+      },
+      {
+        "name": "Skwovet",
+        "visibility_rules": ["$dex_all|819", "$dex_starter|819"]
+      },
+      {
+        "name": "Greedent",
+        "visibility_rules": ["$dex_all|820"]
+      },
+      {
+        "name": "Rookidee",
+        "visibility_rules": ["$dex_all|821", "$dex_starter|821"]
+      },
+      {
+        "name": "Corvisquire",
+        "visibility_rules": ["$dex_all|822"]
+      },
+      {
+        "name": "Corviknight",
+        "visibility_rules": ["$dex_all|823"]
+      },
+      {
+        "name": "Nickit",
+        "visibility_rules": ["$dex_all|827", "$dex_starter|827"]
+      },
+      {
+        "name": "Thievul",
+        "visibility_rules": ["$dex_all|828"]
+      },
+      {
+        "name": "Lechonk",
+        "visibility_rules": ["$dex_all|915", "$dex_starter|915"]
+      },
+      {
+        "name": "Oinkologne",
+        "visibility_rules": ["$dex_all|916"]
+      },
+      {
+        "name": "Pawmi",
+        "visibility_rules": ["$dex_all|921", "$dex_starter|921"]
+      },
+      {
+        "name": "Pawmo",
+        "visibility_rules": ["$dex_all|922"]
+      },
+      {
+        "name": "Pawmot",
+        "visibility_rules": ["$dex_all|923"]
+      },
+      {
+        "name": "Annihilape",
+        "visibility_rules": ["$dex_all|979"]
+      },
+      {
+        "name": "Dudunsparce",
+        "visibility_rules": ["$dex_all|982"]
+      },
+      {
+        "name": "Alola Raichu",
+        "visibility_rules": ["$dex_all|2026"]
+      },
+      {
+        "name": "Paldea Tauros",
+        "visibility_rules": ["$dex_all|8128", "$dex_starter|8128"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 345,
+        "y": 124
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Grass",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|2"],
+    "sections": [
+      {
+        "name": "Bulbasaur",
+        "visibility_rules": ["$dex_all|1", "$dex_starter|1"]
+      },
+      {
+        "name": "Ivysaur",
+        "visibility_rules": ["$dex_all|2"]
+      },
+      {
+        "name": "Venusaur",
+        "visibility_rules": ["$dex_all|3"]
+      },
+      {
+        "name": "Growlithe",
+        "visibility_rules": ["$dex_all|58", "$dex_starter|58"]
+      },
+      {
+        "name": "Arcanine",
+        "visibility_rules": ["$dex_all|59"]
+      },
+      {
+        "name": "Lickitung",
+        "visibility_rules": ["$dex_all|108", "$dex_starter|108"]
+      },
+      {
+        "name": "Sudowoodo",
+        "visibility_rules": ["$dex_all|185"]
+      },
+      {
+        "name": "Hoppip",
+        "visibility_rules": ["$dex_all|187", "$dex_starter|187"]
+      },
+      {
+        "name": "Skiploom",
+        "visibility_rules": ["$dex_all|188"]
+      },
+      {
+        "name": "Jumpluff",
+        "visibility_rules": ["$dex_all|189"]
+      },
+      {
+        "name": "Sunkern",
+        "visibility_rules": ["$dex_all|191", "$dex_starter|191"]
+      },
+      {
+        "name": "Sunflora",
+        "visibility_rules": ["$dex_all|192"]
+      },
+      {
+        "name": "Miltank",
+        "visibility_rules": ["$dex_all|241", "$dex_starter|241"]
+      },
+      {
+        "name": "Wurmple",
+        "visibility_rules": ["$dex_starter|265"]
+      },
+      {
+        "name": "Silcoon",
+        "visibility_rules": ["$dex_all|266"]
+      },
+      {
+        "name": "Beautifly",
+        "visibility_rules": ["$dex_all|267"]
+      },
+      {
+        "name": "Cascoon",
+        "visibility_rules": ["$dex_all|268"]
+      },
+      {
+        "name": "Dustox",
+        "visibility_rules": ["$dex_all|269"]
+      },
+      {
+        "name": "Seedot",
+        "visibility_rules": ["$dex_all|273", "$dex_starter|273"]
+      },
+      {
+        "name": "Nuzleaf",
+        "visibility_rules": ["$dex_all|274"]
+      },
+      {
+        "name": "Shiftry",
+        "visibility_rules": ["$dex_all|275"]
+      },
+      {
+        "name": "Shroomish",
+        "visibility_rules": ["$dex_all|285", "$dex_starter|285"]
+      },
+      {
+        "name": "Breloom",
+        "visibility_rules": ["$dex_all|286"]
+      },
+      {
+        "name": "Turtwig",
+        "visibility_rules": ["$dex_all|387", "$dex_starter|387"]
+      },
+      {
+        "name": "Grotle",
+        "visibility_rules": ["$dex_all|388"]
+      },
+      {
+        "name": "Torterra",
+        "visibility_rules": ["$dex_all|389"]
+      },
+      {
+        "name": "Combee",
+        "visibility_rules": ["$dex_all|415", "$dex_starter|415"]
+      },
+      {
+        "name": "Vespiquen",
+        "visibility_rules": ["$dex_all|416"]
+      },
+      {
+        "name": "Cherubi",
+        "visibility_rules": ["$dex_all|420", "$dex_starter|420"]
+      },
+      {
+        "name": "Cherrim",
+        "visibility_rules": ["$dex_all|421"]
+      },
+      {
+        "name": "Bonsly",
+        "visibility_rules": ["$dex_all|438", "$dex_starter|438"]
+      },
+      {
+        "name": "Lickilicky",
+        "visibility_rules": ["$dex_all|463"]
+      },
+      {
+        "name": "Venipede",
+        "visibility_rules": ["$dex_all|543", "$dex_starter|543"]
+      },
+      {
+        "name": "Whirlipede",
+        "visibility_rules": ["$dex_all|544"]
+      },
+      {
+        "name": "Scolipede",
+        "visibility_rules": ["$dex_all|545"]
+      },
+      {
+        "name": "Cottonee",
+        "visibility_rules": ["$dex_all|546", "$dex_starter|546"]
+      },
+      {
+        "name": "Whimsicott",
+        "visibility_rules": ["$dex_all|547"]
+      },
+      {
+        "name": "Petilil",
+        "visibility_rules": ["$dex_all|548", "$dex_starter|548"]
+      },
+      {
+        "name": "Lilligant",
+        "visibility_rules": ["$dex_all|549"]
+      },
+      {
+        "name": "Foongus",
+        "visibility_rules": ["$dex_all|590", "$dex_starter|590"]
+      },
+      {
+        "name": "Amoonguss",
+        "visibility_rules": ["$dex_all|591"]
+      },
+      {
+        "name": "Virizion",
+        "visibility_rules": ["$dex_all|640", "$dex_starter|640"]
+      },
+      {
+        "name": "Noibat",
+        "visibility_rules": ["$dex_all|714", "$dex_starter|714"]
+      },
+      {
+        "name": "Noivern",
+        "visibility_rules": ["$dex_all|715"]
+      },
+      {
+        "name": "Hisui Lilligant",
+        "visibility_rules": ["$dex_all|6549"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 575,
+        "y": 124
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Lake",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|9"],
+    "sections": [
+      {
+        "name": "Squirtle",
+        "visibility_rules": ["$dex_all|7", "$dex_starter|7"]
+      },
+      {
+        "name": "Wartortle",
+        "visibility_rules": ["$dex_all|8"]
+      },
+      {
+        "name": "Blastoise",
+        "visibility_rules": ["$dex_all|9"]
+      },
+      {
+        "name": "Psyduck",
+        "visibility_rules": ["$dex_all|54", "$dex_starter|54"]
+      },
+      {
+        "name": "Golduck",
+        "visibility_rules": ["$dex_all|55"]
+      },
+      {
+        "name": "Slowpoke",
+        "visibility_rules": ["$dex_all|79", "$dex_starter|79"]
+      },
+      {
+        "name": "Slowbro",
+        "visibility_rules": ["$dex_all|80"]
+      },
+      {
+        "name": "Goldeen",
+        "visibility_rules": ["$dex_all|118", "$dex_starter|118"]
+      },
+      {
+        "name": "Seaking",
+        "visibility_rules": ["$dex_all|119"]
+      },
+      {
+        "name": "Magikarp",
+        "visibility_rules": ["$dex_all|129", "$dex_starter|129"]
+      },
+      {
+        "name": "Gyarados",
+        "visibility_rules": ["$dex_all|130"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_starter|133"]
+      },
+      {
+        "name": "Vaporeon",
+        "visibility_rules": ["$dex_all|134"]
+      },
+      {
+        "name": "Marill",
+        "visibility_rules": ["$dex_all|183"]
+      },
+      {
+        "name": "Azumarill",
+        "visibility_rules": ["$dex_all|184"]
+      },
+      {
+        "name": "Wooper",
+        "visibility_rules": ["$dex_all|194", "$dex_starter|194"]
+      },
+      {
+        "name": "Quagsire",
+        "visibility_rules": ["$dex_all|195"]
+      },
+      {
+        "name": "Slowking",
+        "visibility_rules": ["$dex_all|199"]
+      },
+      {
+        "name": "Suicune",
+        "visibility_rules": ["$dex_all|245", "$dex_starter|245"]
+      },
+      {
+        "name": "Lotad",
+        "visibility_rules": ["$dex_all|270", "$dex_starter|270"]
+      },
+      {
+        "name": "Lombre",
+        "visibility_rules": ["$dex_all|271"]
+      },
+      {
+        "name": "Ludicolo",
+        "visibility_rules": ["$dex_all|272"]
+      },
+      {
+        "name": "Surskit",
+        "visibility_rules": ["$dex_all|283", "$dex_starter|283"]
+      },
+      {
+        "name": "Masquerain",
+        "visibility_rules": ["$dex_all|284"]
+      },
+      {
+        "name": "Azurill",
+        "visibility_rules": ["$dex_starter|298"]
+      },
+      {
+        "name": "Mesprit",
+        "visibility_rules": ["$dex_all|481", "$dex_starter|481"]
+      },
+      {
+        "name": "Oshawott",
+        "visibility_rules": ["$dex_all|501", "$dex_starter|501"]
+      },
+      {
+        "name": "Dewott",
+        "visibility_rules": ["$dex_all|502"]
+      },
+      {
+        "name": "Samurott",
+        "visibility_rules": ["$dex_all|503"]
+      },
+      {
+        "name": "Ducklett",
+        "visibility_rules": ["$dex_all|580", "$dex_starter|580"]
+      },
+      {
+        "name": "Swanna",
+        "visibility_rules": ["$dex_all|581"]
+      },
+      {
+        "name": "Froakie",
+        "visibility_rules": ["$dex_all|656", "$dex_starter|656"]
+      },
+      {
+        "name": "Frogadier",
+        "visibility_rules": ["$dex_all|657"]
+      },
+      {
+        "name": "Greninja",
+        "visibility_rules": ["$dex_all|658"]
+      },
+      {
+        "name": "Wishiwashi",
+        "visibility_rules": ["$dex_all|746", "$dex_starter|746"]
+      },
+      {
+        "name": "Dewpider",
+        "visibility_rules": ["$dex_all|751", "$dex_starter|751"]
+      },
+      {
+        "name": "Araquanid",
+        "visibility_rules": ["$dex_all|752"]
+      },
+      {
+        "name": "Sobble",
+        "visibility_rules": ["$dex_all|816", "$dex_starter|816"]
+      },
+      {
+        "name": "Drizzile",
+        "visibility_rules": ["$dex_all|817"]
+      },
+      {
+        "name": "Inteleon",
+        "visibility_rules": ["$dex_all|818"]
+      },
+      {
+        "name": "Chewtle",
+        "visibility_rules": ["$dex_all|833", "$dex_starter|833"]
+      },
+      {
+        "name": "Drednaw",
+        "visibility_rules": ["$dex_all|834"]
+      },
+      {
+        "name": "Flamigo",
+        "visibility_rules": ["$dex_all|973", "$dex_starter|973"]
+      },
+      {
+        "name": "Battle Bond Greninja",
+        "visibility_rules": ["$dex_all|2658", "$dex_starter|2658"]
+      },
+      {
+        "name": "Hisui Samurott",
+        "visibility_rules": ["$dex_all|6503"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 805,
+        "y": 124
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Metropolis",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|4"],
+    "sections": [
+      {
+        "name": "Rattata",
+        "visibility_rules": ["$dex_all|19", "$dex_starter|19"]
+      },
+      {
+        "name": "Raticate",
+        "visibility_rules": ["$dex_all|20"]
+      },
+      {
+        "name": "Pikachu",
+        "visibility_rules": ["$dex_all|25"]
+      },
+      {
+        "name": "Raichu",
+        "visibility_rules": ["$dex_all|26"]
+      },
+      {
+        "name": "Ditto",
+        "visibility_rules": ["$dex_all|132", "$dex_starter|132"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_all|133", "$dex_starter|133"]
+      },
+      {
+        "name": "Vaporeon",
+        "visibility_rules": ["$dex_all|134"]
+      },
+      {
+        "name": "Jolteon",
+        "visibility_rules": ["$dex_all|135"]
+      },
+      {
+        "name": "Flareon",
+        "visibility_rules": ["$dex_all|136"]
+      },
+      {
+        "name": "Pichu",
+        "visibility_rules": ["$dex_starter|172"]
+      },
+      {
+        "name": "Espeon",
+        "visibility_rules": ["$dex_all|196"]
+      },
+      {
+        "name": "Umbreon",
+        "visibility_rules": ["$dex_all|197"]
+      },
+      {
+        "name": "Houndour",
+        "visibility_rules": ["$dex_all|228", "$dex_starter|228"]
+      },
+      {
+        "name": "Houndoom",
+        "visibility_rules": ["$dex_all|229"]
+      },
+      {
+        "name": "Smeargle",
+        "visibility_rules": ["$dex_all|235", "$dex_starter|235"]
+      },
+      {
+        "name": "Zigzagoon",
+        "visibility_rules": ["$dex_all|263", "$dex_starter|263"]
+      },
+      {
+        "name": "Linoone",
+        "visibility_rules": ["$dex_all|264"]
+      },
+      {
+        "name": "Castform",
+        "visibility_rules": ["$dex_all|351", "$dex_starter|351"]
+      },
+      {
+        "name": "Glameow",
+        "visibility_rules": ["$dex_all|431", "$dex_starter|431"]
+      },
+      {
+        "name": "Purugly",
+        "visibility_rules": ["$dex_all|432"]
+      },
+      {
+        "name": "Leafeon",
+        "visibility_rules": ["$dex_all|470"]
+      },
+      {
+        "name": "Glaceon",
+        "visibility_rules": ["$dex_all|471"]
+      },
+      {
+        "name": "Patrat",
+        "visibility_rules": ["$dex_all|504", "$dex_starter|504"]
+      },
+      {
+        "name": "Watchog",
+        "visibility_rules": ["$dex_all|505"]
+      },
+      {
+        "name": "Lillipup",
+        "visibility_rules": ["$dex_all|506", "$dex_starter|506"]
+      },
+      {
+        "name": "Herdier",
+        "visibility_rules": ["$dex_all|507"]
+      },
+      {
+        "name": "Stoutland",
+        "visibility_rules": ["$dex_all|508"]
+      },
+      {
+        "name": "Furfrou",
+        "visibility_rules": ["$dex_all|676", "$dex_starter|676"]
+      },
+      {
+        "name": "Espurr",
+        "visibility_rules": ["$dex_all|677", "$dex_starter|677"]
+      },
+      {
+        "name": "Meowstic",
+        "visibility_rules": ["$dex_all|678"]
+      },
+      {
+        "name": "Sylveon",
+        "visibility_rules": ["$dex_all|700"]
+      },
+      {
+        "name": "Yamper",
+        "visibility_rules": ["$dex_all|835", "$dex_starter|835"]
+      },
+      {
+        "name": "Boltund",
+        "visibility_rules": ["$dex_all|836"]
+      },
+      {
+        "name": "Indeedee",
+        "visibility_rules": ["$dex_all|876", "$dex_starter|876"]
+      },
+      {
+        "name": "Morpeko",
+        "visibility_rules": ["$dex_all|877", "$dex_starter|877"]
+      },
+      {
+        "name": "Tandemaus",
+        "visibility_rules": ["$dex_all|924", "$dex_starter|924"]
+      },
+      {
+        "name": "Maushold",
+        "visibility_rules": ["$dex_all|925"]
+      },
+      {
+        "name": "Fidough",
+        "visibility_rules": ["$dex_all|926", "$dex_starter|926"]
+      },
+      {
+        "name": "Dachsbun",
+        "visibility_rules": ["$dex_all|927"]
+      },
+      {
+        "name": "Squawkabilly",
+        "visibility_rules": ["$dex_all|931", "$dex_starter|931"]
+      },
+      {
+        "name": "Varoom",
+        "visibility_rules": ["$dex_all|965", "$dex_starter|965"]
+      },
+      {
+        "name": "Revavroom",
+        "visibility_rules": ["$dex_all|966"]
+      },
+      {
+        "name": "Alola Raichu",
+        "visibility_rules": ["$dex_all|2026"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1035,
+        "y": 124
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Beach",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|8"],
+    "sections": [
+      {
+        "name": "Shellder",
+        "visibility_rules": ["$dex_all|90", "$dex_starter|90"]
+      },
+      {
+        "name": "Cloyster",
+        "visibility_rules": ["$dex_all|91"]
+      },
+      {
+        "name": "Krabby",
+        "visibility_rules": ["$dex_all|98", "$dex_starter|98"]
+      },
+      {
+        "name": "Kingler",
+        "visibility_rules": ["$dex_all|99"]
+      },
+      {
+        "name": "Staryu",
+        "visibility_rules": ["$dex_all|120", "$dex_starter|120"]
+      },
+      {
+        "name": "Starmie",
+        "visibility_rules": ["$dex_all|121"]
+      },
+      {
+        "name": "Corphish",
+        "visibility_rules": ["$dex_all|341", "$dex_starter|341"]
+      },
+      {
+        "name": "Crawdaunt",
+        "visibility_rules": ["$dex_all|342"]
+      },
+      {
+        "name": "Burmy",
+        "visibility_rules": ["$dex_all|412", "$dex_starter|412"]
+      },
+      {
+        "name": "Wormadam",
+        "visibility_rules": ["$dex_all|413"]
+      },
+      {
+        "name": "Mothim",
+        "visibility_rules": ["$dex_all|414"]
+      },
+      {
+        "name": "Cresselia",
+        "visibility_rules": ["$dex_all|488", "$dex_starter|488"]
+      },
+      {
+        "name": "Dwebble",
+        "visibility_rules": ["$dex_all|557", "$dex_starter|557"]
+      },
+      {
+        "name": "Crustle",
+        "visibility_rules": ["$dex_all|558"]
+      },
+      {
+        "name": "Tirtouga",
+        "visibility_rules": ["$dex_all|564", "$dex_starter|564"]
+      },
+      {
+        "name": "Carracosta",
+        "visibility_rules": ["$dex_all|565"]
+      },
+      {
+        "name": "Keldeo",
+        "visibility_rules": ["$dex_all|647", "$dex_starter|647"]
+      },
+      {
+        "name": "Binacle",
+        "visibility_rules": ["$dex_all|688", "$dex_starter|688"]
+      },
+      {
+        "name": "Barbaracle",
+        "visibility_rules": ["$dex_all|689"]
+      },
+      {
+        "name": "Clauncher",
+        "visibility_rules": ["$dex_all|692", "$dex_starter|692"]
+      },
+      {
+        "name": "Clawitzer",
+        "visibility_rules": ["$dex_all|693"]
+      },
+      {
+        "name": "Mareanie",
+        "visibility_rules": ["$dex_all|747", "$dex_starter|747"]
+      },
+      {
+        "name": "Toxapex",
+        "visibility_rules": ["$dex_all|748"]
+      },
+      {
+        "name": "Sandygast",
+        "visibility_rules": ["$dex_all|769", "$dex_starter|769"]
+      },
+      {
+        "name": "Palossand",
+        "visibility_rules": ["$dex_all|770"]
+      },
+      {
+        "name": "Tapu Fini",
+        "visibility_rules": ["$dex_all|788", "$dex_starter|788"]
+      },
+      {
+        "name": "Quaxly",
+        "visibility_rules": ["$dex_all|912", "$dex_starter|912"]
+      },
+      {
+        "name": "Quaxwell",
+        "visibility_rules": ["$dex_all|913"]
+      },
+      {
+        "name": "Quaquaval",
+        "visibility_rules": ["$dex_all|914"]
+      },
+      {
+        "name": "Wiglett",
+        "visibility_rules": ["$dex_all|960", "$dex_starter|960"]
+      },
+      {
+        "name": "Wugtrio",
+        "visibility_rules": ["$dex_all|961"]
+      },
+      {
+        "name": "Tatsugiri",
+        "visibility_rules": ["$dex_all|978", "$dex_starter|978"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1265,
+        "y": 124
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Construction Site",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|26"],
+    "sections": [
+      {
+        "name": "Diglett",
+        "visibility_rules": ["$dex_all|50", "$dex_starter|50"]
+      },
+      {
+        "name": "Dugtrio",
+        "visibility_rules": ["$dex_all|51"]
+      },
+      {
+        "name": "Machop",
+        "visibility_rules": ["$dex_all|66", "$dex_starter|66"]
+      },
+      {
+        "name": "Machoke",
+        "visibility_rules": ["$dex_all|67"]
+      },
+      {
+        "name": "Machamp",
+        "visibility_rules": ["$dex_all|68"]
+      },
+      {
+        "name": "Magnemite",
+        "visibility_rules": ["$dex_all|81", "$dex_starter|81"]
+      },
+      {
+        "name": "Magneton",
+        "visibility_rules": ["$dex_all|82"]
+      },
+      {
+        "name": "Grimer",
+        "visibility_rules": ["$dex_all|88", "$dex_starter|88"]
+      },
+      {
+        "name": "Muk",
+        "visibility_rules": ["$dex_all|89"]
+      },
+      {
+        "name": "Onix",
+        "visibility_rules": ["$dex_all|95", "$dex_starter|95"]
+      },
+      {
+        "name": "Hitmonlee",
+        "visibility_rules": ["$dex_all|106"]
+      },
+      {
+        "name": "Hitmonchan",
+        "visibility_rules": ["$dex_all|107"]
+      },
+      {
+        "name": "Koffing",
+        "visibility_rules": ["$dex_all|109", "$dex_starter|109"]
+      },
+      {
+        "name": "Weezing",
+        "visibility_rules": ["$dex_all|110"]
+      },
+      {
+        "name": "Rhyhorn",
+        "visibility_rules": ["$dex_all|111", "$dex_starter|111"]
+      },
+      {
+        "name": "Rhydon",
+        "visibility_rules": ["$dex_all|112"]
+      },
+      {
+        "name": "Ditto",
+        "visibility_rules": ["$dex_all|132", "$dex_starter|132"]
+      },
+      {
+        "name": "Steelix",
+        "visibility_rules": ["$dex_all|208"]
+      },
+      {
+        "name": "Phanpy",
+        "visibility_rules": ["$dex_all|231", "$dex_starter|231"]
+      },
+      {
+        "name": "Donphan",
+        "visibility_rules": ["$dex_all|232"]
+      },
+      {
+        "name": "Tyrogue",
+        "visibility_rules": ["$dex_all|236", "$dex_starter|236"]
+      },
+      {
+        "name": "Hitmontop",
+        "visibility_rules": ["$dex_all|237"]
+      },
+      {
+        "name": "Makuhita",
+        "visibility_rules": ["$dex_all|296", "$dex_starter|296"]
+      },
+      {
+        "name": "Hariyama",
+        "visibility_rules": ["$dex_all|297"]
+      },
+      {
+        "name": "Nosepass",
+        "visibility_rules": ["$dex_all|299", "$dex_starter|299"]
+      },
+      {
+        "name": "Magnezone",
+        "visibility_rules": ["$dex_all|462"]
+      },
+      {
+        "name": "Rhyperior",
+        "visibility_rules": ["$dex_all|464"]
+      },
+      {
+        "name": "Probopass",
+        "visibility_rules": ["$dex_all|476"]
+      },
+      {
+        "name": "Drilbur",
+        "visibility_rules": ["$dex_all|529", "$dex_starter|529"]
+      },
+      {
+        "name": "Excadrill",
+        "visibility_rules": ["$dex_all|530"]
+      },
+      {
+        "name": "Timburr",
+        "visibility_rules": ["$dex_all|532", "$dex_starter|532"]
+      },
+      {
+        "name": "Gurdurr",
+        "visibility_rules": ["$dex_all|533"]
+      },
+      {
+        "name": "Conkeldurr",
+        "visibility_rules": ["$dex_all|534"]
+      },
+      {
+        "name": "Scraggy",
+        "visibility_rules": ["$dex_all|559", "$dex_starter|559"]
+      },
+      {
+        "name": "Scrafty",
+        "visibility_rules": ["$dex_all|560"]
+      },
+      {
+        "name": "Cobalion",
+        "visibility_rules": ["$dex_all|638", "$dex_starter|638"]
+      },
+      {
+        "name": "Stakataka",
+        "visibility_rules": ["$dex_all|805", "$dex_starter|805"]
+      },
+      {
+        "name": "Perrserker",
+        "visibility_rules": ["$dex_all|863"]
+      },
+      {
+        "name": "Duraludon",
+        "visibility_rules": ["$dex_all|884", "$dex_starter|884"]
+      },
+      {
+        "name": "Archaludon",
+        "visibility_rules": ["$dex_all|1018"]
+      },
+      {
+        "name": "Alola Geodude",
+        "visibility_rules": ["$dex_all|2074", "$dex_starter|2074"]
+      },
+      {
+        "name": "Alola Graveler",
+        "visibility_rules": ["$dex_all|2075"]
+      },
+      {
+        "name": "Alola Golem",
+        "visibility_rules": ["$dex_all|2076"]
+      },
+      {
+        "name": "Galar Meowth",
+        "visibility_rules": ["$dex_all|4052", "$dex_starter|4052"]
+      },
+      {
+        "name": "Galar Weezing",
+        "visibility_rules": ["$dex_all|4110"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 115,
+        "y": 244
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Slum",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|30"],
+    "sections": [
+      {
+        "name": "Rattata",
+        "visibility_rules": ["$dex_all|19", "$dex_starter|19"]
+      },
+      {
+        "name": "Raticate",
+        "visibility_rules": ["$dex_all|20"]
+      },
+      {
+        "name": "Grimer",
+        "visibility_rules": ["$dex_all|88", "$dex_starter|88"]
+      },
+      {
+        "name": "Muk",
+        "visibility_rules": ["$dex_all|89"]
+      },
+      {
+        "name": "Drowzee",
+        "visibility_rules": ["$dex_all|96", "$dex_starter|96"]
+      },
+      {
+        "name": "Hypno",
+        "visibility_rules": ["$dex_all|97"]
+      },
+      {
+        "name": "Koffing",
+        "visibility_rules": ["$dex_all|109", "$dex_starter|109"]
+      },
+      {
+        "name": "Weezing",
+        "visibility_rules": ["$dex_all|110"]
+      },
+      {
+        "name": "Murkrow",
+        "visibility_rules": ["$dex_all|198", "$dex_starter|198"]
+      },
+      {
+        "name": "Sneasel",
+        "visibility_rules": ["$dex_all|215", "$dex_starter|215"]
+      },
+      {
+        "name": "Houndour",
+        "visibility_rules": ["$dex_all|228", "$dex_starter|228"]
+      },
+      {
+        "name": "Houndoom",
+        "visibility_rules": ["$dex_all|229"]
+      },
+      {
+        "name": "Shuppet",
+        "visibility_rules": ["$dex_all|353", "$dex_starter|353"]
+      },
+      {
+        "name": "Banette",
+        "visibility_rules": ["$dex_all|354"]
+      },
+      {
+        "name": "Burmy",
+        "visibility_rules": ["$dex_starter|412"]
+      },
+      {
+        "name": "Wormadam",
+        "visibility_rules": ["$dex_all|413"]
+      },
+      {
+        "name": "Honchkrow",
+        "visibility_rules": ["$dex_all|430"]
+      },
+      {
+        "name": "Glameow",
+        "visibility_rules": ["$dex_all|431", "$dex_starter|431"]
+      },
+      {
+        "name": "Purugly",
+        "visibility_rules": ["$dex_all|432"]
+      },
+      {
+        "name": "Stunky",
+        "visibility_rules": ["$dex_all|434", "$dex_starter|434"]
+      },
+      {
+        "name": "Skuntank",
+        "visibility_rules": ["$dex_all|435"]
+      },
+      {
+        "name": "Weavile",
+        "visibility_rules": ["$dex_all|461"]
+      },
+      {
+        "name": "Scraggy",
+        "visibility_rules": ["$dex_all|559", "$dex_starter|559"]
+      },
+      {
+        "name": "Scrafty",
+        "visibility_rules": ["$dex_all|560"]
+      },
+      {
+        "name": "Trubbish",
+        "visibility_rules": ["$dex_all|568", "$dex_starter|568"]
+      },
+      {
+        "name": "Garbodor",
+        "visibility_rules": ["$dex_all|569"]
+      },
+      {
+        "name": "Gothita",
+        "visibility_rules": ["$dex_all|574", "$dex_starter|574"]
+      },
+      {
+        "name": "Gothorita",
+        "visibility_rules": ["$dex_all|575"]
+      },
+      {
+        "name": "Gothitelle",
+        "visibility_rules": ["$dex_all|576"]
+      },
+      {
+        "name": "Pawniard",
+        "visibility_rules": ["$dex_all|624", "$dex_starter|624"]
+      },
+      {
+        "name": "Bisharp",
+        "visibility_rules": ["$dex_all|625"]
+      },
+      {
+        "name": "Pancham",
+        "visibility_rules": ["$dex_all|674", "$dex_starter|674"]
+      },
+      {
+        "name": "Pangoro",
+        "visibility_rules": ["$dex_all|675"]
+      },
+      {
+        "name": "Guzzlord",
+        "visibility_rules": ["$dex_all|799", "$dex_starter|799"]
+      },
+      {
+        "name": "Toxel",
+        "visibility_rules": ["$dex_all|848", "$dex_starter|848"]
+      },
+      {
+        "name": "Toxtricity",
+        "visibility_rules": ["$dex_all|849"]
+      },
+      {
+        "name": "Obstagoon",
+        "visibility_rules": ["$dex_all|862"]
+      },
+      {
+        "name": "Squawkabilly",
+        "visibility_rules": ["$dex_all|931", "$dex_starter|931"]
+      },
+      {
+        "name": "Maschiff",
+        "visibility_rules": ["$dex_all|942", "$dex_starter|942"]
+      },
+      {
+        "name": "Mabosstiff",
+        "visibility_rules": ["$dex_all|943"]
+      },
+      {
+        "name": "Varoom",
+        "visibility_rules": ["$dex_all|965", "$dex_starter|965"]
+      },
+      {
+        "name": "Revavroom",
+        "visibility_rules": ["$dex_all|966"]
+      },
+      {
+        "name": "Kingambit",
+        "visibility_rules": ["$dex_all|983"]
+      },
+      {
+        "name": "Alola Rattata",
+        "visibility_rules": ["$dex_all|2019", "$dex_starter|2019"]
+      },
+      {
+        "name": "Alola Raticate",
+        "visibility_rules": ["$dex_all|2020"]
+      },
+      {
+        "name": "Galar Weezing",
+        "visibility_rules": ["$dex_all|4110"]
+      },
+      {
+        "name": "Galar Zigzagoon",
+        "visibility_rules": ["$dex_all|4263", "$dex_starter|4263"]
+      },
+      {
+        "name": "Galar Linoone",
+        "visibility_rules": ["$dex_all|4264"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 345,
+        "y": 244
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Swamp",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|7"],
+    "sections": [
+      {
+        "name": "Ekans",
+        "visibility_rules": ["$dex_all|23", "$dex_starter|23"]
+      },
+      {
+        "name": "Arbok",
+        "visibility_rules": ["$dex_all|24"]
+      },
+      {
+        "name": "Psyduck",
+        "visibility_rules": ["$dex_all|54", "$dex_starter|54"]
+      },
+      {
+        "name": "Golduck",
+        "visibility_rules": ["$dex_all|55"]
+      },
+      {
+        "name": "Poliwag",
+        "visibility_rules": ["$dex_all|60", "$dex_starter|60"]
+      },
+      {
+        "name": "Poliwhirl",
+        "visibility_rules": ["$dex_all|61"]
+      },
+      {
+        "name": "Poliwrath",
+        "visibility_rules": ["$dex_all|62"]
+      },
+      {
+        "name": "Totodile",
+        "visibility_rules": ["$dex_all|158", "$dex_starter|158"]
+      },
+      {
+        "name": "Croconaw",
+        "visibility_rules": ["$dex_all|159"]
+      },
+      {
+        "name": "Feraligatr",
+        "visibility_rules": ["$dex_all|160"]
+      },
+      {
+        "name": "Politoed",
+        "visibility_rules": ["$dex_all|186"]
+      },
+      {
+        "name": "Wooper",
+        "visibility_rules": ["$dex_all|194", "$dex_starter|194"]
+      },
+      {
+        "name": "Quagsire",
+        "visibility_rules": ["$dex_all|195"]
+      },
+      {
+        "name": "Mudkip",
+        "visibility_rules": ["$dex_all|258", "$dex_starter|258"]
+      },
+      {
+        "name": "Marshtomp",
+        "visibility_rules": ["$dex_all|259"]
+      },
+      {
+        "name": "Swampert",
+        "visibility_rules": ["$dex_all|260"]
+      },
+      {
+        "name": "Lotad",
+        "visibility_rules": ["$dex_all|270", "$dex_starter|270"]
+      },
+      {
+        "name": "Lombre",
+        "visibility_rules": ["$dex_all|271"]
+      },
+      {
+        "name": "Ludicolo",
+        "visibility_rules": ["$dex_all|272"]
+      },
+      {
+        "name": "Gulpin",
+        "visibility_rules": ["$dex_all|316", "$dex_starter|316"]
+      },
+      {
+        "name": "Swalot",
+        "visibility_rules": ["$dex_all|317"]
+      },
+      {
+        "name": "Barboach",
+        "visibility_rules": ["$dex_all|339", "$dex_starter|339"]
+      },
+      {
+        "name": "Whiscash",
+        "visibility_rules": ["$dex_all|340"]
+      },
+      {
+        "name": "Shellos",
+        "visibility_rules": ["$dex_all|422", "$dex_starter|422"]
+      },
+      {
+        "name": "Gastrodon",
+        "visibility_rules": ["$dex_all|423"]
+      },
+      {
+        "name": "Skorupi",
+        "visibility_rules": ["$dex_all|451", "$dex_starter|451"]
+      },
+      {
+        "name": "Drapion",
+        "visibility_rules": ["$dex_all|452"]
+      },
+      {
+        "name": "Croagunk",
+        "visibility_rules": ["$dex_all|453", "$dex_starter|453"]
+      },
+      {
+        "name": "Toxicroak",
+        "visibility_rules": ["$dex_all|454"]
+      },
+      {
+        "name": "Azelf",
+        "visibility_rules": ["$dex_all|482", "$dex_starter|482"]
+      },
+      {
+        "name": "Tympole",
+        "visibility_rules": ["$dex_all|535", "$dex_starter|535"]
+      },
+      {
+        "name": "Palpitoad",
+        "visibility_rules": ["$dex_all|536"]
+      },
+      {
+        "name": "Seismitoad",
+        "visibility_rules": ["$dex_all|537"]
+      },
+      {
+        "name": "Stunfisk",
+        "visibility_rules": ["$dex_all|618", "$dex_starter|618"]
+      },
+      {
+        "name": "Goomy",
+        "visibility_rules": ["$dex_starter|704"]
+      },
+      {
+        "name": "Mareanie",
+        "visibility_rules": ["$dex_all|747", "$dex_starter|747"]
+      },
+      {
+        "name": "Toxapex",
+        "visibility_rules": ["$dex_all|748"]
+      },
+      {
+        "name": "Poipole",
+        "visibility_rules": ["$dex_all|803", "$dex_starter|803"]
+      },
+      {
+        "name": "Naganadel",
+        "visibility_rules": ["$dex_all|804"]
+      },
+      {
+        "name": "Clodsire",
+        "visibility_rules": ["$dex_all|980"]
+      },
+      {
+        "name": "Galar Slowpoke",
+        "visibility_rules": ["$dex_all|4079", "$dex_starter|4079"]
+      },
+      {
+        "name": "Galar Slowbro",
+        "visibility_rules": ["$dex_all|4080"]
+      },
+      {
+        "name": "Galar Slowking",
+        "visibility_rules": ["$dex_all|4199"]
+      },
+      {
+        "name": "Galar Stunfisk",
+        "visibility_rules": ["$dex_all|4618", "$dex_starter|4618"]
+      },
+      {
+        "name": "Hisui Sliggoo",
+        "visibility_rules": ["$dex_all|6705"]
+      },
+      {
+        "name": "Hisui Goodra",
+        "visibility_rules": ["$dex_all|6706"]
+      },
+      {
+        "name": "Paldea Wooper",
+        "visibility_rules": ["$dex_all|8194", "$dex_starter|8194"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 575,
+        "y": 244
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Tall Grass",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|3"],
+    "sections": [
+      {
+        "name": "Nidoran F",
+        "visibility_rules": ["$dex_all|29", "$dex_starter|29"]
+      },
+      {
+        "name": "Nidorina",
+        "visibility_rules": ["$dex_all|30"]
+      },
+      {
+        "name": "Nidoqueen",
+        "visibility_rules": ["$dex_all|31"]
+      },
+      {
+        "name": "Nidoran M",
+        "visibility_rules": ["$dex_all|32", "$dex_starter|32"]
+      },
+      {
+        "name": "Nidorino",
+        "visibility_rules": ["$dex_all|33"]
+      },
+      {
+        "name": "Nidoking",
+        "visibility_rules": ["$dex_all|34"]
+      },
+      {
+        "name": "Vulpix",
+        "visibility_rules": ["$dex_all|37", "$dex_starter|37"]
+      },
+      {
+        "name": "Ninetales",
+        "visibility_rules": ["$dex_all|38"]
+      },
+      {
+        "name": "Oddish",
+        "visibility_rules": ["$dex_all|43", "$dex_starter|43"]
+      },
+      {
+        "name": "Gloom",
+        "visibility_rules": ["$dex_all|44"]
+      },
+      {
+        "name": "Vileplume",
+        "visibility_rules": ["$dex_all|45"]
+      },
+      {
+        "name": "Paras",
+        "visibility_rules": ["$dex_all|46", "$dex_starter|46"]
+      },
+      {
+        "name": "Parasect",
+        "visibility_rules": ["$dex_all|47"]
+      },
+      {
+        "name": "Venonat",
+        "visibility_rules": ["$dex_all|48", "$dex_starter|48"]
+      },
+      {
+        "name": "Venomoth",
+        "visibility_rules": ["$dex_all|49"]
+      },
+      {
+        "name": "Scyther",
+        "visibility_rules": ["$dex_all|123", "$dex_starter|123"]
+      },
+      {
+        "name": "Pinsir",
+        "visibility_rules": ["$dex_all|127", "$dex_starter|127"]
+      },
+      {
+        "name": "Chikorita",
+        "visibility_rules": ["$dex_all|152", "$dex_starter|152"]
+      },
+      {
+        "name": "Bayleef",
+        "visibility_rules": ["$dex_all|153"]
+      },
+      {
+        "name": "Meganium",
+        "visibility_rules": ["$dex_all|154"]
+      },
+      {
+        "name": "Spinarak",
+        "visibility_rules": ["$dex_all|167", "$dex_starter|167"]
+      },
+      {
+        "name": "Ariados",
+        "visibility_rules": ["$dex_all|168"]
+      },
+      {
+        "name": "Bellossom",
+        "visibility_rules": ["$dex_all|182"]
+      },
+      {
+        "name": "Girafarig",
+        "visibility_rules": ["$dex_all|203", "$dex_starter|203"]
+      },
+      {
+        "name": "Scizor",
+        "visibility_rules": ["$dex_all|212"]
+      },
+      {
+        "name": "Raikou",
+        "visibility_rules": ["$dex_all|243", "$dex_starter|243"]
+      },
+      {
+        "name": "Entei",
+        "visibility_rules": ["$dex_all|244", "$dex_starter|244"]
+      },
+      {
+        "name": "Nincada",
+        "visibility_rules": ["$dex_all|290", "$dex_starter|290"]
+      },
+      {
+        "name": "Ninjask",
+        "visibility_rules": ["$dex_all|291"]
+      },
+      {
+        "name": "Shedinja",
+        "visibility_rules": ["$dex_all|292"]
+      },
+      {
+        "name": "Zangoose",
+        "visibility_rules": ["$dex_all|335", "$dex_starter|335"]
+      },
+      {
+        "name": "Seviper",
+        "visibility_rules": ["$dex_all|336", "$dex_starter|336"]
+      },
+      {
+        "name": "Kecleon",
+        "visibility_rules": ["$dex_all|352", "$dex_starter|352"]
+      },
+      {
+        "name": "Tropius",
+        "visibility_rules": ["$dex_all|357", "$dex_starter|357"]
+      },
+      {
+        "name": "Kricketot",
+        "visibility_rules": ["$dex_all|401", "$dex_starter|401"]
+      },
+      {
+        "name": "Kricketune",
+        "visibility_rules": ["$dex_all|402"]
+      },
+      {
+        "name": "Audino",
+        "visibility_rules": ["$dex_all|531", "$dex_starter|531"]
+      },
+      {
+        "name": "Pawniard",
+        "visibility_rules": ["$dex_all|624", "$dex_starter|624"]
+      },
+      {
+        "name": "Bisharp",
+        "visibility_rules": ["$dex_all|625"]
+      },
+      {
+        "name": "Scatterbug",
+        "visibility_rules": ["$dex_all|664", "$dex_starter|664"]
+      },
+      {
+        "name": "Spewpa",
+        "visibility_rules": ["$dex_all|665"]
+      },
+      {
+        "name": "Vivillon",
+        "visibility_rules": ["$dex_all|666"]
+      },
+      {
+        "name": "Fomantis",
+        "visibility_rules": ["$dex_all|753", "$dex_starter|753"]
+      },
+      {
+        "name": "Lurantis",
+        "visibility_rules": ["$dex_all|754"]
+      },
+      {
+        "name": "Bounsweet",
+        "visibility_rules": ["$dex_all|761", "$dex_starter|761"]
+      },
+      {
+        "name": "Steenee",
+        "visibility_rules": ["$dex_all|762"]
+      },
+      {
+        "name": "Tsareena",
+        "visibility_rules": ["$dex_all|763"]
+      },
+      {
+        "name": "Kleavor",
+        "visibility_rules": ["$dex_all|900"]
+      },
+      {
+        "name": "Nymble",
+        "visibility_rules": ["$dex_all|919", "$dex_starter|919"]
+      },
+      {
+        "name": "Lokix",
+        "visibility_rules": ["$dex_all|920"]
+      },
+      {
+        "name": "Farigiraf",
+        "visibility_rules": ["$dex_all|981"]
+      },
+      {
+        "name": "Kingambit",
+        "visibility_rules": ["$dex_all|983"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 805,
+        "y": 244
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Cave",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|13"],
+    "sections": [
+      {
+        "name": "Zubat",
+        "visibility_rules": ["$dex_all|41", "$dex_starter|41"]
+      },
+      {
+        "name": "Golbat",
+        "visibility_rules": ["$dex_all|42"]
+      },
+      {
+        "name": "Paras",
+        "visibility_rules": ["$dex_all|46", "$dex_starter|46"]
+      },
+      {
+        "name": "Parasect",
+        "visibility_rules": ["$dex_all|47"]
+      },
+      {
+        "name": "Geodude",
+        "visibility_rules": ["$dex_all|74", "$dex_starter|74"]
+      },
+      {
+        "name": "Graveler",
+        "visibility_rules": ["$dex_all|75"]
+      },
+      {
+        "name": "Golem",
+        "visibility_rules": ["$dex_all|76"]
+      },
+      {
+        "name": "Onix",
+        "visibility_rules": ["$dex_all|95", "$dex_starter|95"]
+      },
+      {
+        "name": "Crobat",
+        "visibility_rules": ["$dex_all|169"]
+      },
+      {
+        "name": "Steelix",
+        "visibility_rules": ["$dex_all|208"]
+      },
+      {
+        "name": "Shuckle",
+        "visibility_rules": ["$dex_all|213", "$dex_starter|213"]
+      },
+      {
+        "name": "Teddiursa",
+        "visibility_rules": ["$dex_all|216", "$dex_starter|216"]
+      },
+      {
+        "name": "Ursaring",
+        "visibility_rules": ["$dex_all|217"]
+      },
+      {
+        "name": "Whismur",
+        "visibility_rules": ["$dex_all|293", "$dex_starter|293"]
+      },
+      {
+        "name": "Loudred",
+        "visibility_rules": ["$dex_all|294"]
+      },
+      {
+        "name": "Exploud",
+        "visibility_rules": ["$dex_all|295"]
+      },
+      {
+        "name": "Makuhita",
+        "visibility_rules": ["$dex_all|296", "$dex_starter|296"]
+      },
+      {
+        "name": "Hariyama",
+        "visibility_rules": ["$dex_all|297"]
+      },
+      {
+        "name": "Nosepass",
+        "visibility_rules": ["$dex_all|299", "$dex_starter|299"]
+      },
+      {
+        "name": "Probopass",
+        "visibility_rules": ["$dex_all|476"]
+      },
+      {
+        "name": "Uxie",
+        "visibility_rules": ["$dex_all|480", "$dex_starter|480"]
+      },
+      {
+        "name": "Roggenrola",
+        "visibility_rules": ["$dex_all|524", "$dex_starter|524"]
+      },
+      {
+        "name": "Boldore",
+        "visibility_rules": ["$dex_all|525"]
+      },
+      {
+        "name": "Gigalith",
+        "visibility_rules": ["$dex_all|526"]
+      },
+      {
+        "name": "Woobat",
+        "visibility_rules": ["$dex_all|527", "$dex_starter|527"]
+      },
+      {
+        "name": "Swoobat",
+        "visibility_rules": ["$dex_all|528"]
+      },
+      {
+        "name": "Ferroseed",
+        "visibility_rules": ["$dex_all|597", "$dex_starter|597"]
+      },
+      {
+        "name": "Ferrothorn",
+        "visibility_rules": ["$dex_all|598"]
+      },
+      {
+        "name": "Bunnelby",
+        "visibility_rules": ["$dex_all|659", "$dex_starter|659"]
+      },
+      {
+        "name": "Diggersby",
+        "visibility_rules": ["$dex_all|660"]
+      },
+      {
+        "name": "Carbink",
+        "visibility_rules": ["$dex_all|703", "$dex_starter|703"]
+      },
+      {
+        "name": "Noibat",
+        "visibility_rules": ["$dex_all|714", "$dex_starter|714"]
+      },
+      {
+        "name": "Noivern",
+        "visibility_rules": ["$dex_all|715"]
+      },
+      {
+        "name": "Rockruff",
+        "visibility_rules": ["$dex_all|744", "$dex_starter|744"]
+      },
+      {
+        "name": "Lycanroc",
+        "visibility_rules": ["$dex_all|745"]
+      },
+      {
+        "name": "Wimpod",
+        "visibility_rules": ["$dex_all|767", "$dex_starter|767"]
+      },
+      {
+        "name": "Golisopod",
+        "visibility_rules": ["$dex_all|768"]
+      },
+      {
+        "name": "Ursaluna",
+        "visibility_rules": ["$dex_all|901"]
+      },
+      {
+        "name": "Nacli",
+        "visibility_rules": ["$dex_all|932", "$dex_starter|932"]
+      },
+      {
+        "name": "Naclstack",
+        "visibility_rules": ["$dex_all|933"]
+      },
+      {
+        "name": "Garganacl",
+        "visibility_rules": ["$dex_all|934"]
+      },
+      {
+        "name": "Glimmet",
+        "visibility_rules": ["$dex_all|969", "$dex_starter|969"]
+      },
+      {
+        "name": "Glimmora",
+        "visibility_rules": ["$dex_all|970"]
+      },
+      {
+        "name": "Terapagos",
+        "visibility_rules": ["$dex_all|1024", "$dex_starter|1024"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1035,
+        "y": 244
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Dojo",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|20"],
+    "sections": [
+      {
+        "name": "Mankey",
+        "visibility_rules": ["$dex_all|56", "$dex_starter|56"]
+      },
+      {
+        "name": "Primeape",
+        "visibility_rules": ["$dex_all|57"]
+      },
+      {
+        "name": "Hitmonlee",
+        "visibility_rules": ["$dex_all|106"]
+      },
+      {
+        "name": "Hitmonchan",
+        "visibility_rules": ["$dex_all|107"]
+      },
+      {
+        "name": "Tyrogue",
+        "visibility_rules": ["$dex_starter|236"]
+      },
+      {
+        "name": "Hitmontop",
+        "visibility_rules": ["$dex_all|237"]
+      },
+      {
+        "name": "Ralts",
+        "visibility_rules": ["$dex_starter|280"]
+      },
+      {
+        "name": "Makuhita",
+        "visibility_rules": ["$dex_all|296", "$dex_starter|296"]
+      },
+      {
+        "name": "Hariyama",
+        "visibility_rules": ["$dex_all|297"]
+      },
+      {
+        "name": "Meditite",
+        "visibility_rules": ["$dex_all|307", "$dex_starter|307"]
+      },
+      {
+        "name": "Medicham",
+        "visibility_rules": ["$dex_all|308"]
+      },
+      {
+        "name": "Riolu",
+        "visibility_rules": ["$dex_starter|447"]
+      },
+      {
+        "name": "Lucario",
+        "visibility_rules": ["$dex_all|448"]
+      },
+      {
+        "name": "Croagunk",
+        "visibility_rules": ["$dex_all|453", "$dex_starter|453"]
+      },
+      {
+        "name": "Toxicroak",
+        "visibility_rules": ["$dex_all|454"]
+      },
+      {
+        "name": "Gallade",
+        "visibility_rules": ["$dex_all|475"]
+      },
+      {
+        "name": "Throh",
+        "visibility_rules": ["$dex_all|538", "$dex_starter|538"]
+      },
+      {
+        "name": "Sawk",
+        "visibility_rules": ["$dex_all|539", "$dex_starter|539"]
+      },
+      {
+        "name": "Scraggy",
+        "visibility_rules": ["$dex_all|559", "$dex_starter|559"]
+      },
+      {
+        "name": "Scrafty",
+        "visibility_rules": ["$dex_all|560"]
+      },
+      {
+        "name": "Mienfoo",
+        "visibility_rules": ["$dex_all|619", "$dex_starter|619"]
+      },
+      {
+        "name": "Mienshao",
+        "visibility_rules": ["$dex_all|620"]
+      },
+      {
+        "name": "Terrakion",
+        "visibility_rules": ["$dex_all|639", "$dex_starter|639"]
+      },
+      {
+        "name": "Pancham",
+        "visibility_rules": ["$dex_all|674", "$dex_starter|674"]
+      },
+      {
+        "name": "Pangoro",
+        "visibility_rules": ["$dex_all|675"]
+      },
+      {
+        "name": "Rowlet",
+        "visibility_rules": ["$dex_starter|722"]
+      },
+      {
+        "name": "Stufful",
+        "visibility_rules": ["$dex_all|759", "$dex_starter|759"]
+      },
+      {
+        "name": "Bewear",
+        "visibility_rules": ["$dex_all|760"]
+      },
+      {
+        "name": "Clobbopus",
+        "visibility_rules": ["$dex_all|852", "$dex_starter|852"]
+      },
+      {
+        "name": "Grapploct",
+        "visibility_rules": ["$dex_all|853"]
+      },
+      {
+        "name": "Sirfetchd",
+        "visibility_rules": ["$dex_all|865"]
+      },
+      {
+        "name": "Zamazenta",
+        "visibility_rules": ["$dex_all|889", "$dex_starter|889"]
+      },
+      {
+        "name": "Kubfu",
+        "visibility_rules": ["$dex_all|891", "$dex_starter|891"]
+      },
+      {
+        "name": "Urshifu",
+        "visibility_rules": ["$dex_all|892"]
+      },
+      {
+        "name": "Annihilape",
+        "visibility_rules": ["$dex_all|979"]
+      },
+      {
+        "name": "Galar Farfetchd",
+        "visibility_rules": ["$dex_all|4083", "$dex_starter|4083"]
+      },
+      {
+        "name": "Galar Zapdos",
+        "visibility_rules": ["$dex_all|4145", "$dex_starter|4145"]
+      },
+      {
+        "name": "Hisui Decidueye",
+        "visibility_rules": ["$dex_all|6724"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1265,
+        "y": 244
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Forest",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|5"],
+    "sections": [
+      {
+        "name": "Caterpie",
+        "visibility_rules": ["$dex_starter|10"]
+      },
+      {
+        "name": "Butterfree",
+        "visibility_rules": ["$dex_all|12"]
+      },
+      {
+        "name": "Weedle",
+        "visibility_rules": ["$dex_starter|13"]
+      },
+      {
+        "name": "Beedrill",
+        "visibility_rules": ["$dex_all|15"]
+      },
+      {
+        "name": "Ekans",
+        "visibility_rules": ["$dex_all|23", "$dex_starter|23"]
+      },
+      {
+        "name": "Arbok",
+        "visibility_rules": ["$dex_all|24"]
+      },
+      {
+        "name": "Venonat",
+        "visibility_rules": ["$dex_all|48", "$dex_starter|48"]
+      },
+      {
+        "name": "Venomoth",
+        "visibility_rules": ["$dex_all|49"]
+      },
+      {
+        "name": "Bellsprout",
+        "visibility_rules": ["$dex_all|69", "$dex_starter|69"]
+      },
+      {
+        "name": "Weepinbell",
+        "visibility_rules": ["$dex_all|70"]
+      },
+      {
+        "name": "Victreebel",
+        "visibility_rules": ["$dex_all|71"]
+      },
+      {
+        "name": "Exeggcute",
+        "visibility_rules": ["$dex_all|102", "$dex_starter|102"]
+      },
+      {
+        "name": "Exeggutor",
+        "visibility_rules": ["$dex_all|103"]
+      },
+      {
+        "name": "Scyther",
+        "visibility_rules": ["$dex_all|123", "$dex_starter|123"]
+      },
+      {
+        "name": "Hoothoot",
+        "visibility_rules": ["$dex_all|163", "$dex_starter|163"]
+      },
+      {
+        "name": "Noctowl",
+        "visibility_rules": ["$dex_all|164"]
+      },
+      {
+        "name": "Spinarak",
+        "visibility_rules": ["$dex_all|167", "$dex_starter|167"]
+      },
+      {
+        "name": "Ariados",
+        "visibility_rules": ["$dex_all|168"]
+      },
+      {
+        "name": "Pineco",
+        "visibility_rules": ["$dex_all|204", "$dex_starter|204"]
+      },
+      {
+        "name": "Forretress",
+        "visibility_rules": ["$dex_all|205"]
+      },
+      {
+        "name": "Scizor",
+        "visibility_rules": ["$dex_all|212"]
+      },
+      {
+        "name": "Heracross",
+        "visibility_rules": ["$dex_all|214", "$dex_starter|214"]
+      },
+      {
+        "name": "Teddiursa",
+        "visibility_rules": ["$dex_all|216", "$dex_starter|216"]
+      },
+      {
+        "name": "Ursaring",
+        "visibility_rules": ["$dex_all|217"]
+      },
+      {
+        "name": "Stantler",
+        "visibility_rules": ["$dex_all|234", "$dex_starter|234"]
+      },
+      {
+        "name": "Treecko",
+        "visibility_rules": ["$dex_all|252", "$dex_starter|252"]
+      },
+      {
+        "name": "Grovyle",
+        "visibility_rules": ["$dex_all|253"]
+      },
+      {
+        "name": "Sceptile",
+        "visibility_rules": ["$dex_all|254"]
+      },
+      {
+        "name": "Wurmple",
+        "visibility_rules": ["$dex_starter|265"]
+      },
+      {
+        "name": "Beautifly",
+        "visibility_rules": ["$dex_all|267"]
+      },
+      {
+        "name": "Dustox",
+        "visibility_rules": ["$dex_all|269"]
+      },
+      {
+        "name": "Seedot",
+        "visibility_rules": ["$dex_all|273", "$dex_starter|273"]
+      },
+      {
+        "name": "Nuzleaf",
+        "visibility_rules": ["$dex_all|274"]
+      },
+      {
+        "name": "Shiftry",
+        "visibility_rules": ["$dex_all|275"]
+      },
+      {
+        "name": "Shroomish",
+        "visibility_rules": ["$dex_all|285", "$dex_starter|285"]
+      },
+      {
+        "name": "Breloom",
+        "visibility_rules": ["$dex_all|286"]
+      },
+      {
+        "name": "Roselia",
+        "visibility_rules": ["$dex_all|315"]
+      },
+      {
+        "name": "Tropius",
+        "visibility_rules": ["$dex_all|357", "$dex_starter|357"]
+      },
+      {
+        "name": "Budew",
+        "visibility_rules": ["$dex_starter|406"]
+      },
+      {
+        "name": "Roserade",
+        "visibility_rules": ["$dex_all|407"]
+      },
+      {
+        "name": "Burmy",
+        "visibility_rules": ["$dex_all|412", "$dex_starter|412"]
+      },
+      {
+        "name": "Wormadam",
+        "visibility_rules": ["$dex_all|413"]
+      },
+      {
+        "name": "Mothim",
+        "visibility_rules": ["$dex_all|414"]
+      },
+      {
+        "name": "Combee",
+        "visibility_rules": ["$dex_all|415", "$dex_starter|415"]
+      },
+      {
+        "name": "Vespiquen",
+        "visibility_rules": ["$dex_all|416"]
+      },
+      {
+        "name": "Pansage",
+        "visibility_rules": ["$dex_all|511", "$dex_starter|511"]
+      },
+      {
+        "name": "Simisage",
+        "visibility_rules": ["$dex_all|512"]
+      },
+      {
+        "name": "Sewaddle",
+        "visibility_rules": ["$dex_all|540", "$dex_starter|540"]
+      },
+      {
+        "name": "Swadloon",
+        "visibility_rules": ["$dex_all|541"]
+      },
+      {
+        "name": "Leavanny",
+        "visibility_rules": ["$dex_all|542"]
+      },
+      {
+        "name": "Venipede",
+        "visibility_rules": ["$dex_all|543", "$dex_starter|543"]
+      },
+      {
+        "name": "Whirlipede",
+        "visibility_rules": ["$dex_all|544"]
+      },
+      {
+        "name": "Scolipede",
+        "visibility_rules": ["$dex_all|545"]
+      },
+      {
+        "name": "Petilil",
+        "visibility_rules": ["$dex_all|548", "$dex_starter|548"]
+      },
+      {
+        "name": "Lilligant",
+        "visibility_rules": ["$dex_all|549"]
+      },
+      {
+        "name": "Deerling",
+        "visibility_rules": ["$dex_all|585", "$dex_starter|585"]
+      },
+      {
+        "name": "Sawsbuck",
+        "visibility_rules": ["$dex_all|586"]
+      },
+      {
+        "name": "Karrablast",
+        "visibility_rules": ["$dex_all|588", "$dex_starter|588"]
+      },
+      {
+        "name": "Escavalier",
+        "visibility_rules": ["$dex_all|589"]
+      },
+      {
+        "name": "Shelmet",
+        "visibility_rules": ["$dex_all|616", "$dex_starter|616"]
+      },
+      {
+        "name": "Accelgor",
+        "visibility_rules": ["$dex_all|617"]
+      },
+      {
+        "name": "Durant",
+        "visibility_rules": ["$dex_all|632", "$dex_starter|632"]
+      },
+      {
+        "name": "Chespin",
+        "visibility_rules": ["$dex_all|650", "$dex_starter|650"]
+      },
+      {
+        "name": "Quilladin",
+        "visibility_rules": ["$dex_all|651"]
+      },
+      {
+        "name": "Chesnaught",
+        "visibility_rules": ["$dex_all|652"]
+      },
+      {
+        "name": "Scatterbug",
+        "visibility_rules": ["$dex_starter|664"]
+      },
+      {
+        "name": "Vivillon",
+        "visibility_rules": ["$dex_all|666"]
+      },
+      {
+        "name": "Rowlet",
+        "visibility_rules": ["$dex_all|722", "$dex_starter|722"]
+      },
+      {
+        "name": "Dartrix",
+        "visibility_rules": ["$dex_all|723"]
+      },
+      {
+        "name": "Decidueye",
+        "visibility_rules": ["$dex_all|724"]
+      },
+      {
+        "name": "Rockruff",
+        "visibility_rules": ["$dex_all|744", "$dex_starter|744"]
+      },
+      {
+        "name": "Lycanroc",
+        "visibility_rules": ["$dex_all|745"]
+      },
+      {
+        "name": "Kartana",
+        "visibility_rules": ["$dex_all|798", "$dex_starter|798"]
+      },
+      {
+        "name": "Blipbug",
+        "visibility_rules": ["$dex_starter|824"]
+      },
+      {
+        "name": "Dottler",
+        "visibility_rules": ["$dex_all|825"]
+      },
+      {
+        "name": "Orbeetle",
+        "visibility_rules": ["$dex_all|826"]
+      },
+      {
+        "name": "Calyrex",
+        "visibility_rules": ["$dex_all|898", "$dex_starter|898"]
+      },
+      {
+        "name": "Wyrdeer",
+        "visibility_rules": ["$dex_all|899"]
+      },
+      {
+        "name": "Kleavor",
+        "visibility_rules": ["$dex_all|900"]
+      },
+      {
+        "name": "Ursaluna",
+        "visibility_rules": ["$dex_all|901"]
+      },
+      {
+        "name": "Tarountula",
+        "visibility_rules": ["$dex_all|917", "$dex_starter|917"]
+      },
+      {
+        "name": "Spidops",
+        "visibility_rules": ["$dex_all|918"]
+      },
+      {
+        "name": "Nymble",
+        "visibility_rules": ["$dex_all|919", "$dex_starter|919"]
+      },
+      {
+        "name": "Lokix",
+        "visibility_rules": ["$dex_all|920"]
+      },
+      {
+        "name": "Squawkabilly",
+        "visibility_rules": ["$dex_all|931", "$dex_starter|931"]
+      },
+      {
+        "name": "Shroodle",
+        "visibility_rules": ["$dex_all|944", "$dex_starter|944"]
+      },
+      {
+        "name": "Grafaiai",
+        "visibility_rules": ["$dex_all|945"]
+      },
+      {
+        "name": "Toedscool",
+        "visibility_rules": ["$dex_all|948", "$dex_starter|948"]
+      },
+      {
+        "name": "Toedscruel",
+        "visibility_rules": ["$dex_all|949"]
+      },
+      {
+        "name": "Wo Chien",
+        "visibility_rules": ["$dex_all|1001", "$dex_starter|1001"]
+      },
+      {
+        "name": "Alola Exeggutor",
+        "visibility_rules": ["$dex_all|2103"]
+      },
+      {
+        "name": "Hisui Lilligant",
+        "visibility_rules": ["$dex_all|6549"]
+      },
+      {
+        "name": "Hisui Decidueye",
+        "visibility_rules": ["$dex_all|6724"]
+      },
+      {
+        "name": "Bloodmoon Ursaluna",
+        "visibility_rules": ["$dex_all|8901", "$dex_starter|8901"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 115,
+        "y": 364
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Graveyard",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|19"],
+    "sections": [
+      {
+        "name": "Gastly",
+        "visibility_rules": ["$dex_all|92", "$dex_starter|92"]
+      },
+      {
+        "name": "Haunter",
+        "visibility_rules": ["$dex_all|93"]
+      },
+      {
+        "name": "Gengar",
+        "visibility_rules": ["$dex_all|94"]
+      },
+      {
+        "name": "Cubone",
+        "visibility_rules": ["$dex_all|104", "$dex_starter|104"]
+      },
+      {
+        "name": "Marowak",
+        "visibility_rules": ["$dex_all|105"]
+      },
+      {
+        "name": "Cyndaquil",
+        "visibility_rules": ["$dex_starter|155"]
+      },
+      {
+        "name": "Misdreavus",
+        "visibility_rules": ["$dex_all|200", "$dex_starter|200"]
+      },
+      {
+        "name": "Shuppet",
+        "visibility_rules": ["$dex_all|353", "$dex_starter|353"]
+      },
+      {
+        "name": "Banette",
+        "visibility_rules": ["$dex_all|354"]
+      },
+      {
+        "name": "Duskull",
+        "visibility_rules": ["$dex_all|355", "$dex_starter|355"]
+      },
+      {
+        "name": "Dusclops",
+        "visibility_rules": ["$dex_all|356"]
+      },
+      {
+        "name": "Drifloon",
+        "visibility_rules": ["$dex_all|425", "$dex_starter|425"]
+      },
+      {
+        "name": "Drifblim",
+        "visibility_rules": ["$dex_all|426"]
+      },
+      {
+        "name": "Mismagius",
+        "visibility_rules": ["$dex_all|429"]
+      },
+      {
+        "name": "Spiritomb",
+        "visibility_rules": ["$dex_all|442", "$dex_starter|442"]
+      },
+      {
+        "name": "Dusknoir",
+        "visibility_rules": ["$dex_all|477"]
+      },
+      {
+        "name": "Giratina",
+        "visibility_rules": ["$dex_all|487", "$dex_starter|487"]
+      },
+      {
+        "name": "Yamask",
+        "visibility_rules": ["$dex_all|562", "$dex_starter|562"]
+      },
+      {
+        "name": "Cofagrigus",
+        "visibility_rules": ["$dex_all|563"]
+      },
+      {
+        "name": "Litwick",
+        "visibility_rules": ["$dex_all|607", "$dex_starter|607"]
+      },
+      {
+        "name": "Lampent",
+        "visibility_rules": ["$dex_all|608"]
+      },
+      {
+        "name": "Chandelure",
+        "visibility_rules": ["$dex_all|609"]
+      },
+      {
+        "name": "Phantump",
+        "visibility_rules": ["$dex_all|708", "$dex_starter|708"]
+      },
+      {
+        "name": "Trevenant",
+        "visibility_rules": ["$dex_all|709"]
+      },
+      {
+        "name": "Pumpkaboo",
+        "visibility_rules": ["$dex_all|710", "$dex_starter|710"]
+      },
+      {
+        "name": "Gourgeist",
+        "visibility_rules": ["$dex_all|711"]
+      },
+      {
+        "name": "Mimikyu",
+        "visibility_rules": ["$dex_all|778", "$dex_starter|778"]
+      },
+      {
+        "name": "Marshadow",
+        "visibility_rules": ["$dex_all|802", "$dex_starter|802"]
+      },
+      {
+        "name": "Sinistea",
+        "visibility_rules": ["$dex_all|854", "$dex_starter|854"]
+      },
+      {
+        "name": "Polteageist",
+        "visibility_rules": ["$dex_all|855"]
+      },
+      {
+        "name": "Spectrier",
+        "visibility_rules": ["$dex_all|897", "$dex_starter|897"]
+      },
+      {
+        "name": "Fuecoco",
+        "visibility_rules": ["$dex_all|909", "$dex_starter|909"]
+      },
+      {
+        "name": "Crocalor",
+        "visibility_rules": ["$dex_all|910"]
+      },
+      {
+        "name": "Skeledirge",
+        "visibility_rules": ["$dex_all|911"]
+      },
+      {
+        "name": "Charcadet",
+        "visibility_rules": ["$dex_starter|935"]
+      },
+      {
+        "name": "Ceruledge",
+        "visibility_rules": ["$dex_all|937"]
+      },
+      {
+        "name": "Greavard",
+        "visibility_rules": ["$dex_all|971", "$dex_starter|971"]
+      },
+      {
+        "name": "Houndstone",
+        "visibility_rules": ["$dex_all|972"]
+      },
+      {
+        "name": "Alola Marowak",
+        "visibility_rules": ["$dex_all|2105"]
+      },
+      {
+        "name": "Hisui Typhlosion",
+        "visibility_rules": ["$dex_all|6157"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 345,
+        "y": 364
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Island",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|40"],
+    "sections": [
+      {
+        "name": "Exeggcute",
+        "visibility_rules": ["$dex_starter|102"]
+      },
+      {
+        "name": "Cubone",
+        "visibility_rules": ["$dex_starter|104"]
+      },
+      {
+        "name": "Pichu",
+        "visibility_rules": ["$dex_starter|172"]
+      },
+      {
+        "name": "Oricorio",
+        "visibility_rules": ["$dex_all|741", "$dex_starter|741"]
+      },
+      {
+        "name": "Bruxish",
+        "visibility_rules": ["$dex_all|779", "$dex_starter|779"]
+      },
+      {
+        "name": "Blacephalon",
+        "visibility_rules": ["$dex_all|806", "$dex_starter|806"]
+      },
+      {
+        "name": "Alola Rattata",
+        "visibility_rules": ["$dex_all|2019", "$dex_starter|2019"]
+      },
+      {
+        "name": "Alola Raticate",
+        "visibility_rules": ["$dex_all|2020"]
+      },
+      {
+        "name": "Alola Raichu",
+        "visibility_rules": ["$dex_all|2026"]
+      },
+      {
+        "name": "Alola Sandshrew",
+        "visibility_rules": ["$dex_all|2027", "$dex_starter|2027"]
+      },
+      {
+        "name": "Alola Sandslash",
+        "visibility_rules": ["$dex_all|2028"]
+      },
+      {
+        "name": "Alola Vulpix",
+        "visibility_rules": ["$dex_all|2037", "$dex_starter|2037"]
+      },
+      {
+        "name": "Alola Ninetales",
+        "visibility_rules": ["$dex_all|2038"]
+      },
+      {
+        "name": "Alola Diglett",
+        "visibility_rules": ["$dex_all|2050", "$dex_starter|2050"]
+      },
+      {
+        "name": "Alola Dugtrio",
+        "visibility_rules": ["$dex_all|2051"]
+      },
+      {
+        "name": "Alola Meowth",
+        "visibility_rules": ["$dex_all|2052", "$dex_starter|2052"]
+      },
+      {
+        "name": "Alola Persian",
+        "visibility_rules": ["$dex_all|2053"]
+      },
+      {
+        "name": "Alola Geodude",
+        "visibility_rules": ["$dex_all|2074", "$dex_starter|2074"]
+      },
+      {
+        "name": "Alola Graveler",
+        "visibility_rules": ["$dex_all|2075"]
+      },
+      {
+        "name": "Alola Golem",
+        "visibility_rules": ["$dex_all|2076"]
+      },
+      {
+        "name": "Alola Grimer",
+        "visibility_rules": ["$dex_all|2088", "$dex_starter|2088"]
+      },
+      {
+        "name": "Alola Muk",
+        "visibility_rules": ["$dex_all|2089"]
+      },
+      {
+        "name": "Alola Exeggutor",
+        "visibility_rules": ["$dex_all|2103"]
+      },
+      {
+        "name": "Alola Marowak",
+        "visibility_rules": ["$dex_all|2105"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 575,
+        "y": 364
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Power Plant",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|17"],
+    "sections": [
+      {
+        "name": "Pikachu",
+        "visibility_rules": ["$dex_all|25"]
+      },
+      {
+        "name": "Raichu",
+        "visibility_rules": ["$dex_all|26"]
+      },
+      {
+        "name": "Magnemite",
+        "visibility_rules": ["$dex_all|81", "$dex_starter|81"]
+      },
+      {
+        "name": "Magneton",
+        "visibility_rules": ["$dex_all|82"]
+      },
+      {
+        "name": "Voltorb",
+        "visibility_rules": ["$dex_all|100", "$dex_starter|100"]
+      },
+      {
+        "name": "Electrode",
+        "visibility_rules": ["$dex_all|101"]
+      },
+      {
+        "name": "Electabuzz",
+        "visibility_rules": ["$dex_all|125"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_starter|133"]
+      },
+      {
+        "name": "Jolteon",
+        "visibility_rules": ["$dex_all|135"]
+      },
+      {
+        "name": "Zapdos",
+        "visibility_rules": ["$dex_all|145", "$dex_starter|145"]
+      },
+      {
+        "name": "Pichu",
+        "visibility_rules": ["$dex_starter|172"]
+      },
+      {
+        "name": "Mareep",
+        "visibility_rules": ["$dex_all|179", "$dex_starter|179"]
+      },
+      {
+        "name": "Flaaffy",
+        "visibility_rules": ["$dex_all|180"]
+      },
+      {
+        "name": "Ampharos",
+        "visibility_rules": ["$dex_all|181"]
+      },
+      {
+        "name": "Elekid",
+        "visibility_rules": ["$dex_starter|239"]
+      },
+      {
+        "name": "Electrike",
+        "visibility_rules": ["$dex_all|309", "$dex_starter|309"]
+      },
+      {
+        "name": "Manectric",
+        "visibility_rules": ["$dex_all|310"]
+      },
+      {
+        "name": "Plusle",
+        "visibility_rules": ["$dex_all|311", "$dex_starter|311"]
+      },
+      {
+        "name": "Minun",
+        "visibility_rules": ["$dex_all|312", "$dex_starter|312"]
+      },
+      {
+        "name": "Shinx",
+        "visibility_rules": ["$dex_all|403", "$dex_starter|403"]
+      },
+      {
+        "name": "Luxio",
+        "visibility_rules": ["$dex_all|404"]
+      },
+      {
+        "name": "Luxray",
+        "visibility_rules": ["$dex_all|405"]
+      },
+      {
+        "name": "Pachirisu",
+        "visibility_rules": ["$dex_all|417", "$dex_starter|417"]
+      },
+      {
+        "name": "Magnezone",
+        "visibility_rules": ["$dex_all|462"]
+      },
+      {
+        "name": "Electivire",
+        "visibility_rules": ["$dex_all|466"]
+      },
+      {
+        "name": "Rotom",
+        "visibility_rules": ["$dex_all|479", "$dex_starter|479"]
+      },
+      {
+        "name": "Emolga",
+        "visibility_rules": ["$dex_all|587", "$dex_starter|587"]
+      },
+      {
+        "name": "Thundurus",
+        "visibility_rules": ["$dex_all|642", "$dex_starter|642"]
+      },
+      {
+        "name": "Zekrom",
+        "visibility_rules": ["$dex_all|644", "$dex_starter|644"]
+      },
+      {
+        "name": "Dedenne",
+        "visibility_rules": ["$dex_all|702", "$dex_starter|702"]
+      },
+      {
+        "name": "Grubbin",
+        "visibility_rules": ["$dex_all|736", "$dex_starter|736"]
+      },
+      {
+        "name": "Charjabug",
+        "visibility_rules": ["$dex_all|737"]
+      },
+      {
+        "name": "Vikavolt",
+        "visibility_rules": ["$dex_all|738"]
+      },
+      {
+        "name": "Togedemaru",
+        "visibility_rules": ["$dex_all|777", "$dex_starter|777"]
+      },
+      {
+        "name": "Xurkitree",
+        "visibility_rules": ["$dex_all|796", "$dex_starter|796"]
+      },
+      {
+        "name": "Zeraora",
+        "visibility_rules": ["$dex_all|807", "$dex_starter|807"]
+      },
+      {
+        "name": "Regieleki",
+        "visibility_rules": ["$dex_all|894", "$dex_starter|894"]
+      },
+      {
+        "name": "Pawmi",
+        "visibility_rules": ["$dex_all|921", "$dex_starter|921"]
+      },
+      {
+        "name": "Pawmo",
+        "visibility_rules": ["$dex_all|922"]
+      },
+      {
+        "name": "Pawmot",
+        "visibility_rules": ["$dex_all|923"]
+      },
+      {
+        "name": "Tadbulb",
+        "visibility_rules": ["$dex_all|938", "$dex_starter|938"]
+      },
+      {
+        "name": "Bellibolt",
+        "visibility_rules": ["$dex_all|939"]
+      },
+      {
+        "name": "Alola Raichu",
+        "visibility_rules": ["$dex_all|2026"]
+      },
+      {
+        "name": "Hisui Voltorb",
+        "visibility_rules": ["$dex_all|6100", "$dex_starter|6100"]
+      },
+      {
+        "name": "Hisui Electrode",
+        "visibility_rules": ["$dex_all|6101"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 805,
+        "y": 364
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Sea",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|6"],
+    "sections": [
+      {
+        "name": "Poliwag",
+        "visibility_rules": ["$dex_all|60", "$dex_starter|60"]
+      },
+      {
+        "name": "Poliwhirl",
+        "visibility_rules": ["$dex_all|61"]
+      },
+      {
+        "name": "Poliwrath",
+        "visibility_rules": ["$dex_all|62"]
+      },
+      {
+        "name": "Tentacool",
+        "visibility_rules": ["$dex_all|72", "$dex_starter|72"]
+      },
+      {
+        "name": "Tentacruel",
+        "visibility_rules": ["$dex_all|73"]
+      },
+      {
+        "name": "Slowpoke",
+        "visibility_rules": ["$dex_all|79", "$dex_starter|79"]
+      },
+      {
+        "name": "Slowbro",
+        "visibility_rules": ["$dex_all|80"]
+      },
+      {
+        "name": "Shellder",
+        "visibility_rules": ["$dex_all|90", "$dex_starter|90"]
+      },
+      {
+        "name": "Cloyster",
+        "visibility_rules": ["$dex_all|91"]
+      },
+      {
+        "name": "Horsea",
+        "visibility_rules": ["$dex_all|116", "$dex_starter|116"]
+      },
+      {
+        "name": "Seadra",
+        "visibility_rules": ["$dex_all|117"]
+      },
+      {
+        "name": "Goldeen",
+        "visibility_rules": ["$dex_all|118", "$dex_starter|118"]
+      },
+      {
+        "name": "Seaking",
+        "visibility_rules": ["$dex_all|119"]
+      },
+      {
+        "name": "Staryu",
+        "visibility_rules": ["$dex_all|120", "$dex_starter|120"]
+      },
+      {
+        "name": "Starmie",
+        "visibility_rules": ["$dex_all|121"]
+      },
+      {
+        "name": "Magikarp",
+        "visibility_rules": ["$dex_all|129", "$dex_starter|129"]
+      },
+      {
+        "name": "Gyarados",
+        "visibility_rules": ["$dex_all|130"]
+      },
+      {
+        "name": "Lapras",
+        "visibility_rules": ["$dex_all|131", "$dex_starter|131"]
+      },
+      {
+        "name": "Chinchou",
+        "visibility_rules": ["$dex_all|170", "$dex_starter|170"]
+      },
+      {
+        "name": "Lanturn",
+        "visibility_rules": ["$dex_all|171"]
+      },
+      {
+        "name": "Politoed",
+        "visibility_rules": ["$dex_all|186"]
+      },
+      {
+        "name": "Slowking",
+        "visibility_rules": ["$dex_all|199"]
+      },
+      {
+        "name": "Kingdra",
+        "visibility_rules": ["$dex_all|230"]
+      },
+      {
+        "name": "Lugia",
+        "visibility_rules": ["$dex_all|249", "$dex_starter|249"]
+      },
+      {
+        "name": "Wingull",
+        "visibility_rules": ["$dex_all|278", "$dex_starter|278"]
+      },
+      {
+        "name": "Pelipper",
+        "visibility_rules": ["$dex_all|279"]
+      },
+      {
+        "name": "Carvanha",
+        "visibility_rules": ["$dex_all|318", "$dex_starter|318"]
+      },
+      {
+        "name": "Sharpedo",
+        "visibility_rules": ["$dex_all|319"]
+      },
+      {
+        "name": "Wailmer",
+        "visibility_rules": ["$dex_all|320", "$dex_starter|320"]
+      },
+      {
+        "name": "Wailord",
+        "visibility_rules": ["$dex_all|321"]
+      },
+      {
+        "name": "Piplup",
+        "visibility_rules": ["$dex_all|393", "$dex_starter|393"]
+      },
+      {
+        "name": "Prinplup",
+        "visibility_rules": ["$dex_all|394"]
+      },
+      {
+        "name": "Empoleon",
+        "visibility_rules": ["$dex_all|395"]
+      },
+      {
+        "name": "Buizel",
+        "visibility_rules": ["$dex_all|418", "$dex_starter|418"]
+      },
+      {
+        "name": "Floatzel",
+        "visibility_rules": ["$dex_all|419"]
+      },
+      {
+        "name": "Finneon",
+        "visibility_rules": ["$dex_all|456", "$dex_starter|456"]
+      },
+      {
+        "name": "Lumineon",
+        "visibility_rules": ["$dex_all|457"]
+      },
+      {
+        "name": "Panpour",
+        "visibility_rules": ["$dex_all|515", "$dex_starter|515"]
+      },
+      {
+        "name": "Simipour",
+        "visibility_rules": ["$dex_all|516"]
+      },
+      {
+        "name": "Tirtouga",
+        "visibility_rules": ["$dex_all|564", "$dex_starter|564"]
+      },
+      {
+        "name": "Carracosta",
+        "visibility_rules": ["$dex_all|565"]
+      },
+      {
+        "name": "Inkay",
+        "visibility_rules": ["$dex_all|686", "$dex_starter|686"]
+      },
+      {
+        "name": "Malamar",
+        "visibility_rules": ["$dex_all|687"]
+      },
+      {
+        "name": "Popplio",
+        "visibility_rules": ["$dex_all|728", "$dex_starter|728"]
+      },
+      {
+        "name": "Brionne",
+        "visibility_rules": ["$dex_all|729"]
+      },
+      {
+        "name": "Primarina",
+        "visibility_rules": ["$dex_all|730"]
+      },
+      {
+        "name": "Cramorant",
+        "visibility_rules": ["$dex_all|845", "$dex_starter|845"]
+      },
+      {
+        "name": "Wattrel",
+        "visibility_rules": ["$dex_all|940", "$dex_starter|940"]
+      },
+      {
+        "name": "Kilowattrel",
+        "visibility_rules": ["$dex_all|941"]
+      },
+      {
+        "name": "Finizen",
+        "visibility_rules": ["$dex_all|963", "$dex_starter|963"]
+      },
+      {
+        "name": "Palafin",
+        "visibility_rules": ["$dex_all|964"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1035,
+        "y": 364
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Abyss",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|24"],
+    "sections": [
+      {
+        "name": "Zubat",
+        "visibility_rules": ["$dex_all|41", "$dex_starter|41"]
+      },
+      {
+        "name": "Golbat",
+        "visibility_rules": ["$dex_all|42"]
+      },
+      {
+        "name": "Paras",
+        "visibility_rules": ["$dex_all|46", "$dex_starter|46"]
+      },
+      {
+        "name": "Parasect",
+        "visibility_rules": ["$dex_all|47"]
+      },
+      {
+        "name": "Gastly",
+        "visibility_rules": ["$dex_all|92", "$dex_starter|92"]
+      },
+      {
+        "name": "Haunter",
+        "visibility_rules": ["$dex_all|93"]
+      },
+      {
+        "name": "Gengar",
+        "visibility_rules": ["$dex_all|94"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_starter|133"]
+      },
+      {
+        "name": "Crobat",
+        "visibility_rules": ["$dex_all|169"]
+      },
+      {
+        "name": "Umbreon",
+        "visibility_rules": ["$dex_all|197"]
+      },
+      {
+        "name": "Misdreavus",
+        "visibility_rules": ["$dex_all|200", "$dex_starter|200"]
+      },
+      {
+        "name": "Dunsparce",
+        "visibility_rules": ["$dex_all|206", "$dex_starter|206"]
+      },
+      {
+        "name": "Houndour",
+        "visibility_rules": ["$dex_all|228", "$dex_starter|228"]
+      },
+      {
+        "name": "Houndoom",
+        "visibility_rules": ["$dex_all|229"]
+      },
+      {
+        "name": "Whismur",
+        "visibility_rules": ["$dex_all|293", "$dex_starter|293"]
+      },
+      {
+        "name": "Loudred",
+        "visibility_rules": ["$dex_all|294"]
+      },
+      {
+        "name": "Exploud",
+        "visibility_rules": ["$dex_all|295"]
+      },
+      {
+        "name": "Sableye",
+        "visibility_rules": ["$dex_all|302", "$dex_starter|302"]
+      },
+      {
+        "name": "Mawile",
+        "visibility_rules": ["$dex_all|303", "$dex_starter|303"]
+      },
+      {
+        "name": "Absol",
+        "visibility_rules": ["$dex_all|359", "$dex_starter|359"]
+      },
+      {
+        "name": "Snorunt",
+        "visibility_rules": ["$dex_starter|361"]
+      },
+      {
+        "name": "Mismagius",
+        "visibility_rules": ["$dex_all|429"]
+      },
+      {
+        "name": "Spiritomb",
+        "visibility_rules": ["$dex_all|442", "$dex_starter|442"]
+      },
+      {
+        "name": "Froslass",
+        "visibility_rules": ["$dex_all|478"]
+      },
+      {
+        "name": "Palkia",
+        "visibility_rules": ["$dex_all|484", "$dex_starter|484"]
+      },
+      {
+        "name": "Darkrai",
+        "visibility_rules": ["$dex_all|491", "$dex_starter|491"]
+      },
+      {
+        "name": "Woobat",
+        "visibility_rules": ["$dex_all|527", "$dex_starter|527"]
+      },
+      {
+        "name": "Swoobat",
+        "visibility_rules": ["$dex_all|528"]
+      },
+      {
+        "name": "Zorua",
+        "visibility_rules": ["$dex_all|570", "$dex_starter|570"]
+      },
+      {
+        "name": "Zoroark",
+        "visibility_rules": ["$dex_all|571"]
+      },
+      {
+        "name": "Deino",
+        "visibility_rules": ["$dex_all|633", "$dex_starter|633"]
+      },
+      {
+        "name": "Zweilous",
+        "visibility_rules": ["$dex_all|634"]
+      },
+      {
+        "name": "Hydreigon",
+        "visibility_rules": ["$dex_all|635"]
+      },
+      {
+        "name": "Yveltal",
+        "visibility_rules": ["$dex_all|717", "$dex_starter|717"]
+      },
+      {
+        "name": "Impidimp",
+        "visibility_rules": ["$dex_all|859", "$dex_starter|859"]
+      },
+      {
+        "name": "Morgrem",
+        "visibility_rules": ["$dex_all|860"]
+      },
+      {
+        "name": "Grimmsnarl",
+        "visibility_rules": ["$dex_all|861"]
+      },
+      {
+        "name": "Dreepy",
+        "visibility_rules": ["$dex_all|885", "$dex_starter|885"]
+      },
+      {
+        "name": "Drakloak",
+        "visibility_rules": ["$dex_all|886"]
+      },
+      {
+        "name": "Dragapult",
+        "visibility_rules": ["$dex_all|887"]
+      },
+      {
+        "name": "Dudunsparce",
+        "visibility_rules": ["$dex_all|982"]
+      },
+      {
+        "name": "Galar Moltres",
+        "visibility_rules": ["$dex_all|4146", "$dex_starter|4146"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1265,
+        "y": 364
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Badlands",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|12"],
+    "sections": [
+      {
+        "name": "Sandshrew",
+        "visibility_rules": ["$dex_all|27", "$dex_starter|27"]
+      },
+      {
+        "name": "Sandslash",
+        "visibility_rules": ["$dex_all|28"]
+      },
+      {
+        "name": "Diglett",
+        "visibility_rules": ["$dex_all|50", "$dex_starter|50"]
+      },
+      {
+        "name": "Dugtrio",
+        "visibility_rules": ["$dex_all|51"]
+      },
+      {
+        "name": "Geodude",
+        "visibility_rules": ["$dex_all|74", "$dex_starter|74"]
+      },
+      {
+        "name": "Graveler",
+        "visibility_rules": ["$dex_all|75"]
+      },
+      {
+        "name": "Golem",
+        "visibility_rules": ["$dex_all|76"]
+      },
+      {
+        "name": "Onix",
+        "visibility_rules": ["$dex_all|95", "$dex_starter|95"]
+      },
+      {
+        "name": "Cubone",
+        "visibility_rules": ["$dex_all|104", "$dex_starter|104"]
+      },
+      {
+        "name": "Marowak",
+        "visibility_rules": ["$dex_all|105"]
+      },
+      {
+        "name": "Rhyhorn",
+        "visibility_rules": ["$dex_all|111", "$dex_starter|111"]
+      },
+      {
+        "name": "Rhydon",
+        "visibility_rules": ["$dex_all|112"]
+      },
+      {
+        "name": "Gligar",
+        "visibility_rules": ["$dex_all|207", "$dex_starter|207"]
+      },
+      {
+        "name": "Steelix",
+        "visibility_rules": ["$dex_all|208"]
+      },
+      {
+        "name": "Phanpy",
+        "visibility_rules": ["$dex_all|231", "$dex_starter|231"]
+      },
+      {
+        "name": "Donphan",
+        "visibility_rules": ["$dex_all|232"]
+      },
+      {
+        "name": "Numel",
+        "visibility_rules": ["$dex_all|322", "$dex_starter|322"]
+      },
+      {
+        "name": "Camerupt",
+        "visibility_rules": ["$dex_all|323"]
+      },
+      {
+        "name": "Groudon",
+        "visibility_rules": ["$dex_all|383", "$dex_starter|383"]
+      },
+      {
+        "name": "Rhyperior",
+        "visibility_rules": ["$dex_all|464"]
+      },
+      {
+        "name": "Gliscor",
+        "visibility_rules": ["$dex_all|472"]
+      },
+      {
+        "name": "Roggenrola",
+        "visibility_rules": ["$dex_all|524", "$dex_starter|524"]
+      },
+      {
+        "name": "Boldore",
+        "visibility_rules": ["$dex_all|525"]
+      },
+      {
+        "name": "Gigalith",
+        "visibility_rules": ["$dex_all|526"]
+      },
+      {
+        "name": "Drilbur",
+        "visibility_rules": ["$dex_all|529", "$dex_starter|529"]
+      },
+      {
+        "name": "Excadrill",
+        "visibility_rules": ["$dex_all|530"]
+      },
+      {
+        "name": "Landorus",
+        "visibility_rules": ["$dex_all|645", "$dex_starter|645"]
+      },
+      {
+        "name": "Mudbray",
+        "visibility_rules": ["$dex_all|749", "$dex_starter|749"]
+      },
+      {
+        "name": "Mudsdale",
+        "visibility_rules": ["$dex_all|750"]
+      },
+      {
+        "name": "Sizzlipede",
+        "visibility_rules": ["$dex_all|850", "$dex_starter|850"]
+      },
+      {
+        "name": "Centiskorch",
+        "visibility_rules": ["$dex_all|851"]
+      },
+      {
+        "name": "Cufant",
+        "visibility_rules": ["$dex_all|878", "$dex_starter|878"]
+      },
+      {
+        "name": "Copperajah",
+        "visibility_rules": ["$dex_all|879"]
+      },
+      {
+        "name": "Klawf",
+        "visibility_rules": ["$dex_all|950", "$dex_starter|950"]
+      },
+      {
+        "name": "Capsakid",
+        "visibility_rules": ["$dex_all|951", "$dex_starter|951"]
+      },
+      {
+        "name": "Scovillain",
+        "visibility_rules": ["$dex_all|952"]
+      },
+      {
+        "name": "Poltchageist",
+        "visibility_rules": ["$dex_all|1012", "$dex_starter|1012"]
+      },
+      {
+        "name": "Sinistcha",
+        "visibility_rules": ["$dex_all|1013"]
+      },
+      {
+        "name": "Okidogi",
+        "visibility_rules": ["$dex_all|1014", "$dex_starter|1014"]
+      },
+      {
+        "name": "Alola Marowak",
+        "visibility_rules": ["$dex_all|2105"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 115,
+        "y": 484
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Factory",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|21"],
+    "sections": [
+      {
+        "name": "Machop",
+        "visibility_rules": ["$dex_all|66", "$dex_starter|66"]
+      },
+      {
+        "name": "Machoke",
+        "visibility_rules": ["$dex_all|67"]
+      },
+      {
+        "name": "Machamp",
+        "visibility_rules": ["$dex_all|68"]
+      },
+      {
+        "name": "Magnemite",
+        "visibility_rules": ["$dex_all|81", "$dex_starter|81"]
+      },
+      {
+        "name": "Magneton",
+        "visibility_rules": ["$dex_all|82"]
+      },
+      {
+        "name": "Voltorb",
+        "visibility_rules": ["$dex_all|100", "$dex_starter|100"]
+      },
+      {
+        "name": "Electrode",
+        "visibility_rules": ["$dex_all|101"]
+      },
+      {
+        "name": "Electabuzz",
+        "visibility_rules": ["$dex_all|125"]
+      },
+      {
+        "name": "Magmar",
+        "visibility_rules": ["$dex_all|126"]
+      },
+      {
+        "name": "Porygon",
+        "visibility_rules": ["$dex_all|137", "$dex_starter|137"]
+      },
+      {
+        "name": "Porygon2",
+        "visibility_rules": ["$dex_all|233"]
+      },
+      {
+        "name": "Elekid",
+        "visibility_rules": ["$dex_all|239", "$dex_starter|239"]
+      },
+      {
+        "name": "Magby",
+        "visibility_rules": ["$dex_all|240", "$dex_starter|240"]
+      },
+      {
+        "name": "Beldum",
+        "visibility_rules": ["$dex_all|374", "$dex_starter|374"]
+      },
+      {
+        "name": "Metang",
+        "visibility_rules": ["$dex_all|375"]
+      },
+      {
+        "name": "Metagross",
+        "visibility_rules": ["$dex_all|376"]
+      },
+      {
+        "name": "Bronzor",
+        "visibility_rules": ["$dex_all|436", "$dex_starter|436"]
+      },
+      {
+        "name": "Bronzong",
+        "visibility_rules": ["$dex_all|437"]
+      },
+      {
+        "name": "Magnezone",
+        "visibility_rules": ["$dex_all|462"]
+      },
+      {
+        "name": "Electivire",
+        "visibility_rules": ["$dex_all|466"]
+      },
+      {
+        "name": "Magmortar",
+        "visibility_rules": ["$dex_all|467"]
+      },
+      {
+        "name": "Porygon Z",
+        "visibility_rules": ["$dex_all|474"]
+      },
+      {
+        "name": "Timburr",
+        "visibility_rules": ["$dex_all|532", "$dex_starter|532"]
+      },
+      {
+        "name": "Gurdurr",
+        "visibility_rules": ["$dex_all|533"]
+      },
+      {
+        "name": "Conkeldurr",
+        "visibility_rules": ["$dex_all|534"]
+      },
+      {
+        "name": "Klink",
+        "visibility_rules": ["$dex_all|599", "$dex_starter|599"]
+      },
+      {
+        "name": "Klang",
+        "visibility_rules": ["$dex_all|600"]
+      },
+      {
+        "name": "Klinklang",
+        "visibility_rules": ["$dex_all|601"]
+      },
+      {
+        "name": "Genesect",
+        "visibility_rules": ["$dex_all|649", "$dex_starter|649"]
+      },
+      {
+        "name": "Klefki",
+        "visibility_rules": ["$dex_all|707", "$dex_starter|707"]
+      },
+      {
+        "name": "Magearna",
+        "visibility_rules": ["$dex_all|801", "$dex_starter|801"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 345,
+        "y": 484
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Ice Cave",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|15"],
+    "sections": [
+      {
+        "name": "Slowpoke",
+        "visibility_rules": ["$dex_starter|79"]
+      },
+      {
+        "name": "Seel",
+        "visibility_rules": ["$dex_all|86", "$dex_starter|86"]
+      },
+      {
+        "name": "Dewgong",
+        "visibility_rules": ["$dex_all|87"]
+      },
+      {
+        "name": "Jynx",
+        "visibility_rules": ["$dex_all|124"]
+      },
+      {
+        "name": "Lapras",
+        "visibility_rules": ["$dex_all|131", "$dex_starter|131"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_starter|133"]
+      },
+      {
+        "name": "Articuno",
+        "visibility_rules": ["$dex_all|144", "$dex_starter|144"]
+      },
+      {
+        "name": "Slowking",
+        "visibility_rules": ["$dex_all|199"]
+      },
+      {
+        "name": "Sneasel",
+        "visibility_rules": ["$dex_all|215", "$dex_starter|215"]
+      },
+      {
+        "name": "Swinub",
+        "visibility_rules": ["$dex_all|220", "$dex_starter|220"]
+      },
+      {
+        "name": "Piloswine",
+        "visibility_rules": ["$dex_all|221"]
+      },
+      {
+        "name": "Delibird",
+        "visibility_rules": ["$dex_all|225", "$dex_starter|225"]
+      },
+      {
+        "name": "Smoochum",
+        "visibility_rules": ["$dex_all|238", "$dex_starter|238"]
+      },
+      {
+        "name": "Snorunt",
+        "visibility_rules": ["$dex_all|361", "$dex_starter|361"]
+      },
+      {
+        "name": "Glalie",
+        "visibility_rules": ["$dex_all|362"]
+      },
+      {
+        "name": "Spheal",
+        "visibility_rules": ["$dex_all|363", "$dex_starter|363"]
+      },
+      {
+        "name": "Sealeo",
+        "visibility_rules": ["$dex_all|364"]
+      },
+      {
+        "name": "Walrein",
+        "visibility_rules": ["$dex_all|365"]
+      },
+      {
+        "name": "Regice",
+        "visibility_rules": ["$dex_all|378", "$dex_starter|378"]
+      },
+      {
+        "name": "Weavile",
+        "visibility_rules": ["$dex_all|461"]
+      },
+      {
+        "name": "Glaceon",
+        "visibility_rules": ["$dex_all|471"]
+      },
+      {
+        "name": "Mamoswine",
+        "visibility_rules": ["$dex_all|473"]
+      },
+      {
+        "name": "Froslass",
+        "visibility_rules": ["$dex_all|478"]
+      },
+      {
+        "name": "Vanillite",
+        "visibility_rules": ["$dex_all|582", "$dex_starter|582"]
+      },
+      {
+        "name": "Vanillish",
+        "visibility_rules": ["$dex_all|583"]
+      },
+      {
+        "name": "Vanilluxe",
+        "visibility_rules": ["$dex_all|584"]
+      },
+      {
+        "name": "Cubchoo",
+        "visibility_rules": ["$dex_all|613", "$dex_starter|613"]
+      },
+      {
+        "name": "Beartic",
+        "visibility_rules": ["$dex_all|614"]
+      },
+      {
+        "name": "Cryogonal",
+        "visibility_rules": ["$dex_all|615", "$dex_starter|615"]
+      },
+      {
+        "name": "Kyurem",
+        "visibility_rules": ["$dex_all|646", "$dex_starter|646"]
+      },
+      {
+        "name": "Amaura",
+        "visibility_rules": ["$dex_all|698", "$dex_starter|698"]
+      },
+      {
+        "name": "Aurorus",
+        "visibility_rules": ["$dex_all|699"]
+      },
+      {
+        "name": "Bergmite",
+        "visibility_rules": ["$dex_all|712", "$dex_starter|712"]
+      },
+      {
+        "name": "Avalugg",
+        "visibility_rules": ["$dex_all|713"]
+      },
+      {
+        "name": "Crabrawler",
+        "visibility_rules": ["$dex_all|739", "$dex_starter|739"]
+      },
+      {
+        "name": "Crabominable",
+        "visibility_rules": ["$dex_all|740"]
+      },
+      {
+        "name": "Snom",
+        "visibility_rules": ["$dex_all|872", "$dex_starter|872"]
+      },
+      {
+        "name": "Frosmoth",
+        "visibility_rules": ["$dex_all|873"]
+      },
+      {
+        "name": "Eiscue",
+        "visibility_rules": ["$dex_all|875", "$dex_starter|875"]
+      },
+      {
+        "name": "Cetoddle",
+        "visibility_rules": ["$dex_all|974", "$dex_starter|974"]
+      },
+      {
+        "name": "Cetitan",
+        "visibility_rules": ["$dex_all|975"]
+      },
+      {
+        "name": "Hisui Avalugg",
+        "visibility_rules": ["$dex_all|6713"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 575,
+        "y": 484
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Jungle",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|27"],
+    "sections": [
+      {
+        "name": "Exeggcute",
+        "visibility_rules": ["$dex_all|102", "$dex_starter|102"]
+      },
+      {
+        "name": "Exeggutor",
+        "visibility_rules": ["$dex_all|103"]
+      },
+      {
+        "name": "Tangela",
+        "visibility_rules": ["$dex_all|114", "$dex_starter|114"]
+      },
+      {
+        "name": "Kangaskhan",
+        "visibility_rules": ["$dex_all|115", "$dex_starter|115"]
+      },
+      {
+        "name": "Scyther",
+        "visibility_rules": ["$dex_all|123", "$dex_starter|123"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_starter|133"]
+      },
+      {
+        "name": "Spinarak",
+        "visibility_rules": ["$dex_all|167", "$dex_starter|167"]
+      },
+      {
+        "name": "Ariados",
+        "visibility_rules": ["$dex_all|168"]
+      },
+      {
+        "name": "Aipom",
+        "visibility_rules": ["$dex_all|190", "$dex_starter|190"]
+      },
+      {
+        "name": "Yanma",
+        "visibility_rules": ["$dex_all|193", "$dex_starter|193"]
+      },
+      {
+        "name": "Scizor",
+        "visibility_rules": ["$dex_all|212"]
+      },
+      {
+        "name": "Shroomish",
+        "visibility_rules": ["$dex_all|285", "$dex_starter|285"]
+      },
+      {
+        "name": "Breloom",
+        "visibility_rules": ["$dex_all|286"]
+      },
+      {
+        "name": "Slakoth",
+        "visibility_rules": ["$dex_all|287", "$dex_starter|287"]
+      },
+      {
+        "name": "Vigoroth",
+        "visibility_rules": ["$dex_all|288"]
+      },
+      {
+        "name": "Slaking",
+        "visibility_rules": ["$dex_all|289"]
+      },
+      {
+        "name": "Seviper",
+        "visibility_rules": ["$dex_all|336", "$dex_starter|336"]
+      },
+      {
+        "name": "Tropius",
+        "visibility_rules": ["$dex_all|357", "$dex_starter|357"]
+      },
+      {
+        "name": "Combee",
+        "visibility_rules": ["$dex_all|415", "$dex_starter|415"]
+      },
+      {
+        "name": "Vespiquen",
+        "visibility_rules": ["$dex_all|416"]
+      },
+      {
+        "name": "Cherubi",
+        "visibility_rules": ["$dex_all|420", "$dex_starter|420"]
+      },
+      {
+        "name": "Cherrim",
+        "visibility_rules": ["$dex_all|421"]
+      },
+      {
+        "name": "Ambipom",
+        "visibility_rules": ["$dex_all|424"]
+      },
+      {
+        "name": "Chatot",
+        "visibility_rules": ["$dex_all|441", "$dex_starter|441"]
+      },
+      {
+        "name": "Carnivine",
+        "visibility_rules": ["$dex_all|455", "$dex_starter|455"]
+      },
+      {
+        "name": "Tangrowth",
+        "visibility_rules": ["$dex_all|465"]
+      },
+      {
+        "name": "Yanmega",
+        "visibility_rules": ["$dex_all|469"]
+      },
+      {
+        "name": "Leafeon",
+        "visibility_rules": ["$dex_all|470"]
+      },
+      {
+        "name": "Snivy",
+        "visibility_rules": ["$dex_all|495", "$dex_starter|495"]
+      },
+      {
+        "name": "Servine",
+        "visibility_rules": ["$dex_all|496"]
+      },
+      {
+        "name": "Serperior",
+        "visibility_rules": ["$dex_all|497"]
+      },
+      {
+        "name": "Purrloin",
+        "visibility_rules": ["$dex_all|509", "$dex_starter|509"]
+      },
+      {
+        "name": "Liepard",
+        "visibility_rules": ["$dex_all|510"]
+      },
+      {
+        "name": "Pansage",
+        "visibility_rules": ["$dex_all|511", "$dex_starter|511"]
+      },
+      {
+        "name": "Simisage",
+        "visibility_rules": ["$dex_all|512"]
+      },
+      {
+        "name": "Pansear",
+        "visibility_rules": ["$dex_all|513", "$dex_starter|513"]
+      },
+      {
+        "name": "Simisear",
+        "visibility_rules": ["$dex_all|514"]
+      },
+      {
+        "name": "Panpour",
+        "visibility_rules": ["$dex_all|515", "$dex_starter|515"]
+      },
+      {
+        "name": "Simipour",
+        "visibility_rules": ["$dex_all|516"]
+      },
+      {
+        "name": "Blitzle",
+        "visibility_rules": ["$dex_all|522", "$dex_starter|522"]
+      },
+      {
+        "name": "Zebstrika",
+        "visibility_rules": ["$dex_all|523"]
+      },
+      {
+        "name": "Sewaddle",
+        "visibility_rules": ["$dex_all|540", "$dex_starter|540"]
+      },
+      {
+        "name": "Swadloon",
+        "visibility_rules": ["$dex_all|541"]
+      },
+      {
+        "name": "Leavanny",
+        "visibility_rules": ["$dex_all|542"]
+      },
+      {
+        "name": "Foongus",
+        "visibility_rules": ["$dex_all|590", "$dex_starter|590"]
+      },
+      {
+        "name": "Amoonguss",
+        "visibility_rules": ["$dex_all|591"]
+      },
+      {
+        "name": "Joltik",
+        "visibility_rules": ["$dex_all|595", "$dex_starter|595"]
+      },
+      {
+        "name": "Galvantula",
+        "visibility_rules": ["$dex_all|596"]
+      },
+      {
+        "name": "Litleo",
+        "visibility_rules": ["$dex_all|667", "$dex_starter|667"]
+      },
+      {
+        "name": "Pyroar",
+        "visibility_rules": ["$dex_all|668"]
+      },
+      {
+        "name": "Pancham",
+        "visibility_rules": ["$dex_all|674", "$dex_starter|674"]
+      },
+      {
+        "name": "Pangoro",
+        "visibility_rules": ["$dex_all|675"]
+      },
+      {
+        "name": "Pikipek",
+        "visibility_rules": ["$dex_all|731", "$dex_starter|731"]
+      },
+      {
+        "name": "Trumbeak",
+        "visibility_rules": ["$dex_all|732"]
+      },
+      {
+        "name": "Toucannon",
+        "visibility_rules": ["$dex_all|733"]
+      },
+      {
+        "name": "Fomantis",
+        "visibility_rules": ["$dex_all|753", "$dex_starter|753"]
+      },
+      {
+        "name": "Lurantis",
+        "visibility_rules": ["$dex_all|754"]
+      },
+      {
+        "name": "Oranguru",
+        "visibility_rules": ["$dex_all|765", "$dex_starter|765"]
+      },
+      {
+        "name": "Passimian",
+        "visibility_rules": ["$dex_all|766", "$dex_starter|766"]
+      },
+      {
+        "name": "Komala",
+        "visibility_rules": ["$dex_all|775", "$dex_starter|775"]
+      },
+      {
+        "name": "Tapu Lele",
+        "visibility_rules": ["$dex_all|786", "$dex_starter|786"]
+      },
+      {
+        "name": "Buzzwole",
+        "visibility_rules": ["$dex_all|794", "$dex_starter|794"]
+      },
+      {
+        "name": "Grookey",
+        "visibility_rules": ["$dex_all|810", "$dex_starter|810"]
+      },
+      {
+        "name": "Thwackey",
+        "visibility_rules": ["$dex_all|811"]
+      },
+      {
+        "name": "Rillaboom",
+        "visibility_rules": ["$dex_all|812"]
+      },
+      {
+        "name": "Falinks",
+        "visibility_rules": ["$dex_all|870", "$dex_starter|870"]
+      },
+      {
+        "name": "Zarude",
+        "visibility_rules": ["$dex_all|893", "$dex_starter|893"]
+      },
+      {
+        "name": "Kleavor",
+        "visibility_rules": ["$dex_all|900"]
+      },
+      {
+        "name": "Munkidori",
+        "visibility_rules": ["$dex_all|1015", "$dex_starter|1015"]
+      },
+      {
+        "name": "Alola Exeggutor",
+        "visibility_rules": ["$dex_all|2103"]
+      },
+      {
+        "name": "Galar Ponyta",
+        "visibility_rules": ["$dex_all|4077", "$dex_starter|4077"]
+      },
+      {
+        "name": "Galar Rapidash",
+        "visibility_rules": ["$dex_all|4078"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 805,
+        "y": 484
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Laboratory",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|41"],
+    "sections": [
+      {
+        "name": "Magnemite",
+        "visibility_rules": ["$dex_all|81", "$dex_starter|81"]
+      },
+      {
+        "name": "Magneton",
+        "visibility_rules": ["$dex_all|82"]
+      },
+      {
+        "name": "Grimer",
+        "visibility_rules": ["$dex_all|88", "$dex_starter|88"]
+      },
+      {
+        "name": "Muk",
+        "visibility_rules": ["$dex_all|89"]
+      },
+      {
+        "name": "Voltorb",
+        "visibility_rules": ["$dex_all|100", "$dex_starter|100"]
+      },
+      {
+        "name": "Electrode",
+        "visibility_rules": ["$dex_all|101"]
+      },
+      {
+        "name": "Ditto",
+        "visibility_rules": ["$dex_all|132", "$dex_starter|132"]
+      },
+      {
+        "name": "Porygon",
+        "visibility_rules": ["$dex_all|137", "$dex_starter|137"]
+      },
+      {
+        "name": "Mewtwo",
+        "visibility_rules": ["$dex_all|150", "$dex_starter|150"]
+      },
+      {
+        "name": "Porygon2",
+        "visibility_rules": ["$dex_all|233"]
+      },
+      {
+        "name": "Bronzor",
+        "visibility_rules": ["$dex_all|436", "$dex_starter|436"]
+      },
+      {
+        "name": "Bronzong",
+        "visibility_rules": ["$dex_all|437"]
+      },
+      {
+        "name": "Magnezone",
+        "visibility_rules": ["$dex_all|462"]
+      },
+      {
+        "name": "Porygon Z",
+        "visibility_rules": ["$dex_all|474"]
+      },
+      {
+        "name": "Rotom",
+        "visibility_rules": ["$dex_all|479", "$dex_starter|479"]
+      },
+      {
+        "name": "Munna",
+        "visibility_rules": ["$dex_all|517", "$dex_starter|517"]
+      },
+      {
+        "name": "Musharna",
+        "visibility_rules": ["$dex_all|518"]
+      },
+      {
+        "name": "Solosis",
+        "visibility_rules": ["$dex_all|577", "$dex_starter|577"]
+      },
+      {
+        "name": "Duosion",
+        "visibility_rules": ["$dex_all|578"]
+      },
+      {
+        "name": "Reuniclus",
+        "visibility_rules": ["$dex_all|579"]
+      },
+      {
+        "name": "Klink",
+        "visibility_rules": ["$dex_all|599", "$dex_starter|599"]
+      },
+      {
+        "name": "Klang",
+        "visibility_rules": ["$dex_all|600"]
+      },
+      {
+        "name": "Klinklang",
+        "visibility_rules": ["$dex_all|601"]
+      },
+      {
+        "name": "Klefki",
+        "visibility_rules": ["$dex_all|707", "$dex_starter|707"]
+      },
+      {
+        "name": "Zygarde",
+        "visibility_rules": ["$dex_all|718", "$dex_starter|718"]
+      },
+      {
+        "name": "Type Null",
+        "visibility_rules": ["$dex_all|772", "$dex_starter|772"]
+      },
+      {
+        "name": "Silvally",
+        "visibility_rules": ["$dex_all|773"]
+      },
+      {
+        "name": "Miraidon",
+        "visibility_rules": ["$dex_all|1008", "$dex_starter|1008"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1035,
+        "y": 484
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Meadow",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|16"],
+    "sections": [
+      {
+        "name": "Jigglypuff",
+        "visibility_rules": ["$dex_all|39"]
+      },
+      {
+        "name": "Wigglytuff",
+        "visibility_rules": ["$dex_all|40"]
+      },
+      {
+        "name": "Ponyta",
+        "visibility_rules": ["$dex_all|77", "$dex_starter|77"]
+      },
+      {
+        "name": "Rapidash",
+        "visibility_rules": ["$dex_all|78"]
+      },
+      {
+        "name": "Chansey",
+        "visibility_rules": ["$dex_all|113"]
+      },
+      {
+        "name": "Tauros",
+        "visibility_rules": ["$dex_all|128", "$dex_starter|128"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_all|133", "$dex_starter|133"]
+      },
+      {
+        "name": "Vaporeon",
+        "visibility_rules": ["$dex_all|134"]
+      },
+      {
+        "name": "Jolteon",
+        "visibility_rules": ["$dex_all|135"]
+      },
+      {
+        "name": "Flareon",
+        "visibility_rules": ["$dex_all|136"]
+      },
+      {
+        "name": "Ledyba",
+        "visibility_rules": ["$dex_all|165", "$dex_starter|165"]
+      },
+      {
+        "name": "Ledian",
+        "visibility_rules": ["$dex_all|166"]
+      },
+      {
+        "name": "Igglybuff",
+        "visibility_rules": ["$dex_starter|174"]
+      },
+      {
+        "name": "Mareep",
+        "visibility_rules": ["$dex_all|179", "$dex_starter|179"]
+      },
+      {
+        "name": "Flaaffy",
+        "visibility_rules": ["$dex_all|180"]
+      },
+      {
+        "name": "Ampharos",
+        "visibility_rules": ["$dex_all|181"]
+      },
+      {
+        "name": "Espeon",
+        "visibility_rules": ["$dex_all|196"]
+      },
+      {
+        "name": "Umbreon",
+        "visibility_rules": ["$dex_all|197"]
+      },
+      {
+        "name": "Snubbull",
+        "visibility_rules": ["$dex_all|209", "$dex_starter|209"]
+      },
+      {
+        "name": "Granbull",
+        "visibility_rules": ["$dex_all|210"]
+      },
+      {
+        "name": "Miltank",
+        "visibility_rules": ["$dex_all|241", "$dex_starter|241"]
+      },
+      {
+        "name": "Blissey",
+        "visibility_rules": ["$dex_all|242"]
+      },
+      {
+        "name": "Ralts",
+        "visibility_rules": ["$dex_all|280", "$dex_starter|280"]
+      },
+      {
+        "name": "Kirlia",
+        "visibility_rules": ["$dex_all|281"]
+      },
+      {
+        "name": "Gardevoir",
+        "visibility_rules": ["$dex_all|282"]
+      },
+      {
+        "name": "Skitty",
+        "visibility_rules": ["$dex_all|300", "$dex_starter|300"]
+      },
+      {
+        "name": "Delcatty",
+        "visibility_rules": ["$dex_all|301"]
+      },
+      {
+        "name": "Volbeat",
+        "visibility_rules": ["$dex_all|313", "$dex_starter|313"]
+      },
+      {
+        "name": "Illumise",
+        "visibility_rules": ["$dex_all|314", "$dex_starter|314"]
+      },
+      {
+        "name": "Roselia",
+        "visibility_rules": ["$dex_all|315"]
+      },
+      {
+        "name": "Spinda",
+        "visibility_rules": ["$dex_all|327", "$dex_starter|327"]
+      },
+      {
+        "name": "Budew",
+        "visibility_rules": ["$dex_starter|406"]
+      },
+      {
+        "name": "Roserade",
+        "visibility_rules": ["$dex_all|407"]
+      },
+      {
+        "name": "Glameow",
+        "visibility_rules": ["$dex_all|431", "$dex_starter|431"]
+      },
+      {
+        "name": "Purugly",
+        "visibility_rules": ["$dex_all|432"]
+      },
+      {
+        "name": "Happiny",
+        "visibility_rules": ["$dex_starter|440"]
+      },
+      {
+        "name": "Leafeon",
+        "visibility_rules": ["$dex_all|470"]
+      },
+      {
+        "name": "Glaceon",
+        "visibility_rules": ["$dex_all|471"]
+      },
+      {
+        "name": "Gallade",
+        "visibility_rules": ["$dex_all|475"]
+      },
+      {
+        "name": "Shaymin",
+        "visibility_rules": ["$dex_all|492", "$dex_starter|492"]
+      },
+      {
+        "name": "Blitzle",
+        "visibility_rules": ["$dex_all|522", "$dex_starter|522"]
+      },
+      {
+        "name": "Zebstrika",
+        "visibility_rules": ["$dex_all|523"]
+      },
+      {
+        "name": "Cottonee",
+        "visibility_rules": ["$dex_all|546", "$dex_starter|546"]
+      },
+      {
+        "name": "Whimsicott",
+        "visibility_rules": ["$dex_all|547"]
+      },
+      {
+        "name": "Petilil",
+        "visibility_rules": ["$dex_starter|548"]
+      },
+      {
+        "name": "Minccino",
+        "visibility_rules": ["$dex_all|572", "$dex_starter|572"]
+      },
+      {
+        "name": "Cinccino",
+        "visibility_rules": ["$dex_all|573"]
+      },
+      {
+        "name": "Bouffalant",
+        "visibility_rules": ["$dex_all|626", "$dex_starter|626"]
+      },
+      {
+        "name": "Meloetta",
+        "visibility_rules": ["$dex_all|648", "$dex_starter|648"]
+      },
+      {
+        "name": "Flabebe",
+        "visibility_rules": ["$dex_all|669", "$dex_starter|669"]
+      },
+      {
+        "name": "Floette",
+        "visibility_rules": ["$dex_all|670"]
+      },
+      {
+        "name": "Florges",
+        "visibility_rules": ["$dex_all|671"]
+      },
+      {
+        "name": "Sylveon",
+        "visibility_rules": ["$dex_all|700"]
+      },
+      {
+        "name": "Oricorio",
+        "visibility_rules": ["$dex_all|741", "$dex_starter|741"]
+      },
+      {
+        "name": "Cutiefly",
+        "visibility_rules": ["$dex_all|742", "$dex_starter|742"]
+      },
+      {
+        "name": "Ribombee",
+        "visibility_rules": ["$dex_all|743"]
+      },
+      {
+        "name": "Gossifleur",
+        "visibility_rules": ["$dex_all|829", "$dex_starter|829"]
+      },
+      {
+        "name": "Eldegoss",
+        "visibility_rules": ["$dex_all|830"]
+      },
+      {
+        "name": "Wooloo",
+        "visibility_rules": ["$dex_all|831", "$dex_starter|831"]
+      },
+      {
+        "name": "Dubwool",
+        "visibility_rules": ["$dex_all|832"]
+      },
+      {
+        "name": "Applin",
+        "visibility_rules": ["$dex_all|840", "$dex_starter|840"]
+      },
+      {
+        "name": "Flapple",
+        "visibility_rules": ["$dex_all|841"]
+      },
+      {
+        "name": "Appletun",
+        "visibility_rules": ["$dex_all|842"]
+      },
+      {
+        "name": "Enamorus",
+        "visibility_rules": ["$dex_all|905", "$dex_starter|905"]
+      },
+      {
+        "name": "Sprigatito",
+        "visibility_rules": ["$dex_all|906", "$dex_starter|906"]
+      },
+      {
+        "name": "Floragato",
+        "visibility_rules": ["$dex_all|907"]
+      },
+      {
+        "name": "Meowscarada",
+        "visibility_rules": ["$dex_all|908"]
+      },
+      {
+        "name": "Smoliv",
+        "visibility_rules": ["$dex_all|928", "$dex_starter|928"]
+      },
+      {
+        "name": "Dolliv",
+        "visibility_rules": ["$dex_all|929"]
+      },
+      {
+        "name": "Arboliva",
+        "visibility_rules": ["$dex_all|930"]
+      },
+      {
+        "name": "Dipplin",
+        "visibility_rules": ["$dex_all|1011"]
+      },
+      {
+        "name": "Hydrapple",
+        "visibility_rules": ["$dex_all|1019"]
+      },
+      {
+        "name": "Hisui Lilligant",
+        "visibility_rules": ["$dex_all|6549"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1265,
+        "y": 484
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Seabed",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|10"],
+    "sections": [
+      {
+        "name": "Tentacool",
+        "visibility_rules": ["$dex_all|72", "$dex_starter|72"]
+      },
+      {
+        "name": "Tentacruel",
+        "visibility_rules": ["$dex_all|73"]
+      },
+      {
+        "name": "Shellder",
+        "visibility_rules": ["$dex_all|90", "$dex_starter|90"]
+      },
+      {
+        "name": "Cloyster",
+        "visibility_rules": ["$dex_all|91"]
+      },
+      {
+        "name": "Omanyte",
+        "visibility_rules": ["$dex_all|138", "$dex_starter|138"]
+      },
+      {
+        "name": "Omastar",
+        "visibility_rules": ["$dex_all|139"]
+      },
+      {
+        "name": "Kabuto",
+        "visibility_rules": ["$dex_all|140", "$dex_starter|140"]
+      },
+      {
+        "name": "Kabutops",
+        "visibility_rules": ["$dex_all|141"]
+      },
+      {
+        "name": "Chinchou",
+        "visibility_rules": ["$dex_all|170", "$dex_starter|170"]
+      },
+      {
+        "name": "Lanturn",
+        "visibility_rules": ["$dex_all|171"]
+      },
+      {
+        "name": "Qwilfish",
+        "visibility_rules": ["$dex_all|211", "$dex_starter|211"]
+      },
+      {
+        "name": "Corsola",
+        "visibility_rules": ["$dex_all|222", "$dex_starter|222"]
+      },
+      {
+        "name": "Remoraid",
+        "visibility_rules": ["$dex_all|223", "$dex_starter|223"]
+      },
+      {
+        "name": "Octillery",
+        "visibility_rules": ["$dex_all|224"]
+      },
+      {
+        "name": "Mantine",
+        "visibility_rules": ["$dex_all|226"]
+      },
+      {
+        "name": "Wailmer",
+        "visibility_rules": ["$dex_all|320", "$dex_starter|320"]
+      },
+      {
+        "name": "Wailord",
+        "visibility_rules": ["$dex_all|321"]
+      },
+      {
+        "name": "Feebas",
+        "visibility_rules": ["$dex_all|349", "$dex_starter|349"]
+      },
+      {
+        "name": "Milotic",
+        "visibility_rules": ["$dex_all|350"]
+      },
+      {
+        "name": "Clamperl",
+        "visibility_rules": ["$dex_all|366", "$dex_starter|366"]
+      },
+      {
+        "name": "Huntail",
+        "visibility_rules": ["$dex_all|367"]
+      },
+      {
+        "name": "Gorebyss",
+        "visibility_rules": ["$dex_all|368"]
+      },
+      {
+        "name": "Relicanth",
+        "visibility_rules": ["$dex_all|369", "$dex_starter|369"]
+      },
+      {
+        "name": "Luvdisc",
+        "visibility_rules": ["$dex_all|370", "$dex_starter|370"]
+      },
+      {
+        "name": "Kyogre",
+        "visibility_rules": ["$dex_all|382", "$dex_starter|382"]
+      },
+      {
+        "name": "Shellos",
+        "visibility_rules": ["$dex_all|422", "$dex_starter|422"]
+      },
+      {
+        "name": "Gastrodon",
+        "visibility_rules": ["$dex_all|423"]
+      },
+      {
+        "name": "Mantyke",
+        "visibility_rules": ["$dex_all|458", "$dex_starter|458"]
+      },
+      {
+        "name": "Basculin",
+        "visibility_rules": ["$dex_all|550", "$dex_starter|550"]
+      },
+      {
+        "name": "Frillish",
+        "visibility_rules": ["$dex_all|592", "$dex_starter|592"]
+      },
+      {
+        "name": "Jellicent",
+        "visibility_rules": ["$dex_all|593"]
+      },
+      {
+        "name": "Alomomola",
+        "visibility_rules": ["$dex_all|594", "$dex_starter|594"]
+      },
+      {
+        "name": "Tynamo",
+        "visibility_rules": ["$dex_all|602", "$dex_starter|602"]
+      },
+      {
+        "name": "Eelektrik",
+        "visibility_rules": ["$dex_all|603"]
+      },
+      {
+        "name": "Eelektross",
+        "visibility_rules": ["$dex_all|604"]
+      },
+      {
+        "name": "Skrelp",
+        "visibility_rules": ["$dex_all|690", "$dex_starter|690"]
+      },
+      {
+        "name": "Dragalge",
+        "visibility_rules": ["$dex_all|691"]
+      },
+      {
+        "name": "Pyukumuku",
+        "visibility_rules": ["$dex_all|771", "$dex_starter|771"]
+      },
+      {
+        "name": "Dhelmise",
+        "visibility_rules": ["$dex_all|781", "$dex_starter|781"]
+      },
+      {
+        "name": "Nihilego",
+        "visibility_rules": ["$dex_all|793", "$dex_starter|793"]
+      },
+      {
+        "name": "Arrokuda",
+        "visibility_rules": ["$dex_all|846", "$dex_starter|846"]
+      },
+      {
+        "name": "Barraskewda",
+        "visibility_rules": ["$dex_all|847"]
+      },
+      {
+        "name": "Cursola",
+        "visibility_rules": ["$dex_all|864"]
+      },
+      {
+        "name": "Pincurchin",
+        "visibility_rules": ["$dex_all|871", "$dex_starter|871"]
+      },
+      {
+        "name": "Arctovish",
+        "visibility_rules": ["$dex_all|883", "$dex_starter|883"]
+      },
+      {
+        "name": "Basculegion",
+        "visibility_rules": ["$dex_all|902"]
+      },
+      {
+        "name": "Overqwil",
+        "visibility_rules": ["$dex_all|904"]
+      },
+      {
+        "name": "Veluza",
+        "visibility_rules": ["$dex_all|976", "$dex_starter|976"]
+      },
+      {
+        "name": "Dondozo",
+        "visibility_rules": ["$dex_all|977", "$dex_starter|977"]
+      },
+      {
+        "name": "Galar Corsola",
+        "visibility_rules": ["$dex_all|4222", "$dex_starter|4222"]
+      },
+      {
+        "name": "Hisui Qwilfish",
+        "visibility_rules": ["$dex_all|6211", "$dex_starter|6211"]
+      },
+      {
+        "name": "Hisui Basculin",
+        "visibility_rules": ["$dex_all|6550", "$dex_starter|6550"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 115,
+        "y": 604
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Temple",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|29"],
+    "sections": [
+      {
+        "name": "Gastly",
+        "visibility_rules": ["$dex_all|92", "$dex_starter|92"]
+      },
+      {
+        "name": "Haunter",
+        "visibility_rules": ["$dex_all|93"]
+      },
+      {
+        "name": "Gengar",
+        "visibility_rules": ["$dex_all|94"]
+      },
+      {
+        "name": "Cubone",
+        "visibility_rules": ["$dex_all|104", "$dex_starter|104"]
+      },
+      {
+        "name": "Marowak",
+        "visibility_rules": ["$dex_all|105"]
+      },
+      {
+        "name": "Natu",
+        "visibility_rules": ["$dex_all|177", "$dex_starter|177"]
+      },
+      {
+        "name": "Xatu",
+        "visibility_rules": ["$dex_all|178"]
+      },
+      {
+        "name": "Baltoy",
+        "visibility_rules": ["$dex_all|343", "$dex_starter|343"]
+      },
+      {
+        "name": "Claydol",
+        "visibility_rules": ["$dex_all|344"]
+      },
+      {
+        "name": "Duskull",
+        "visibility_rules": ["$dex_all|355", "$dex_starter|355"]
+      },
+      {
+        "name": "Dusclops",
+        "visibility_rules": ["$dex_all|356"]
+      },
+      {
+        "name": "Chimecho",
+        "visibility_rules": ["$dex_all|358"]
+      },
+      {
+        "name": "Chingling",
+        "visibility_rules": ["$dex_all|433", "$dex_starter|433"]
+      },
+      {
+        "name": "Skorupi",
+        "visibility_rules": ["$dex_all|451", "$dex_starter|451"]
+      },
+      {
+        "name": "Drapion",
+        "visibility_rules": ["$dex_all|452"]
+      },
+      {
+        "name": "Dusknoir",
+        "visibility_rules": ["$dex_all|477"]
+      },
+      {
+        "name": "Regigigas",
+        "visibility_rules": ["$dex_all|486", "$dex_starter|486"]
+      },
+      {
+        "name": "Yamask",
+        "visibility_rules": ["$dex_all|562", "$dex_starter|562"]
+      },
+      {
+        "name": "Cofagrigus",
+        "visibility_rules": ["$dex_all|563"]
+      },
+      {
+        "name": "Litwick",
+        "visibility_rules": ["$dex_all|607", "$dex_starter|607"]
+      },
+      {
+        "name": "Lampent",
+        "visibility_rules": ["$dex_all|608"]
+      },
+      {
+        "name": "Chandelure",
+        "visibility_rules": ["$dex_all|609"]
+      },
+      {
+        "name": "Golett",
+        "visibility_rules": ["$dex_all|622", "$dex_starter|622"]
+      },
+      {
+        "name": "Golurk",
+        "visibility_rules": ["$dex_all|623"]
+      },
+      {
+        "name": "Honedge",
+        "visibility_rules": ["$dex_all|679", "$dex_starter|679"]
+      },
+      {
+        "name": "Doublade",
+        "visibility_rules": ["$dex_all|680"]
+      },
+      {
+        "name": "Aegislash",
+        "visibility_rules": ["$dex_all|681"]
+      },
+      {
+        "name": "Hoopa",
+        "visibility_rules": ["$dex_all|720", "$dex_starter|720"]
+      },
+      {
+        "name": "Tapu Koko",
+        "visibility_rules": ["$dex_all|785", "$dex_starter|785"]
+      },
+      {
+        "name": "Gimmighoul",
+        "visibility_rules": ["$dex_all|999", "$dex_starter|999"]
+      },
+      {
+        "name": "Gholdengo",
+        "visibility_rules": ["$dex_all|1000"]
+      },
+      {
+        "name": "Alola Marowak",
+        "visibility_rules": ["$dex_all|2105"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 345,
+        "y": 604
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Desert",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|14"],
+    "sections": [
+      {
+        "name": "Sandshrew",
+        "visibility_rules": ["$dex_all|27", "$dex_starter|27"]
+      },
+      {
+        "name": "Sandslash",
+        "visibility_rules": ["$dex_all|28"]
+      },
+      {
+        "name": "Doduo",
+        "visibility_rules": ["$dex_all|84", "$dex_starter|84"]
+      },
+      {
+        "name": "Dodrio",
+        "visibility_rules": ["$dex_all|85"]
+      },
+      {
+        "name": "Gligar",
+        "visibility_rules": ["$dex_all|207", "$dex_starter|207"]
+      },
+      {
+        "name": "Numel",
+        "visibility_rules": ["$dex_all|322", "$dex_starter|322"]
+      },
+      {
+        "name": "Camerupt",
+        "visibility_rules": ["$dex_all|323"]
+      },
+      {
+        "name": "Trapinch",
+        "visibility_rules": ["$dex_all|328", "$dex_starter|328"]
+      },
+      {
+        "name": "Vibrava",
+        "visibility_rules": ["$dex_all|329"]
+      },
+      {
+        "name": "Flygon",
+        "visibility_rules": ["$dex_all|330"]
+      },
+      {
+        "name": "Cacnea",
+        "visibility_rules": ["$dex_all|331", "$dex_starter|331"]
+      },
+      {
+        "name": "Cacturne",
+        "visibility_rules": ["$dex_all|332"]
+      },
+      {
+        "name": "Lileep",
+        "visibility_rules": ["$dex_all|345", "$dex_starter|345"]
+      },
+      {
+        "name": "Cradily",
+        "visibility_rules": ["$dex_all|346"]
+      },
+      {
+        "name": "Anorith",
+        "visibility_rules": ["$dex_all|347", "$dex_starter|347"]
+      },
+      {
+        "name": "Armaldo",
+        "visibility_rules": ["$dex_all|348"]
+      },
+      {
+        "name": "Regirock",
+        "visibility_rules": ["$dex_all|377", "$dex_starter|377"]
+      },
+      {
+        "name": "Gible",
+        "visibility_rules": ["$dex_all|443", "$dex_starter|443"]
+      },
+      {
+        "name": "Gabite",
+        "visibility_rules": ["$dex_all|444"]
+      },
+      {
+        "name": "Garchomp",
+        "visibility_rules": ["$dex_all|445"]
+      },
+      {
+        "name": "Hippopotas",
+        "visibility_rules": ["$dex_all|449", "$dex_starter|449"]
+      },
+      {
+        "name": "Hippowdon",
+        "visibility_rules": ["$dex_all|450"]
+      },
+      {
+        "name": "Skorupi",
+        "visibility_rules": ["$dex_all|451", "$dex_starter|451"]
+      },
+      {
+        "name": "Drapion",
+        "visibility_rules": ["$dex_all|452"]
+      },
+      {
+        "name": "Gliscor",
+        "visibility_rules": ["$dex_all|472"]
+      },
+      {
+        "name": "Sandile",
+        "visibility_rules": ["$dex_all|551", "$dex_starter|551"]
+      },
+      {
+        "name": "Krokorok",
+        "visibility_rules": ["$dex_all|552"]
+      },
+      {
+        "name": "Krookodile",
+        "visibility_rules": ["$dex_all|553"]
+      },
+      {
+        "name": "Darumaka",
+        "visibility_rules": ["$dex_all|554", "$dex_starter|554"]
+      },
+      {
+        "name": "Darmanitan",
+        "visibility_rules": ["$dex_all|555"]
+      },
+      {
+        "name": "Maractus",
+        "visibility_rules": ["$dex_all|556", "$dex_starter|556"]
+      },
+      {
+        "name": "Sigilyph",
+        "visibility_rules": ["$dex_all|561", "$dex_starter|561"]
+      },
+      {
+        "name": "Yamask",
+        "visibility_rules": ["$dex_all|562", "$dex_starter|562"]
+      },
+      {
+        "name": "Cofagrigus",
+        "visibility_rules": ["$dex_all|563"]
+      },
+      {
+        "name": "Helioptile",
+        "visibility_rules": ["$dex_all|694", "$dex_starter|694"]
+      },
+      {
+        "name": "Heliolisk",
+        "visibility_rules": ["$dex_all|695"]
+      },
+      {
+        "name": "Tapu Bulu",
+        "visibility_rules": ["$dex_all|787", "$dex_starter|787"]
+      },
+      {
+        "name": "Pheromosa",
+        "visibility_rules": ["$dex_all|795", "$dex_starter|795"]
+      },
+      {
+        "name": "Silicobra",
+        "visibility_rules": ["$dex_all|843", "$dex_starter|843"]
+      },
+      {
+        "name": "Sandaconda",
+        "visibility_rules": ["$dex_all|844"]
+      },
+      {
+        "name": "Stonjourner",
+        "visibility_rules": ["$dex_all|874", "$dex_starter|874"]
+      },
+      {
+        "name": "Bramblin",
+        "visibility_rules": ["$dex_all|946", "$dex_starter|946"]
+      },
+      {
+        "name": "Brambleghast",
+        "visibility_rules": ["$dex_all|947"]
+      },
+      {
+        "name": "Rellor",
+        "visibility_rules": ["$dex_all|953", "$dex_starter|953"]
+      },
+      {
+        "name": "Rabsca",
+        "visibility_rules": ["$dex_all|954"]
+      },
+      {
+        "name": "Orthworm",
+        "visibility_rules": ["$dex_all|968", "$dex_starter|968"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 575,
+        "y": 604
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Fairy Cave",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|28"],
+    "sections": [
+      {
+        "name": "Clefairy",
+        "visibility_rules": ["$dex_all|35"]
+      },
+      {
+        "name": "Clefable",
+        "visibility_rules": ["$dex_all|36"]
+      },
+      {
+        "name": "Jigglypuff",
+        "visibility_rules": ["$dex_all|39"]
+      },
+      {
+        "name": "Wigglytuff",
+        "visibility_rules": ["$dex_all|40"]
+      },
+      {
+        "name": "Cleffa",
+        "visibility_rules": ["$dex_starter|173"]
+      },
+      {
+        "name": "Igglybuff",
+        "visibility_rules": ["$dex_starter|174"]
+      },
+      {
+        "name": "Togepi",
+        "visibility_rules": ["$dex_starter|175"]
+      },
+      {
+        "name": "Togetic",
+        "visibility_rules": ["$dex_all|176"]
+      },
+      {
+        "name": "Marill",
+        "visibility_rules": ["$dex_all|183"]
+      },
+      {
+        "name": "Azumarill",
+        "visibility_rules": ["$dex_all|184"]
+      },
+      {
+        "name": "Ralts",
+        "visibility_rules": ["$dex_all|280", "$dex_starter|280"]
+      },
+      {
+        "name": "Kirlia",
+        "visibility_rules": ["$dex_all|281"]
+      },
+      {
+        "name": "Gardevoir",
+        "visibility_rules": ["$dex_all|282"]
+      },
+      {
+        "name": "Azurill",
+        "visibility_rules": ["$dex_starter|298"]
+      },
+      {
+        "name": "Mawile",
+        "visibility_rules": ["$dex_all|303", "$dex_starter|303"]
+      },
+      {
+        "name": "Togekiss",
+        "visibility_rules": ["$dex_all|468"]
+      },
+      {
+        "name": "Gallade",
+        "visibility_rules": ["$dex_all|475"]
+      },
+      {
+        "name": "Audino",
+        "visibility_rules": ["$dex_all|531", "$dex_starter|531"]
+      },
+      {
+        "name": "Fennekin",
+        "visibility_rules": ["$dex_all|653", "$dex_starter|653"]
+      },
+      {
+        "name": "Braixen",
+        "visibility_rules": ["$dex_all|654"]
+      },
+      {
+        "name": "Delphox",
+        "visibility_rules": ["$dex_all|655"]
+      },
+      {
+        "name": "Spritzee",
+        "visibility_rules": ["$dex_all|682", "$dex_starter|682"]
+      },
+      {
+        "name": "Aromatisse",
+        "visibility_rules": ["$dex_all|683"]
+      },
+      {
+        "name": "Swirlix",
+        "visibility_rules": ["$dex_all|684", "$dex_starter|684"]
+      },
+      {
+        "name": "Slurpuff",
+        "visibility_rules": ["$dex_all|685"]
+      },
+      {
+        "name": "Carbink",
+        "visibility_rules": ["$dex_all|703", "$dex_starter|703"]
+      },
+      {
+        "name": "Xerneas",
+        "visibility_rules": ["$dex_all|716", "$dex_starter|716"]
+      },
+      {
+        "name": "Diancie",
+        "visibility_rules": ["$dex_all|719", "$dex_starter|719"]
+      },
+      {
+        "name": "Cutiefly",
+        "visibility_rules": ["$dex_all|742", "$dex_starter|742"]
+      },
+      {
+        "name": "Ribombee",
+        "visibility_rules": ["$dex_all|743"]
+      },
+      {
+        "name": "Morelull",
+        "visibility_rules": ["$dex_all|755", "$dex_starter|755"]
+      },
+      {
+        "name": "Shiinotic",
+        "visibility_rules": ["$dex_all|756"]
+      },
+      {
+        "name": "Comfey",
+        "visibility_rules": ["$dex_all|764", "$dex_starter|764"]
+      },
+      {
+        "name": "Hatenna",
+        "visibility_rules": ["$dex_all|856", "$dex_starter|856"]
+      },
+      {
+        "name": "Hattrem",
+        "visibility_rules": ["$dex_all|857"]
+      },
+      {
+        "name": "Hatterene",
+        "visibility_rules": ["$dex_all|858"]
+      },
+      {
+        "name": "Impidimp",
+        "visibility_rules": ["$dex_all|859", "$dex_starter|859"]
+      },
+      {
+        "name": "Morgrem",
+        "visibility_rules": ["$dex_all|860"]
+      },
+      {
+        "name": "Grimmsnarl",
+        "visibility_rules": ["$dex_all|861"]
+      },
+      {
+        "name": "Milcery",
+        "visibility_rules": ["$dex_all|868", "$dex_starter|868"]
+      },
+      {
+        "name": "Alcremie",
+        "visibility_rules": ["$dex_all|869"]
+      },
+      {
+        "name": "Eternal Floette",
+        "visibility_rules": ["$dex_all|2670", "$dex_starter|2670"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 805,
+        "y": 604
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Mountain",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|11"],
+    "sections": [
+      {
+        "name": "Pidgey",
+        "visibility_rules": ["$dex_all|16", "$dex_starter|16"]
+      },
+      {
+        "name": "Pidgeotto",
+        "visibility_rules": ["$dex_all|17"]
+      },
+      {
+        "name": "Pidgeot",
+        "visibility_rules": ["$dex_all|18"]
+      },
+      {
+        "name": "Spearow",
+        "visibility_rules": ["$dex_all|21", "$dex_starter|21"]
+      },
+      {
+        "name": "Fearow",
+        "visibility_rules": ["$dex_all|22"]
+      },
+      {
+        "name": "Machop",
+        "visibility_rules": ["$dex_all|66", "$dex_starter|66"]
+      },
+      {
+        "name": "Machoke",
+        "visibility_rules": ["$dex_all|67"]
+      },
+      {
+        "name": "Machamp",
+        "visibility_rules": ["$dex_all|68"]
+      },
+      {
+        "name": "Geodude",
+        "visibility_rules": ["$dex_all|74", "$dex_starter|74"]
+      },
+      {
+        "name": "Graveler",
+        "visibility_rules": ["$dex_all|75"]
+      },
+      {
+        "name": "Golem",
+        "visibility_rules": ["$dex_all|76"]
+      },
+      {
+        "name": "Rhyhorn",
+        "visibility_rules": ["$dex_all|111", "$dex_starter|111"]
+      },
+      {
+        "name": "Rhydon",
+        "visibility_rules": ["$dex_all|112"]
+      },
+      {
+        "name": "Natu",
+        "visibility_rules": ["$dex_all|177", "$dex_starter|177"]
+      },
+      {
+        "name": "Xatu",
+        "visibility_rules": ["$dex_all|178"]
+      },
+      {
+        "name": "Murkrow",
+        "visibility_rules": ["$dex_all|198", "$dex_starter|198"]
+      },
+      {
+        "name": "Slugma",
+        "visibility_rules": ["$dex_all|218", "$dex_starter|218"]
+      },
+      {
+        "name": "Magcargo",
+        "visibility_rules": ["$dex_all|219"]
+      },
+      {
+        "name": "Skarmory",
+        "visibility_rules": ["$dex_all|227", "$dex_starter|227"]
+      },
+      {
+        "name": "Larvitar",
+        "visibility_rules": ["$dex_all|246", "$dex_starter|246"]
+      },
+      {
+        "name": "Pupitar",
+        "visibility_rules": ["$dex_all|247"]
+      },
+      {
+        "name": "Tyranitar",
+        "visibility_rules": ["$dex_all|248"]
+      },
+      {
+        "name": "Ho Oh",
+        "visibility_rules": ["$dex_all|250", "$dex_starter|250"]
+      },
+      {
+        "name": "Torchic",
+        "visibility_rules": ["$dex_all|255", "$dex_starter|255"]
+      },
+      {
+        "name": "Combusken",
+        "visibility_rules": ["$dex_all|256"]
+      },
+      {
+        "name": "Blaziken",
+        "visibility_rules": ["$dex_all|257"]
+      },
+      {
+        "name": "Taillow",
+        "visibility_rules": ["$dex_all|276", "$dex_starter|276"]
+      },
+      {
+        "name": "Swellow",
+        "visibility_rules": ["$dex_all|277"]
+      },
+      {
+        "name": "Aron",
+        "visibility_rules": ["$dex_all|304", "$dex_starter|304"]
+      },
+      {
+        "name": "Lairon",
+        "visibility_rules": ["$dex_all|305"]
+      },
+      {
+        "name": "Aggron",
+        "visibility_rules": ["$dex_all|306"]
+      },
+      {
+        "name": "Spoink",
+        "visibility_rules": ["$dex_all|325", "$dex_starter|325"]
+      },
+      {
+        "name": "Grumpig",
+        "visibility_rules": ["$dex_all|326"]
+      },
+      {
+        "name": "Swablu",
+        "visibility_rules": ["$dex_all|333", "$dex_starter|333"]
+      },
+      {
+        "name": "Altaria",
+        "visibility_rules": ["$dex_all|334"]
+      },
+      {
+        "name": "Starly",
+        "visibility_rules": ["$dex_all|396", "$dex_starter|396"]
+      },
+      {
+        "name": "Staravia",
+        "visibility_rules": ["$dex_all|397"]
+      },
+      {
+        "name": "Staraptor",
+        "visibility_rules": ["$dex_all|398"]
+      },
+      {
+        "name": "Cranidos",
+        "visibility_rules": ["$dex_all|408", "$dex_starter|408"]
+      },
+      {
+        "name": "Rampardos",
+        "visibility_rules": ["$dex_all|409"]
+      },
+      {
+        "name": "Shieldon",
+        "visibility_rules": ["$dex_all|410", "$dex_starter|410"]
+      },
+      {
+        "name": "Bastiodon",
+        "visibility_rules": ["$dex_all|411"]
+      },
+      {
+        "name": "Honchkrow",
+        "visibility_rules": ["$dex_all|430"]
+      },
+      {
+        "name": "Gible",
+        "visibility_rules": ["$dex_all|443", "$dex_starter|443"]
+      },
+      {
+        "name": "Gabite",
+        "visibility_rules": ["$dex_all|444"]
+      },
+      {
+        "name": "Garchomp",
+        "visibility_rules": ["$dex_all|445"]
+      },
+      {
+        "name": "Rhyperior",
+        "visibility_rules": ["$dex_all|464"]
+      },
+      {
+        "name": "Pidove",
+        "visibility_rules": ["$dex_all|519", "$dex_starter|519"]
+      },
+      {
+        "name": "Tranquill",
+        "visibility_rules": ["$dex_all|520"]
+      },
+      {
+        "name": "Unfezant",
+        "visibility_rules": ["$dex_all|521"]
+      },
+      {
+        "name": "Roggenrola",
+        "visibility_rules": ["$dex_all|524", "$dex_starter|524"]
+      },
+      {
+        "name": "Boldore",
+        "visibility_rules": ["$dex_all|525"]
+      },
+      {
+        "name": "Gigalith",
+        "visibility_rules": ["$dex_all|526"]
+      },
+      {
+        "name": "Archen",
+        "visibility_rules": ["$dex_starter|566"]
+      },
+      {
+        "name": "Archeops",
+        "visibility_rules": ["$dex_all|567"]
+      },
+      {
+        "name": "Axew",
+        "visibility_rules": ["$dex_all|610", "$dex_starter|610"]
+      },
+      {
+        "name": "Fraxure",
+        "visibility_rules": ["$dex_all|611"]
+      },
+      {
+        "name": "Haxorus",
+        "visibility_rules": ["$dex_all|612"]
+      },
+      {
+        "name": "Rufflet",
+        "visibility_rules": ["$dex_all|627", "$dex_starter|627"]
+      },
+      {
+        "name": "Braviary",
+        "visibility_rules": ["$dex_all|628"]
+      },
+      {
+        "name": "Vullaby",
+        "visibility_rules": ["$dex_all|629", "$dex_starter|629"]
+      },
+      {
+        "name": "Mandibuzz",
+        "visibility_rules": ["$dex_all|630"]
+      },
+      {
+        "name": "Tornadus",
+        "visibility_rules": ["$dex_all|641", "$dex_starter|641"]
+      },
+      {
+        "name": "Fletchling",
+        "visibility_rules": ["$dex_all|661", "$dex_starter|661"]
+      },
+      {
+        "name": "Fletchinder",
+        "visibility_rules": ["$dex_all|662"]
+      },
+      {
+        "name": "Talonflame",
+        "visibility_rules": ["$dex_all|663"]
+      },
+      {
+        "name": "Skiddo",
+        "visibility_rules": ["$dex_all|672", "$dex_starter|672"]
+      },
+      {
+        "name": "Gogoat",
+        "visibility_rules": ["$dex_all|673"]
+      },
+      {
+        "name": "Hawlucha",
+        "visibility_rules": ["$dex_all|701", "$dex_starter|701"]
+      },
+      {
+        "name": "Rookidee",
+        "visibility_rules": ["$dex_all|821", "$dex_starter|821"]
+      },
+      {
+        "name": "Corvisquire",
+        "visibility_rules": ["$dex_all|822"]
+      },
+      {
+        "name": "Corviknight",
+        "visibility_rules": ["$dex_all|823"]
+      },
+      {
+        "name": "Nacli",
+        "visibility_rules": ["$dex_all|932", "$dex_starter|932"]
+      },
+      {
+        "name": "Naclstack",
+        "visibility_rules": ["$dex_all|933"]
+      },
+      {
+        "name": "Garganacl",
+        "visibility_rules": ["$dex_all|934"]
+      },
+      {
+        "name": "Flittle",
+        "visibility_rules": ["$dex_all|955", "$dex_starter|955"]
+      },
+      {
+        "name": "Espathra",
+        "visibility_rules": ["$dex_all|956"]
+      },
+      {
+        "name": "Bombirdier",
+        "visibility_rules": ["$dex_all|962", "$dex_starter|962"]
+      },
+      {
+        "name": "Ting Lu",
+        "visibility_rules": ["$dex_all|1003", "$dex_starter|1003"]
+      },
+      {
+        "name": "Ogerpon",
+        "visibility_rules": ["$dex_all|1017", "$dex_starter|1017"]
+      },
+      {
+        "name": "Hisui Braviary",
+        "visibility_rules": ["$dex_all|6628"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1035,
+        "y": 604
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Ruins",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|22"],
+    "sections": [
+      {
+        "name": "Abra",
+        "visibility_rules": ["$dex_all|63", "$dex_starter|63"]
+      },
+      {
+        "name": "Kadabra",
+        "visibility_rules": ["$dex_all|64"]
+      },
+      {
+        "name": "Alakazam",
+        "visibility_rules": ["$dex_all|65"]
+      },
+      {
+        "name": "Drowzee",
+        "visibility_rules": ["$dex_all|96", "$dex_starter|96"]
+      },
+      {
+        "name": "Hypno",
+        "visibility_rules": ["$dex_all|97"]
+      },
+      {
+        "name": "Mr Mime",
+        "visibility_rules": ["$dex_all|122"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_starter|133"]
+      },
+      {
+        "name": "Natu",
+        "visibility_rules": ["$dex_all|177", "$dex_starter|177"]
+      },
+      {
+        "name": "Xatu",
+        "visibility_rules": ["$dex_all|178"]
+      },
+      {
+        "name": "Espeon",
+        "visibility_rules": ["$dex_all|196"]
+      },
+      {
+        "name": "Unown",
+        "visibility_rules": ["$dex_all|201", "$dex_starter|201"]
+      },
+      {
+        "name": "Wobbuffet",
+        "visibility_rules": ["$dex_all|202"]
+      },
+      {
+        "name": "Spoink",
+        "visibility_rules": ["$dex_all|325", "$dex_starter|325"]
+      },
+      {
+        "name": "Grumpig",
+        "visibility_rules": ["$dex_all|326"]
+      },
+      {
+        "name": "Baltoy",
+        "visibility_rules": ["$dex_all|343", "$dex_starter|343"]
+      },
+      {
+        "name": "Claydol",
+        "visibility_rules": ["$dex_all|344"]
+      },
+      {
+        "name": "Wynaut",
+        "visibility_rules": ["$dex_starter|360"]
+      },
+      {
+        "name": "Registeel",
+        "visibility_rules": ["$dex_all|379", "$dex_starter|379"]
+      },
+      {
+        "name": "Mime Jr",
+        "visibility_rules": ["$dex_starter|439"]
+      },
+      {
+        "name": "Sigilyph",
+        "visibility_rules": ["$dex_all|561", "$dex_starter|561"]
+      },
+      {
+        "name": "Archen",
+        "visibility_rules": ["$dex_all|566", "$dex_starter|566"]
+      },
+      {
+        "name": "Archeops",
+        "visibility_rules": ["$dex_all|567"]
+      },
+      {
+        "name": "Gothita",
+        "visibility_rules": ["$dex_all|574", "$dex_starter|574"]
+      },
+      {
+        "name": "Gothorita",
+        "visibility_rules": ["$dex_all|575"]
+      },
+      {
+        "name": "Gothitelle",
+        "visibility_rules": ["$dex_all|576"]
+      },
+      {
+        "name": "Elgyem",
+        "visibility_rules": ["$dex_all|605", "$dex_starter|605"]
+      },
+      {
+        "name": "Beheeyem",
+        "visibility_rules": ["$dex_all|606"]
+      },
+      {
+        "name": "Runerigus",
+        "visibility_rules": ["$dex_all|867"]
+      },
+      {
+        "name": "Stonjourner",
+        "visibility_rules": ["$dex_all|874", "$dex_starter|874"]
+      },
+      {
+        "name": "Tinkatink",
+        "visibility_rules": ["$dex_all|957", "$dex_starter|957"]
+      },
+      {
+        "name": "Tinkatuff",
+        "visibility_rules": ["$dex_all|958"]
+      },
+      {
+        "name": "Tinkaton",
+        "visibility_rules": ["$dex_all|959"]
+      },
+      {
+        "name": "Koraidon",
+        "visibility_rules": ["$dex_all|1007", "$dex_starter|1007"]
+      },
+      {
+        "name": "Fezandipiti",
+        "visibility_rules": ["$dex_all|1016", "$dex_starter|1016"]
+      },
+      {
+        "name": "Galar Yamask",
+        "visibility_rules": ["$dex_all|4562", "$dex_starter|4562"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1265,
+        "y": 604
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Snowy Forest",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|31"],
+    "sections": [
+      {
+        "name": "Sentret",
+        "visibility_rules": ["$dex_all|161", "$dex_starter|161"]
+      },
+      {
+        "name": "Furret",
+        "visibility_rules": ["$dex_all|162"]
+      },
+      {
+        "name": "Sneasel",
+        "visibility_rules": ["$dex_all|215", "$dex_starter|215"]
+      },
+      {
+        "name": "Teddiursa",
+        "visibility_rules": ["$dex_all|216", "$dex_starter|216"]
+      },
+      {
+        "name": "Ursaring",
+        "visibility_rules": ["$dex_all|217"]
+      },
+      {
+        "name": "Swinub",
+        "visibility_rules": ["$dex_all|220", "$dex_starter|220"]
+      },
+      {
+        "name": "Piloswine",
+        "visibility_rules": ["$dex_all|221"]
+      },
+      {
+        "name": "Delibird",
+        "visibility_rules": ["$dex_all|225", "$dex_starter|225"]
+      },
+      {
+        "name": "Stantler",
+        "visibility_rules": ["$dex_all|234", "$dex_starter|234"]
+      },
+      {
+        "name": "Snorunt",
+        "visibility_rules": ["$dex_starter|361"]
+      },
+      {
+        "name": "Glalie",
+        "visibility_rules": ["$dex_all|362"]
+      },
+      {
+        "name": "Mime Jr",
+        "visibility_rules": ["$dex_starter|439"]
+      },
+      {
+        "name": "Snover",
+        "visibility_rules": ["$dex_all|459", "$dex_starter|459"]
+      },
+      {
+        "name": "Abomasnow",
+        "visibility_rules": ["$dex_all|460"]
+      },
+      {
+        "name": "Weavile",
+        "visibility_rules": ["$dex_all|461"]
+      },
+      {
+        "name": "Mamoswine",
+        "visibility_rules": ["$dex_all|473"]
+      },
+      {
+        "name": "Froslass",
+        "visibility_rules": ["$dex_all|478"]
+      },
+      {
+        "name": "Cubchoo",
+        "visibility_rules": ["$dex_all|613", "$dex_starter|613"]
+      },
+      {
+        "name": "Beartic",
+        "visibility_rules": ["$dex_all|614"]
+      },
+      {
+        "name": "Cryogonal",
+        "visibility_rules": ["$dex_all|615", "$dex_starter|615"]
+      },
+      {
+        "name": "Skiddo",
+        "visibility_rules": ["$dex_all|672", "$dex_starter|672"]
+      },
+      {
+        "name": "Gogoat",
+        "visibility_rules": ["$dex_all|673"]
+      },
+      {
+        "name": "Bergmite",
+        "visibility_rules": ["$dex_starter|712"]
+      },
+      {
+        "name": "Avalugg",
+        "visibility_rules": ["$dex_all|713"]
+      },
+      {
+        "name": "Mr Rime",
+        "visibility_rules": ["$dex_all|866"]
+      },
+      {
+        "name": "Snom",
+        "visibility_rules": ["$dex_all|872", "$dex_starter|872"]
+      },
+      {
+        "name": "Frosmoth",
+        "visibility_rules": ["$dex_all|873"]
+      },
+      {
+        "name": "Eiscue",
+        "visibility_rules": ["$dex_all|875", "$dex_starter|875"]
+      },
+      {
+        "name": "Arctozolt",
+        "visibility_rules": ["$dex_all|881", "$dex_starter|881"]
+      },
+      {
+        "name": "Zacian",
+        "visibility_rules": ["$dex_all|888", "$dex_starter|888"]
+      },
+      {
+        "name": "Glastrier",
+        "visibility_rules": ["$dex_all|896", "$dex_starter|896"]
+      },
+      {
+        "name": "Wyrdeer",
+        "visibility_rules": ["$dex_all|899"]
+      },
+      {
+        "name": "Ursaluna",
+        "visibility_rules": ["$dex_all|901"]
+      },
+      {
+        "name": "Sneasler",
+        "visibility_rules": ["$dex_all|903"]
+      },
+      {
+        "name": "Chien Pao",
+        "visibility_rules": ["$dex_all|1002", "$dex_starter|1002"]
+      },
+      {
+        "name": "Alola Sandshrew",
+        "visibility_rules": ["$dex_all|2027", "$dex_starter|2027"]
+      },
+      {
+        "name": "Alola Sandslash",
+        "visibility_rules": ["$dex_all|2028"]
+      },
+      {
+        "name": "Alola Vulpix",
+        "visibility_rules": ["$dex_all|2037", "$dex_starter|2037"]
+      },
+      {
+        "name": "Alola Ninetales",
+        "visibility_rules": ["$dex_all|2038"]
+      },
+      {
+        "name": "Galar Mr Mime",
+        "visibility_rules": ["$dex_all|4122"]
+      },
+      {
+        "name": "Galar Articuno",
+        "visibility_rules": ["$dex_all|4144", "$dex_starter|4144"]
+      },
+      {
+        "name": "Galar Darumaka",
+        "visibility_rules": ["$dex_all|4554", "$dex_starter|4554"]
+      },
+      {
+        "name": "Galar Darmanitan",
+        "visibility_rules": ["$dex_all|4555"]
+      },
+      {
+        "name": "Hisui Sneasel",
+        "visibility_rules": ["$dex_all|6215", "$dex_starter|6215"]
+      },
+      {
+        "name": "Hisui Zorua",
+        "visibility_rules": ["$dex_all|6570", "$dex_starter|6570"]
+      },
+      {
+        "name": "Hisui Zoroark",
+        "visibility_rules": ["$dex_all|6571"]
+      },
+      {
+        "name": "Hisui Avalugg",
+        "visibility_rules": ["$dex_all|6713"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 115,
+        "y": 724
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Space",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|25"],
+    "sections": [
+      {
+        "name": "Clefairy",
+        "visibility_rules": ["$dex_all|35"]
+      },
+      {
+        "name": "Clefable",
+        "visibility_rules": ["$dex_all|36"]
+      },
+      {
+        "name": "Staryu",
+        "visibility_rules": ["$dex_all|120", "$dex_starter|120"]
+      },
+      {
+        "name": "Starmie",
+        "visibility_rules": ["$dex_all|121"]
+      },
+      {
+        "name": "Porygon",
+        "visibility_rules": ["$dex_all|137", "$dex_starter|137"]
+      },
+      {
+        "name": "Cleffa",
+        "visibility_rules": ["$dex_all|173", "$dex_starter|173"]
+      },
+      {
+        "name": "Porygon2",
+        "visibility_rules": ["$dex_all|233"]
+      },
+      {
+        "name": "Lunatone",
+        "visibility_rules": ["$dex_all|337", "$dex_starter|337"]
+      },
+      {
+        "name": "Solrock",
+        "visibility_rules": ["$dex_all|338", "$dex_starter|338"]
+      },
+      {
+        "name": "Baltoy",
+        "visibility_rules": ["$dex_all|343", "$dex_starter|343"]
+      },
+      {
+        "name": "Claydol",
+        "visibility_rules": ["$dex_all|344"]
+      },
+      {
+        "name": "Beldum",
+        "visibility_rules": ["$dex_all|374", "$dex_starter|374"]
+      },
+      {
+        "name": "Metang",
+        "visibility_rules": ["$dex_all|375"]
+      },
+      {
+        "name": "Metagross",
+        "visibility_rules": ["$dex_all|376"]
+      },
+      {
+        "name": "Rayquaza",
+        "visibility_rules": ["$dex_all|384", "$dex_starter|384"]
+      },
+      {
+        "name": "Bronzor",
+        "visibility_rules": ["$dex_all|436", "$dex_starter|436"]
+      },
+      {
+        "name": "Bronzong",
+        "visibility_rules": ["$dex_all|437"]
+      },
+      {
+        "name": "Porygon Z",
+        "visibility_rules": ["$dex_all|474"]
+      },
+      {
+        "name": "Munna",
+        "visibility_rules": ["$dex_all|517", "$dex_starter|517"]
+      },
+      {
+        "name": "Musharna",
+        "visibility_rules": ["$dex_all|518"]
+      },
+      {
+        "name": "Sigilyph",
+        "visibility_rules": ["$dex_all|561", "$dex_starter|561"]
+      },
+      {
+        "name": "Solosis",
+        "visibility_rules": ["$dex_all|577", "$dex_starter|577"]
+      },
+      {
+        "name": "Duosion",
+        "visibility_rules": ["$dex_all|578"]
+      },
+      {
+        "name": "Reuniclus",
+        "visibility_rules": ["$dex_all|579"]
+      },
+      {
+        "name": "Elgyem",
+        "visibility_rules": ["$dex_all|605", "$dex_starter|605"]
+      },
+      {
+        "name": "Beheeyem",
+        "visibility_rules": ["$dex_all|606"]
+      },
+      {
+        "name": "Minior",
+        "visibility_rules": ["$dex_all|774", "$dex_starter|774"]
+      },
+      {
+        "name": "Cosmog",
+        "visibility_rules": ["$dex_all|789", "$dex_starter|789"]
+      },
+      {
+        "name": "Cosmoem",
+        "visibility_rules": ["$dex_all|790"]
+      },
+      {
+        "name": "Solgaleo",
+        "visibility_rules": ["$dex_all|791"]
+      },
+      {
+        "name": "Lunala",
+        "visibility_rules": ["$dex_all|792"]
+      },
+      {
+        "name": "Celesteela",
+        "visibility_rules": ["$dex_all|797", "$dex_starter|797"]
+      },
+      {
+        "name": "Necrozma",
+        "visibility_rules": ["$dex_all|800", "$dex_starter|800"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 345,
+        "y": 724
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Volcano",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|18"],
+    "sections": [
+      {
+        "name": "Charmander",
+        "visibility_rules": ["$dex_all|4", "$dex_starter|4"]
+      },
+      {
+        "name": "Charmeleon",
+        "visibility_rules": ["$dex_all|5"]
+      },
+      {
+        "name": "Charizard",
+        "visibility_rules": ["$dex_all|6"]
+      },
+      {
+        "name": "Vulpix",
+        "visibility_rules": ["$dex_all|37", "$dex_starter|37"]
+      },
+      {
+        "name": "Ninetales",
+        "visibility_rules": ["$dex_all|38"]
+      },
+      {
+        "name": "Growlithe",
+        "visibility_rules": ["$dex_all|58", "$dex_starter|58"]
+      },
+      {
+        "name": "Arcanine",
+        "visibility_rules": ["$dex_all|59"]
+      },
+      {
+        "name": "Ponyta",
+        "visibility_rules": ["$dex_all|77", "$dex_starter|77"]
+      },
+      {
+        "name": "Rapidash",
+        "visibility_rules": ["$dex_all|78"]
+      },
+      {
+        "name": "Magmar",
+        "visibility_rules": ["$dex_all|126"]
+      },
+      {
+        "name": "Eevee",
+        "visibility_rules": ["$dex_starter|133"]
+      },
+      {
+        "name": "Flareon",
+        "visibility_rules": ["$dex_all|136"]
+      },
+      {
+        "name": "Moltres",
+        "visibility_rules": ["$dex_all|146", "$dex_starter|146"]
+      },
+      {
+        "name": "Cyndaquil",
+        "visibility_rules": ["$dex_all|155", "$dex_starter|155"]
+      },
+      {
+        "name": "Quilava",
+        "visibility_rules": ["$dex_all|156"]
+      },
+      {
+        "name": "Typhlosion",
+        "visibility_rules": ["$dex_all|157"]
+      },
+      {
+        "name": "Slugma",
+        "visibility_rules": ["$dex_all|218", "$dex_starter|218"]
+      },
+      {
+        "name": "Magcargo",
+        "visibility_rules": ["$dex_all|219"]
+      },
+      {
+        "name": "Magby",
+        "visibility_rules": ["$dex_starter|240"]
+      },
+      {
+        "name": "Poochyena",
+        "visibility_rules": ["$dex_all|261", "$dex_starter|261"]
+      },
+      {
+        "name": "Mightyena",
+        "visibility_rules": ["$dex_all|262"]
+      },
+      {
+        "name": "Meditite",
+        "visibility_rules": ["$dex_all|307", "$dex_starter|307"]
+      },
+      {
+        "name": "Medicham",
+        "visibility_rules": ["$dex_all|308"]
+      },
+      {
+        "name": "Numel",
+        "visibility_rules": ["$dex_all|322", "$dex_starter|322"]
+      },
+      {
+        "name": "Camerupt",
+        "visibility_rules": ["$dex_all|323"]
+      },
+      {
+        "name": "Torkoal",
+        "visibility_rules": ["$dex_all|324", "$dex_starter|324"]
+      },
+      {
+        "name": "Spoink",
+        "visibility_rules": ["$dex_all|325", "$dex_starter|325"]
+      },
+      {
+        "name": "Grumpig",
+        "visibility_rules": ["$dex_all|326"]
+      },
+      {
+        "name": "Swablu",
+        "visibility_rules": ["$dex_all|333", "$dex_starter|333"]
+      },
+      {
+        "name": "Altaria",
+        "visibility_rules": ["$dex_all|334"]
+      },
+      {
+        "name": "Chimchar",
+        "visibility_rules": ["$dex_all|390", "$dex_starter|390"]
+      },
+      {
+        "name": "Monferno",
+        "visibility_rules": ["$dex_all|391"]
+      },
+      {
+        "name": "Infernape",
+        "visibility_rules": ["$dex_all|392"]
+      },
+      {
+        "name": "Magmortar",
+        "visibility_rules": ["$dex_all|467"]
+      },
+      {
+        "name": "Heatran",
+        "visibility_rules": ["$dex_all|485", "$dex_starter|485"]
+      },
+      {
+        "name": "Tepig",
+        "visibility_rules": ["$dex_all|498", "$dex_starter|498"]
+      },
+      {
+        "name": "Pignite",
+        "visibility_rules": ["$dex_all|499"]
+      },
+      {
+        "name": "Emboar",
+        "visibility_rules": ["$dex_all|500"]
+      },
+      {
+        "name": "Pansear",
+        "visibility_rules": ["$dex_all|513", "$dex_starter|513"]
+      },
+      {
+        "name": "Simisear",
+        "visibility_rules": ["$dex_all|514"]
+      },
+      {
+        "name": "Heatmor",
+        "visibility_rules": ["$dex_all|631", "$dex_starter|631"]
+      },
+      {
+        "name": "Larvesta",
+        "visibility_rules": ["$dex_all|636", "$dex_starter|636"]
+      },
+      {
+        "name": "Volcarona",
+        "visibility_rules": ["$dex_all|637"]
+      },
+      {
+        "name": "Reshiram",
+        "visibility_rules": ["$dex_all|643", "$dex_starter|643"]
+      },
+      {
+        "name": "Fennekin",
+        "visibility_rules": ["$dex_all|653", "$dex_starter|653"]
+      },
+      {
+        "name": "Braixen",
+        "visibility_rules": ["$dex_all|654"]
+      },
+      {
+        "name": "Delphox",
+        "visibility_rules": ["$dex_all|655"]
+      },
+      {
+        "name": "Volcanion",
+        "visibility_rules": ["$dex_all|721", "$dex_starter|721"]
+      },
+      {
+        "name": "Litten",
+        "visibility_rules": ["$dex_all|725", "$dex_starter|725"]
+      },
+      {
+        "name": "Torracat",
+        "visibility_rules": ["$dex_all|726"]
+      },
+      {
+        "name": "Incineroar",
+        "visibility_rules": ["$dex_all|727"]
+      },
+      {
+        "name": "Salandit",
+        "visibility_rules": ["$dex_all|757", "$dex_starter|757"]
+      },
+      {
+        "name": "Salazzle",
+        "visibility_rules": ["$dex_all|758"]
+      },
+      {
+        "name": "Turtonator",
+        "visibility_rules": ["$dex_all|776", "$dex_starter|776"]
+      },
+      {
+        "name": "Scorbunny",
+        "visibility_rules": ["$dex_all|813", "$dex_starter|813"]
+      },
+      {
+        "name": "Raboot",
+        "visibility_rules": ["$dex_all|814"]
+      },
+      {
+        "name": "Cinderace",
+        "visibility_rules": ["$dex_all|815"]
+      },
+      {
+        "name": "Rolycoly",
+        "visibility_rules": ["$dex_all|837", "$dex_starter|837"]
+      },
+      {
+        "name": "Carkol",
+        "visibility_rules": ["$dex_all|838"]
+      },
+      {
+        "name": "Coalossal",
+        "visibility_rules": ["$dex_all|839"]
+      },
+      {
+        "name": "Charcadet",
+        "visibility_rules": ["$dex_all|935", "$dex_starter|935"]
+      },
+      {
+        "name": "Armarouge",
+        "visibility_rules": ["$dex_all|936"]
+      },
+      {
+        "name": "Ceruledge",
+        "visibility_rules": ["$dex_all|937"]
+      },
+      {
+        "name": "Chi Yu",
+        "visibility_rules": ["$dex_all|1004", "$dex_starter|1004"]
+      },
+      {
+        "name": "Alola Diglett",
+        "visibility_rules": ["$dex_all|2050", "$dex_starter|2050"]
+      },
+      {
+        "name": "Alola Dugtrio",
+        "visibility_rules": ["$dex_all|2051"]
+      },
+      {
+        "name": "Hisui Growlithe",
+        "visibility_rules": ["$dex_all|6058", "$dex_starter|6058"]
+      },
+      {
+        "name": "Hisui Arcanine",
+        "visibility_rules": ["$dex_all|6059"]
+      },
+      {
+        "name": "Hisui Typhlosion",
+        "visibility_rules": ["$dex_all|6157"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 575,
+        "y": 724
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Wasteland",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|23"],
+    "sections": [
+      {
+        "name": "Aerodactyl",
+        "visibility_rules": ["$dex_all|142", "$dex_starter|142"]
+      },
+      {
+        "name": "Dratini",
+        "visibility_rules": ["$dex_all|147", "$dex_starter|147"]
+      },
+      {
+        "name": "Dragonair",
+        "visibility_rules": ["$dex_all|148"]
+      },
+      {
+        "name": "Dragonite",
+        "visibility_rules": ["$dex_all|149"]
+      },
+      {
+        "name": "Larvitar",
+        "visibility_rules": ["$dex_all|246", "$dex_starter|246"]
+      },
+      {
+        "name": "Pupitar",
+        "visibility_rules": ["$dex_all|247"]
+      },
+      {
+        "name": "Tyranitar",
+        "visibility_rules": ["$dex_all|248"]
+      },
+      {
+        "name": "Trapinch",
+        "visibility_rules": ["$dex_starter|328"]
+      },
+      {
+        "name": "Vibrava",
+        "visibility_rules": ["$dex_all|329"]
+      },
+      {
+        "name": "Flygon",
+        "visibility_rules": ["$dex_all|330"]
+      },
+      {
+        "name": "Swablu",
+        "visibility_rules": ["$dex_all|333", "$dex_starter|333"]
+      },
+      {
+        "name": "Altaria",
+        "visibility_rules": ["$dex_all|334"]
+      },
+      {
+        "name": "Bagon",
+        "visibility_rules": ["$dex_all|371", "$dex_starter|371"]
+      },
+      {
+        "name": "Shelgon",
+        "visibility_rules": ["$dex_all|372"]
+      },
+      {
+        "name": "Salamence",
+        "visibility_rules": ["$dex_all|373"]
+      },
+      {
+        "name": "Gible",
+        "visibility_rules": ["$dex_all|443", "$dex_starter|443"]
+      },
+      {
+        "name": "Gabite",
+        "visibility_rules": ["$dex_all|444"]
+      },
+      {
+        "name": "Garchomp",
+        "visibility_rules": ["$dex_all|445"]
+      },
+      {
+        "name": "Dialga",
+        "visibility_rules": ["$dex_all|483", "$dex_starter|483"]
+      },
+      {
+        "name": "Axew",
+        "visibility_rules": ["$dex_all|610", "$dex_starter|610"]
+      },
+      {
+        "name": "Fraxure",
+        "visibility_rules": ["$dex_all|611"]
+      },
+      {
+        "name": "Haxorus",
+        "visibility_rules": ["$dex_all|612"]
+      },
+      {
+        "name": "Druddigon",
+        "visibility_rules": ["$dex_all|621", "$dex_starter|621"]
+      },
+      {
+        "name": "Deino",
+        "visibility_rules": ["$dex_all|633", "$dex_starter|633"]
+      },
+      {
+        "name": "Zweilous",
+        "visibility_rules": ["$dex_all|634"]
+      },
+      {
+        "name": "Hydreigon",
+        "visibility_rules": ["$dex_all|635"]
+      },
+      {
+        "name": "Tyrunt",
+        "visibility_rules": ["$dex_all|696", "$dex_starter|696"]
+      },
+      {
+        "name": "Tyrantrum",
+        "visibility_rules": ["$dex_all|697"]
+      },
+      {
+        "name": "Goomy",
+        "visibility_rules": ["$dex_all|704", "$dex_starter|704"]
+      },
+      {
+        "name": "Sliggoo",
+        "visibility_rules": ["$dex_all|705"]
+      },
+      {
+        "name": "Goodra",
+        "visibility_rules": ["$dex_all|706"]
+      },
+      {
+        "name": "Drampa",
+        "visibility_rules": ["$dex_all|780", "$dex_starter|780"]
+      },
+      {
+        "name": "Jangmo O",
+        "visibility_rules": ["$dex_all|782", "$dex_starter|782"]
+      },
+      {
+        "name": "Hakamo O",
+        "visibility_rules": ["$dex_all|783"]
+      },
+      {
+        "name": "Kommo O",
+        "visibility_rules": ["$dex_all|784"]
+      },
+      {
+        "name": "Dracozolt",
+        "visibility_rules": ["$dex_all|880", "$dex_starter|880"]
+      },
+      {
+        "name": "Dracovish",
+        "visibility_rules": ["$dex_all|882", "$dex_starter|882"]
+      },
+      {
+        "name": "Dreepy",
+        "visibility_rules": ["$dex_all|885", "$dex_starter|885"]
+      },
+      {
+        "name": "Drakloak",
+        "visibility_rules": ["$dex_all|886"]
+      },
+      {
+        "name": "Dragapult",
+        "visibility_rules": ["$dex_all|887"]
+      },
+      {
+        "name": "Regidrago",
+        "visibility_rules": ["$dex_all|895", "$dex_starter|895"]
+      },
+      {
+        "name": "Cyclizar",
+        "visibility_rules": ["$dex_all|967", "$dex_starter|967"]
+      },
+      {
+        "name": "Frigibax",
+        "visibility_rules": ["$dex_all|996", "$dex_starter|996"]
+      },
+      {
+        "name": "Arctibax",
+        "visibility_rules": ["$dex_all|997"]
+      },
+      {
+        "name": "Baxcalibur",
+        "visibility_rules": ["$dex_all|998"]
+      },
+      {
+        "name": "Hisui Sliggoo",
+        "visibility_rules": ["$dex_all|6705"]
+      },
+      {
+        "name": "Hisui Goodra",
+        "visibility_rules": ["$dex_all|6706"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 805,
+        "y": 724
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - End",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|50"],
+    "sections": [
+      {
+        "name": "Eternatus",
+        "visibility_rules": ["$dex_all|890", "$dex_starter|890"]
+      },
+      {
+        "name": "Great Tusk",
+        "visibility_rules": ["$dex_all|984", "$dex_starter|984"]
+      },
+      {
+        "name": "Scream Tail",
+        "visibility_rules": ["$dex_all|985", "$dex_starter|985"]
+      },
+      {
+        "name": "Brute Bonnet",
+        "visibility_rules": ["$dex_all|986", "$dex_starter|986"]
+      },
+      {
+        "name": "Flutter Mane",
+        "visibility_rules": ["$dex_all|987", "$dex_starter|987"]
+      },
+      {
+        "name": "Slither Wing",
+        "visibility_rules": ["$dex_all|988", "$dex_starter|988"]
+      },
+      {
+        "name": "Sandy Shocks",
+        "visibility_rules": ["$dex_all|989", "$dex_starter|989"]
+      },
+      {
+        "name": "Iron Treads",
+        "visibility_rules": ["$dex_all|990", "$dex_starter|990"]
+      },
+      {
+        "name": "Iron Bundle",
+        "visibility_rules": ["$dex_all|991", "$dex_starter|991"]
+      },
+      {
+        "name": "Iron Hands",
+        "visibility_rules": ["$dex_all|992", "$dex_starter|992"]
+      },
+      {
+        "name": "Iron Jugulis",
+        "visibility_rules": ["$dex_all|993", "$dex_starter|993"]
+      },
+      {
+        "name": "Iron Moth",
+        "visibility_rules": ["$dex_all|994", "$dex_starter|994"]
+      },
+      {
+        "name": "Iron Thorns",
+        "visibility_rules": ["$dex_all|995", "$dex_starter|995"]
+      },
+      {
+        "name": "Roaring Moon",
+        "visibility_rules": ["$dex_all|1005", "$dex_starter|1005"]
+      },
+      {
+        "name": "Iron Valiant",
+        "visibility_rules": ["$dex_all|1006", "$dex_starter|1006"]
+      },
+      {
+        "name": "Walking Wake",
+        "visibility_rules": ["$dex_all|1009", "$dex_starter|1009"]
+      },
+      {
+        "name": "Iron Leaves",
+        "visibility_rules": ["$dex_all|1010", "$dex_starter|1010"]
+      },
+      {
+        "name": "Gouging Fire",
+        "visibility_rules": ["$dex_all|1020", "$dex_starter|1020"]
+      },
+      {
+        "name": "Raging Bolt",
+        "visibility_rules": ["$dex_all|1021", "$dex_starter|1021"]
+      },
+      {
+        "name": "Iron Boulder",
+        "visibility_rules": ["$dex_all|1022", "$dex_starter|1022"]
+      },
+      {
+        "name": "Iron Crown",
+        "visibility_rules": ["$dex_all|1023", "$dex_starter|1023"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1035,
+        "y": 724
+      }
+    ]
+  },
+  {
+    "name": "Pokedex - Anywhere (End, floor 1)",
+    "visibility_rules": ["$dexsanity_on"],
+    "access_rules": ["$dex_box_reachable|any"],
+    "sections": [
+      {
+        "name": "Pikachu",
+        "visibility_rules": ["$dex_starter|25"]
+      },
+      {
+        "name": "Mew",
+        "visibility_rules": ["$dex_all|151", "$dex_starter|151"]
+      },
+      {
+        "name": "Celebi",
+        "visibility_rules": ["$dex_all|251", "$dex_starter|251"]
+      },
+      {
+        "name": "Azurill",
+        "visibility_rules": ["$dex_all|298"]
+      },
+      {
+        "name": "Wynaut",
+        "visibility_rules": ["$dex_all|360"]
+      },
+      {
+        "name": "Jirachi",
+        "visibility_rules": ["$dex_all|385", "$dex_starter|385"]
+      },
+      {
+        "name": "Deoxys",
+        "visibility_rules": ["$dex_all|386", "$dex_starter|386"]
+      },
+      {
+        "name": "Budew",
+        "visibility_rules": ["$dex_all|406"]
+      },
+      {
+        "name": "Mime Jr",
+        "visibility_rules": ["$dex_all|439"]
+      },
+      {
+        "name": "Phione",
+        "visibility_rules": ["$dex_all|489", "$dex_starter|489"]
+      },
+      {
+        "name": "Manaphy",
+        "visibility_rules": ["$dex_all|490", "$dex_starter|490"]
+      },
+      {
+        "name": "Arceus",
+        "visibility_rules": ["$dex_all|493", "$dex_starter|493"]
+      },
+      {
+        "name": "Victini",
+        "visibility_rules": ["$dex_all|494", "$dex_starter|494"]
+      },
+      {
+        "name": "Meltan",
+        "visibility_rules": ["$dex_all|808", "$dex_starter|808"]
+      },
+      {
+        "name": "Melmetal",
+        "visibility_rules": ["$dex_all|809"]
+      },
+      {
+        "name": "Pecharunt",
+        "visibility_rules": ["$dex_all|1025", "$dex_starter|1025"]
+      }
+    ],
+    "map_locations": [
+      {
+        "map": "pokedex",
+        "x": 1265,
+        "y": 724
+      }
+    ]
+  }
+]

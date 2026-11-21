@@ -8,6 +8,12 @@
   "shop_location_offset": 1000,
   "pokemon_item_offset": 10000,
   "shop_tier_waves": [1, 21, 51, 81, 111, 141, 171],
+  "biome_location_offset": 2000,
+  "biome_pass_offset": 700,
+  "wave_bonus_location_offset": 3000,
+  "blitz_final_wave": 100,
+  "blitz_shop_tier_waves": [1, 11, 26, 41, 56, 71, 86],
+  "dex_location_offset": 10000,
   "items": [
     {
       "offset": 1,
@@ -609,6 +615,90 @@
       "classification": "trap"
     },
     {
+      "offset": 508,
+      "key": "TRAP_INFATUATION",
+      "name": "Infatuation Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 509,
+      "key": "TRAP_ENCORE",
+      "name": "Encore Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 510,
+      "key": "TRAP_TAUNT",
+      "name": "Taunt Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 511,
+      "key": "TRAP_TORMENT",
+      "name": "Torment Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 512,
+      "key": "TRAP_DISABLE",
+      "name": "Disable Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 513,
+      "key": "TRAP_HEAL_BLOCK",
+      "name": "Heal Block Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 514,
+      "key": "TRAP_YAWN",
+      "name": "Yawn Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 515,
+      "key": "TRAP_LEECH_SEED",
+      "name": "Leech Seed Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 516,
+      "key": "TRAP_CURSE",
+      "name": "Curse Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 517,
+      "key": "TRAP_SALT_CURE",
+      "name": "Salt Cure Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 518,
+      "key": "TRAP_TAR_SHOT",
+      "name": "Tar Shot Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
+      "offset": 519,
+      "key": "TRAP_THROAT_CHOP",
+      "name": "Throat Chop Trap",
+      "category": "trap",
+      "classification": "trap"
+    },
+    {
       "offset": 600,
       "key": "EFFECT_STAT_UP",
       "name": "Stat Boost",
@@ -642,11 +732,160 @@
       "name": "Mist",
       "category": "effect",
       "classification": "filler"
+    },
+    {
+      "offset": 605,
+      "key": "EFFECT_AURORA_VEIL",
+      "name": "Aurora Veil",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 606,
+      "key": "EFFECT_LUCKY_CHANT",
+      "name": "Lucky Chant",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 607,
+      "key": "EFFECT_TAILWIND",
+      "name": "Tailwind",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 608,
+      "key": "EFFECT_HAPPY_HOUR",
+      "name": "Happy Hour",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 609,
+      "key": "EFFECT_HEAL_BELL",
+      "name": "Heal Bell",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 610,
+      "key": "EFFECT_HOWL",
+      "name": "Howl",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 611,
+      "key": "EFFECT_DRAGON_CHEER",
+      "name": "Dragon Cheer",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 612,
+      "key": "EFFECT_LIFE_DEW",
+      "name": "Life Dew",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 613,
+      "key": "EFFECT_JUNGLE_HEALING",
+      "name": "Jungle Healing",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 614,
+      "key": "EFFECT_HAZE",
+      "name": "Haze",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 615,
+      "key": "EFFECT_RAIN_DANCE",
+      "name": "Rain Dance",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 616,
+      "key": "EFFECT_SUNNY_DAY",
+      "name": "Sunny Day",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 617,
+      "key": "EFFECT_SANDSTORM",
+      "name": "Sandstorm",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 618,
+      "key": "EFFECT_SNOWSCAPE",
+      "name": "Snowscape",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 619,
+      "key": "EFFECT_ELECTRIC_TERRAIN",
+      "name": "Electric Terrain",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 620,
+      "key": "EFFECT_GRASSY_TERRAIN",
+      "name": "Grassy Terrain",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 621,
+      "key": "EFFECT_MISTY_TERRAIN",
+      "name": "Misty Terrain",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 622,
+      "key": "EFFECT_PSYCHIC_TERRAIN",
+      "name": "Psychic Terrain",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 623,
+      "key": "EFFECT_GRAVITY",
+      "name": "Gravity",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 624,
+      "key": "EFFECT_TRICK_ROOM",
+      "name": "Trick Room",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 625,
+      "key": "EFFECT_MUD_SPORT",
+      "name": "Mud Sport",
+      "category": "effect",
+      "classification": "filler"
+    },
+    {
+      "offset": 626,
+      "key": "EFFECT_WATER_SPORT",
+      "name": "Water Sport",
+      "category": "effect",
+      "classification": "filler"
     }
-  ],
-  "biome_location_offset": 2000,
-  "biome_pass_offset": 700,
-  "wave_bonus_location_offset": 3000,
-  "blitz_final_wave": 100,
-  "blitz_shop_tier_waves": [1, 11, 26, 41, 56, 71, 86]
+  ]
 }

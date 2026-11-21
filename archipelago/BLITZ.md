@@ -61,7 +61,7 @@ combat selon le mode. Elle sert aussi à `fixed-battle-configs.ts`, `trainer-par
 | Rival 2 | 25 | 13 |
 | Sbire 1 | 35 | 18 |
 | Rival 3 | 55 | 28 |
-| Sbires 2 et 3, Admin 1 | 62, 64, 66 | 31, 32, 33 |
+| Sbires 2 et 3, Admin 1 | 62, 64, 66 | 32, 33, 34 |
 | Rival 4 | 95 | 48 |
 | Sbire 4, Admin 2, Chef 1 | 112, 114, 115 | 56, 57, 58 |
 | Rival 5 | 145 | 68 |
@@ -170,4 +170,6 @@ passer avant le Conseil 4, et non au milieu. Ces étages ne croisent aucun comba
 - **Rencontres mystères.** Elles apparaissent entre les étages 5 et 90, et leurs conditions d'étage sont vérifiées
   sur l'étage virtuel. Leur nombre total par run reste celui du Classic, donc elles sont deux fois plus fréquentes.
 - **Tracker.** La carte de l'onglet Floors garde ses 20 cases : en Blitz, les cases au-delà de l'étage 100 sont
-  vides (leurs checks sont masqués).
+  vides (leurs checks sont masqués), et l'étage 100 (boss final) n'a pas de check.
+- **Sbires 2 et 3, Admin 1** aux étages 32, 33 et 34 (et non 31 à 33) : aucun combat fixe n'a lieu sur le premier
+  étage d'un bloc de 10, réservé à la rencontre de la Dexsanity.

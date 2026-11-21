@@ -1,5 +1,6 @@
 import { globalScene } from "#app/global-scene";
 import { speciesDataRegistry } from "#app/global-species-data-registry";
+import { allBiomes } from "#data/data-lists";
 import { Egg } from "#data/egg";
 import { AbilityAttr } from "#enums/ability-attr";
 import { BiomeId } from "#enums/biome-id";
@@ -21,12 +22,14 @@ import {
 import { EggData } from "#system/egg-data";
 import type { DexData } from "#types/dex-data";
 import type { StarterData } from "#types/save-data";
-import { getBiomeName } from "#utils/common";
+import { getBiomeName, randSeedItem } from "#utils/common";
+import { type ApSentEntry, getArchipelagoCheckBar } from "./ap-check-bar";
 import { ArchipelagoClient, ClientStatus, type ConnectedPacket, ItemFlags, type NetworkItem } from "./ap-client";
 import apData from "./ap-data.json";
 import { type ApSessionState, apHooks } from "./ap-hooks";
 import { AP_ITEM_ICON_DATA_URI, AP_ITEM_ICON_TEXTURE } from "./ap-icon";
 import { apText } from "./ap-messages";
+import { BLITZ_GYM_WAVES } from "./blitz";
 
 export type { ApSessionState };
 
@@ -140,6 +143,7 @@ const WAVE_BONUS_LOCATION_BASE = AP_BASE_ID + apData.wave_bonus_location_offset;
 const SHOP_LOCATION_BASE = AP_BASE_ID + apData.shop_location_offset;
 const BIOME_LOCATION_BASE = AP_BASE_ID + apData.biome_location_offset;
 const BIOME_PASS_BASE = AP_BASE_ID + apData.biome_pass_offset;
+const DEX_LOCATION_BASE = AP_BASE_ID + apData.dex_location_offset;
 
 /** Biomes always open with the `biome_passes` option: the Town (start and fallback) and the End (last floors) */
 const FREE_BIOMES = new Set<number>([BiomeId.TOWN, BiomeId.END]);
@@ -202,6 +206,24 @@ export function getBiomeLocationId(biomeId: number, floor: number): number {
 
 /** Every biome id of the game (biome floor locations of unknown biomes are ignored) */
 const BIOME_IDS = new Set<number>(Object.values(BiomeId));
+
+/** Location id of the Dexsanity check of a species (a starter species with `dexsanity: starters`) */
+export function getDexLocationId(speciesId: SpeciesId): number {
+  return DEX_LOCATION_BASE + speciesId;
+}
+
+/** Dexsanity option: no Pokédex checks, one check per starter (any Pokémon of its line), or one per species */
+export enum ApDexsanityMode {
+  OFF = 0,
+  STARTERS = 1,
+  ALL = 2,
+}
+
+/** Goal of the seed (`goal` option) */
+export enum ApGoal {
+  ETERNATUS = 0,
+  POKEDEX = 1,
+}
 
 /** Location id of the n-th (1-based) Archipelago shop item */
 export function getShopLocationId(index: number): number {
@@ -403,6 +425,8 @@ export class ArchipelagoManager {
   private deathLinkWave = -1;
   /** Whether the items kept for every run were already handed out at floor 1 of this run */
   private runStartHandled = false;
+  /** Species with a Dexsanity check, cached for the slot data they come from */
+  private dexsanitySpecies: { source: Record<string, any>; ids: Set<number> } | null = null;
   /** Time (seconds) of the last DeathLink sent, to ignore its echo */
   private lastDeathLinkSent = 0;
   /** Messages received from the server (item sends, chat...) kept for display */
@@ -432,6 +456,7 @@ export class ArchipelagoManager {
     apHooks.getShopOptions = (wave, baseCost) => this.getShopOptions(wave, baseCost);
     apHooks.getStarterValueLimit = () => (this.active ? this.getStarterValueLimit() : null);
     apHooks.isBlitz = () => this.active && this.isBlitz();
+    apHooks.onPokemonObtained = (speciesId, newCatch) => this.onPokemonObtained(speciesId, newCatch);
     apHooks.getSoldLabel = type =>
       type?.isArchipelagoShopItem && this.isLocationChecked(type.locationId) ? apText("shopItemSold") : null;
   }
@@ -500,13 +525,19 @@ export class ArchipelagoManager {
     const unsent = this.profile.checkedLocations.filter(l => !serverChecked.has(l));
     this.client.checkLocations(unsent);
     this.profile.checkedLocations = [...new Set([...this.profile.checkedLocations, ...connected.checked_locations])];
+    // Pokédex goal: all the Dexsanity checks were made (e.g. while offline)
+    if (this.getGoal() === ApGoal.POKEDEX && this.isDexsanityComplete()) {
+      this.profile.goalReached = true;
+    }
     this.client.setStatus(this.profile.goalReached ? ClientStatus.CLIENT_GOAL : ClientStatus.CLIENT_PLAYING);
 
     // Scout every shop location (so the shop can display what it sells) and every other missing location
     // (so key trainers can hint at the progression items they hold)
     const missingOrChecked = new Set([...connected.missing_locations, ...connected.checked_locations]);
     const shopLocations = this.getAllShopLocationIds().filter(l => missingOrChecked.has(l));
-    this.client.scoutLocations([...new Set([...shopLocations, ...connected.missing_locations])]);
+    // The trainer hints chosen at generation are shown again even once their location is checked
+    const hintLocations = Object.values(this.getTrainerHintLocations() ?? {}).filter(l => missingOrChecked.has(l));
+    this.client.scoutLocations([...new Set([...shopLocations, ...hintLocations, ...connected.missing_locations])]);
     this.saveProfile();
   }
 
@@ -704,7 +735,15 @@ export class ArchipelagoManager {
 
   /** Whether the player may go from the given (just cleared) wave to the next one */
   canAdvanceFrom(wave: number): boolean {
-    return wave + 1 <= this.getMaxWave();
+    return wave + 1 <= this.getMaxWave() && !this.isEndPassMissingFor(wave + 1);
+  }
+
+  /**
+   * Whether the End Pass (`biome_passes: end_only`) is still needed to play this wave: the End takes the last block
+   * of 10 floors
+   */
+  isEndPassMissingFor(wave: number): boolean {
+    return this.isEndPassRequired() && wave > this.getFinalWave() - AP_GATE_INTERVAL && !this.hasEndPass();
   }
 
   getPassesNeededFor(wave: number): number {
@@ -716,6 +755,16 @@ export class ArchipelagoManager {
   /** Whether biomes need a Biome Pass to be visited (`biome_passes` option) */
   isBiomePassesEnabled(): boolean {
     return !!this.slotData.biome_passes;
+  }
+
+  /** Whether the End needs its own pass (`biome_passes: end_only`): the other biomes are open */
+  isEndPassRequired(): boolean {
+    return !!this.slotData.end_pass;
+  }
+
+  hasEndPass(): boolean {
+    const itemId = getBiomePassItemId(BiomeId.END);
+    return this.receivedItems.some(i => i.item === itemId);
   }
 
   /** Whether the biome may be chosen as the next destination */
@@ -981,13 +1030,45 @@ export class ArchipelagoManager {
     );
   }
 
-  checkLocation(locationId: number): void {
+  /** @returns whether the location was checked now (`false` if it already was) */
+  checkLocation(locationId: number): boolean {
     if (!this.profile || this.isLocationChecked(locationId)) {
-      return;
+      return false;
     }
     this.profile.checkedLocations.push(locationId);
     this.client.checkLocations([locationId]);
     this.saveProfile();
+    return true;
+  }
+
+  /**
+   * Checks locations and lists the items they sent in the side panel (floor, biome floor and Dexsanity checks)
+   * @returns the locations checked now
+   */
+  checkLocationsWithNotice(locationIds: number[]): number[] {
+    const checked = locationIds.filter(l => this.checkLocation(l));
+    if (checked.length === 0) {
+      return checked;
+    }
+    try {
+      const ownSlot = this.client.connected?.slot;
+      const entries: ApSentEntry[] = checked.map(l => {
+        const scouted = this.scoutedLocations.get(l);
+        if (!scouted) {
+          return { item: apText("shopItemUnknown"), player: "", tint: getClassificationTint(0) };
+        }
+        return {
+          item: this.client.getItemName(scouted.item, scouted.player),
+          player: scouted.player === ownSlot ? apText("checkSentOwn") : this.client.getPlayerName(scouted.player),
+          tint: getClassificationTint(scouted.flags),
+        };
+      });
+      getArchipelagoCheckBar()?.showEntries(apText("checkSent"), entries);
+    } catch (err) {
+      // The panel is only a display: never block the game for it
+      console.error("[AP] Failed to show the sent items", err);
+    }
+    return checked;
   }
 
   /** Whether locations were checked while connected but the server has not confirmed them yet */
@@ -1017,18 +1098,20 @@ export class ArchipelagoManager {
   onWaveCleared(wave: number, leaving = false): void {
     if (wave >= 1 && wave < this.getFinalWave()) {
       const mode = this.getLocationMode();
+      const locations: number[] = [];
       if (mode !== ApLocationMode.BIOME_FLOORS) {
-        this.checkLocation(getWaveLocationId(wave));
+        locations.push(getWaveLocationId(wave));
         // "Floor N Bonus": with the first check, or at the second reward phase in a Blitz run
         if (this.getFloorChecks() >= 2 && (leaving || !this.isBlitz())) {
-          this.checkLocation(getWaveBonusLocationId(wave));
+          locations.push(getWaveBonusLocationId(wave));
         }
       }
       if (mode !== ApLocationMode.FLOORS) {
         // When a floor multiple of 10 is left, the arena already shows the next biome
         const biomeId = this.waveBiome?.wave === wave ? this.waveBiome.biomeId : globalScene.arena.biomeId;
-        this.checkLocation(getBiomeLocationId(biomeId, ((wave - 1) % AP_GATE_INTERVAL) + 1));
+        locations.push(getBiomeLocationId(biomeId, ((wave - 1) % AP_GATE_INTERVAL) + 1));
       }
+      this.checkLocationsWithNotice(locations);
     }
     this.shopCache = null;
   }
@@ -1044,9 +1127,20 @@ export class ArchipelagoManager {
       && this.getFloorChecks() >= 2
       && this.getLocationMode() !== ApLocationMode.BIOME_FLOORS
     ) {
-      this.checkLocation(getWaveBonusLocationId(wave));
+      this.checkLocationsWithNotice([getWaveBonusLocationId(wave)]);
     }
     this.shopCache = null;
+  }
+
+  /** The final boss was beaten: the goal of the seed, unless it is the Pokédex goal */
+  onFinalBossDefeated(): void {
+    if (this.getGoal() === ApGoal.ETERNATUS) {
+      this.sendGoal();
+    }
+  }
+
+  getGoal(): ApGoal {
+    return Number(this.slotData.goal ?? ApGoal.ETERNATUS) as ApGoal;
   }
 
   sendGoal(): void {
@@ -1056,6 +1150,89 @@ export class ArchipelagoManager {
     this.profile.goalReached = true;
     this.client.setStatus(ClientStatus.CLIENT_GOAL);
     this.saveProfile();
+  }
+
+  /* ---------------------------------------------------------------- Dexsanity */
+
+  getDexsanityMode(): ApDexsanityMode {
+    return Number(this.slotData.dexsanity ?? ApDexsanityMode.OFF) as ApDexsanityMode;
+  }
+
+  /** Species with a Dexsanity check (starter species with `dexsanity: starters`), from the slot data */
+  getDexsanitySpecies(): Set<number> {
+    if (this.dexsanitySpecies?.source !== this.slotData) {
+      const ids = Array.isArray(this.slotData.dexsanity_species) ? this.slotData.dexsanity_species.map(Number) : [];
+      this.dexsanitySpecies = { source: this.slotData, ids: new Set(ids) };
+    }
+    return this.dexsanitySpecies.ids;
+  }
+
+  /** Species whose Dexsanity check is sent when the given species is obtained (`undefined`: none) */
+  private getDexsanityTarget(speciesId: SpeciesId): SpeciesId | undefined {
+    const mode = this.getDexsanityMode();
+    if (mode === ApDexsanityMode.OFF) {
+      return undefined;
+    }
+    const target =
+      mode === ApDexsanityMode.STARTERS ? speciesDataRegistry.getSpecies(speciesId).getRootSpeciesId() : speciesId;
+    return this.getDexsanitySpecies().has(target) ? target : undefined;
+  }
+
+  /** Whether obtaining the species would still send a Dexsanity check */
+  isDexsanityMissing(speciesId: SpeciesId): boolean {
+    const target = this.getDexsanityTarget(speciesId);
+    return target !== undefined && !this.isLocationChecked(getDexLocationId(target));
+  }
+
+  /**
+   * A Pokémon was obtained (caught, hatched, given, or evolved with `dexsanity: all`) during an Archipelago run:
+   * sends its Dexsanity check
+   * @param newCatch - The Pokémon joins the team now (not an evolution or a form change)
+   */
+  onPokemonObtained(speciesId: SpeciesId, newCatch: boolean): void {
+    if (!(this.active && this.profile) || (!newCatch && this.getDexsanityMode() !== ApDexsanityMode.ALL)) {
+      return;
+    }
+    const target = this.getDexsanityTarget(speciesId);
+    if (target === undefined || this.checkLocationsWithNotice([getDexLocationId(target)]).length === 0) {
+      return;
+    }
+    if (this.getGoal() === ApGoal.POKEDEX && !this.profile.goalReached && this.isDexsanityComplete()) {
+      this.sendGoal();
+      globalScene.phaseManager.queueMessage(apText("dexComplete"));
+      globalScene.phaseManager.queueMessage(apText("goalComplete"));
+    }
+  }
+
+  isDexsanityComplete(): boolean {
+    const species = this.getDexsanitySpecies();
+    return species.size > 0 && [...species].every(id => this.isLocationChecked(getDexLocationId(id)));
+  }
+
+  /**
+   * Dexsanity: the wild Pokémon met on the first floor of each block of 10 is one of the current biome not obtained
+   * yet (on the first floor of the End, any Pokémon not obtained yet). `null`: a regular encounter.
+   */
+  getDexsanityEncounter(wave: number, biomeId: BiomeId): SpeciesId | null {
+    if (!this.active || this.getDexsanityMode() === ApDexsanityMode.OFF || wave % AP_GATE_INTERVAL !== 1) {
+      return null;
+    }
+    let candidates: SpeciesId[];
+    if (biomeId === BiomeId.END && wave > this.getFinalWave() - AP_GATE_INTERVAL) {
+      candidates = [...this.getDexsanitySpecies()].filter(id => !this.isLocationChecked(getDexLocationId(id)));
+    } else {
+      const pool = allBiomes.get(biomeId)?.pokemonPool ?? {};
+      const species = new Set<SpeciesId>();
+      for (const byTime of Object.values(pool)) {
+        for (const ids of Object.values(byTime as Record<string, readonly SpeciesId[]>)) {
+          for (const id of ids) {
+            species.add(id);
+          }
+        }
+      }
+      candidates = [...species].filter(id => this.isDexsanityMissing(id));
+    }
+    return candidates.length > 0 ? randSeedItem(candidates) : null;
   }
 
   /* ---------------------------------------------------------------- DeathLink */
@@ -1126,13 +1303,41 @@ export class ArchipelagoManager {
   }
 
   /**
-   * Picks a progression item hidden at a location of this world not checked or hinted yet (preferably for another
-   * player), registers the hint on the server and returns its text.
-   * @returns `null` when hints are disabled or there is nothing left to hint at
+   * Locations hinted by the key trainers, chosen at generation (`trainer_hint_locations` slot data): the same
+   * trainer always gives the same hint. `null` for the seeds made before (a random hint is picked then).
    */
-  takeTrainerHint(): string | null {
+  private getTrainerHintLocations(): Record<string, number> | null {
+    const hints = this.slotData.trainer_hint_locations;
+    return hints && typeof hints === "object" ? (hints as Record<string, number>) : null;
+  }
+
+  /**
+   * Key of the trainer fought on this floor in `trainer_hint_locations`: `fixed_<floor>` for a story battle (its
+   * Classic floor, also in a Blitz run), `gym_<n>` for the n-th Gym Leader of the run
+   */
+  private getTrainerHintKey(wave: number): string | null {
+    const gameMode = globalScene.gameMode;
+    if (gameMode.isFixedBattle(wave)) {
+      return `fixed_${gameMode.getClassicFixedWave(wave)}`;
+    }
+    if (gameMode.isGymWave(wave, globalScene.offsetGym)) {
+      const index = this.isBlitz()
+        ? BLITZ_GYM_WAVES.indexOf(wave)
+        : Math.floor((wave - (globalScene.offsetGym ? 30 : 20)) / 30);
+      return `gym_${index + 1}`;
+    }
+    return null;
+  }
+
+  /**
+   * Hint given by the key trainer beaten on this floor: the location chosen at generation for it (or, for older
+   * seeds, a progression item not checked or hinted yet, preferably for another player). The hint is also
+   * registered on the server.
+   * @returns `null` when hints are disabled or there is nothing to hint at
+   */
+  takeTrainerHint(wave: number): string | null {
     try {
-      return this.pickTrainerHint();
+      return this.pickTrainerHint(wave);
     } catch (err) {
       // A hint must never block the end of the battle
       console.error("[AP] Failed to build a trainer hint", err);
@@ -1140,8 +1345,40 @@ export class ArchipelagoManager {
     }
   }
 
-  private pickTrainerHint(): string | null {
+  private pickTrainerHint(wave: number): string | null {
     if (!(this.profile && this.isConnected && this.isTrainerHintsEnabled())) {
+      return null;
+    }
+    const fixedHints = this.getTrainerHintLocations();
+    if (fixedHints) {
+      const key = this.getTrainerHintKey(wave);
+      const locationId = key === null ? undefined : fixedHints[key];
+      const target = locationId === undefined ? undefined : this.scoutedLocations.get(locationId);
+      const location = locationId === undefined ? null : this.describeLocation(locationId);
+      if (!(target && location)) {
+        return null;
+      }
+      if (!this.isLocationChecked(target.location)) {
+        // Also listed in the multiworld hints (create_as_hint 2: only new hints are announced)
+        this.client.scoutLocations([target.location], 2);
+      }
+      return this.formatHint(target, location);
+    }
+    return this.pickRandomTrainerHint();
+  }
+
+  private formatHint(target: NetworkItem, location: NonNullable<ReturnType<ArchipelagoManager["describeLocation"]>>) {
+    return apText(location.key, {
+      item: this.client.getItemName(target.item, target.player),
+      player: this.client.getPlayerName(target.player),
+      floor: location.floor,
+      zone: location.biomeId === undefined ? "" : getBiomeName(location.biomeId),
+      pokemon: location.speciesId === undefined ? "" : speciesDataRegistry.getSpecies(location.speciesId).name,
+    });
+  }
+
+  private pickRandomTrainerHint(): string | null {
+    if (!this.profile) {
       return null;
     }
     const hinted = new Set(this.profile.hintedLocations ?? []);
@@ -1162,19 +1399,20 @@ export class ArchipelagoManager {
     this.saveProfile();
     // Also listed in the multiworld hints (create_as_hint 2: only new hints are announced)
     this.client.scoutLocations([target.location], 2);
-    const location = this.describeLocation(target.location)!;
-    return apText(location.key, {
-      item: this.client.getItemName(target.item, target.player),
-      player: this.client.getPlayerName(target.player),
-      floor: location.floor,
-      zone: location.biomeId === undefined ? "" : getBiomeName(location.biomeId),
-    });
+    return this.formatHint(target, this.describeLocation(target.location)!);
   }
 
   /** Where a location of this world is, for hints (`null`: not a location the game knows) */
-  private describeLocation(
-    locationId: number,
-  ): { key: "hintFloor" | "hintBiomeFloor" | "hintShop"; floor: number; biomeId?: BiomeId } | null {
+  private describeLocation(locationId: number): {
+    key: "hintFloor" | "hintBiomeFloor" | "hintShop" | "hintDex";
+    floor: number;
+    biomeId?: BiomeId;
+    speciesId?: SpeciesId;
+  } | null {
+    const dexSpecies = locationId - DEX_LOCATION_BASE;
+    if (dexSpecies > 0 && dexSpecies in SpeciesId) {
+      return { key: "hintDex", floor: 0, speciesId: dexSpecies as SpeciesId };
+    }
     const wave = locationId - WAVE_LOCATION_BASE;
     if (wave >= 1 && wave < this.getFinalWave()) {
       return { key: "hintFloor", floor: wave };

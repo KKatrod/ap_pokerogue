@@ -9,9 +9,15 @@ DEFAULT_SETTINGS = {
     shop_per_tier = 10,
     shop_per_visit = 1,
     biome_passes = false,
+    end_pass = false,    -- biome_passes: end_only
     blitz = false,
     floor_checks = 1,
+    dexsanity = 0,       -- 0 false, 1 starters, 2 all
 }
+
+-- Species ids with a Dexsanity check (dexsanity_species of slot_data); nil when not connected: every Pokemon of the
+-- mode is shown then
+DEX_LIST = nil
 
 local function count(code)
     return Tracker:ProviderCountForCode(code)
@@ -38,8 +44,13 @@ function set_settings(settings)
         mode.CurrentStage = settings.location_mode
     end
     set_toggle("biome_passes", settings.biome_passes)
+    set_toggle("end_pass_option", settings.end_pass)
     set_toggle("blitz", settings.blitz)
     set_count("floor_checks", settings.floor_checks)
+    local dex = Tracker:FindObjectForCode("dexsanity")
+    if dex then
+        dex.CurrentStage = settings.dexsanity
+    end
     set_count("shop_count", settings.shop_count)
     set_count("shop_per_tier", settings.shop_per_tier)
     set_count("shop_per_visit", settings.shop_per_visit)
@@ -75,9 +86,24 @@ function floor_bonus()
     return count("floor_checks") >= 2
 end
 
--- The End is forced on the last block: one Floor Pass per block before it
+-- Not a Blitz run (the last floor of a Blitz run has no check)
+function not_blitz()
+    return not is_blitz()
+end
+
+-- The End is forced on the last block: one Floor Pass per block before it, and the End Pass with
+-- biome_passes: end_only
 function end_reachable()
-    return count("pass") >= block_count() - 1
+    return count("pass") >= block_count() - 1 and (count("end_pass_option") == 0 or count("end_pass") > 0)
+end
+
+-- The block (0-based) of floors can be reached: one Floor Pass per block before it (the End: see end_reachable)
+function block_reachable(block)
+    block = tonumber(block)
+    if block >= block_count() - 1 then
+        return end_reachable()
+    end
+    return count("pass") >= block
 end
 
 -- Biome floors ------------------------------------------------------------------------------------------------
@@ -137,6 +163,47 @@ function biome_in_logic(biome_id)
         return can_reach_biome(biome_id)
     end
     return count("pass") >= BIOME_DEPTHS[biome_id] and (biome_id == PLAINS_BIOME or count("map") > 0)
+end
+
+-- Dexsanity -------------------------------------------------------------------------------------------------
+
+local function dexsanity_mode()
+    local dex = Tracker:FindObjectForCode("dexsanity")
+    return dex and dex.CurrentStage or 0
+end
+
+function dexsanity_on()
+    return dexsanity_mode() > 0
+end
+
+local function in_dex_list(species_id)
+    return DEX_LIST == nil or DEX_LIST[tonumber(species_id)] == true
+end
+
+-- The Pokemon is in the slot's list, with dexsanity: all
+function dex_all(species_id)
+    return dexsanity_mode() == 2 and in_dex_list(species_id)
+end
+
+-- The starter is in the slot's list, with dexsanity: starters
+function dex_starter(species_id)
+    return dexsanity_mode() == 1 and in_dex_list(species_id)
+end
+
+-- Same as the Dexsanity rule of the apworld: a biome where the Pokemon is met can be reached, or the End (its
+-- first floor offers any Pokemon not obtained yet)
+function dex_box_reachable(biome_id)
+    if end_reachable() then
+        return true
+    end
+    if biome_id == "any" then
+        return false
+    end
+    biome_id = tonumber(biome_id)
+    if biome_id == TOWN_BIOME then
+        return true
+    end
+    return biome_reachable(biome_id)
 end
 
 -- Shop items ---------------------------------------------------------------------------------------------------

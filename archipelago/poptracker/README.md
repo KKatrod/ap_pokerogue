@@ -28,8 +28,9 @@ Onglets :
 
 | Onglet | Contenu |
 |---|---|
-| **Floors** | Une case par bloc de 10 étages (`Floors 1-10` … `Floors 191-199`) avec les checks `Floor N Cleared` (N = 1 à 199), et `Floor N Bonus` avec `floor_checks: 2`. En Blitz, les blocs au-delà de l'étage 99 sont masqués. |
+| **Floors** | Une case par bloc de 10 étages (`Floors 1-10` … `Floors 191-199`) avec les checks `Floor N Cleared` (N = 1 à 199), et `Floor N Bonus` avec `floor_checks: 2`. En Blitz, les blocs au-delà de l'étage 99 et la case de l'étage 100 (boss final, sans check) sont masqués. |
 | **Biomes** | Un marqueur par biome avec ses checks `<Biome> - Floor 1` à `<Biome> - Floor 10` (`End` : étages 1 à 9 ; le 10ᵉ est le boss final, l'objectif). |
+| **Pokedex** | Avec la Dexsanity : une case par biome, avec les Pokémon de la liste qu'on peut y rencontrer, et une case *Anywhere* pour ceux qui n'apparaissent dans aucun biome (seul le premier étage de la Fin les propose). En mode `starters`, un starter est rangé dans chaque biome où apparaît un Pokémon de sa lignée ; en mode `all`, une espèce est rangée là où elle apparaît, et là où apparaissent ses pré-évolutions. Seuls les Pokémon de `dexsanity_species` (slot data) sont affichés ; un check fait coche le Pokémon dans toutes ses cases. Une case est en logique dès que son biome est atteignable (passes d'étage, et Biome Passes avec `biome_passes: true`), ou que la Fin l'est. |
 | **Shop** | Les checks `Shop Item N`, regroupés par tier de la boutique (Tier 1 : étages 1-20, Tier 2 : 21-50, 51-80, 81-110, 111-140, 141-170, Tier 7 : 171-199 ; en Blitz : 1, 11, 26, 41, 56, 71 et 86). |
 
 Les variantes viennent de `slot_data.location_mode`, appliqué à la connexion :
@@ -41,8 +42,8 @@ Les variantes viennent de `slot_data.location_mode`, appliqué à la connexion :
 | `2` (`both`) | Floors + Biomes + Shop |
 
 Le panneau *Settings (from the server)* montre les valeurs lues dans `slot_data` : mode (FL, BI, F+B),
-`biome_passes` (BP, allumé si l'option est active), `blitz` (BZ, allumé en Blitz), `floor_checks` (FC, 1 ou 2),
-`shop_item_count` (SH), `shop_items_per_tier` (/T) et `shop_items_per_visit` (/V). Une fois connecté, ces réglages
+`biome_passes` (BP, allumé avec `biome_passes: true`), `end_pass` (EP, allumé avec `biome_passes: end_only`), `blitz` (BZ, allumé en Blitz), `floor_checks` (FC, 1 ou 2),
+`shop_item_count` (SH), `shop_items_per_tier` (/T), `shop_items_per_visit` (/V) et `dexsanity` (DX, DX:S, DX:A). Une fois connecté, ces réglages
 viennent du serveur et un clic dessus est annulé. Sans connexion, on peut les régler à la main (clic gauche /
 clic droit). Les valeurs par défaut sont celles de l'apworld (floors, pas de Biome Passes, pas de Blitz, 1 check
 par étage, 70, 10, 1).
@@ -55,6 +56,7 @@ Objets suivis :
 - **Biome Pass - <Biome>** : un par biome sauf Town et End, soit 33. Ils sont dans le groupe *Biome Passes*,
   classés par bloc, avec une abréviation du biome (PLA = Plains, TG = Tall Grass, etc.). Le groupe reste
   affiché sans l'option, mais il ne sert alors à rien.
+- **Biome Pass - End** (END, à côté de la Map) : le seul pass avec `biome_passes: end_only`.
 
 ## Logique
 
@@ -80,6 +82,9 @@ Elle suit l'apworld (`__init__.py`) :
   l'apworld, réécrit en Lua dans `scripts/logic.lua`). Par exemple, Tall Grass demande les passes de Plains,
   Grass et Tall Grass, plus 3 Floor Passes. Town n'a pas de passe. End n'en a pas non plus : il reste au bloc 19.
   La Map ne change rien à cette logique.
+- **Pass de la Fin** (`biome_passes: end_only`) : le dernier bloc d'étages (End) demande tous les Floor Passes et
+  le `Biome Pass - End`.
+
 
 Règle propre au tracker, **sans l'option `biome_passes`** (mode `biome_floors` / `both`) : sans la Map, le
 biome suivant est tiré au hasard. Dès qu'on a assez de passes pour leur bloc, les étages des biomes autres que

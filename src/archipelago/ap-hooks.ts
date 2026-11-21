@@ -21,6 +21,8 @@ export interface ApHooks {
   getStarterValueLimit(): number | null;
   /** Whether the connected seed uses the Blitz option (100 floors, see `blitz.ts`) */
   isBlitz(): boolean;
+  /** A Pokémon was obtained in an Archipelago run (Dexsanity), `newCatch` unless it evolved or changed form */
+  onPokemonObtained(speciesId: number, newCatch: boolean): void;
 }
 
 export const apHooks: ApHooks = {
@@ -30,4 +32,5 @@ export const apHooks: ApHooks = {
   getSoldLabel: () => null,
   getStarterValueLimit: () => null,
   isBlitz: () => false,
+  onPokemonObtained: () => {},
 };

@@ -173,6 +173,28 @@ export abstract class MessageUiHandler extends AwaitableUiHandler {
       }
     }
 
+    // A text longer than the message box: shown over several boxes (each one waits for the player)
+    const maxLines = this.message.style.maxLines;
+    const lines = text.split("\n");
+    if (
+      maxLines > 0
+      && lines.length > maxLines
+      && charVarMap.size === 0
+      && delayMap.size === 0
+      && soundMap.size === 0
+      && fadeMap.size === 0
+    ) {
+      const rest = lines.slice(maxLines).join("\n");
+      this.showTextInternal(
+        lines.slice(0, maxLines).join("\n"),
+        delay,
+        () => this.showTextInternal(rest, delay, callback, callbackDelay, prompt, promptDelay),
+        null,
+        true,
+      );
+      return;
+    }
+
     if (this.textTimer) {
       this.textTimer.remove();
       if (this.textCallbackTimer) {

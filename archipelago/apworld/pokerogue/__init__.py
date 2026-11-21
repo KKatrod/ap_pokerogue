@@ -1,11 +1,11 @@
 """
 PokeRogue for Archipelago.
 
-Locations: clearing each floor (1-199) and/or each floor of each biome, and buying the Archipelago items
-offered in the shops.
+Locations: clearing each floor (1-199) and/or each floor of each biome, buying the Archipelago items offered in
+the shops, and obtaining Pokemon (Dexsanity, optional).
 Items: Progressive Floor Passes (needed to go past each floor multiple of 10), Biome Passes (optional),
 starter Pokemon unlocks, Starter Limit +1, consumables, held items, permanent bonus items, eggs, battle effects and
-traps. Goal: clear floor 200.
+traps. Goal: beat Eternatus on the last floor, or obtain every Pokemon of the Dexsanity list.
 
 Item / location ids come from data.py, generated from the game sources
 (node archipelago/generate-apworld-data.mjs).
@@ -19,9 +19,10 @@ from Options import OptionError
 from worlds.AutoWorld import WebWorld, World
 
 from .data import (BASE_ID, BIOME_LOCATION_OFFSET, BIOME_PASS_OFFSET, BIOMES, BLITZ_FINAL_WAVE,
-                   BLITZ_SHOP_TIER_WAVES, FINAL_WAVE, GAME_NAME, GATE_INTERVAL, ITEM_MAX, ITEMS, POKEMON, POKEMON_INFO,
-                   SHOP_LOCATION_OFFSET, SHOP_TIER_WAVES, WAVE_BONUS_LOCATION_OFFSET, WAVE_LOCATION_OFFSET)
-from .options import LimitedSupport, LocationMode, PokemonPoolCosts, PokeRogueOptions
+                   BLITZ_SHOP_TIER_WAVES, DEX_LOCATION_OFFSET, DEX_SPECIES, FINAL_WAVE, GAME_NAME, GATE_INTERVAL,
+                   ITEM_MAX, ITEMS, POKEMON, POKEMON_INFO, POKEMON_ITEM_OFFSET, SHOP_LOCATION_OFFSET, SHOP_TIER_WAVES,
+                   WAVE_BONUS_LOCATION_OFFSET, WAVE_LOCATION_OFFSET)
+from .options import BiomePasses, Dexsanity, Goal, LimitedSupport, LocationMode, PokemonPoolCosts, PokeRogueOptions
 
 FLOOR_PASS = "Progressive Floor Pass"
 VICTORY = "Victory"
@@ -40,6 +41,13 @@ STARTER_AVERAGE_COST_MAX = 3.5
 POOL_COST_BIAS = 1.5
 # Biome Pass priority: a PokeRogue location never holds the pass of a biome reached this many blocks before it or more
 BIOME_PASS_BLOCK_SLACK = 2
+
+# Key trainers giving a hint once beaten (`trainer_hint_locations` slot data): the story battles by their Classic
+# floor (rivals, evil team admins and bosses, Elite Four, Champion; the same battles in a Blitz run), and the n-th Gym
+# Leader of the run
+HINT_TRAINER_KEYS = ([f"fixed_{wave}" for wave in (8, 25, 55, 66, 95, 114, 115, 145, 164, 165, 182, 184, 186, 188, 190,
+                                                   195)]
+                     + [f"gym_{index}" for index in range(1, 7)])
 
 # Relative weights of the egg fillers
 EGG_WEIGHTS = {
@@ -131,6 +139,22 @@ BIOME_PASSES: Dict[int, str] = {biome_id: biome_pass_name(biome_id) for biome_id
                                 if biome_id not in (TOWN_BIOME, END_BIOME)}
 ITEM_TABLE.update({name: BASE_ID + BIOME_PASS_OFFSET + biome_id for biome_id, name in BIOME_PASSES.items()})
 BIOME_PASS_IDS: Dict[str, int] = {name: biome_id for biome_id, name in BIOME_PASSES.items()}
+# The only Biome Pass with `biome_passes: end_only`: needed to enter the End (last block of floors)
+END_PASS = biome_pass_name(END_BIOME)
+ITEM_TABLE[END_PASS] = BASE_ID + BIOME_PASS_OFFSET + END_BIOME
+
+# Dexsanity species, by species id: (name, generation, types, legendary, starter id, pre-evolution id, biome ids)
+DEX_BY_ID: Dict[int, tuple] = {species_id: rest for species_id, *rest in DEX_SPECIES}
+# Species id of each starter Pokemon item
+POKEMON_SPECIES_ID: Dict[str, int] = {name: item_id - BASE_ID - POKEMON_ITEM_OFFSET for name, item_id, _cost in POKEMON}
+
+
+def dex_location_name(species_id: int) -> str:
+    return f"Dex - {DEX_BY_ID[species_id][0]}"
+
+
+def dex_location_id(species_id: int) -> int:
+    return BASE_ID + DEX_LOCATION_OFFSET + species_id
 
 
 def can_reach_biome(state: CollectionState, player: int, target: int, block_count: int = BLOCK_COUNT) -> bool:
@@ -169,6 +193,7 @@ LOCATION_TABLE.update({shop_location_name(i): BASE_ID + SHOP_LOCATION_OFFSET + i
 for _biome_id in sorted(BIOME_DEPTHS):
     for _floor in biome_floors(_biome_id):
         LOCATION_TABLE[biome_location_name(BIOME_NAMES[_biome_id], _floor)] = biome_location_id(_biome_id, _floor)
+LOCATION_TABLE.update({dex_location_name(species_id): dex_location_id(species_id) for species_id in DEX_BY_ID})
 
 
 def shop_item_wave(index: int, per_tier: int, tier_waves: List[int] = SHOP_TIER_WAVES) -> Optional[int]:
@@ -216,10 +241,84 @@ class PokeRogueWorld(World):
         "Held Items": {name for name, _id, cat, _cls in ITEMS if cat == "held"},
         "Bonus Items": {name for name, _id, cat, _cls in ITEMS if cat == "bonus"},
         "Eggs": {name for name, _id, cat, _cls in ITEMS if cat == "egg"},
-        "Biome Passes": set(BIOME_PASSES.values()),
+        "Biome Passes": set(BIOME_PASSES.values()) | {END_PASS},
         "Battle Effects": set(EFFECT_FILLERS),
         "Traps": set(TRAPS),
     }
+
+    starting_pokemon: List[str]
+
+    def generate_early(self) -> None:
+        if self.options.goal.value == Goal.option_pokedex:
+            if self.options.dexsanity.value == Dexsanity.option_false:
+                raise OptionError(f"{self.player_name}: the pokedex goal needs the dexsanity option")
+        # Picked before the regions: the starting Pokemon are left out of the Dexsanity list
+        self.starting_pokemon = self.pick_starting_pokemon()
+        if self.options.goal.value == Goal.option_pokedex and not self.get_dex_species():
+            raise OptionError(f"{self.player_name}: the pokedex goal needs at least one Pokemon in the Dexsanity list")
+
+    def uses_biome_passes(self) -> bool:
+        """`biome_passes: true`: every biome but the Town and the End needs its pass"""
+        return self.options.biome_passes.value == BiomePasses.option_true
+
+    def uses_end_pass(self) -> bool:
+        """`biome_passes: end_only`: only the End needs a pass"""
+        return self.options.biome_passes.value == BiomePasses.option_end_only
+
+    def can_reach_end(self, state: CollectionState) -> bool:
+        """Whether a run can get to the End (the last block of floors)"""
+        return (state.has(FLOOR_PASS, self.player, self.get_block_count() - 1)
+                and (not self.uses_end_pass() or state.has(END_PASS, self.player)))
+
+    def can_reach_biome_floors(self, state: CollectionState, biome_id: int) -> bool:
+        """Whether a run can get to the biome (Floor Passes, and Biome Passes with `biome_passes: true`)"""
+        if biome_id == TOWN_BIOME:
+            return True
+        if biome_id == END_BIOME:
+            return self.can_reach_end(state)
+        if biome_id not in BIOME_DEPTHS:
+            return False
+        if self.uses_biome_passes() and biome_id in BIOME_PASSES:
+            return can_reach_biome(state, self.player, biome_id, self.get_block_count())
+        return state.has(FLOOR_PASS, self.player, BIOME_DEPTHS[biome_id])
+
+    def get_dex_species(self) -> List[int]:
+        """
+        Species with a Dexsanity check: the starters (`starters`) or every species (`all`) usable with the Mono
+        Generation / Mono Type challenges, except the starting Pokemon and the excluded ones
+        """
+        mode = self.options.dexsanity.value
+        if mode == Dexsanity.option_false:
+            return []
+        excluded = set(self.options.dexsanity_exclude.value)
+        no_legendaries = "Legendaries" in excluded
+        starting = {POKEMON_SPECIES_ID[name] for name in self.starting_pokemon}
+        if mode == Dexsanity.option_starters:
+            candidates = [POKEMON_SPECIES_ID[name] for name in self.get_usable_pokemon()]
+        else:
+            generation = self.options.mono_generation.value
+            mono_type = self.get_mono_type()
+            candidates = [species_id for species_id, (_name, gen, types, *_rest) in DEX_BY_ID.items()
+                          if (not generation or gen == generation) and (mono_type is None or mono_type in types)]
+        return sorted(species_id for species_id in candidates
+                      if species_id in DEX_BY_ID and species_id not in starting
+                      and DEX_BY_ID[species_id][0] not in excluded
+                      and not (no_legendaries and DEX_BY_ID[species_id][3]))
+
+    def get_dex_biomes(self, species_id: int) -> Set[int]:
+        """
+        Biomes where obtaining the species can be done: where it is met in the wild, and where a Pokemon of its line
+        is met (`starters`: any Pokemon of the line counts) or one of its pre-evolutions (`all`: it evolves)
+        """
+        if self.options.dexsanity.value == Dexsanity.option_starters:
+            return {biome for line_id, (_n, _g, _t, _l, starter, _p, biomes) in DEX_BY_ID.items()
+                    if starter == species_id for biome in biomes}
+        biomes: Set[int] = set()
+        current: Optional[int] = species_id
+        while current is not None and current in DEX_BY_ID:
+            biomes |= set(DEX_BY_ID[current][6])
+            current = DEX_BY_ID[current][5]
+        return biomes
 
     def is_blitz(self) -> bool:
         return bool(self.options.blitz.value)
@@ -251,9 +350,13 @@ class PokeRogueWorld(World):
             return PokeRogueItem(name, ItemClassification.progression, None, self.player)
         if name in ITEM_CLASSIFICATION:
             classification = CLASSIFICATIONS[ITEM_CLASSIFICATION[name]]
+        elif name == END_PASS:
+            # Needed to reach the last floors
+            classification = ItemClassification.progression
         elif name in BIOME_PASSES.values():
-            # Only needed to reach the biome floor checks
-            classification = (ItemClassification.progression if self.has_biome_locations()
+            # Only needed to reach the biome floor checks and the Dexsanity checks
+            classification = (ItemClassification.progression
+                              if self.has_biome_locations() or self.options.dexsanity.value
                               else ItemClassification.useful)
         else:
             classification = ItemClassification.useful  # Pokemon unlocks
@@ -393,7 +496,7 @@ class PokeRogueWorld(World):
         those of the far biomes to its end (the farthest last).
         """
         for world in multiworld.get_game_worlds(GAME_NAME):
-            if not (world.options.biome_passes.value and world.options.biome_pass_priority.value
+            if not (world.uses_biome_passes() and world.options.biome_pass_priority.value
                     and world.has_biome_locations()):
                 continue
             passes = [item for item in progitempool if item.player == world.player and item.name in BIOME_PASS_IDS]
@@ -438,15 +541,19 @@ class PokeRogueWorld(World):
                     if with_bonus:
                         self.add_location(region, wave_bonus_location_name(wave))
             self.multiworld.regions.append(region)
-            previous.connect(region, f"Floor Pass {block}",
-                             lambda state, p=block: state.has(FLOOR_PASS, self.player, p))
+            if block == block_count - 1:
+                # The End: every Floor Pass, and the End Pass with `biome_passes: end_only`
+                previous.connect(region, f"Floor Pass {block}", lambda state: self.can_reach_end(state))
+            else:
+                previous.connect(region, f"Floor Pass {block}",
+                                 lambda state, p=block: state.has(FLOOR_PASS, self.player, p))
             blocks.append(region)
             previous = region
 
         # Biome floors: available from the first block where the biome can be reached (with Biome Passes, also
         # needs the passes of a path from the Town to the biome)
         if with_biomes:
-            biome_passes = bool(self.options.biome_passes.value)
+            biome_passes = self.uses_biome_passes()
             for biome_id in sorted(BIOME_DEPTHS):
                 depth = self.get_biome_depth(biome_id)
                 for floor in biome_floors(biome_id):
@@ -463,17 +570,34 @@ class PokeRogueWorld(World):
             self.add_location(blocks[(wave - 1) // GATE_INTERVAL], shop_location_name(index))
 
         # Biome Pass priority: the PokeRogue locations of a block don't hold the passes of the biomes much closer
-        if (with_biomes and self.options.biome_passes.value and self.options.biome_pass_priority.value):
+        if with_biomes and self.uses_biome_passes() and self.options.biome_pass_priority.value:
             for block, region in enumerate(blocks):
                 for location in region.locations:
                     location.item_rule = lambda item, b=block: not (
                         item.player == self.player and item.name in BIOME_PASS_IDS
                         and BIOME_DEPTHS[BIOME_PASS_IDS[item.name]] + BIOME_PASS_BLOCK_SLACK < b)
 
-        goal_region = blocks[-1]
-        victory = PokeRogueLocation(self.player, f"Floor {final_wave} Cleared", None, goal_region)
-        victory.place_locked_item(self.create_item(VICTORY))
-        goal_region.locations.append(victory)
+        # Dexsanity: obtaining each Pokemon of the list, in a biome where it (or its line) can be met, or on the
+        # first floor of the End (which offers any Pokemon not obtained yet)
+        dex_locations: List[Location] = []
+        for species_id in self.get_dex_species():
+            location = self.add_location(menu, dex_location_name(species_id))
+            location.access_rule = (lambda state, biomes=frozenset(self.get_dex_biomes(species_id)):
+                                    self.can_reach_end(state)
+                                    or any(self.can_reach_biome_floors(state, b) for b in biomes))
+            dex_locations.append(location)
+
+        if self.options.goal.value == Goal.option_pokedex:
+            victory = PokeRogueLocation(self.player, "Pokedex Complete", None, menu)
+            # The Dexsanity locations are all in the menu region: their own rules are enough
+            victory.access_rule = lambda state: all(location.access_rule(state) for location in dex_locations)
+            victory.place_locked_item(self.create_item(VICTORY))
+            menu.locations.append(victory)
+        else:
+            goal_region = blocks[-1]
+            victory = PokeRogueLocation(self.player, f"Floor {final_wave} Cleared", None, goal_region)
+            victory.place_locked_item(self.create_item(VICTORY))
+            goal_region.locations.append(victory)
 
     def create_items(self) -> None:
         location_count = len(self.multiworld.get_unfilled_locations(self.player))
@@ -482,12 +606,14 @@ class PokeRogueWorld(World):
         # Floor passes: one per gate between the first floor block and the last one
         pool += [self.create_item(FLOOR_PASS) for _ in range(self.get_block_count() - 1)]
 
-        # Biome passes: one per biome except the Town and the End
-        if self.options.biome_passes.value:
+        # Biome passes: one per biome except the Town and the End, or the End one only
+        if self.uses_biome_passes():
             pool += [self.create_item(name) for name in BIOME_PASSES.values()]
+        elif self.uses_end_pass():
+            pool.append(self.create_item(END_PASS))
 
         # Pokemon: a few to start with, some more shuffled in the multiworld (only usable ones with the challenges)
-        starting = self.pick_starting_pokemon()
+        starting = self.starting_pokemon
         for name in starting:
             self.multiworld.push_precollected(self.create_item(name))
         remaining = [name for name in self.get_usable_pokemon() if name not in starting]
@@ -540,7 +666,8 @@ class PokeRogueWorld(World):
             "shop_cost_percent": self.options.shop_cost_percent.value,
             "death_link": bool(self.options.death_link.value),
             "trainer_hints": bool(self.options.trainer_hints.value),
-            "biome_passes": bool(self.options.biome_passes.value),
+            "biome_passes": self.uses_biome_passes(),
+            "end_pass": self.uses_end_pass(),
             # Challenge values, by name of the game's Challenges enum (0: off)
             "challenges": {
                 "SINGLE_GENERATION": self.options.mono_generation.value,
@@ -558,4 +685,36 @@ class PokeRogueWorld(World):
             "floor_checks": self.options.floor_checks.value,
             "final_wave": self.get_final_wave(),
             "shop_tier_waves": self.get_shop_tier_waves(),
+            "goal": self.options.goal.value,
+            "dexsanity": self.options.dexsanity.value,
+            "dexsanity_species": self.get_dex_species(),
+            "trainer_hint_locations": self.get_trainer_hint_locations(),
         }
+
+    def get_trainer_hint_locations(self) -> Dict[str, int]:
+        """
+        Location hinted by each key trainer, chosen once the items are placed: progression items for other players
+        first, then this player's progression items, then useful items, then any item (all different)
+        """
+        if not self.options.trainer_hints.value:
+            return {}
+        groups: List[List[Location]] = [[], [], [], [], []]
+        for location in self.multiworld.get_locations(self.player):
+            item = location.item
+            if location.address is None or item is None or item.code is None:
+                continue
+            other = item.player != self.player
+            if item.advancement:
+                groups[0 if other else 1].append(location)
+            elif item.useful:
+                groups[2 if other else 3].append(location)
+            else:
+                groups[4].append(location)
+        chosen: List[int] = []
+        for group in groups:
+            group.sort(key=lambda location: location.address)
+            self.random.shuffle(group)
+            chosen += [location.address for location in group]
+        keys = list(HINT_TRAINER_KEYS)
+        self.random.shuffle(keys)
+        return dict(zip(keys, chosen))

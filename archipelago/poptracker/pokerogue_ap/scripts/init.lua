@@ -7,6 +7,7 @@ Tracker:AddMaps("maps/maps.json")
 Tracker:AddLocations("locations/floors.json")
 Tracker:AddLocations("locations/biomes.json")
 Tracker:AddLocations("locations/shop.json")
+Tracker:AddLocations("locations/pokedex.json")
 Tracker:AddLayouts("layouts/tracker.json")
 
 set_default_settings()

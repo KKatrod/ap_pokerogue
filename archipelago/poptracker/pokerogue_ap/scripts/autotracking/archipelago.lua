@@ -53,14 +53,21 @@ end
 local function apply_settings()
     applying_settings = true
     if SLOT_DATA then
+        -- Before the settings: changing them refreshes the visibility rules
+        DEX_LIST = {}
+        for _, species_id in ipairs(SLOT_DATA.dexsanity_species or {}) do
+            DEX_LIST[tonumber(species_id)] = true
+        end
         set_settings({
             location_mode = slot_number(SLOT_DATA, "location_mode", DEFAULT_SETTINGS.location_mode),
             shop_count = slot_number(SLOT_DATA, "shop_item_count", DEFAULT_SETTINGS.shop_count),
             shop_per_tier = slot_number(SLOT_DATA, "shop_items_per_tier", DEFAULT_SETTINGS.shop_per_tier),
             shop_per_visit = slot_number(SLOT_DATA, "shop_items_per_visit", DEFAULT_SETTINGS.shop_per_visit),
             biome_passes = slot_number(SLOT_DATA, "biome_passes", 0) ~= 0,
+            end_pass = slot_number(SLOT_DATA, "end_pass", 0) ~= 0,
             blitz = slot_number(SLOT_DATA, "blitz", 0) ~= 0,
             floor_checks = slot_number(SLOT_DATA, "floor_checks", DEFAULT_SETTINGS.floor_checks),
+            dexsanity = slot_number(SLOT_DATA, "dexsanity", 0),
         })
     end
     applying_settings = false
@@ -73,8 +80,8 @@ local function on_setting_changed(_code)
     end
 end
 
-for _, code in ipairs({ "location_mode", "biome_passes", "blitz", "floor_checks", "shop_count", "shop_per_tier",
-    "shop_per_visit" }) do
+for _, code in ipairs({ "location_mode", "biome_passes", "end_pass_option", "blitz", "floor_checks", "shop_count",
+    "shop_per_tier", "shop_per_visit", "dexsanity" }) do
     ScriptHost:AddWatchForCode("lock setting " .. code, code, on_setting_changed)
 end
 

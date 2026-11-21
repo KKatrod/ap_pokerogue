@@ -22,5 +22,11 @@
     "location_size": 64,
     "location_border_thickness": 4,
     "img": "images/maps/shop.png"
+  },
+  {
+    "name": "pokedex",
+    "location_size": 48,
+    "location_border_thickness": 4,
+    "img": "images/maps/pokedex.png"
   }
 ]

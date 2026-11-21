@@ -24,16 +24,16 @@ export const BLITZ_GYM_WAVES: readonly number[] = [10, 25, 40, 55, 70, 80];
 /** Floors where Mystery Encounters may spawn (half of the Classic range) */
 export const BLITZ_MYSTERY_ENCOUNTER_WAVES: [number, number] = [5, 90];
 
-/** Floor of each Classic story battle in a Blitz run */
+/** Floor of each Classic story battle in a Blitz run (never the first floor of a block of 10: see Dexsanity) */
 export const BLITZ_FIXED_BOSS_WAVES: Readonly<Record<ClassicFixedBossWaves, number>> = {
   [ClassicFixedBossWaves.TOWN_YOUNGSTER]: 3,
   [ClassicFixedBossWaves.RIVAL_1]: 4,
   [ClassicFixedBossWaves.RIVAL_2]: 13,
   [ClassicFixedBossWaves.EVIL_GRUNT_1]: 18,
   [ClassicFixedBossWaves.RIVAL_3]: 28,
-  [ClassicFixedBossWaves.EVIL_GRUNT_2]: 31,
-  [ClassicFixedBossWaves.EVIL_GRUNT_3]: 32,
-  [ClassicFixedBossWaves.EVIL_ADMIN_1]: 33,
+  [ClassicFixedBossWaves.EVIL_GRUNT_2]: 32,
+  [ClassicFixedBossWaves.EVIL_GRUNT_3]: 33,
+  [ClassicFixedBossWaves.EVIL_ADMIN_1]: 34,
   [ClassicFixedBossWaves.RIVAL_4]: 48,
   [ClassicFixedBossWaves.EVIL_GRUNT_4]: 56,
   [ClassicFixedBossWaves.EVIL_ADMIN_2]: 57,

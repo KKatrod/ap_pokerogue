@@ -57,7 +57,7 @@ export class GameOverPhase extends BattlePhase {
     }
 
     if (this.isVictory && globalScene.gameMode.isArchipelago) {
-      archipelago.sendGoal();
+      archipelago.onFinalBossDefeated();
     }
 
     // Handle Mystery Encounter special Game Over cases

@@ -47,6 +47,13 @@
                 "type": "map",
                 "maps": ["shop"]
               }
+            },
+            {
+              "title": "Pokedex",
+              "content": {
+                "type": "map",
+                "maps": ["pokedex"]
+              }
             }
           ]
         }
@@ -65,7 +72,7 @@
           "type": "itemgrid",
           "item_margin": "4,4",
           "item_size": 48,
-          "rows": [["pass", "map"]]
+          "rows": [["pass", "map", "end_pass"]]
         }
       },
       {
@@ -93,8 +100,8 @@
           "item_margin": "4,4",
           "item_size": 48,
           "rows": [
-            ["location_mode", "biome_passes", "blitz", "floor_checks"],
-            ["shop_count", "shop_per_tier", "shop_per_visit"]
+            ["location_mode", "biome_passes", "end_pass_option", "blitz", "floor_checks"],
+            ["shop_count", "shop_per_tier", "shop_per_visit", "dexsanity"]
           ]
         }
       }

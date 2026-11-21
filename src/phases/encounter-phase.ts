@@ -4,6 +4,7 @@ import { PLAYER_PARTY_MAX_SIZE, WEIGHT_INCREMENT_ON_SPAWN_MISS } from "#app/cons
 import { audioManager } from "#app/global-audio-manager";
 import { globalScene } from "#app/global-scene";
 import { settings } from "#app/global-settings-manager";
+import { speciesDataRegistry } from "#app/global-species-data-registry";
 import { getPokemonNameWithAffix } from "#app/messages";
 import { activeOverrides } from "#app/overrides";
 import { handleTutorial, Tutorial } from "#app/tutorial";
@@ -115,10 +116,19 @@ export class EncounterPhase extends BattlePhase {
         if (battle.battleType === BattleType.TRAINER) {
           battle.enemyParty[e] = battle.trainer?.genPartyMember(e)!; // TODO:: is the bang correct here?
         } else {
-          let enemySpecies = globalScene.randomSpecies(battle.waveIndex, level, true);
+          // Archipelago Dexsanity: a Pokémon not obtained yet on the first floor of each block of 10
+          const dexsanitySpecies =
+            e === 0 && globalScene.gameMode.isArchipelago
+              ? archipelago.getDexsanityEncounter(battle.waveIndex, globalScene.arena.biomeId)
+              : null;
+          let enemySpecies =
+            dexsanitySpecies === null
+              ? globalScene.randomSpecies(battle.waveIndex, level, true)
+              : speciesDataRegistry.getSpecies(dexsanitySpecies);
           // If player has golden bug net, rolls 10% chance to replace non-boss wave wild species from the golden bug net bug pool
           if (
-            globalScene.findModifier(m => m instanceof BoostBugSpawnModifier)
+            dexsanitySpecies === null
+            && globalScene.findModifier(m => m instanceof BoostBugSpawnModifier)
             && !globalScene.gameMode.isBoss(battle.waveIndex)
             && globalScene.arena.biomeId !== BiomeId.END
             && randSeedInt(10) === 0
@@ -581,6 +591,13 @@ export class EncounterPhase extends BattlePhase {
     }
 
     if (!this.loaded) {
+      // Archipelago: floor 1 of a run hands out the items received so far before the team is sent out
+      // (DNA Splicers included, and before the "switch Pokémon?" question)
+      if (globalScene.gameMode.isArchipelago && archipelago.shouldHandleRunStart()) {
+        archipelago.markRunStartHandled();
+        globalScene.phaseManager.pushNew("ArchipelagoReceivePhase", true, true);
+      }
+
       const availablePartyMembers = globalScene.getPokemonAllowedInBattle();
 
       if (!availablePartyMembers[0].isOnField()) {

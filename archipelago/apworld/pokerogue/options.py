@@ -1,8 +1,17 @@
 from dataclasses import dataclass
 
-from Options import Choice, DeathLink, DefaultOnToggle, PerGameCommonOptions, Range, Toggle
+from Options import Choice, DeathLink, DefaultOnToggle, OptionSet, PerGameCommonOptions, Range, Toggle
 
-from .data import POKEMON
+from .data import DEX_SPECIES, POKEMON
+
+
+class Goal(Choice):
+    """eternatus: beat Eternatus on the last floor (200, or 100 with Blitz).
+    pokedex: obtain every Pokemon of the Dexsanity list (needs dexsanity)."""
+    display_name = "Goal"
+    option_eternatus = 0
+    option_pokedex = 1
+    default = 0
 
 
 class LocationMode(Choice):
@@ -16,6 +25,28 @@ class LocationMode(Choice):
     option_biome_floors = 1
     option_both = 2
     default = 0
+
+
+class Dexsanity(Choice):
+    """Obtaining Pokemon is a check (caught, hatched, given by an event, or evolved with "all").
+    false: no Pokedex checks.
+    starters: one check per starter not owned at the start, sent by obtaining any Pokemon of its line.
+    all: one check per species (evolutions and regional forms included).
+    The Mono Generation / Mono Type challenges restrict the list. The first floor of each block of 10 always offers
+    a Pokemon of the biome not obtained yet (if any), and the first floor of the End any Pokemon not obtained yet."""
+    display_name = "Dexsanity"
+    option_false = 0
+    option_starters = 1
+    option_all = 2
+    alias_starter_only = 1
+    default = 0
+
+
+class DexsanityExclude(OptionSet):
+    """Pokemon removed from the Dexsanity list, by name (e.g. "Bulbasaur", "Alola Rattata").
+    "Legendaries" removes every legendary, sub-legendary and mythical Pokemon."""
+    display_name = "Dexsanity Exclude"
+    valid_keys = sorted({name for _id, name, *_rest in DEX_SPECIES} | {"Legendaries"})
 
 
 class ShopItemCount(Range):
@@ -133,15 +164,21 @@ class PokemonPoolCosts(Choice):
     default = 0
 
 
-class BiomePasses(Toggle):
-    """Each biome (except the Town and the End) needs its Biome Pass to be visited, on top of the Floor Passes.
-    When none of the next biomes is unlocked, you go back to the Town. With the Map, the Town is always one of the
-    choices."""
+class BiomePasses(Choice):
+    """true: each biome (except the Town and the End) needs its Biome Pass to be visited, on top of the Floor
+    Passes. When none of the next biomes is unlocked, you go back to the Town. With the Map, the Town is always one of
+    the choices.
+    end_only: a single "Biome Pass - End" is needed to enter the End (the last 10 floors), on top of every Floor Pass.
+    The other biomes are open."""
     display_name = "Biome Passes"
+    option_false = 0
+    option_true = 1
+    option_end_only = 2
+    default = 0
 
 
 class BiomePassPriority(DefaultOnToggle):
-    """With Biome Passes, the generator places the passes of the biomes close to the Town earlier in the multiworld
+    """With Biome Passes (true), the generator places the passes of the biomes close to the Town earlier in the multiworld
     than those of the farther biomes, so the biomes come into logic roughly in the order of a run.
     In PokeRogue, the pass of a biome is never found more than 2 floor blocks after the first block where the biome
     can be visited (e.g. the pass of a biome of floors 11-20 is found by floor 40 at most). In the other games of the
@@ -292,7 +329,10 @@ class TrainerHints(DefaultOnToggle):
 
 @dataclass
 class PokeRogueOptions(PerGameCommonOptions):
+    goal: Goal
     location_mode: LocationMode
+    dexsanity: Dexsanity
+    dexsanity_exclude: DexsanityExclude
     blitz: Blitz
     floor_checks: FloorChecks
     shop_item_count: ShopItemCount

@@ -1703,6 +1703,10 @@ export class GameData {
   ): Promise<boolean> {
     // If incrementCount === false (not a catch scenario), only update the pokemon's dex data if the Pokemon has already been marked as caught in dex
     // Prevents form changes, nature changes, etc. from unintentionally updating the dex data of a "rental" pokemon
+    if (this.archipelagoBackup) {
+      // Archipelago Dexsanity: obtaining a Pokémon is a check
+      apHooks.onPokemonObtained(pokemon.species.speciesId, incrementCount);
+    }
     const speciesRootForm = pokemon.species.getRootSpeciesId();
     if (!incrementCount && !globalScene.gameData.dexData[speciesRootForm].caughtAttr) {
       return Promise.resolve(false);

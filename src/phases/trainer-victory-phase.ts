@@ -94,7 +94,7 @@ export class TrainerVictoryPhase extends BattlePhase {
           globalScene.gameMode.isArchipelago
           && archipelago.isHintTrainer(trainerConfig?.trainerType, trainerConfig?.isBoss)
         ) {
-          const hint = archipelago.takeTrainerHint();
+          const hint = archipelago.takeTrainerHint(globalScene.currentBattle.waveIndex);
           if (hint) {
             showMessageOrEnd = () =>
               globalScene.ui.showDialogue(

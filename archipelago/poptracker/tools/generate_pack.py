@@ -67,6 +67,10 @@ def biome_pass_code(biome_id):
     return f"biome_pass_{biome_id}"
 
 
+# The pass of the End (biome_passes: end_only)
+END_PASS_CODE = "end_pass"
+
+
 def biome_abbreviations():
     """Short labels for the Biome Pass icons: initials of a multi-word name, else the first 3 letters."""
     def short(name, fallback=False):
@@ -81,6 +85,67 @@ def biome_abbreviations():
     if len(set(labels.values())) != len(labels):
         raise SystemExit(f"Biome Pass labels are not unique: {labels}")
     return labels
+
+
+# ---------------------------------------------------------------- Dexsanity
+
+DEX_NAMES = {species_id: name for species_id, name, *_rest in data["DEX_SPECIES"]}
+DEX_BIOMES = {species_id: biomes for species_id, *_rest, biomes in data["DEX_SPECIES"]}
+DEX_PREVOLUTION = {species_id: prevolution for species_id, *_rest, prevolution, _biomes in data["DEX_SPECIES"]}
+DEX_STARTER = {species_id: starter for species_id, _n, _g, _t, _l, starter, _p, _b in data["DEX_SPECIES"]}
+# Species id of each starter (the Dexsanity checks of `dexsanity: starters`)
+DEX_STARTERS = {item_id - BASE_ID - data["POKEMON_ITEM_OFFSET"] for _name, item_id, _cost in data["POKEMON"]}
+# Box of the Pokedex tab for the Pokemon met in no biome: only the first floor of the End offers them
+DEX_ANYWHERE = "Pokedex - Anywhere (End, floor 1)"
+
+
+def dex_biomes_all(species_id):
+    """dexsanity: all - same as get_dex_biomes in the apworld: the biomes of the species and its pre-evolutions"""
+    biomes, current = set(), species_id
+    while current is not None and current in DEX_BIOMES:
+        biomes |= set(DEX_BIOMES[current])
+        current = DEX_PREVOLUTION[current]
+    return biomes & set(DEPTHS)
+
+
+def dex_biomes_starters(species_id):
+    """dexsanity: starters - the biomes of any Pokemon of the starter's line"""
+    return {b for s, starter in DEX_STARTER.items() if starter == species_id for b in DEX_BIOMES[s]} & set(DEPTHS)
+
+
+DEX_ALL = {s: dex_biomes_all(s) for s in DEX_NAMES}
+DEX_LINE = {s: dex_biomes_starters(s) for s in DEX_STARTERS if s in DEX_NAMES}
+
+
+def dex_box_name(biome_id):
+    return f"Pokedex - {BIOME_NAMES[biome_id]}"
+
+
+def dex_visibility(species_id, biome_id):
+    """
+    The section of the Pokemon in the box of the biome (None: the anywhere box) is shown with the slot's Dexsanity
+    mode when the Pokemon is in the slot's list (scripts/logic.lua)
+    """
+    rules = []
+    all_biomes = DEX_ALL[species_id]
+    if (biome_id in all_biomes) if biome_id is not None else not all_biomes:
+        rules.append(f"$dex_all|{species_id}")
+    if species_id in DEX_LINE:
+        line = DEX_LINE[species_id]
+        if (biome_id in line) if biome_id is not None else not line:
+            rules.append(f"$dex_starter|{species_id}")
+    return rules
+
+
+def dex_boxes():
+    """(box name, biome id or None, [(species id, visibility rules)])"""
+    boxes = []
+    for biome_id in BIOMES:
+        sections = [(s, dex_visibility(s, biome_id)) for s in sorted(DEX_NAMES)]
+        boxes.append((dex_box_name(biome_id), biome_id, [(s, r) for s, r in sections if r]))
+    anywhere = [(s, dex_visibility(s, None)) for s in sorted(DEX_NAMES)]
+    boxes.append((DEX_ANYWHERE, None, [(s, r) for s, r in anywhere if r]))
+    return boxes
 
 
 def biome_floors(biome_id):
@@ -187,6 +252,8 @@ def items_json():
         {"name": "Progressive Floor Pass", "type": "consumable", "img": "images/items/floor_pass.png",
          "codes": "pass", "min_quantity": 0, "max_quantity": BLOCK_COUNT - 1, "increment": 1},
         {"name": "Map", "type": "toggle", "img": "images/items/map.png", "codes": "map"},
+        {"name": "Biome Pass - End (biome_passes: end_only)", "type": "toggle", "img": "images/items/end_pass.png",
+         "codes": END_PASS_CODE},
         *[{"name": f"Biome Pass - {BIOME_NAMES[b]}", "type": "toggle",
            "img": f"images/items/biome_pass_{b}.png", "codes": biome_pass_code(b)} for b in BIOME_PASSES],
         {"name": "Location Mode", "type": "progressive", "loop": True, "allow_disabled": False,
@@ -208,8 +275,20 @@ def items_json():
          "codes": "shop_per_visit", "min_quantity": 1, "max_quantity": 3, "increment": 1},
         {"name": "Biome Passes (option)", "type": "toggle", "img": "images/settings/biome_passes.png",
          "codes": "biome_passes"},
+        {"name": "End Pass (option biome_passes: end_only)", "type": "toggle", "img": "images/settings/end_pass.png",
+         "codes": "end_pass_option"},
         {"name": "Blitz (option): 100 floors", "type": "toggle", "img": "images/settings/blitz.png",
          "codes": "blitz"},
+        {"name": "Dexsanity (option)", "type": "progressive", "loop": True, "allow_disabled": False,
+         "codes": "dexsanity",
+         "stages": [
+             {"name": "Dexsanity: false", "img": "images/settings/dex_off.png", "codes": "dex_off",
+              "inherit_codes": False},
+             {"name": "Dexsanity: starters", "img": "images/settings/dex_starters.png", "codes": "dex_starters",
+              "inherit_codes": False},
+             {"name": "Dexsanity: all", "img": "images/settings/dex_all.png", "codes": "dex_all",
+              "inherit_codes": False},
+         ]},
         {"name": "Floor Checks (option): 1 or 2 per floor", "type": "consumable",
          "img": "images/settings/floor_checks.png", "codes": "floor_checks", "min_quantity": 1, "max_quantity": 2,
          "increment": 1},
@@ -224,9 +303,13 @@ def floor_locations(centres):
         first, last = block * GATE + 1, min((block + 1) * GATE, FINAL_WAVE - 1)
         sections = []
         for wave in range(first, last + 1):
-            sections.append({"name": f"Floor {wave} Cleared"})
+            # The last floor of a Blitz run is the final boss: no check
+            blitz_final = wave == data["BLITZ_FINAL_WAVE"]
+            sections.append({"name": f"Floor {wave} Cleared", **({"visibility_rules": ["$not_blitz"]}
+                                                                  if blitz_final else {})})
             # Second check of the floor (floor_checks: 2)
-            sections.append({"name": f"Floor {wave} Bonus", "visibility_rules": ["$floor_bonus"]})
+            sections.append({"name": f"Floor {wave} Bonus",
+                             "visibility_rules": ["$floor_bonus,$not_blitz" if blitz_final else "$floor_bonus"]})
         location = {
             "name": block_name(block),
             # The blocks past the last floor of a Blitz run are hidden
@@ -235,7 +318,8 @@ def floor_locations(centres):
             "map_locations": [{"map": "floors", "x": centres[block][0], "y": centres[block][1]}],
         }
         if block:
-            location["access_rules"] = [f"pass:{block}"]
+            # The Floor Passes, and the End Pass for the last block with biome_passes: end_only
+            location["access_rules"] = [f"$block_reachable|{block}"]
         locations.append(location)
     return locations
 
@@ -244,7 +328,7 @@ def biome_access_rules(biome_id):
     if biome_id == TOWN:
         return None
     if biome_id == END:
-        return ["$end_reachable"]  # forced at the last block (19, or 9 with Blitz), no Biome Pass
+        return ["$end_reachable"]  # forced at the last block (19, or 9 with Blitz), End Pass with end_only
     # scripts/logic.lua: reachable with the Floor Passes (and the Biome Passes with the biome_passes option);
     # in logic once biome_in_logic is also true, otherwise a sequence break ([...] is an optional requirement)
     return [f"$biome_reachable|{biome_id},[$biome_in_logic|{biome_id}]"]
@@ -289,6 +373,21 @@ def shop_locations(centres):
     return locations
 
 
+def dex_locations(centres):
+    """Pokedex tab: one box per biome with the Pokemon met there (and the anywhere box)"""
+    locations = []
+    for i, (name, biome_id, sections) in enumerate(dex_boxes()):
+        locations.append({
+            "name": name,
+            "visibility_rules": ["$dexsanity_on"],
+            # The biome can be reached (Floor Passes, and Biome Passes with biome_passes: true), or the End
+            "access_rules": [f"$dex_box_reachable|{'any' if biome_id is None else biome_id}"],
+            "sections": [{"name": DEX_NAMES[s], "visibility_rules": rules} for s, rules in sections],
+            "map_locations": [{"map": "pokedex", "x": centres[i][0], "y": centres[i][1]}],
+        })
+    return locations
+
+
 def location_mapping_lua():
     lines = [
         "-- Generated by archipelago/poptracker/tools/generate_pack.py - do not edit by hand.",
@@ -307,6 +406,14 @@ def location_mapping_lua():
         for floor in biome_floors(biome_id):
             location_id = BASE_ID + data["BIOME_LOCATION_OFFSET"] + biome_id * 10 + floor - 1
             lines.append(f'  [{location_id}] = "@{BIOME_NAMES[biome_id]}/Floor {floor}",')
+    # A Pokemon is listed in every box where it can be met (only the boxes of the slot's mode show it)
+    boxes_of = {}
+    for name, _biome_id, sections in dex_boxes():
+        for species_id, _rules in sections:
+            boxes_of.setdefault(species_id, []).append(name)
+    for species_id in sorted(boxes_of):
+        codes = ", ".join(f'"@{name}/{DEX_NAMES[species_id]}"' for name in boxes_of[species_id])
+        lines.append(f'  [{BASE_ID + data["DEX_LOCATION_OFFSET"] + species_id}] = {{{codes}}},')
     lines.append("}")
     lines += [
         "",
@@ -316,6 +423,7 @@ def location_mapping_lua():
         f'  [{ITEM_IDS["Map"]}] = {{"map", "toggle"}},',
         *[f'  [{BASE_ID + data["BIOME_PASS_OFFSET"] + b}] = {{"{biome_pass_code(b)}", "toggle"}},  '
           f'-- Biome Pass - {BIOME_NAMES[b]}' for b in BIOME_PASSES],
+        f'  [{BASE_ID + data["BIOME_PASS_OFFSET"] + END}] = {{"{END_PASS_CODE}", "toggle"}},  -- Biome Pass - End',
         "}",
         "",
         "-- Biome links (biome id -> next biome ids), floor block of each biome, and the Biome Pass codes",
@@ -377,8 +485,13 @@ def main():
     icon("images/settings/per_tier.png", "/T", (150, 110, 40, 255))
     icon("images/settings/per_visit.png", "/V", (150, 110, 40, 255))
     icon("images/settings/biome_passes.png", "BP", (60, 140, 90, 255))
+    icon("images/settings/end_pass.png", "EP", (150, 50, 160, 255))
+    icon("images/items/end_pass.png", "END", (150, 50, 160, 255), "rect")
     icon("images/settings/blitz.png", "BZ", (190, 70, 40, 255))
     icon("images/settings/floor_checks.png", "FC", (90, 90, 110, 255))
+    icon("images/settings/dex_off.png", "DX", (90, 90, 110, 255))
+    icon("images/settings/dex_starters.png", "DX:S", (200, 60, 60, 255))
+    icon("images/settings/dex_all.png", "DX:A", (200, 60, 60, 255))
     for b, label in biome_abbreviations().items():
         icon(f"images/items/biome_pass_{b}.png", label, block_color(DEPTHS[b]) + (255,), "rect")
 
@@ -391,6 +504,12 @@ def main():
         [(BIOME_NAMES[b], f"{block_name(DEPTHS[b])} - {passes_label(DEPTHS[b])}" if b != END
           else "last block - 19 passes (Blitz 9)", block_color(DEPTHS[b]))
          for b in BIOMES], 5, 260, 130)
+    dex_cells = [(BIOME_NAMES[b], f"{block_name(DEPTHS[b])} - {passes_label(DEPTHS[b])}" if b != END
+                  else "last block", block_color(DEPTHS[b])) for b in BIOMES]
+    dex_cells.append(("Anywhere", "first floor of the End", block_color(BLOCK_COUNT - 1)))
+    dex_centres = grid_map(
+        "images/maps/pokedex.png", "Pokedex - the Pokemon to obtain, by biome where they are met",
+        dex_cells, 6, 230, 120)
     shop_centres = grid_map(
         "images/maps/shop.png", "Archipelago shop items - by tier of the regular shop",
         [(f"{shop_tier_name(t)}: floors {shop_tier_floors(t)[0]}-{shop_tier_floors(t)[1]}",
@@ -403,6 +522,7 @@ def main():
         {"name": "biomes_grid", "location_size": 52, "location_border_thickness": 4,
          "img": "images/maps/biomes_grid.png"},
         {"name": "shop", "location_size": 64, "location_border_thickness": 4, "img": "images/maps/shop.png"},
+        {"name": "pokedex", "location_size": 48, "location_border_thickness": 4, "img": "images/maps/pokedex.png"},
     ]
     if chart_positions is not None:
         size = max(24, round(min(chart_size) / 30))
@@ -414,6 +534,7 @@ def main():
     write("locations/floors.json", floor_locations(floor_centres))
     write("locations/biomes.json", biome_locations(biome_centres, chart_positions))
     write("locations/shop.json", shop_locations(shop_centres))
+    write("locations/pokedex.json", dex_locations(dex_centres))
     write("scripts/autotracking/mapping.lua", location_mapping_lua())
 
     biome_tab_map = "biome_chart" if chart_positions is not None else "biomes_grid"
@@ -434,6 +555,7 @@ def main():
                         {"title": "Floors", "content": {"type": "map", "maps": ["floors"]}},
                         *biome_tabs,
                         {"title": "Shop", "content": {"type": "map", "maps": ["shop"]}},
+                        {"title": "Pokedex", "content": {"type": "map", "maps": ["pokedex"]}},
                     ]},
                 ],
             },
@@ -445,15 +567,15 @@ def main():
             "content": [
                 {"type": "group", "header": "Items", "content": {
                     "type": "itemgrid", "item_margin": "4,4", "item_size": 48,
-                    "rows": [["pass", "map"]]}},
+                    "rows": [["pass", "map", END_PASS_CODE]]}},
                 {"type": "group", "header": "Biome Passes", "content": {
                     "type": "itemgrid", "item_margin": "3,3", "item_size": 36,
                     "rows": [[biome_pass_code(b) for b in BIOME_PASSES[i:i + 6]]
                              for i in range(0, len(BIOME_PASSES), 6)]}},
                 {"type": "group", "header": "Settings (from the server)", "content": {
                     "type": "itemgrid", "item_margin": "4,4", "item_size": 48,
-                    "rows": [["location_mode", "biome_passes", "blitz", "floor_checks"],
-                             ["shop_count", "shop_per_tier", "shop_per_visit"]]}},
+                    "rows": [["location_mode", "biome_passes", "end_pass_option", "blitz", "floor_checks"],
+                             ["shop_count", "shop_per_tier", "shop_per_visit", "dexsanity"]]}},
             ],
         },
         "tracker_broadcast": {

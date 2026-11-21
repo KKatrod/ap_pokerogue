@@ -15,6 +15,12 @@
     "codes": "map"
   },
   {
+    "name": "Biome Pass - End (biome_passes: end_only)",
+    "type": "toggle",
+    "img": "images/items/end_pass.png",
+    "codes": "end_pass"
+  },
+  {
     "name": "Biome Pass - Plains",
     "type": "toggle",
     "img": "images/items/biome_pass_1.png",
@@ -273,10 +279,43 @@
     "codes": "biome_passes"
   },
   {
+    "name": "End Pass (option biome_passes: end_only)",
+    "type": "toggle",
+    "img": "images/settings/end_pass.png",
+    "codes": "end_pass_option"
+  },
+  {
     "name": "Blitz (option): 100 floors",
     "type": "toggle",
     "img": "images/settings/blitz.png",
     "codes": "blitz"
+  },
+  {
+    "name": "Dexsanity (option)",
+    "type": "progressive",
+    "loop": true,
+    "allow_disabled": false,
+    "codes": "dexsanity",
+    "stages": [
+      {
+        "name": "Dexsanity: false",
+        "img": "images/settings/dex_off.png",
+        "codes": "dex_off",
+        "inherit_codes": false
+      },
+      {
+        "name": "Dexsanity: starters",
+        "img": "images/settings/dex_starters.png",
+        "codes": "dex_starters",
+        "inherit_codes": false
+      },
+      {
+        "name": "Dexsanity: all",
+        "img": "images/settings/dex_all.png",
+        "codes": "dex_all",
+        "inherit_codes": false
+      }
+    ]
   },
   {
     "name": "Floor Checks (option): 1 or 2 per floor",
