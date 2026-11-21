@@ -9,6 +9,7 @@ import { EggSourceType } from "#enums/egg-source-types";
 import { EggTier } from "#enums/egg-type";
 import { ModifierTier } from "#enums/modifier-tier";
 import { Nature } from "#enums/nature";
+import { Passive } from "#enums/passive";
 import { SpeciesId } from "#enums/species-id";
 import { TrainerType } from "#enums/trainer-type";
 import { ConsumableModifier, type Modifier, PersistentModifier } from "#modifiers/modifier";
@@ -101,6 +102,15 @@ const EGG_ITEM_TIERS: Record<string, EggTier | undefined> = {
 function isTargetedModifierType(type: ModifierType): boolean {
   return type instanceof PokemonModifierType;
 }
+
+/** `starter_bonus_unlock: egg_moves`: the 4 egg moves of a starter (one bit each) */
+const ALL_EGG_MOVES = 0b1111;
+/** `starter_bonus_unlock: natures`: every nature (bit `nature + 1`, like the game) */
+const ALL_NATURES_ATTR = Object.values(Nature)
+  .filter((n): n is Nature => typeof n === "number")
+  .reduce((attr, nature) => attr | (1 << (nature + 1)), 0);
+/** `starter_bonus_unlock: fast_egg`: the eggs need this many times fewer floors to hatch */
+const FAST_EGG_DIVISOR = 10;
 
 /** Maximum number of eggs a profile can hold (same limit as the game) */
 const MAX_EGGS = 99;
@@ -596,6 +606,8 @@ export class ArchipelagoManager {
     }
     ensureArchipelagoIconTexture();
     this.active = true;
+    // Starters hatched from the Archipelago eggs since the last time get the bonuses too
+    this.applyStarterBonuses();
     this.profile.eggs ??= [];
     globalScene.gameData.swapInArchipelagoProfile(
       this.profile.dexData,
@@ -680,7 +692,62 @@ export class ArchipelagoManager {
         this.unlockSpecies(def.speciesId);
       }
     }
+    this.applyStarterBonuses();
     this.saveProfile();
+  }
+
+  /** Bonuses of the `starter_bonus_unlock` option (passives, abilities, egg moves, shinies, natures, fast_egg) */
+  private hasStarterBonus(bonus: string): boolean {
+    const bonuses = this.slotData.starter_bonus_unlock;
+    return Array.isArray(bonuses) && bonuses.includes(bonus);
+  }
+
+  /**
+   * Gives the `starter_bonus_unlock` bonuses to every starter unlocked in the profile (received, starting or
+   * hatched): called on connection, on each item received and when entering the Archipelago mode
+   */
+  private applyStarterBonuses(): void {
+    if (!this.profile) {
+      return;
+    }
+    const passives = this.hasStarterBonus("passives");
+    const abilities = this.hasStarterBonus("abilities");
+    const eggMoves = this.hasStarterBonus("egg_moves");
+    const shinies = this.hasStarterBonus("shinies");
+    const natures = this.hasStarterBonus("natures");
+    if (!(passives || abilities || eggMoves || shinies || natures)) {
+      return;
+    }
+    for (const [key, starterEntry] of Object.entries(this.profile.starterData)) {
+      const speciesId = Number(key) as SpeciesId;
+      const dexEntry = this.profile.dexData[speciesId];
+      if (!(starterEntry && dexEntry?.caughtAttr)) {
+        continue;
+      }
+      const species = speciesDataRegistry.getSpecies(speciesId);
+      if (passives) {
+        starterEntry.passiveAttr |= Passive.UNLOCKED | Passive.ENABLED;
+      }
+      if (abilities) {
+        starterEntry.abilityAttr |=
+          AbilityAttr.ABILITY_1
+          | (species.ability2 ? AbilityAttr.ABILITY_2 : 0)
+          | (species.abilityHidden ? AbilityAttr.ABILITY_HIDDEN : 0);
+      }
+      if (eggMoves) {
+        starterEntry.eggMoves = ALL_EGG_MOVES;
+      }
+      if (shinies) {
+        const shinyAttr =
+          (DexAttr.SHINY | DexAttr.DEFAULT_VARIANT | DexAttr.VARIANT_2 | DexAttr.VARIANT_3)
+          & species.getFullUnlocksData();
+        dexEntry.caughtAttr |= shinyAttr;
+        dexEntry.seenAttr |= shinyAttr;
+      }
+      if (natures) {
+        dexEntry.natureAttr |= ALL_NATURES_ATTR;
+      }
+    }
   }
 
   private unlockSpecies(speciesId: SpeciesId): void {
@@ -925,13 +992,15 @@ export class ArchipelagoManager {
     }
     const tier = EGG_ITEM_TIERS[def.key];
     // Without a tier (Mystery Egg), the tier is rolled like a gacha pull
-    eggs.push(
-      new Egg({
-        ...(tier === undefined ? {} : { tier }),
-        sourceType: EggSourceType.EVENT,
-        eggDescriptor: "Archipelago",
-      }),
-    );
+    const egg = new Egg({
+      ...(tier === undefined ? {} : { tier }),
+      sourceType: EggSourceType.EVENT,
+      eggDescriptor: "Archipelago",
+    });
+    if (this.hasStarterBonus("fast_egg")) {
+      egg.hatchWaves = Math.max(1, Math.ceil(egg.hatchWaves / FAST_EGG_DIVISOR));
+    }
+    eggs.push(egg);
     this.saveProfile();
     return true;
   }

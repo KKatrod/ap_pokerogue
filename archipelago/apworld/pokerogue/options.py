@@ -204,6 +204,18 @@ class FloorChecks(Range):
     default = 1
 
 
+class StarterBonusUnlock(OptionSet):
+    """Bonuses given to every starter unlocked in the Archipelago profile (received, starting or hatched):
+    passives: the passive ability, unlocked and enabled.
+    abilities: every ability (second and hidden ability included).
+    egg_moves: the 4 egg moves.
+    shinies: the shiny forms (every shiny variant the species has).
+    natures: every nature.
+    fast_egg: the Archipelago eggs hatch 10 times faster (a tenth of the floors)."""
+    display_name = "Starter Bonus Unlock"
+    valid_keys = ["passives", "abilities", "egg_moves", "shinies", "natures", "fast_egg"]
+
+
 class StarterLimitItems(Range):
     """Number of "Starter Limit +1" items in the pool: each one raises the starter points of your team by 1
     (10 at first, 30 at most)."""
@@ -353,6 +365,7 @@ class PokeRogueOptions(PerGameCommonOptions):
     biome_passes: BiomePasses
     biome_pass_priority: BiomePassPriority
     starter_limit_items: StarterLimitItems
+    starter_bonus_unlock: StarterBonusUnlock
     mono_generation: MonoGeneration
     mono_type: MonoType
     limited_support: LimitedSupport

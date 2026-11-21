@@ -685,6 +685,7 @@ class PokeRogueWorld(World):
             "floor_checks": self.options.floor_checks.value,
             "final_wave": self.get_final_wave(),
             "shop_tier_waves": self.get_shop_tier_waves(),
+            "starter_bonus_unlock": sorted(self.options.starter_bonus_unlock.value),
             "goal": self.options.goal.value,
             "dexsanity": self.options.dexsanity.value,
             "dexsanity_species": self.get_dex_species(),
