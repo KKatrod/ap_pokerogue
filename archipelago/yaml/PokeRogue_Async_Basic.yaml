@@ -16,6 +16,9 @@ PokeRogue:
   shop_items_per_tier: 30
 
   # --- Valeurs par défaut ---
+  goal: eternatus
+  dexsanity: false
+  dexsanity_exclude: []
   floor_checks: 1
   shop_items_per_visit: 1
   shop_cost_percent: 100
@@ -32,6 +35,7 @@ PokeRogue:
   trainer_hints: true
   biome_pass_priority: true
   starter_limit_items: 20
+  starter_bonus_unlock: []
   mono_generation: off
   mono_type: off
   limited_support: off
