@@ -57,6 +57,24 @@ Pendant une partie Archipelago, ce sont les œufs du profil AP qui progressent ;
 
 La connexion se reconnecte automatiquement ; les locations faites hors-ligne sont renvoyées à la reconnexion.
 
+## Client sans installation
+
+`archipelago/client/` permet de distribuer le jeu dans un dossier que le joueur lance sans rien installer (ni Node, ni dépendances) :
+
+```bash
+node archipelago/client/build-client.mjs <dossier de sortie> --node <dossier contenant node.exe>
+```
+
+Le script compile le jeu (`vite build --mode app` : pas de compte, sauvegardes dans le navigateur) et assemble :
+
+- `game/` : le jeu compilé, images, sons et textes compris (environ 720 Mo) ;
+- `serve.mjs` : un petit serveur web sans dépendance, qui sert `game/` sur `http://localhost:8000` et ouvre le navigateur par défaut ;
+- `pokerogue.bat` : lance `node
+ode.exe serve.mjs` ;
+- `node/` : `node.exe` (copié avec `--node`, ou ajouté à la main).
+
+Le joueur double-clique sur `pokerogue.bat` et garde la fenêtre ouverte pendant la partie. Le port reste 8000 : le navigateur garde les sauvegardes par adresse, un autre port afficherait une sauvegarde vide. Si PokeRogue est déjà lancé, le script ouvre simplement le navigateur. `--no-build` réutilise le dernier build (`dist/`).
+
 ## Côté serveur : l'apworld
 
 `archipelago/apworld/pokerogue/` est le monde Archipelago (Python). Pour l'utiliser : zipper le dossier `pokerogue` en `pokerogue.apworld` et le placer dans `custom_worlds/` (ou `lib/worlds/`) d'Archipelago. Après chaque nouvelle version, **fermer puis relancer le Launcher** avant de régénérer le template YAML (*Generate Template Options*) : un Launcher déjà ouvert garde l'ancienne version en mémoire et produit un template sans les nouvelles options.
