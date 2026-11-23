@@ -1,5 +1,6 @@
 import { applyAbAttrs } from "#abilities/apply-ab-attrs";
 import { Animation } from "#app/animations";
+import { apHooks } from "#app/archipelago/ap-hooks";
 import { Battle } from "#app/battle";
 import {
   ANTI_VARIANCE_WEIGHT_MODIFIER,
@@ -3428,6 +3429,10 @@ export class BattleScene extends SceneBase {
     if (getDailyMysteryEncounter(waveIndex) != null) {
       return true;
     }
+    // Archipelago: the "See the Fate" encounter is forced on one floor of the run
+    if (this.gameMode.isArchipelago && apHooks.getForcedMysteryEncounter(waveIndex) != null) {
+      return true;
+    }
     if (!this.isMysteryEncounterValidForWave(battleType, waveIndex)) {
       return false;
     }
@@ -3506,6 +3511,8 @@ export class BattleScene extends SceneBase {
     } else if (canBypass) {
       encounter = allMysteryEncounters[encounterType ?? -1];
       return encounter;
+    } else if (this.gameMode.isArchipelago && apHooks.getForcedMysteryEncounter(this.currentBattle.waveIndex) != null) {
+      encounter = allMysteryEncounters[apHooks.getForcedMysteryEncounter(this.currentBattle.waveIndex)!];
     } else if (getDailyMysteryEncounter(this.currentBattle.waveIndex) == null) {
       encounter = encounterType == null ? null : allMysteryEncounters[encounterType];
     } else {

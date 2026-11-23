@@ -333,6 +333,14 @@ class ActivePassives(Choice):
     default = 0
 
 
+class FateEncounter(DefaultOnToggle):
+    """Once per run, a Mega Alakazam offers to "see the fate" (Mystery Encounter, floors 41-99, or 21-49 with Blitz).
+    Choices: where one of your Floor / Biome Passes is, the sphere of a rare progression item of another player, or
+    which players should reach their goal first and last according to the generation (spoiler) order.
+    Each run gives a different pass hint and a different item hint."""
+    display_name = "Fate Encounter"
+
+
 class TrainerHints(DefaultOnToggle):
     """Key trainers (rival, Gym Leaders, Elite Four, Champion, evil team bosses and admins) give, once beaten,
     a hint about a progression item hidden in PokeRogue for another player."""
@@ -362,6 +370,7 @@ class PokeRogueOptions(PerGameCommonOptions):
     trap_percent: TrapPercent
     death_link: DeathLink
     trainer_hints: TrainerHints
+    fate_encounter: FateEncounter
     biome_passes: BiomePasses
     biome_pass_priority: BiomePassPriority
     starter_limit_items: StarterLimitItems

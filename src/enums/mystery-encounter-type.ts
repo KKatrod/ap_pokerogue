@@ -30,4 +30,6 @@ export enum MysteryEncounterType {
   UNCOMMON_BREED,
   GLOBAL_TRADE_SYSTEM,
   THE_EXPERT_POKEMON_BREEDER,
+  /** Archipelago mode only: "See the Fate" (forced once per run, see `ArchipelagoManager.getFateWave`) */
+  ARCHIPELAGO_FATE,
 }

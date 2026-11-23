@@ -471,6 +471,16 @@ export class ArchipelagoClient {
     }
   }
 
+  /**
+   * Registers hints about locations of a player (free, unlike !hint): the locations must hold items of this slot
+   * (servers without `CreateHints` ignore it)
+   */
+  createHints(locations: number[], player: number): void {
+    if (locations.length > 0) {
+      this.send([{ cmd: "CreateHints", locations, player }]);
+    }
+  }
+
   setStatus(status: ClientStatus): void {
     this.send([{ cmd: "StatusUpdate", status }]);
   }

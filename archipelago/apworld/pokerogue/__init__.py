@@ -10,7 +10,7 @@ traps. Goal: beat Eternatus on the last floor, or obtain every Pokemon of the De
 Item / location ids come from data.py, generated from the game sources
 (node archipelago/generate-apworld-data.mjs).
 """
-from collections import deque
+from collections import Counter, deque
 import logging
 from typing import Dict, List, Optional, Set
 
@@ -28,6 +28,7 @@ FLOOR_PASS = "Progressive Floor Pass"
 VICTORY = "Victory"
 MAP = "Map"
 STARTER_LIMIT = "Starter Limit +1"
+FLY_TICKET = "Fly Ticket"
 
 TOWN_BIOME = 0
 END_BIOME = 50
@@ -48,6 +49,13 @@ BIOME_PASS_BLOCK_SLACK = 2
 HINT_TRAINER_KEYS = ([f"fixed_{wave}" for wave in (8, 25, 55, 66, 95, 114, 115, 145, 164, 165, 182, 184, 186, 188, 190,
                                                    195)]
                      + [f"gym_{index}" for index in range(1, 7)])
+
+# Fate encounter: hints prepared at generation
+# A progression item of another player is hinted only if its owner has at most this many copies of it (no Triforce
+# Pieces or puzzle pieces)
+FATE_RARE_ITEM_MAX_COPIES = 3
+# At most this many hints of each kind in the slot data (one is used per run)
+FATE_MAX_HINTS = 60
 
 # Relative weights of the egg fillers
 EGG_WEIGHTS = {
@@ -208,6 +216,38 @@ def shop_item_wave(index: int, per_tier: int, tier_waves: List[int] = SHOP_TIER_
     if tier >= len(tier_waves):
         return None
     return tier_waves[tier]
+
+
+def get_multiworld_spheres(multiworld) -> tuple:
+    """
+    Spheres of the multiworld, like the spoiler: (sphere of each filled location, sphere where each player reaches
+    their goal or None, number of spheres). Computed once per generation, for every PokeRogue world.
+    """
+    cached = getattr(multiworld, "_pokerogue_spheres", None)
+    if cached is not None:
+        return cached
+    players = [player for player in multiworld.player_ids if player not in multiworld.groups]
+    state = CollectionState(multiworld)
+    remaining = set(multiworld.get_filled_locations())
+    sphere_of: Dict[Location, int] = {}
+    goal_sphere: Dict[int, Optional[int]] = {
+        player: 0 if multiworld.completion_condition[player](state) else None for player in players}
+    sphere = 0
+    while remaining:
+        reachable = {location for location in remaining if location.can_reach(state)}
+        if not reachable:
+            break
+        sphere += 1
+        for location in reachable:
+            sphere_of[location] = sphere
+            state.collect(location.item, True, location)
+        remaining -= reachable
+        for player in players:
+            if goal_sphere[player] is None and multiworld.completion_condition[player](state):
+                goal_sphere[player] = sphere
+    result = (sphere_of, goal_sphere, sphere)
+    multiworld._pokerogue_spheres = result
+    return result
 
 
 class PokeRogueItem(Item):
@@ -643,6 +683,10 @@ class PokeRogueWorld(World):
                     if len(pool) < location_count:
                         pool.append(self.create_item(name))
 
+        # Fly Ticket: with the Map, the biomes already visited are also offered when the biome changes
+        if len(pool) < location_count:
+            pool.append(self.create_item(FLY_TICKET))
+
         # Starter Limit +1: raise the starter points of the team (10 at first, 30 at most)
         for _ in range(self.options.starter_limit_items.value):
             if len(pool) < location_count:
@@ -690,6 +734,62 @@ class PokeRogueWorld(World):
             "dexsanity": self.options.dexsanity.value,
             "dexsanity_species": self.get_dex_species(),
             "trainer_hint_locations": self.get_trainer_hint_locations(),
+            **self.get_fate_data(),
+        }
+
+    def get_fate_data(self) -> Dict[str, object]:
+        """
+        Fate encounter: where this player's passes are, rare progression items of other players beyond half of the
+        spheres, and the players reaching their goal first and last (generation order, like the spoiler)
+        """
+        if not self.options.fate_encounter.value:
+            return {"fate_encounter": False}
+        sphere_of, goal_sphere, total = get_multiworld_spheres(self.multiworld)
+        locations = [location for location in self.multiworld.get_filled_locations()
+                     if location.address is not None and location.item is not None and location.item.code is not None]
+
+        pass_names = {FLOOR_PASS, END_PASS} | set(BIOME_PASSES.values())
+        passes = [location for location in locations
+                  if location.item.player == self.player and location.item.name in pass_names]
+        passes.sort(key=lambda location: (location.player, location.address))
+        self.random.shuffle(passes)
+
+        copies = Counter((location.item.player, location.item.name) for location in locations)
+        candidates = [location for location in locations
+                      if location.item.advancement and location.item.player != self.player
+                      and copies[(location.item.player, location.item.name)] <= FATE_RARE_ITEM_MAX_COPIES
+                      and sphere_of.get(location, 0) * 2 > total]
+        # Items of other games first
+        other_games = [location for location in candidates
+                       if self.multiworld.game[location.item.player] != GAME_NAME]
+        candidates = other_games or candidates
+        candidates.sort(key=lambda location: (location.player, location.address))
+        self.random.shuffle(candidates)
+
+        goal_players = {player: sphere for player, sphere in goal_sphere.items() if sphere is not None}
+        first = min(goal_players.values(), default=None)
+        last = max(goal_players.values(), default=None)
+        return {
+            "fate_encounter": True,
+            "fate_pass_hints": [
+                {"item": location.item.name, "item_id": location.item.code, "location": location.name,
+                 "location_id": location.address, "finder": location.player,
+                 "game": self.multiworld.game[location.player]}
+                for location in passes[:FATE_MAX_HINTS]
+            ],
+            "fate_sphere_hints": [
+                {"item": location.item.name, "owner": location.item.player, "location": location.name,
+                 "location_id": location.address, "finder": location.player,
+                 "game": self.multiworld.game[location.player], "sphere": sphere_of[location], "total": total}
+                for location in candidates[:FATE_MAX_HINTS]
+            ],
+            "fate_goal_order": {
+                "first": sorted(p for p, sphere in goal_players.items() if sphere == first),
+                "first_sphere": first,
+                "last": sorted(p for p, sphere in goal_players.items() if sphere == last),
+                "last_sphere": last,
+                "total": total,
+            },
         }
 
     def get_trainer_hint_locations(self) -> Dict[str, int]:

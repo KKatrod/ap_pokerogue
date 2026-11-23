@@ -87,6 +87,7 @@ BIOMES = [
 ITEMS = [
     ("Progressive Floor Pass", 8571001, "gate", "progression"),
     ("Starter Limit +1", 8571002, "starter_limit", "useful"),
+    ("Fly Ticket", 8571003, "fly_ticket", "useful"),
     ("Potion", 8571100, "consumable", "filler"),
     ("Super Potion", 8571101, "consumable", "filler"),
     ("Hyper Potion", 8571102, "consumable", "filler"),

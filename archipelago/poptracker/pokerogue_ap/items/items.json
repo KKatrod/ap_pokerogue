@@ -15,6 +15,12 @@
     "codes": "map"
   },
   {
+    "name": "Fly Ticket (with the Map: fly to a biome already visited)",
+    "type": "toggle",
+    "img": "images/items/fly_ticket.png",
+    "codes": "fly_ticket"
+  },
+  {
     "name": "Biome Pass - End (biome_passes: end_only)",
     "type": "toggle",
     "img": "images/items/end_pass.png",

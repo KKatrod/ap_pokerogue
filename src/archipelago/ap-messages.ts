@@ -65,6 +65,14 @@ const messages = {
     usingItem: "Using:",
     dexObtained: "New Pokémon registered: {{pokemon}}!",
     dexComplete: "Every Pokémon of the Dexsanity list was obtained!",
+    fatePass: 'I see... {{item}} rests at "{{location}}", in the world of {{player}} ({{game}}).',
+    fateSphere:
+      'I see... {{item}} of {{owner}} lies at "{{location}}", in the world of {{player}} ({{game}}). Sphere {{sphere}} of {{total}}.',
+    fateGoal:
+      "Fate says that {{first}} will reach their goal first (sphere {{firstSphere}}), and {{last}} last (sphere {{lastSphere}} of {{total}}).",
+    fateNothing: "The threads of fate are too tangled... I cannot see anything.",
+    flyTicketName: "Fly Ticket",
+    flyTicketReceived: "Fly Ticket received! With the Map, you can now fly to a biome you already visited.",
   },
   fr: {
     modeName: "Archipelago",
@@ -126,6 +134,14 @@ const messages = {
     usingItem: "Utilisation :",
     dexObtained: "Nouveau Pokémon enregistré : {{pokemon}} !",
     dexComplete: "Tous les Pokémon de la liste Dexsanity ont été obtenus !",
+    fatePass: "Je vois... {{item}} repose à « {{location}} », dans le monde de {{player}} ({{game}}).",
+    fateSphere:
+      "Je vois... {{item}} de {{owner}} se trouve à « {{location}} », dans le monde de {{player}} ({{game}}). Sphère {{sphere}} sur {{total}}.",
+    fateGoal:
+      "Selon le destin, {{first}} atteindra son objectif en premier (sphère {{firstSphere}}), et {{last}} en dernier (sphère {{lastSphere}} sur {{total}}).",
+    fateNothing: "Les fils du destin sont trop emmêlés... Je ne vois rien.",
+    flyTicketName: "Ticket Vol",
+    flyTicketReceived: "Ticket Vol reçu ! Avec la Carte, vous pouvez désormais voler vers un biome déjà visité.",
   },
 };
 

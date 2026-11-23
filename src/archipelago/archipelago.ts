@@ -8,6 +8,7 @@ import { DexAttr } from "#enums/dex-attr";
 import { EggSourceType } from "#enums/egg-source-types";
 import { EggTier } from "#enums/egg-type";
 import { ModifierTier } from "#enums/modifier-tier";
+import { MysteryEncounterType } from "#enums/mystery-encounter-type";
 import { Nature } from "#enums/nature";
 import { Passive } from "#enums/passive";
 import { SpeciesId } from "#enums/species-id";
@@ -23,10 +24,11 @@ import {
 import { EggData } from "#system/egg-data";
 import type { DexData } from "#types/dex-data";
 import type { StarterData } from "#types/save-data";
-import { getBiomeName, randSeedItem } from "#utils/common";
+import { getBiomeName, randSeedInt, randSeedItem } from "#utils/common";
 import { type ApSentEntry, getArchipelagoCheckBar } from "./ap-check-bar";
 import { ArchipelagoClient, ClientStatus, type ConnectedPacket, ItemFlags, type NetworkItem } from "./ap-client";
 import apData from "./ap-data.json";
+import { AP_FATE_SPRITE_DATA_URI, AP_FATE_SPRITE_FRAME, AP_FATE_SPRITE_KEY } from "./ap-fate-sprite";
 import { type ApSessionState, apHooks } from "./ap-hooks";
 import { AP_ITEM_ICON_DATA_URI, AP_ITEM_ICON_TEXTURE } from "./ap-icon";
 import { apText } from "./ap-messages";
@@ -63,6 +65,8 @@ export enum ApItemCategory {
   BIOME_PASS = "biome_pass",
   /** Raises the starter points of the team by 1 */
   STARTER_LIMIT = "starter_limit",
+  /** With the Map, the biomes already visited are also offered when the biome changes */
+  FLY_TICKET = "fly_ticket",
 }
 
 /** Starter points of the team without any Starter Limit +1 (same as Classic) */
@@ -111,6 +115,11 @@ const ALL_NATURES_ATTR = Object.values(Nature)
   .reduce((attr, nature) => attr | (1 << (nature + 1)), 0);
 /** `starter_bonus_unlock: fast_egg`: the eggs need this many times fewer floors to hatch */
 const FAST_EGG_DIVISOR = 10;
+
+/** "See the Fate" encounter: range of floors (Classic, Blitz) and seed offset of the floor draw */
+const FATE_WAVES_CLASSIC: [number, number] = [41, 99];
+const FATE_WAVES_BLITZ: [number, number] = [21, 49];
+const FATE_SEED_OFFSET = 777_777;
 
 /** Maximum number of eggs a profile can hold (same limit as the game) */
 const MAX_EGGS = 99;
@@ -265,6 +274,33 @@ interface ApProfile {
   hintedLocations?: number[];
   /** Eggs of the Archipelago profile: they hatch during Archipelago runs */
   eggs?: Egg[];
+  /** "See the Fate" encounter: indices (in the slot data lists) of the pass and key item hints already given */
+  fateShownPasses?: number[];
+  fateShownSpheres?: number[];
+  /** Biomes whose 10 floors were cleared at least once (in any run): the destinations of the Fly Ticket */
+  visitedBiomes?: number[];
+}
+
+/** Hint of the "See the Fate" encounter about a pass of this player (`fate_pass_hints` slot data) */
+interface ApFatePassHint {
+  item: string;
+  item_id: number;
+  location: string;
+  location_id: number;
+  finder: number;
+  game: string;
+}
+
+/** Hint of the "See the Fate" encounter about a rare progression item of another player (`fate_sphere_hints`) */
+interface ApFateSphereHint {
+  item: string;
+  owner: number;
+  location: string;
+  location_id: number;
+  finder: number;
+  game: string;
+  sphere: number;
+  total: number;
 }
 
 interface ApLastConnection {
@@ -400,6 +436,32 @@ export function getClassificationTint(flags: number): number {
   return CLASSIFICATION_TINTS.filler;
 }
 
+/** Registers the Mega Alakazam of the "See the Fate" encounter (an atlas of one frame, like the game's sprites) */
+export function ensureFateSpriteTexture(): void {
+  const textures = globalScene?.textures;
+  if (!textures || textures.exists(AP_FATE_SPRITE_KEY)) {
+    return;
+  }
+  const image = new Image();
+  image.onload = () => {
+    if (textures.exists(AP_FATE_SPRITE_KEY)) {
+      return;
+    }
+    textures.addAtlasJSONHash(AP_FATE_SPRITE_KEY, image, {
+      frames: {
+        "0001.png": {
+          frame: { x: 0, y: 0, w: AP_FATE_SPRITE_FRAME.w, h: AP_FATE_SPRITE_FRAME.h },
+          rotated: false,
+          trimmed: false,
+          spriteSourceSize: { x: 0, y: 0, w: AP_FATE_SPRITE_FRAME.w, h: AP_FATE_SPRITE_FRAME.h },
+          sourceSize: { w: AP_FATE_SPRITE_FRAME.w, h: AP_FATE_SPRITE_FRAME.h },
+        },
+      },
+    });
+  };
+  image.src = AP_FATE_SPRITE_DATA_URI;
+}
+
 /** Registers the Archipelago item icon texture (once the game textures are available) */
 export function ensureArchipelagoIconTexture(): void {
   const textures = globalScene?.textures;
@@ -435,6 +497,8 @@ export class ArchipelagoManager {
   private deathLinkWave = -1;
   /** Whether the items kept for every run were already handed out at floor 1 of this run */
   private runStartHandled = false;
+  /** Floor of the "See the Fate" encounter, cached for the run seed */
+  private fateWave: { seed: string; wave: number | null } | null = null;
   /** Species with a Dexsanity check, cached for the slot data they come from */
   private dexsanitySpecies: { source: Record<string, any>; ids: Set<number> } | null = null;
   /** Time (seconds) of the last DeathLink sent, to ignore its echo */
@@ -467,6 +531,8 @@ export class ArchipelagoManager {
     apHooks.getStarterValueLimit = () => (this.active ? this.getStarterValueLimit() : null);
     apHooks.isBlitz = () => this.active && this.isBlitz();
     apHooks.onPokemonObtained = (speciesId, newCatch) => this.onPokemonObtained(speciesId, newCatch);
+    apHooks.getForcedMysteryEncounter = wave =>
+      this.active && wave === this.getFateWave() ? MysteryEncounterType.ARCHIPELAGO_FATE : null;
     apHooks.getSoldLabel = type =>
       type?.isArchipelagoShopItem && this.isLocationChecked(type.locationId) ? apText("shopItemSold") : null;
   }
@@ -605,6 +671,7 @@ export class ArchipelagoManager {
       return;
     }
     ensureArchipelagoIconTexture();
+    ensureFateSpriteTexture();
     this.active = true;
     // Starters hatched from the Archipelago eggs since the last time get the bonuses too
     this.applyStarterBonuses();
@@ -843,6 +910,33 @@ export class ArchipelagoManager {
     return this.receivedItems.some(i => i.item === itemId);
   }
 
+  /* ---------------------------------------------------------------- Fly Ticket */
+
+  hasFlyTicket(): boolean {
+    return this.receivedItems.some(i => getApItemDef(i.item)?.category === ApItemCategory.FLY_TICKET);
+  }
+
+  private markBiomeVisited(biomeId: number): void {
+    if (!this.profile || biomeId === BiomeId.END || this.profile.visitedBiomes?.includes(biomeId)) {
+      return;
+    }
+    this.profile.visitedBiomes = [...(this.profile.visitedBiomes ?? []), biomeId];
+    this.saveProfile();
+  }
+
+  /**
+   * Fly Ticket: the biomes already visited the player may also fly to from the current one (not the current biome,
+   * not the End, and with `biome_passes: true` only the unlocked ones). Empty without the Fly Ticket.
+   */
+  getFlyTicketBiomes(currentBiome: BiomeId): BiomeId[] {
+    if (!(this.active && this.profile && this.hasFlyTicket())) {
+      return [];
+    }
+    return (this.profile.visitedBiomes ?? [])
+      .filter(b => b !== currentBiome && b !== BiomeId.END && BIOME_IDS.has(b) && this.hasBiomePass(b as BiomeId))
+      .map(b => b as BiomeId);
+  }
+
   /* ------------------------------------------------------------ Starter points */
 
   /** Starter points of the team: 10, plus 1 per Starter Limit +1 received (30 at most) */
@@ -957,6 +1051,8 @@ export class ArchipelagoManager {
         messages.push(apText("biomePassReceived", { biome: getBiomeName(def.biomeId) }));
       } else if (def?.category === ApItemCategory.STARTER_LIMIT) {
         starterLimitReceived = true;
+      } else if (def?.category === ApItemCategory.FLY_TICKET) {
+        messages.push(apText("flyTicketReceived"));
       }
     }
     // A single message for all the Starter Limit +1 received since the last announcement
@@ -974,7 +1070,10 @@ export class ArchipelagoManager {
   }
 
   getReceivedMessage(item: NetworkItem, def: ApItemDef): string {
-    const itemName = this.resolveModifierType(def)?.name ?? def.name;
+    const itemName =
+      def.category === ApItemCategory.FLY_TICKET
+        ? apText("flyTicketName")
+        : (this.resolveModifierType(def)?.name ?? def.name);
     if (item.player === this.client.connected?.slot) {
       return apText("receivedOwn", { item: itemName });
     }
@@ -1175,10 +1274,14 @@ export class ArchipelagoManager {
           locations.push(getWaveBonusLocationId(wave));
         }
       }
+      // When a floor multiple of 10 is left, the arena already shows the next biome
+      const biomeId = this.waveBiome?.wave === wave ? this.waveBiome.biomeId : globalScene.arena.biomeId;
       if (mode !== ApLocationMode.FLOORS) {
-        // When a floor multiple of 10 is left, the arena already shows the next biome
-        const biomeId = this.waveBiome?.wave === wave ? this.waveBiome.biomeId : globalScene.arena.biomeId;
         locations.push(getBiomeLocationId(biomeId, ((wave - 1) % AP_GATE_INTERVAL) + 1));
+      }
+      // The last floor of a biome is cleared: the biome is visited (Fly Ticket)
+      if (wave % AP_GATE_INTERVAL === 0) {
+        this.markBiomeVisited(biomeId);
       }
       this.checkLocationsWithNotice(locations);
     }
@@ -1302,6 +1405,121 @@ export class ArchipelagoManager {
       candidates = [...species].filter(id => this.isDexsanityMissing(id));
     }
     return candidates.length > 0 ? randSeedItem(candidates) : null;
+  }
+
+  /* ------------------------------------------------------------- Fate encounter */
+
+  /** Whether the seed has the "See the Fate" encounter (`fate_encounter` option) */
+  isFateEncounterEnabled(): boolean {
+    return !!this.slotData.fate_encounter;
+  }
+
+  /**
+   * Floor of the run where the "See the Fate" encounter is forced: drawn from the run seed between floors 41 and 99
+   * (21 and 49 with Blitz), never on a floor multiple of 10, the first floor of a block, a story battle or a Gym Leader
+   * @returns `null` without the encounter
+   */
+  getFateWave(): number | null {
+    if (!(this.active && this.isFateEncounterEnabled() && globalScene.gameMode?.isArchipelago)) {
+      return null;
+    }
+    const seed = globalScene.seed;
+    if (this.fateWave?.seed === seed) {
+      return this.fateWave.wave;
+    }
+    const [first, last] = this.isBlitz() ? FATE_WAVES_BLITZ : FATE_WAVES_CLASSIC;
+    const gameMode = globalScene.gameMode;
+    const candidates: number[] = [];
+    for (let wave = first; wave <= last; wave++) {
+      if (
+        wave % 10 > 1
+        && !gameMode.isFixedBattle(wave)
+        && !gameMode.isGymWave(wave, globalScene.offsetGym)
+        && !gameMode.isWaveFinal(wave)
+      ) {
+        candidates.push(wave);
+      }
+    }
+    let wave: number | null = null;
+    if (candidates.length > 0) {
+      globalScene.executeWithSeedOffset(() => {
+        wave = candidates[randSeedInt(candidates.length)];
+      }, FATE_SEED_OFFSET);
+    }
+    this.fateWave = { seed, wave };
+    return wave;
+  }
+
+  /** "A pass": where a pass of this player lies, a different one each run (preferably one not received yet) */
+  takeFatePassHint(): string {
+    const hints: ApFatePassHint[] = Array.isArray(this.slotData.fate_pass_hints) ? this.slotData.fate_pass_hints : [];
+    if (!this.profile || hints.length === 0) {
+      return apText("fateNothing");
+    }
+    const shown = new Set(this.profile.fateShownPasses ?? []);
+    const floorPassId = AP_BASE_ID + (apData.items.find(i => i.category === ApItemCategory.GATE)?.offset ?? 0);
+    const missing = (hint: ApFatePassHint) =>
+      hint.item_id === floorPassId
+        ? this.getFloorPassCount() < this.getFinalWave() / AP_GATE_INTERVAL - 1
+        : !this.receivedItems.some(i => i.item === hint.item_id);
+    const indices = hints.map((_, i) => i);
+    const index =
+      indices.find(i => !shown.has(i) && missing(hints[i]))
+      ?? indices.find(i => !shown.has(i))
+      ?? indices.find(i => missing(hints[i]))
+      ?? 0;
+    const hint = hints[index];
+    this.profile.fateShownPasses = [...shown, index];
+    this.saveProfile();
+    // Also listed in the multiworld hints (the location holds an item of this slot)
+    this.client.createHints([hint.location_id], hint.finder);
+    return apText("fatePass", {
+      item: hint.item,
+      location: hint.location,
+      player: this.client.getPlayerName(hint.finder),
+      game: hint.game,
+    });
+  }
+
+  /** "A key item": a rare progression item of another player beyond half of the spheres, a different one each run */
+  takeFateSphereHint(): string {
+    const hints: ApFateSphereHint[] = Array.isArray(this.slotData.fate_sphere_hints)
+      ? this.slotData.fate_sphere_hints
+      : [];
+    if (!this.profile || hints.length === 0) {
+      return apText("fateNothing");
+    }
+    const shown = new Set(this.profile.fateShownSpheres ?? []);
+    const index = hints.findIndex((_, i) => !shown.has(i));
+    const chosen = index >= 0 ? index : Math.floor(Math.random() * hints.length);
+    const hint = hints[chosen];
+    this.profile.fateShownSpheres = [...shown, chosen];
+    this.saveProfile();
+    return apText("fateSphere", {
+      item: hint.item,
+      owner: this.client.getPlayerName(hint.owner),
+      location: hint.location,
+      player: this.client.getPlayerName(hint.finder),
+      game: hint.game,
+      sphere: hint.sphere,
+      total: hint.total,
+    });
+  }
+
+  /** "The winners": the players reaching their goal first and last in the generation (spoiler) order */
+  getFateGoalText(): string {
+    const order = this.slotData.fate_goal_order;
+    if (!(order && Array.isArray(order.first) && order.first.length > 0 && Array.isArray(order.last))) {
+      return apText("fateNothing");
+    }
+    const names = (players: number[]) => players.map(p => this.client.getPlayerName(p)).join(", ");
+    return apText("fateGoal", {
+      first: names(order.first),
+      firstSphere: order.first_sphere,
+      last: names(order.last),
+      lastSphere: order.last_sphere,
+      total: order.total,
+    });
   }
 
   /* ---------------------------------------------------------------- DeathLink */

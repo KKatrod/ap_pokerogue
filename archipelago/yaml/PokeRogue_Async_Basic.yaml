@@ -33,6 +33,7 @@ PokeRogue:
   trap_percent: 0
   death_link: false
   trainer_hints: true
+  fate_encounter: true
   biome_pass_priority: true
   starter_limit_items: 20
   starter_bonus_unlock: []

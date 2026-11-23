@@ -252,6 +252,8 @@ def items_json():
         {"name": "Progressive Floor Pass", "type": "consumable", "img": "images/items/floor_pass.png",
          "codes": "pass", "min_quantity": 0, "max_quantity": BLOCK_COUNT - 1, "increment": 1},
         {"name": "Map", "type": "toggle", "img": "images/items/map.png", "codes": "map"},
+        {"name": "Fly Ticket (with the Map: fly to a biome already visited)", "type": "toggle",
+         "img": "images/items/fly_ticket.png", "codes": "fly_ticket"},
         {"name": "Biome Pass - End (biome_passes: end_only)", "type": "toggle", "img": "images/items/end_pass.png",
          "codes": END_PASS_CODE},
         *[{"name": f"Biome Pass - {BIOME_NAMES[b]}", "type": "toggle",
@@ -421,6 +423,7 @@ def location_mapping_lua():
         "ITEM_MAPPING = {",
         f'  [{ITEM_IDS["Progressive Floor Pass"]}] = {{"pass", "consumable"}},',
         f'  [{ITEM_IDS["Map"]}] = {{"map", "toggle"}},',
+        f'  [{ITEM_IDS["Fly Ticket"]}] = {{"fly_ticket", "toggle"}},',
         *[f'  [{BASE_ID + data["BIOME_PASS_OFFSET"] + b}] = {{"{biome_pass_code(b)}", "toggle"}},  '
           f'-- Biome Pass - {BIOME_NAMES[b]}' for b in BIOME_PASSES],
         f'  [{BASE_ID + data["BIOME_PASS_OFFSET"] + END}] = {{"{END_PASS_CODE}", "toggle"}},  -- Biome Pass - End',
@@ -478,6 +481,7 @@ def main():
     # Icons
     icon("images/items/floor_pass.png", "FP", (200, 60, 60, 255), "rect")
     icon("images/items/map.png", "MAP", (40, 120, 200, 255), "rect")
+    icon("images/items/fly_ticket.png", "FLY", (60, 170, 200, 255), "rect")
     icon("images/settings/mode_floors.png", "FL", (90, 90, 110, 255))
     icon("images/settings/mode_biomes.png", "BI", (60, 140, 90, 255))
     icon("images/settings/mode_both.png", "F+B", (130, 90, 150, 255))
@@ -567,7 +571,7 @@ def main():
             "content": [
                 {"type": "group", "header": "Items", "content": {
                     "type": "itemgrid", "item_margin": "4,4", "item_size": 48,
-                    "rows": [["pass", "map", END_PASS_CODE]]}},
+                    "rows": [["pass", "map", "fly_ticket", END_PASS_CODE]]}},
                 {"type": "group", "header": "Biome Passes", "content": {
                     "type": "itemgrid", "item_margin": "3,3", "item_size": 36,
                     "rows": [[biome_pass_code(b) for b in BIOME_PASSES[i:i + 6]]

@@ -53,11 +53,25 @@ export class SelectBiomePhase extends BattlePhase {
     const eventBiomeLinks = timedEventManager.getEventBiomeLinks(currentBiome);
     const allBiomeLinks: BiomeLinks = [...biomeLinks, ...eventBiomeLinks];
 
+    // Archipelago Fly Ticket: with the Map, the biomes already visited are added to the choices
+    const hasMap = !!globalScene.findModifier(m => m instanceof MapModifier);
+    const flyBiomes = gameMode.isArchipelago && hasMap ? archipelago.getFlyTicketBiomes(currentBiome) : [];
+
     // Archipelago with Biome Passes: only the unlocked biomes may be chosen, the Town otherwise
     if (gameMode.isArchipelago && archipelago.isBiomePassesEnabled()) {
       const links =
         allBiomeLinks.length === 1 ? allBiomeLinks : allBiomeLinks.filter(b => !Array.isArray(b) || !randSeedInt(b[1]));
-      this.selectArchipelagoBiome(links.map(b => (Array.isArray(b) ? b[0] : b)));
+      this.selectArchipelagoBiome(
+        links.map(b => (Array.isArray(b) ? b[0] : b)),
+        flyBiomes,
+      );
+      return;
+    }
+    if (flyBiomes.length > 0) {
+      const links =
+        allBiomeLinks.length === 1 ? allBiomeLinks : allBiomeLinks.filter(b => !Array.isArray(b) || !randSeedInt(b[1]));
+      const biomes = links.map(b => (Array.isArray(b) ? b[0] : b));
+      this.showBiomeChoices([...biomes, ...flyBiomes.filter(b => !biomes.includes(b))]);
       return;
     }
     if (allBiomeLinks.length > 1 || (forcedBiomes != null && forcedBiomes.length > 1)) {
@@ -113,12 +127,14 @@ export class SelectBiomePhase extends BattlePhase {
    * Archipelago with Biome Passes: picks the next biome among the unlocked ones. Without any, the player goes back
    * to the Town; with a Map, the Town is always one of the choices.
    */
-  private selectArchipelagoBiome(links: BiomeId[]): void {
+  private selectArchipelagoBiome(links: BiomeId[], flyBiomes: BiomeId[] = []): void {
     const unlocked = links.filter(b => archipelago.hasBiomePass(b));
     const hasMap = !!globalScene.findModifier(m => m instanceof MapModifier);
     const choices = hasMap && !unlocked.includes(BiomeId.TOWN) ? [...unlocked, BiomeId.TOWN] : unlocked;
+    // Fly Ticket (with the Map): the biomes already visited
+    choices.push(...flyBiomes.filter(b => !choices.includes(b)));
 
-    if (unlocked.length === 0) {
+    if (unlocked.length === 0 && flyBiomes.length === 0) {
       globalScene.ui.showText(apText("biomeFallback"), null, () => this.setNextBiomeAndEnd(BiomeId.TOWN), null, true);
       return;
     }
@@ -130,6 +146,11 @@ export class SelectBiomePhase extends BattlePhase {
       this.setNextBiomeAndEnd(randSeedItem(choices));
       return;
     }
+    this.showBiomeChoices(choices);
+  }
+
+  /** Lets the player choose the next biome (Map) */
+  private showBiomeChoices(choices: BiomeId[]): void {
     globalScene.ui.setMode(UiMode.OPTION_SELECT, {
       options: choices.map(
         b =>

@@ -1,3 +1,4 @@
+import { ArchipelagoFateEncounter } from "#app/archipelago/ap-fate-encounter";
 import { BiomeId } from "#enums/biome-id";
 import { MysteryEncounterType } from "#enums/mystery-encounter-type";
 import { ATrainersTestEncounter } from "#mystery-encounters/a-trainers-test-encounter";
@@ -270,6 +271,8 @@ export function initMysteryEncounters() {
   allMysteryEncounters[MysteryEncounterType.UNCOMMON_BREED] = UncommonBreedEncounter;
   allMysteryEncounters[MysteryEncounterType.GLOBAL_TRADE_SYSTEM] = GlobalTradeSystemEncounter;
   allMysteryEncounters[MysteryEncounterType.THE_EXPERT_POKEMON_BREEDER] = TheExpertPokemonBreederEncounter;
+  // Archipelago mode only, in no biome: forced on one floor of the run
+  allMysteryEncounters[MysteryEncounterType.ARCHIPELAGO_FATE] = ArchipelagoFateEncounter;
 
   // Add extreme encounters to biome map
   extremeBiomeEncounters.forEach(encounter => {

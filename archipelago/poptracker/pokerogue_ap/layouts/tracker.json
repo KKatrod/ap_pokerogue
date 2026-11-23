@@ -72,7 +72,7 @@
           "type": "itemgrid",
           "item_margin": "4,4",
           "item_size": 48,
-          "rows": [["pass", "map", "end_pass"]]
+          "rows": [["pass", "map", "fly_ticket", "end_pass"]]
         }
       },
       {

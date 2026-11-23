@@ -31,6 +31,13 @@
       "max": 20
     },
     {
+      "offset": 3,
+      "key": "FLY_TICKET",
+      "name": "Fly Ticket",
+      "category": "fly_ticket",
+      "classification": "useful"
+    },
+    {
       "offset": 100,
       "key": "POTION",
       "name": "Potion",

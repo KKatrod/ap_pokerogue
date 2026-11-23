@@ -2188,6 +2188,7 @@ LOCATION_MAPPING = {
 ITEM_MAPPING = {
   [8571001] = {"pass", "consumable"},
   [8571317] = {"map", "toggle"},
+  [8571003] = {"fly_ticket", "toggle"},
   [8571701] = {"biome_pass_1", "toggle"},  -- Biome Pass - Plains
   [8571702] = {"biome_pass_2", "toggle"},  -- Biome Pass - Grass
   [8571709] = {"biome_pass_9", "toggle"},  -- Biome Pass - Lake

@@ -23,6 +23,8 @@ export interface ApHooks {
   isBlitz(): boolean;
   /** A Pokémon was obtained in an Archipelago run (Dexsanity), `newCatch` unless it evolved or changed form */
   onPokemonObtained(speciesId: number, newCatch: boolean): void;
+  /** Mystery encounter forced on this floor (the "See the Fate" encounter), or null */
+  getForcedMysteryEncounter(waveIndex: number): number | null;
 }
 
 export const apHooks: ApHooks = {
@@ -33,4 +35,5 @@ export const apHooks: ApHooks = {
   getStarterValueLimit: () => null,
   isBlitz: () => false,
   onPokemonObtained: () => {},
+  getForcedMysteryEncounter: () => null,
 };
