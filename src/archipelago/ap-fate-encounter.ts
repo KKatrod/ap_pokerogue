@@ -32,7 +32,7 @@ const FATE_TEXTS = {
       },
       2: {
         label: "A key item",
-        tooltip: "(+) Where a rare key item of another player lies, and its sphere",
+        tooltip: "(+) When a rare key item of another player will be found",
       },
       3: {
         label: "The winners",
@@ -56,7 +56,7 @@ const FATE_TEXTS = {
       },
       2: {
         label: "Un objet clé",
-        tooltip: "(+) Où se trouve un objet clé rare d'un autre joueur, et sa sphère",
+        tooltip: "(+) À quel moment de l'aventure se trouve un objet clé rare d'un autre joueur",
       },
       3: {
         label: "Les vainqueurs",

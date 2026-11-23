@@ -218,6 +218,11 @@ def shop_item_wave(index: int, per_tier: int, tier_waves: List[int] = SHOP_TIER_
     return tier_waves[tier]
 
 
+def adventure_part(sphere: int, total: int) -> int:
+    """Third of the spheres (1: early, 2: middle, 3: late) where the sphere lies"""
+    return min(3, max(1, -(-3 * sphere // max(total, 1))))
+
+
 def get_multiworld_spheres(multiworld) -> tuple:
     """
     Spheres of the multiworld, like the spoiler: (sphere of each filled location, sphere where each player reaches
@@ -754,17 +759,20 @@ class PokeRogueWorld(World):
         passes.sort(key=lambda location: (location.player, location.address))
         self.random.shuffle(passes)
 
+        # Rare progression items of other players (a few copies at most), each told once: the part of the
+        # adventure (third of the spheres) of its first copy
         copies = Counter((location.item.player, location.item.name) for location in locations)
-        candidates = [location for location in locations
-                      if location.item.advancement and location.item.player != self.player
-                      and copies[(location.item.player, location.item.name)] <= FATE_RARE_ITEM_MAX_COPIES
-                      and sphere_of.get(location, 0) * 2 > total]
+        first_sphere: Dict[tuple, int] = {}
+        for location in locations:
+            key = (location.item.player, location.item.name)
+            if (location.item.advancement and location.item.player != self.player
+                    and copies[key] <= FATE_RARE_ITEM_MAX_COPIES and location in sphere_of):
+                first_sphere[key] = min(first_sphere.get(key, sphere_of[location]), sphere_of[location])
+        rare_items = sorted(first_sphere)
         # Items of other games first
-        other_games = [location for location in candidates
-                       if self.multiworld.game[location.item.player] != GAME_NAME]
-        candidates = other_games or candidates
-        candidates.sort(key=lambda location: (location.player, location.address))
-        self.random.shuffle(candidates)
+        other_games = [key for key in rare_items if self.multiworld.game[key[0]] != GAME_NAME]
+        rare_items = other_games or rare_items
+        self.random.shuffle(rare_items)
 
         goal_players = {player: sphere for player, sphere in goal_sphere.items() if sphere is not None}
         first = min(goal_players.values(), default=None)
@@ -778,17 +786,14 @@ class PokeRogueWorld(World):
                 for location in passes[:FATE_MAX_HINTS]
             ],
             "fate_sphere_hints": [
-                {"item": location.item.name, "owner": location.item.player, "location": location.name,
-                 "location_id": location.address, "finder": location.player,
-                 "game": self.multiworld.game[location.player], "sphere": sphere_of[location], "total": total}
-                for location in candidates[:FATE_MAX_HINTS]
+                # Only the part of the adventure is told (1: first third of the spheres, 2: second, 3: last)
+                {"item": name, "owner": owner, "part": adventure_part(first_sphere[(owner, name)], total)}
+                for owner, name in rare_items[:FATE_MAX_HINTS]
             ],
             "fate_goal_order": {
+                # Only the players: neither their sphere nor the number of spheres
                 "first": sorted(p for p, sphere in goal_players.items() if sphere == first),
-                "first_sphere": first,
                 "last": sorted(p for p, sphere in goal_players.items() if sphere == last),
-                "last_sphere": last,
-                "total": total,
             },
         }
 

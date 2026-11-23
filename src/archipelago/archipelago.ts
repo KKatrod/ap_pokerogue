@@ -295,12 +295,11 @@ interface ApFatePassHint {
 interface ApFateSphereHint {
   item: string;
   owner: number;
-  location: string;
-  location_id: number;
-  finder: number;
-  game: string;
-  sphere: number;
-  total: number;
+  /** Part of the adventure of its first copy: 1 first third of the spheres, 2 second, 3 last */
+  part?: number;
+  /** Seeds of apworld 0.14: the sphere (and the number of spheres) instead of the part */
+  sphere?: number;
+  total?: number;
 }
 
 interface ApLastConnection {
@@ -1481,7 +1480,7 @@ export class ArchipelagoManager {
     });
   }
 
-  /** "A key item": a rare progression item of another player beyond half of the spheres, a different one each run */
+  /** "A key item": when a rare progression item of another player is found (third of the spheres), a different one each run */
   takeFateSphereHint(): string {
     const hints: ApFateSphereHint[] = Array.isArray(this.slotData.fate_sphere_hints)
       ? this.slotData.fate_sphere_hints
@@ -1495,15 +1494,12 @@ export class ArchipelagoManager {
     const hint = hints[chosen];
     this.profile.fateShownSpheres = [...shown, chosen];
     this.saveProfile();
-    return apText("fateSphere", {
-      item: hint.item,
-      owner: this.client.getPlayerName(hint.owner),
-      location: hint.location,
-      player: this.client.getPlayerName(hint.finder),
-      game: hint.game,
-      sphere: hint.sphere,
-      total: hint.total,
-    });
+    // Only the part of the adventure: neither the location nor the sphere
+    const part =
+      hint.part
+      ?? (hint.sphere && hint.total ? Math.min(3, Math.max(1, Math.ceil((3 * hint.sphere) / hint.total))) : 2);
+    const key = part <= 1 ? "fateSphere1" : part === 2 ? "fateSphere2" : "fateSphere3";
+    return apText(key, { item: hint.item, owner: this.client.getPlayerName(hint.owner) });
   }
 
   /** "The winners": the players reaching their goal first and last in the generation (spoiler) order */
@@ -1512,14 +1508,19 @@ export class ArchipelagoManager {
     if (!(order && Array.isArray(order.first) && order.first.length > 0 && Array.isArray(order.last))) {
       return apText("fateNothing");
     }
-    const names = (players: number[]) => players.map(p => this.client.getPlayerName(p)).join(", ");
-    return apText("fateGoal", {
-      first: names(order.first),
-      firstSphere: order.first_sphere,
-      last: names(order.last),
-      lastSphere: order.last_sphere,
-      total: order.total,
-    });
+    // Only the names: "A, B and C"
+    const names = (players: number[]) => {
+      const list = players.map(p => this.client.getPlayerName(p));
+      return list.length > 1 ? `${list.slice(0, -1).join(", ")} ${apText("nameListAnd")} ${list.at(-1)}` : list[0];
+    };
+    const first: number[] = order.first;
+    const last: number[] = order.last;
+    if (first.length === last.length && first.every(p => last.includes(p))) {
+      // Everyone reaches their goal at the same time
+      return apText("fateGoalTie", { players: names(first) });
+    }
+    // The verb agrees with several first players (in French)
+    return apText(first.length > 1 ? "fateGoalPlural" : "fateGoal", { first: names(first), last: names(last) });
   }
 
   /* ---------------------------------------------------------------- DeathLink */
