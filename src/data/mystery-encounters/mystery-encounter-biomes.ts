@@ -1,4 +1,5 @@
 import { ArchipelagoFateEncounter } from "#app/archipelago/ap-fate-encounter";
+import { ArchipelagoKatrodEncounter } from "#app/archipelago/ap-katrod-encounter";
 import { BiomeId } from "#enums/biome-id";
 import { MysteryEncounterType } from "#enums/mystery-encounter-type";
 import { ATrainersTestEncounter } from "#mystery-encounters/a-trainers-test-encounter";
@@ -179,6 +180,7 @@ const anyBiomeEncounters: MysteryEncounterType[] = [
   MysteryEncounterType.WEIRD_DREAM,
   MysteryEncounterType.TELEPORTING_HIJINKS,
   MysteryEncounterType.UNCOMMON_BREED,
+  MysteryEncounterType.ARCHIPELAGO_KATROD,
 ];
 
 /**
@@ -273,6 +275,8 @@ export function initMysteryEncounters() {
   allMysteryEncounters[MysteryEncounterType.THE_EXPERT_POKEMON_BREEDER] = TheExpertPokemonBreederEncounter;
   // Archipelago mode only, in no biome: forced on one floor of the run
   allMysteryEncounters[MysteryEncounterType.ARCHIPELAGO_FATE] = ArchipelagoFateEncounter;
+  // Archipelago mode only (see its scene requirement), in any biome
+  allMysteryEncounters[MysteryEncounterType.ARCHIPELAGO_KATROD] = ArchipelagoKatrodEncounter;
 
   // Add extreme encounters to biome map
   extremeBiomeEncounters.forEach(encounter => {

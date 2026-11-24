@@ -735,6 +735,7 @@ class PokeRogueWorld(World):
             "final_wave": self.get_final_wave(),
             "shop_tier_waves": self.get_shop_tier_waves(),
             "starter_bonus_unlock": sorted(self.options.starter_bonus_unlock.value),
+            "katrod_encounter": bool(self.options.katrod_encounter.value),
             "goal": self.options.goal.value,
             "dexsanity": self.options.dexsanity.value,
             "dexsanity_species": self.get_dex_species(),

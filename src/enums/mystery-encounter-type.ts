@@ -32,4 +32,6 @@ export enum MysteryEncounterType {
   THE_EXPERT_POKEMON_BREEDER,
   /** Archipelago mode only: "See the Fate" (forced once per run, see `ArchipelagoManager.getFateWave`) */
   ARCHIPELAGO_FATE,
+  /** Archipelago mode only: Katrod and his favourite topics (option `katrod_encounter`) */
+  ARCHIPELAGO_KATROD,
 }

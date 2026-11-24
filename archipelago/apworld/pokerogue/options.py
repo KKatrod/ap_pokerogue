@@ -341,6 +341,12 @@ class FateEncounter(DefaultOnToggle):
     display_name = "Fate Encounter"
 
 
+class KatrodEncounter(DefaultOnToggle):
+    """Katrod, a trainer full of passions, may block your way (rare Mystery Encounter, at most once per run): a rant
+    on Marx and Gramsci, a randomizer diatribe, a debate turning into a battle, or a coffee."""
+    display_name = "Katrod Encounter"
+
+
 class TrainerHints(DefaultOnToggle):
     """Key trainers (rival, Gym Leaders, Elite Four, Champion, evil team bosses and admins) give, once beaten,
     a hint about a progression item hidden in PokeRogue for another player."""
@@ -371,6 +377,7 @@ class PokeRogueOptions(PerGameCommonOptions):
     death_link: DeathLink
     trainer_hints: TrainerHints
     fate_encounter: FateEncounter
+    katrod_encounter: KatrodEncounter
     biome_passes: BiomePasses
     biome_pass_priority: BiomePassPriority
     starter_limit_items: StarterLimitItems

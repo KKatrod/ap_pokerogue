@@ -31,6 +31,12 @@ import apData from "./ap-data.json";
 import { AP_FATE_SPRITE_DATA_URI, AP_FATE_SPRITE_FRAME, AP_FATE_SPRITE_KEY } from "./ap-fate-sprite";
 import { type ApSessionState, apHooks } from "./ap-hooks";
 import { AP_ITEM_ICON_DATA_URI, AP_ITEM_ICON_TEXTURE } from "./ap-icon";
+import {
+  AP_KATROD_SPRITE_DATA_URI,
+  AP_KATROD_SPRITE_FRAME,
+  AP_KATROD_SPRITE_KEY,
+  AP_KATROD_SPRITE_SOURCE,
+} from "./ap-katrod-sprite";
 import { apText } from "./ap-messages";
 import { BLITZ_GYM_WAVES } from "./blitz";
 
@@ -435,30 +441,51 @@ export function getClassificationTint(flags: number): number {
   return CLASSIFICATION_TINTS.filler;
 }
 
-/** Registers the Mega Alakazam of the "See the Fate" encounter (an atlas of one frame, like the game's sprites) */
-export function ensureFateSpriteTexture(): void {
+/** Registers a sprite of one frame as an atlas, like the sprites of the game (once the textures are available) */
+function ensureSingleFrameAtlas(
+  key: string,
+  dataUri: string,
+  frame: { w: number; h: number },
+  source?: { x: number; y: number; w: number; h: number },
+): void {
   const textures = globalScene?.textures;
-  if (!textures || textures.exists(AP_FATE_SPRITE_KEY)) {
+  if (!textures || textures.exists(key)) {
     return;
   }
   const image = new Image();
   image.onload = () => {
-    if (textures.exists(AP_FATE_SPRITE_KEY)) {
+    if (textures.exists(key)) {
       return;
     }
-    textures.addAtlasJSONHash(AP_FATE_SPRITE_KEY, image, {
+    textures.addAtlasJSONHash(key, image, {
       frames: {
         "0001.png": {
-          frame: { x: 0, y: 0, w: AP_FATE_SPRITE_FRAME.w, h: AP_FATE_SPRITE_FRAME.h },
+          frame: { x: 0, y: 0, w: frame.w, h: frame.h },
           rotated: false,
-          trimmed: false,
-          spriteSourceSize: { x: 0, y: 0, w: AP_FATE_SPRITE_FRAME.w, h: AP_FATE_SPRITE_FRAME.h },
-          sourceSize: { w: AP_FATE_SPRITE_FRAME.w, h: AP_FATE_SPRITE_FRAME.h },
+          // A trimmed frame (like the trainer atlases) keeps the shadow under the sprite as wide as the sprite
+          trimmed: !!source,
+          spriteSourceSize: { x: source?.x ?? 0, y: source?.y ?? 0, w: frame.w, h: frame.h },
+          sourceSize: { w: source?.w ?? frame.w, h: source?.h ?? frame.h },
         },
       },
     });
   };
-  image.src = AP_FATE_SPRITE_DATA_URI;
+  image.src = dataUri;
+}
+
+/** Registers the Mega Alakazam of the "See the Fate" encounter */
+export function ensureFateSpriteTexture(): void {
+  ensureSingleFrameAtlas(AP_FATE_SPRITE_KEY, AP_FATE_SPRITE_DATA_URI, AP_FATE_SPRITE_FRAME);
+}
+
+/** Registers Katrod, the trainer of the Katrod encounter */
+export function ensureKatrodSpriteTexture(): void {
+  ensureSingleFrameAtlas(
+    AP_KATROD_SPRITE_KEY,
+    AP_KATROD_SPRITE_DATA_URI,
+    AP_KATROD_SPRITE_FRAME,
+    AP_KATROD_SPRITE_SOURCE,
+  );
 }
 
 /** Registers the Archipelago item icon texture (once the game textures are available) */
@@ -671,6 +698,7 @@ export class ArchipelagoManager {
     }
     ensureArchipelagoIconTexture();
     ensureFateSpriteTexture();
+    ensureKatrodSpriteTexture();
     this.active = true;
     // Starters hatched from the Archipelago eggs since the last time get the bonuses too
     this.applyStarterBonuses();
@@ -1407,6 +1435,11 @@ export class ArchipelagoManager {
   }
 
   /* ------------------------------------------------------------- Fate encounter */
+
+  /** Whether Katrod may be met (`katrod_encounter` option, rare mystery encounter) */
+  isKatrodEncounterEnabled(): boolean {
+    return !!this.slotData.katrod_encounter;
+  }
 
   /** Whether the seed has the "See the Fate" encounter (`fate_encounter` option) */
   isFateEncounterEnabled(): boolean {

@@ -80,7 +80,7 @@ Le joueur double-clique sur `pokerogue.bat` et garde la fenêtre ouverte pendant
 
 `archipelago/apworld/pokerogue/` est le monde Archipelago (Python). Pour l'utiliser : zipper le dossier `pokerogue` en `pokerogue.apworld` et le placer dans `custom_worlds/` (ou `lib/worlds/`) d'Archipelago. Après chaque nouvelle version, **fermer puis relancer le Launcher** avant de régénérer le template YAML (*Generate Template Options*) : un Launcher déjà ouvert garde l'ancienne version en mémoire et produit un template sans les nouvelles options.
 
-Options YAML : `goal` (eternatus / pokedex, eternatus), `location_mode` (floors / biome_floors / both, floors), `dexsanity` (false / starters / all, false), `dexsanity_exclude` (liste de noms et/ou `Legendaries`, vide), `shop_item_count` (0–350, 70), `shop_items_per_tier` (0–50, 10), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10 ou `random`, 5), `starting_pokemon_max_cost` (1–10, 6), `start_with_map` (true/false, true), `pokemon_in_pool` (0 à 572 = tous les starters de PokeRogue, 40), `pokemon_pool_costs` (unbiased / varied / low_cost / high_cost, unbiased : coûts des Pokémon du pool, voir ci-dessous), `bonus_item_copies` (1–5, 1), `egg_filler_percent` (0–100, 25), `effect_filler_percent` (0–100, 10), `trap_percent` (0–100, 0), `death_link` (true/false, false), `trainer_hints` (true/false, true), `fate_encounter` (true/false, true : rencontre « Voir le destin », voir ci-dessous), `biome_passes` (false / true / end_only, false), `biome_pass_priority` (true/false, true : voir ci-dessous), `starter_limit_items` (0–20, 20), `starter_bonus_unlock` (liste parmi `passives`, `abilities`, `egg_moves`, `shinies`, `natures`, `fast_egg`, vide : voir ci-dessous), `blitz` (true/false, false : partie de 100 étages, voir [BLITZ.md](BLITZ.md)), `floor_checks` (1–2, 1 : avec 2, un check `Floor N Bonus` en plus de `Floor N Cleared`).
+Options YAML : `goal` (eternatus / pokedex, eternatus), `location_mode` (floors / biome_floors / both, floors), `dexsanity` (false / starters / all, false), `dexsanity_exclude` (liste de noms et/ou `Legendaries`, vide), `shop_item_count` (0–350, 70), `shop_items_per_tier` (0–50, 10), `shop_items_per_visit` (1–3, 1), `shop_cost_percent` (10–500, 100), `starting_pokemon` (1–10 ou `random`, 5), `starting_pokemon_max_cost` (1–10, 6), `start_with_map` (true/false, true), `pokemon_in_pool` (0 à 572 = tous les starters de PokeRogue, 40), `pokemon_pool_costs` (unbiased / varied / low_cost / high_cost, unbiased : coûts des Pokémon du pool, voir ci-dessous), `bonus_item_copies` (1–5, 1), `egg_filler_percent` (0–100, 25), `effect_filler_percent` (0–100, 10), `trap_percent` (0–100, 0), `death_link` (true/false, false), `trainer_hints` (true/false, true), `fate_encounter` (true/false, true : rencontre « Voir le destin », voir ci-dessous), `katrod_encounter` (true/false, true : rencontre « Katrod », voir ci-dessous), `biome_passes` (false / true / end_only, false), `biome_pass_priority` (true/false, true : voir ci-dessous), `starter_limit_items` (0–20, 20), `starter_bonus_unlock` (liste parmi `passives`, `abilities`, `egg_moves`, `shinies`, `natures`, `fast_egg`, vide : voir ci-dessous), `blitz` (true/false, false : partie de 100 étages, voir [BLITZ.md](BLITZ.md)), `floor_checks` (1–2, 1 : avec 2, un check `Floor N Bonus` en plus de `Floor N Cleared`).
 
 **Rencontre « Voir le destin »** (`fate_encounter`) : une fois par run, un Méga-Alakazam aux cuillères aux couleurs d'Archipelago apparaît en rencontre mystère, sur un étage tiré au hasard entre 41 et 99 (21 et 49 en Blitz), jamais sur un étage multiple de 10, un premier étage de bloc, un combat de l'histoire ou un Champion d'Arène. Il répond à une seule question :
 
@@ -89,6 +89,15 @@ Options YAML : `goal` (eternatus / pokedex, eternatus), `location_mode` (floors 
 - **Les vainqueurs** : le ou les joueurs qui atteignent leur objectif en premier, et le ou les joueurs qui l'atteignent en dernier, selon l'ordre des sphères de la génération (comme le spoiler, pas la partie réelle). Seuls les noms sont donnés, sans les sphères.
 
 Ces indices sont préparés à la génération (`fate_pass_hints`, `fate_sphere_hints`, `fate_goal_order` dans le slot data) ; chaque run donne un indice de passe et un indice d'objet différents (le profil retient ceux déjà donnés). Le sprite recoloré est généré par `python archipelago/tools/make_fate_sprite.py`.
+
+**Rencontre « Katrod »** (`katrod_encounter`) : rencontre mystère rare (tier Rogue, tous les biomes, au plus une fois par run), en mode Archipelago seulement. Katrod, militant et joueur de randomizers, propose quatre choix :
+
+- **Tunnel sur Marx** : des EXP. Balance jusqu'à en avoir 4, une vitamine à chaque Pokémon pour sa statistique la plus basse, puis 20 % de l'argent en moins.
+- **Les randomizers** : chaque Pokémon reçoit un talent, un passif et deux types aléatoires, puis 4 capacités aléatoires lui sont proposées (une offensive de puissance ≥ 40 de chacun de ses nouveaux types, physique ou spéciale selon sa meilleure statistique d'attaque, et deux autres) ; le joueur choisit lesquelles apprendre.
+- **Pinailler** : combat contre Katrod (Coatox, Salarsen Forme Grave avec téracristal Normal, Xatu, Minotaupe, Motisma Lavage, et Sulfura de Galar en boss à 2 barres), puis une boutique de 2 objets Master, les autres Rogue.
+- **Offrir un café** : boutique classique.
+
+Les textes (français et anglais) sont dans `src/archipelago/ap-katrod-encounter.ts`. Le sprite de Katrod (tiré de son Mii) est `archipelago/tools/katrod_sprite.png`, converti en `src/archipelago/ap-katrod-sprite.ts` par `python archipelago/tools/make_katrod_sprite.py`.
 
 **Bonus des starters** (`starter_bonus_unlock`) : appliqués à tous les starters débloqués dans le profil AP (reçus, de départ ou éclos), à la connexion, à chaque objet reçu et en entrant dans le mode Archipelago. `passives` : passif débloqué et activé ; `abilities` : tous les talents (second et caché compris) ; `egg_moves` : les 4 capacités œuf ; `shinies` : les formes chromatiques (toutes les variantes de l'espèce) ; `natures` : toutes les natures ; `fast_egg` : les œufs Archipelago éclosent 10 fois plus vite (un dixième des étages, au moins 1).
 
@@ -124,6 +133,7 @@ PokeRogue:
   death_link: false
   trainer_hints: true
   fate_encounter: true
+  katrod_encounter: true
   biome_passes: false
   biome_pass_priority: true
   goal: eternatus
