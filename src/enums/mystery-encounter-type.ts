@@ -34,4 +34,6 @@ export enum MysteryEncounterType {
   ARCHIPELAGO_FATE,
   /** Archipelago mode only: Katrod and his favourite topics (option `katrod_encounter`) */
   ARCHIPELAGO_KATROD,
+  /** Archipelago mode only, with Dexsanity: Professor Oak (forced once per run, see `ArchipelagoManager.getOakWave`) */
+  ARCHIPELAGO_OAK,
 }

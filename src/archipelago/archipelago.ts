@@ -38,6 +38,7 @@ import {
   AP_KATROD_SPRITE_SOURCE,
 } from "./ap-katrod-sprite";
 import { apText } from "./ap-messages";
+import { AP_OAK_SPRITE_DATA_URI, AP_OAK_SPRITE_FRAME, AP_OAK_SPRITE_KEY, AP_OAK_SPRITE_SOURCE } from "./ap-oak-sprite";
 import { BLITZ_GYM_WAVES } from "./blitz";
 
 export type { ApSessionState };
@@ -126,6 +127,10 @@ const FAST_EGG_DIVISOR = 10;
 const FATE_WAVES_CLASSIC: [number, number] = [41, 99];
 const FATE_WAVES_BLITZ: [number, number] = [21, 49];
 const FATE_SEED_OFFSET = 777_777;
+/** Floors where the Professor Oak encounter is forced once per run (Dexsanity), before the "See the Fate" ones */
+const OAK_WAVES_CLASSIC: [number, number] = [11, 39];
+const OAK_WAVES_BLITZ: [number, number] = [11, 19];
+const OAK_SEED_OFFSET = 424_242;
 
 /** Maximum number of eggs a profile can hold (same limit as the game) */
 const MAX_EGGS = 99;
@@ -502,6 +507,11 @@ export function ensureKatrodSpriteTexture(): void {
   );
 }
 
+/** Registers Professor Oak, of the Professor Oak encounter */
+export function ensureOakSpriteTexture(): void {
+  ensureSingleFrameAtlas(AP_OAK_SPRITE_KEY, AP_OAK_SPRITE_DATA_URI, AP_OAK_SPRITE_FRAME, AP_OAK_SPRITE_SOURCE);
+}
+
 /** Registers the Archipelago item icon texture (once the game textures are available) */
 export function ensureArchipelagoIconTexture(): void {
   const textures = globalScene?.textures;
@@ -539,6 +549,7 @@ export class ArchipelagoManager {
   private runStartHandled = false;
   /** Floor of the "See the Fate" encounter, cached for the run seed */
   private fateWave: { seed: string; wave: number | null } | null = null;
+  private oakWave: { seed: string; wave: number | null } | null = null;
   /** Species with a Dexsanity check, cached for the slot data they come from */
   private dexsanitySpecies: { source: Record<string, any>; ids: Set<number> } | null = null;
   /** Time (seconds) of the last DeathLink sent, to ignore its echo */
@@ -571,8 +582,15 @@ export class ArchipelagoManager {
     apHooks.getStarterValueLimit = () => (this.active ? this.getStarterValueLimit() : null);
     apHooks.isBlitz = () => this.active && this.isBlitz();
     apHooks.onPokemonObtained = (speciesId, newCatch) => this.onPokemonObtained(speciesId, newCatch);
-    apHooks.getForcedMysteryEncounter = wave =>
-      this.active && wave === this.getFateWave() ? MysteryEncounterType.ARCHIPELAGO_FATE : null;
+    apHooks.getForcedMysteryEncounter = wave => {
+      if (!this.active) {
+        return null;
+      }
+      if (wave === this.getFateWave()) {
+        return MysteryEncounterType.ARCHIPELAGO_FATE;
+      }
+      return wave === this.getOakWave() ? MysteryEncounterType.ARCHIPELAGO_OAK : null;
+    };
     apHooks.getSoldLabel = type =>
       type?.isArchipelagoShopItem && this.isLocationChecked(type.locationId) ? apText("shopItemSold") : null;
   }
@@ -713,6 +731,7 @@ export class ArchipelagoManager {
     ensureArchipelagoIconTexture();
     ensureFateSpriteTexture();
     ensureKatrodSpriteTexture();
+    ensureOakSpriteTexture();
     this.active = true;
     // Starters hatched from the Archipelago eggs since the last time get the bonuses too
     this.applyStarterBonuses();
@@ -1399,6 +1418,14 @@ export class ArchipelagoManager {
     return this.active && this.getDexsanityMode() !== ApDexsanityMode.OFF;
   }
 
+  /** Pokémon of the Dexsanity list whose check was not sent yet */
+  getMissingDexsanitySpecies(): SpeciesId[] {
+    if (this.getDexsanityMode() === ApDexsanityMode.OFF) {
+      return [];
+    }
+    return [...this.getDexsanitySpecies()].filter(id => !this.isLocationChecked(getDexLocationId(id)));
+  }
+
   /** Whether obtaining the species would still send a Dexsanity check */
   isDexsanityMissing(speciesId: SpeciesId): boolean {
     const target = this.getDexsanityTarget(speciesId);
@@ -1478,10 +1505,45 @@ export class ArchipelagoManager {
       return null;
     }
     const seed = globalScene.seed;
-    if (this.fateWave?.seed === seed) {
-      return this.fateWave.wave;
+    if (this.fateWave?.seed !== seed) {
+      this.fateWave = {
+        seed,
+        wave: this.drawForcedWave(this.isBlitz() ? FATE_WAVES_BLITZ : FATE_WAVES_CLASSIC, FATE_SEED_OFFSET),
+      };
     }
-    const [first, last] = this.isBlitz() ? FATE_WAVES_BLITZ : FATE_WAVES_CLASSIC;
+    return this.fateWave.wave;
+  }
+
+  /**
+   * Floor of the run where the Professor Oak encounter is forced (Dexsanity, while some Pokémon of the list are
+   * missing): drawn from the run seed between floors 11 and 39 (11 and 19 with Blitz), same restrictions as the
+   * "See the Fate" floor
+   * @returns `null` without Dexsanity
+   */
+  getOakWave(): number | null {
+    if (!(this.isOakEncounterEnabled() && globalScene.gameMode?.isArchipelago)) {
+      return null;
+    }
+    const seed = globalScene.seed;
+    if (this.oakWave?.seed !== seed) {
+      this.oakWave = {
+        seed,
+        wave: this.drawForcedWave(this.isBlitz() ? OAK_WAVES_BLITZ : OAK_WAVES_CLASSIC, OAK_SEED_OFFSET),
+      };
+    }
+    return this.oakWave.wave;
+  }
+
+  /** Whether Professor Oak may come: Dexsanity, with at least one Pokémon of the list still missing */
+  isOakEncounterEnabled(): boolean {
+    return (
+      this.active && this.getDexsanityMode() !== ApDexsanityMode.OFF && this.getMissingDexsanitySpecies().length > 0
+    );
+  }
+
+  /** A floor drawn from the run seed in a range: never a floor multiple of 10, the first floor of a block, a story
+   * battle, a Gym Leader or the final floor */
+  private drawForcedWave([first, last]: [number, number], seedOffset: number): number | null {
     const gameMode = globalScene.gameMode;
     const candidates: number[] = [];
     for (let wave = first; wave <= last; wave++) {
@@ -1498,9 +1560,8 @@ export class ArchipelagoManager {
     if (candidates.length > 0) {
       globalScene.executeWithSeedOffset(() => {
         wave = candidates[randSeedInt(candidates.length)];
-      }, FATE_SEED_OFFSET);
+      }, seedOffset);
     }
-    this.fateWave = { seed, wave };
     return wave;
   }
 

@@ -1,5 +1,6 @@
 import { ArchipelagoFateEncounter } from "#app/archipelago/ap-fate-encounter";
 import { ArchipelagoKatrodEncounter } from "#app/archipelago/ap-katrod-encounter";
+import { ArchipelagoOakEncounter } from "#app/archipelago/ap-oak-encounter";
 import { BiomeId } from "#enums/biome-id";
 import { MysteryEncounterType } from "#enums/mystery-encounter-type";
 import { ATrainersTestEncounter } from "#mystery-encounters/a-trainers-test-encounter";
@@ -181,6 +182,7 @@ const anyBiomeEncounters: MysteryEncounterType[] = [
   MysteryEncounterType.TELEPORTING_HIJINKS,
   MysteryEncounterType.UNCOMMON_BREED,
   MysteryEncounterType.ARCHIPELAGO_KATROD,
+  MysteryEncounterType.ARCHIPELAGO_OAK,
 ];
 
 /**
@@ -277,6 +279,7 @@ export function initMysteryEncounters() {
   allMysteryEncounters[MysteryEncounterType.ARCHIPELAGO_FATE] = ArchipelagoFateEncounter;
   // Archipelago mode only (see its scene requirement), in any biome
   allMysteryEncounters[MysteryEncounterType.ARCHIPELAGO_KATROD] = ArchipelagoKatrodEncounter;
+  allMysteryEncounters[MysteryEncounterType.ARCHIPELAGO_OAK] = ArchipelagoOakEncounter;
 
   // Add extreme encounters to biome map
   extremeBiomeEncounters.forEach(encounter => {
