@@ -745,8 +745,9 @@ class PokeRogueWorld(World):
 
     def get_fate_data(self) -> Dict[str, object]:
         """
-        Fate encounter: where this player's passes are, rare progression items of other players beyond half of the
-        spheres, and the players reaching their goal first and last (generation order, like the spoiler)
+        Fate encounter: where this player's passes are, when rare progression items of other players are found,
+        regions holding one of those items, and the players reaching their goal first and last (generation order,
+        like the spoiler)
         """
         if not self.options.fate_encounter.value:
             return {"fate_encounter": False}
@@ -775,6 +776,34 @@ class PokeRogueWorld(World):
         rare_items = other_games or rare_items
         self.random.shuffle(rare_items)
 
+        # Regions of the other players' worlds holding a rare item (same items as above): the region and its world,
+        # how many progression items it holds, and one of those rare items (never its location). The generic "Menu"
+        # regions are left out.
+        progression_in: Counter = Counter()
+        rare_in: Dict[tuple, set] = {}
+        for location in locations:
+            region = location.parent_region
+            if location.player == self.player or region is None or region.name.lower() == "menu":
+                continue
+            region_key = (location.player, region.name)
+            if location.item.advancement:
+                progression_in[region_key] += 1
+            item_key = (location.item.player, location.item.name)
+            if item_key in first_sphere:
+                rare_in.setdefault(region_key, set()).add(item_key)
+        region_hints = []
+        for region_key in sorted(rare_in):
+            items = sorted(rare_in[region_key])
+            # Items of other games first, like above
+            other_game_items = [key for key in items if self.multiworld.game[key[0]] != GAME_NAME]
+            owner, name = self.random.choice(other_game_items or items)
+            region_hints.append((bool(other_game_items), {
+                "region": region_key[1], "world": region_key[0], "game": self.multiworld.game[region_key[0]],
+                "count": progression_in[region_key], "item": name, "owner": owner,
+            }))
+        self.random.shuffle(region_hints)
+        region_hints.sort(key=lambda hint: not hint[0])
+
         goal_players = {player: sphere for player, sphere in goal_sphere.items() if sphere is not None}
         first = min(goal_players.values(), default=None)
         last = max(goal_players.values(), default=None)
@@ -791,6 +820,7 @@ class PokeRogueWorld(World):
                 {"item": name, "owner": owner, "part": adventure_part(first_sphere[(owner, name)], total)}
                 for owner, name in rare_items[:FATE_MAX_HINTS]
             ],
+            "fate_region_hints": [hint for _, hint in region_hints[:FATE_MAX_HINTS]],
             "fate_goal_order": {
                 # Only the players: neither their sphere nor the number of spheres
                 "first": sorted(p for p, sphere in goal_players.items() if sphere == first),

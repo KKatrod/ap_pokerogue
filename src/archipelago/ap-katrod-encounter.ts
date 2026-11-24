@@ -58,7 +58,7 @@ const RANDOM_ATTACK_MIN_POWER = 40;
 const KATROD_TEXTS = {
   en: {
     intro:
-      "A trainer with sparkling eyes blocks your way, a Gramsci book in one hand and a randomizer settings sheet in the other.",
+      "A trainer with sparkling eyes blocks your way, a Gramsci book in one hand and a guide to randomizers in the other.",
     speaker: "Katrod",
     introDialogue: "Hi! Got five minutes? I absolutely have to tell you about something!",
     title: "Katrod's Passions",
@@ -106,7 +106,7 @@ const KATROD_TEXTS = {
   },
   fr: {
     intro:
-      "Un dresseur aux yeux pétillants vous barre la route, un livre de Gramsci dans une main et des réglages de randomizer dans l'autre.",
+      "Un dresseur aux yeux pétillants vous barre la route, un livre de Gramsci dans une main et un guide sur les randomizers dans l'autre.",
     speaker: "Katrod",
     introDialogue: "Salut ! Tu as cinq minutes ? Il faut absolument que je te parle de quelque chose !",
     title: "Les passions de Katrod",

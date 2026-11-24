@@ -38,6 +38,10 @@ const FATE_TEXTS = {
         label: "The winners",
         tooltip: "(+) Who should reach their goal first, and who last",
       },
+      4: {
+        label: "Find the way",
+        tooltip: "(+) A region of a world, how many key items it holds, and one of them",
+      },
     },
     outro: "Archipelakazam vanishes in a multicoloured flash.",
   },
@@ -61,6 +65,10 @@ const FATE_TEXTS = {
       3: {
         label: "Les vainqueurs",
         tooltip: "(+) Qui devrait atteindre son objectif en premier, et en dernier",
+      },
+      4: {
+        label: "Trouver la voie",
+        tooltip: "(+) Une région d'un monde, combien d'objets clés elle recèle, et l'un d'eux",
       },
     },
     outro: "Archipelakazam disparaît dans un éclair multicolore.",
@@ -134,6 +142,13 @@ export const ArchipelagoFateEncounter: MysteryEncounter = MysteryEncounterBuilde
       buttonTooltip: `${namespace}:option.3.tooltip`,
     },
     () => showFate(archipelago.getFateGoalText()),
+  )
+  .withSimpleOption(
+    {
+      buttonLabel: `${namespace}:option.4.label`,
+      buttonTooltip: `${namespace}:option.4.tooltip`,
+    },
+    () => showFate(archipelago.takeFateRegionHint()),
   )
   .withOutroDialogue([
     {

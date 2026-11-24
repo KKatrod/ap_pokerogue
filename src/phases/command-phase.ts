@@ -1,3 +1,4 @@
+import { archipelago } from "#app/archipelago/archipelago";
 import type { TurnCommand } from "#app/battle";
 import { globalScene } from "#app/global-scene";
 import { settings } from "#app/global-settings-manager";
@@ -371,6 +372,10 @@ export class CommandPhase extends FieldPhase {
     const isCatchableDailyBoss = isDailyFinalBoss() && (getDailyEventSeedBoss()?.catchable ?? false);
 
     if (biomeId === BiomeId.END && battleType === BattleType.WILD) {
+      if (gameMode.isArchipelago && archipelago.allowsEndCatch()) {
+        // Archipelago Dexsanity: every Pokémon of the End can be caught, the final boss included
+        return true;
+      }
       if (
         (isClassic && !isClassicFinalBoss && someUncaughtSpeciesOnField)
         || (isFullFreshStart && !isClassicFinalBoss)

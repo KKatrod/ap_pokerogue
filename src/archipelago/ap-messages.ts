@@ -69,6 +69,10 @@ const messages = {
     fateSphere1: "I see... {{item}} of {{owner}} will be found fairly early in the adventure.",
     fateSphere2: "I see... {{item}} of {{owner}} will be found around the middle of the adventure.",
     fateSphere3: "I see... {{item}} of {{owner}} will be found rather late in the adventure.",
+    fateRegion:
+      'I see... the region "{{region}}" in the world of {{player}} ({{game}}) holds {{count}} progression items, {{item}} of {{owner}} among them.',
+    fateRegionOne:
+      'I see... the region "{{region}}" in the world of {{player}} ({{game}}) holds a single progression item: {{item}} of {{owner}}.',
     fateGoal: "Fate says that {{first}} will reach their goal first, and {{last}} last.",
     fateGoalPlural: "Fate says that {{first}} will reach their goal first, and {{last}} last.",
     fateGoalTie: "Fate says that {{players}} will reach their goal at the same time.",
@@ -141,6 +145,10 @@ const messages = {
     fateSphere1: "Je vois... {{item}} de {{owner}} se trouve relativement tôt dans l'aventure.",
     fateSphere2: "Je vois... {{item}} de {{owner}} se trouve vers le milieu de l'aventure.",
     fateSphere3: "Je vois... {{item}} de {{owner}} se trouve plutôt tard dans l'aventure.",
+    fateRegion:
+      "Je vois... la région « {{region}} » du monde de {{player}} ({{game}}) recèle {{count}} objets de progression, dont {{item}} de {{owner}}.",
+    fateRegionOne:
+      "Je vois... la région « {{region}} » du monde de {{player}} ({{game}}) recèle un seul objet de progression : {{item}} de {{owner}}.",
     fateGoal: "Selon le destin, {{first}} atteindra son objectif en premier, et {{last}} en dernier.",
     fateGoalPlural: "Selon le destin, {{first}} atteindront leur objectif en premier, et {{last}} en dernier.",
     fateGoalTie: "Selon le destin, {{players}} atteindront leur objectif en même temps.",

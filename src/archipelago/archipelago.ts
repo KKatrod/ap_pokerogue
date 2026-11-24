@@ -283,6 +283,7 @@ interface ApProfile {
   /** "See the Fate" encounter: indices (in the slot data lists) of the pass and key item hints already given */
   fateShownPasses?: number[];
   fateShownSpheres?: number[];
+  fateShownRegions?: number[];
   /** Biomes whose 10 floors were cleared at least once (in any run): the destinations of the Fly Ticket */
   visitedBiomes?: number[];
 }
@@ -298,6 +299,19 @@ interface ApFatePassHint {
 }
 
 /** Hint of the "See the Fate" encounter about a rare progression item of another player (`fate_sphere_hints`) */
+/** "Find the way": a region holding a rare progression item, from the slot data */
+interface ApFateRegionHint {
+  region: string;
+  /** Player whose world holds the region */
+  world: number;
+  game: string;
+  /** Progression items in the region */
+  count: number;
+  /** One of the rare progression items of the region, and its owner */
+  item: string;
+  owner: number;
+}
+
 interface ApFateSphereHint {
   item: string;
   owner: number;
@@ -1377,6 +1391,14 @@ export class ArchipelagoManager {
     return this.getDexsanitySpecies().has(target) ? target : undefined;
   }
 
+  /**
+   * Whether Poké Balls may be thrown in the End (forbidden in the original game, but the End may hold Pokémon of the
+   * Dexsanity list: the Paradox Pokémon, Eternatus, and the catch-up encounters of the last block)
+   */
+  allowsEndCatch(): boolean {
+    return this.active && this.getDexsanityMode() !== ApDexsanityMode.OFF;
+  }
+
   /** Whether obtaining the species would still send a Dexsanity check */
   isDexsanityMissing(speciesId: SpeciesId): boolean {
     const target = this.getDexsanityTarget(speciesId);
@@ -1533,6 +1555,33 @@ export class ArchipelagoManager {
       ?? (hint.sphere && hint.total ? Math.min(3, Math.max(1, Math.ceil((3 * hint.sphere) / hint.total))) : 2);
     const key = part <= 1 ? "fateSphere1" : part === 2 ? "fateSphere2" : "fateSphere3";
     return apText(key, { item: hint.item, owner: this.client.getPlayerName(hint.owner) });
+  }
+
+  /**
+   * "Find the way": a region of a world holding a rare progression item, how many progression items it holds and
+   * one of the rare ones (never its location), a different region each run
+   */
+  takeFateRegionHint(): string {
+    const hints: ApFateRegionHint[] = Array.isArray(this.slotData.fate_region_hints)
+      ? this.slotData.fate_region_hints
+      : [];
+    if (!this.profile || hints.length === 0) {
+      return apText("fateNothing");
+    }
+    const shown = new Set(this.profile.fateShownRegions ?? []);
+    const index = hints.findIndex((_, i) => !shown.has(i));
+    const chosen = index >= 0 ? index : Math.floor(Math.random() * hints.length);
+    const hint = hints[chosen];
+    this.profile.fateShownRegions = [...shown, chosen];
+    this.saveProfile();
+    return apText(hint.count > 1 ? "fateRegion" : "fateRegionOne", {
+      region: hint.region,
+      player: this.client.getPlayerName(hint.world),
+      game: hint.game,
+      count: hint.count,
+      item: hint.item,
+      owner: this.client.getPlayerName(hint.owner),
+    });
   }
 
   /** "The winners": the players reaching their goal first and last in the generation (spoiler) order */
