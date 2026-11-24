@@ -103,6 +103,8 @@ describe("Archipelago Katrod - Mystery Encounter", () => {
       SpeciesId.ROTOM,
       SpeciesId.GALAR_MOLTRES,
     ]);
+    // "de la Commune" stays in French whatever the language
+    expect(scene.getEnemyParty()[5].getNameToRender()).toMatch(/ de la Commune$/);
   });
 
   it("option 4 should open a regular shop", async () => {

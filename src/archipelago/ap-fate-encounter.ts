@@ -1,7 +1,7 @@
 /**
- * "See the Fate" mystery encounter of the Archipelago mode: once per run, a Mega Alakazam whose spoons have the
- * colours of the Archipelago logo offers a hint about the multiworld (option `fate_encounter`, data prepared at
- * generation in the slot data). The floor is chosen by `ArchipelagoManager.getFateWave`.
+ * "See the Fate" mystery encounter of the Archipelago mode: once per run, Archipelakazam (a Mega Alakazam whose spoons
+ * have the colours of the Archipelago logo) offers a hint about the multiworld (option `fate_encounter`, data prepared
+ * at generation in the slot data). The floor is chosen by `ArchipelagoManager.getFateWave`.
  */
 import { MysteryEncounterTier } from "#enums/mystery-encounter-tier";
 import { MysteryEncounterType } from "#enums/mystery-encounter-type";
@@ -18,12 +18,12 @@ const namespace = "mysteryEncounters/archipelagoFate";
 
 const FATE_TEXTS = {
   en: {
-    intro: "A Mega Alakazam floats above the ground, surrounded by spoons in the colours of the Archipelago.",
-    speaker: "Mega Alakazam",
+    intro: "Archipelakazam floats above the ground, surrounded by spoons in the colours of the Archipelago.",
+    speaker: "Archipelakazam",
     introDialogue: "I can see the threads of fate that bind every world together...\nDo you wish to see them?",
     title: "See the Fate",
     description:
-      "A Mega Alakazam with multicoloured spoons offers to lift the veil on the fate of the multiworld. It will only answer one question.",
+      "Archipelakazam, with its multicoloured spoons, offers to lift the veil on the fate of the multiworld. It will only answer one question.",
     query: "What do you want to see?",
     option: {
       1: {
@@ -39,15 +39,15 @@ const FATE_TEXTS = {
         tooltip: "(+) Who should reach their goal first, and who last",
       },
     },
-    outro: "Mega Alakazam vanishes in a multicoloured flash.",
+    outro: "Archipelakazam vanishes in a multicoloured flash.",
   },
   fr: {
-    intro: "Un Méga-Alakazam flotte au-dessus du sol, entouré de cuillères aux couleurs de l'Archipel.",
-    speaker: "Méga-Alakazam",
+    intro: "Archipelakazam flotte au-dessus du sol, entouré de cuillères aux couleurs de l'Archipel.",
+    speaker: "Archipelakazam",
     introDialogue: "Je perçois les fils du destin qui relient tous les mondes...\nVeux-tu les voir ?",
     title: "Voir le destin",
     description:
-      "Un Méga-Alakazam aux cuillères multicolores propose de lever le voile sur le destin du multiworld. Il ne répondra qu'à une seule question.",
+      "Archipelakazam et ses cuillères multicolores proposent de lever le voile sur le destin du multiworld. Il ne répondra qu'à une seule question.",
     query: "Que veux-tu voir ?",
     option: {
       1: {
@@ -63,7 +63,7 @@ const FATE_TEXTS = {
         tooltip: "(+) Qui devrait atteindre son objectif en premier, et en dernier",
       },
     },
-    outro: "Méga-Alakazam disparaît dans un éclair multicolore.",
+    outro: "Archipelakazam disparaît dans un éclair multicolore.",
   },
 };
 

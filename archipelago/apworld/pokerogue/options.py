@@ -334,8 +334,8 @@ class ActivePassives(Choice):
 
 
 class FateEncounter(DefaultOnToggle):
-    """Once per run, a Mega Alakazam offers to "see the fate" (Mystery Encounter, floors 41-99, or 21-49 with Blitz).
-    Choices: where one of your Floor / Biome Passes is, the sphere of a rare progression item of another player, or
+    """Once per run, Archipelakazam offers to "see the fate" (Mystery Encounter, floors 41-99, or 21-49 with Blitz).
+    Choices: where one of your Floor / Biome Passes is, when a rare progression item of another player is found, or
     which players should reach their goal first and last according to the generation (spoiler) order.
     Each run gives a different pass hint and a different item hint."""
     display_name = "Fate Encounter"

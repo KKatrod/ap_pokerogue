@@ -96,6 +96,13 @@ const KATROD_TEXTS = {
     typesChanged: "{{pokemon}}'s types became {{type1}} and {{type2}}!",
     battleIntro: "I'll prove I'm right with a demonstration!",
     victory: "...Wait. Actually, we agreed from the start, didn't we?",
+    nickname: {
+      toxicroak: "Coatrod",
+      toxtricity: "Re-volt",
+      xatu: "Franc-Xatu",
+      excadrill: "Marxotaupe",
+      rotom: "Practical Work",
+    },
   },
   fr: {
     intro:
@@ -138,6 +145,13 @@ const KATROD_TEXTS = {
     typesChanged: "Les types de {{pokemon}} sont devenus {{type1}} et {{type2}} !",
     battleIntro: "Je vais te prouver par l'exemple que j'ai raison !",
     victory: "... Attends. En fait, on était d'accord depuis le début, non ?",
+    nickname: {
+      toxicroak: "Coatrod",
+      toxtricity: "Ré-volt",
+      xatu: "Franc-Xatu",
+      excadrill: "Marxotaupe",
+      rotom: "TP de Techno",
+    },
   },
 };
 
@@ -338,7 +352,7 @@ function getKatrodPartyConfig(): EnemyPartyConfig {
     {
       species: species(SpeciesId.TOXICROAK),
       isBoss: false,
-      nickname: "Coatrod",
+      nickname: text("nickname.toxicroak"),
       abilityIndex: 1, // Dry Skin
       nature: Nature.ADAMANT,
       moveSet: [MoveId.SWORDS_DANCE, MoveId.DRAIN_PUNCH, MoveId.POISON_JAB, MoveId.SUCKER_PUNCH],
@@ -352,7 +366,7 @@ function getKatrodPartyConfig(): EnemyPartyConfig {
     {
       species: species(SpeciesId.TOXTRICITY),
       isBoss: false,
-      nickname: "Ré-volt",
+      nickname: text("nickname.toxtricity"),
       formIndex: 1, // Low Key
       abilityIndex: 0, // Punk Rock
       nature: Nature.MODEST,
@@ -363,7 +377,7 @@ function getKatrodPartyConfig(): EnemyPartyConfig {
     {
       species: species(SpeciesId.XATU),
       isBoss: false,
-      nickname: "Franc-Xatu",
+      nickname: text("nickname.xatu"),
       abilityIndex: 2, // Magic Bounce
       nature: Nature.TIMID,
       moveSet: [MoveId.CALM_MIND, MoveId.PSYCHIC, MoveId.AIR_SLASH, MoveId.ROOST],
@@ -372,7 +386,7 @@ function getKatrodPartyConfig(): EnemyPartyConfig {
     {
       species: species(SpeciesId.EXCADRILL),
       isBoss: false,
-      nickname: "Marxotaupe",
+      nickname: text("nickname.excadrill"),
       abilityIndex: 2, // Mold Breaker
       nature: Nature.ADAMANT,
       moveSet: [MoveId.SWORDS_DANCE, MoveId.EARTHQUAKE, MoveId.IRON_HEAD, MoveId.ROCK_SLIDE],
@@ -381,7 +395,7 @@ function getKatrodPartyConfig(): EnemyPartyConfig {
     {
       species: species(SpeciesId.ROTOM),
       isBoss: false,
-      nickname: "TP de Techno",
+      nickname: text("nickname.rotom"),
       formIndex: 2, // Wash
       abilityIndex: 0, // Levitate
       nature: Nature.MODEST,
@@ -392,7 +406,8 @@ function getKatrodPartyConfig(): EnemyPartyConfig {
       species: species(SpeciesId.GALAR_MOLTRES),
       isBoss: true,
       bossSegments: 2,
-      nickname: "Sulfura de Paris",
+      // "de la Commune" stays in French in every language, after the local name of Moltres
+      nickname: `${species(SpeciesId.MOLTRES).name} de la Commune`,
       abilityIndex: 0, // Berserk
       nature: Nature.MODEST,
       moveSet: [MoveId.NASTY_PLOT, MoveId.FIERY_WRATH, MoveId.HURRICANE, MoveId.ROOST],
