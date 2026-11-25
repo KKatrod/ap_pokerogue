@@ -1,0 +1,58 @@
+# Archipelago client on GitHub Pages: the same game as the standalone client (vite build --mode app: no login,
+# saves in the browser), playable from a phone browser and installable as an app ("Add to Home screen").
+# Needs the Pages source of the repository set to "GitHub Actions".
+name: Deploy AP client (GitHub Pages)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ap-client-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build the client
+    # Only on the Archipelago fork, never on other copies of the repository
+    if: github.repository == 'KKatrod/ap_pokerogue'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # 7.0.0
+        with:
+          submodules: "recursive"
+
+      - uses: ./.github/actions/setup-deps
+
+      - name: Build the game
+        run: pnpm exec vite build --mode app
+
+      # Files of the assets repository that are not part of the game (like the standalone client)
+      - name: Remove unused files
+        run: find dist -type f \( -name '*.map' -o -name '*.bat' -o -name '*.ps1' -o -name '*.tps' \) -delete
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
