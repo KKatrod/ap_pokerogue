@@ -11,6 +11,7 @@ import { execSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { patchManifest } from "./patch-manifest.mjs";
 
 const clientDir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(clientDir, "..", "..");
@@ -45,6 +46,7 @@ cpSync(dist, join(outDir, "game"), {
   recursive: true,
   filter: source => !SKIPPED_EXTENSIONS.has(extname(source).toLowerCase()),
 });
+patchManifest(join(outDir, "game"));
 for (const file of ["serve.mjs", "pokerogue.bat"]) {
   cpSync(join(clientDir, file), join(outDir, file));
 }

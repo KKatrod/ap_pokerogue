@@ -70,11 +70,19 @@ Le script compile le jeu (`vite build --mode app` : pas de compte, sauvegardes d
 
 - `game/` : le jeu compilé, images, sons et textes compris (environ 720 Mo) ;
 - `serve.mjs` : un petit serveur web sans dépendance, qui sert `game/` sur `http://localhost:8000` et ouvre le navigateur par défaut ;
-- `pokerogue.bat` : lance `node
-ode.exe serve.mjs` ;
+- `pokerogue.bat` : lance `node\node.exe serve.mjs` ;
 - `node/` : `node.exe` (copié avec `--node`, ou ajouté à la main).
 
 Le joueur double-clique sur `pokerogue.bat` et garde la fenêtre ouverte pendant la partie. Le port reste 8000 : le navigateur garde les sauvegardes par adresse, un autre port afficherait une sauvegarde vide. Si PokeRogue est déjà lancé, le script ouvre simplement le navigateur. `--no-build` réutilise le dernier build (`dist/`).
+
+## Version en ligne (mobile)
+
+Le même jeu est publié sur GitHub Pages, à l'adresse <https://kkatrod.github.io/ap_pokerogue/>, par le workflow `.github/workflows/deploy-ap-client.yml` (à chaque push sur `main`, ou à la demande depuis l'onglet Actions). Il se joue dans le navigateur d'un téléphone, avec les contrôles tactiles du jeu, de préférence en paysage, et s'installe comme une application (« Ajouter à l'écran d'accueil », nom « PokéRogue AP »).
+
+- Le workflow compile le jeu comme le client sans installation (`vite build --mode app`), retire les fichiers inutiles, puis adapte le manifeste d'application avec `archipelago/client/patch-manifest.mjs` : adresse de départ relative (sinon l'application installée s'ouvrirait à la racine du domaine) et nom propre au client Archipelago. `build-client.mjs` applique la même adaptation.
+- Réglages du dépôt nécessaires : source de Pages « GitHub Actions », et `main` autorisée à déployer (branche par défaut, ou règle de l'environnement `github-pages`).
+- Le site est en HTTPS : il ne peut se connecter qu'à des serveurs Archipelago en `wss://` (archipelago.gg l'est), pas à un serveur `ws://` lancé sur un PC.
+- Les sauvegardes restent propres à chaque appareil et à chaque adresse (navigateur du téléphone, client du PC).
 
 ## Côté serveur : l'apworld
 
